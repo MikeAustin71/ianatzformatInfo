@@ -1,6 +1,7 @@
 package main
 
 import (
+  "errors"
   "fmt"
   "github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
   "github.com/MikeAustin71/stringopsgo/strops/v2"
@@ -46,144 +47,6 @@ import (
 
  */
 
-type TimeZoneMajorGroups []string
-
-type TimeZoneDataDto struct {
-  MajorGroup string
-  SubTzName string
-  TzName string
-  TzValue string
-  TzClass int       // 0 = Unknown
-  // 1 = Canonical
-  // 2 = Alias
-  // 3 = Sub-Group
-}
-
-func (tzDataDto TimeZoneDataDto) NewTimeZone(
-  majorGroup,
-  tzName,
-  tzValue string,
-  tzClass int) (TimeZoneDataDto, error) {
-
-  ePrefix := "TimeZoneDataDto.NewTimeZone() - ERROR:\n"
-
-  if tzClass < 1 || tzClass > 3 {
-    return TimeZoneDataDto{},
-      fmt.Errorf(ePrefix + "Input Parameter tzClass is out of bounds and INVALID!\n" +
-        "Valid values are 1-3!\ntzClass='%v'", tzClass)
-  }
-
-  tzDto := TimeZoneDataDto{}
-  tzDto.MajorGroup = majorGroup
-  tzDto.TzName = tzName
-  tzDto.TzValue = tzValue
-  tzDto.TzClass = tzClass
-
-  return tzDto, nil
-}
-
-func (tzDataDto TimeZoneDataDto) NewSubTimeZone(
-  majorGroup,
-  subTimeZoneName,
-  tzName,
-  tzValue string,
-  tzClass int) (TimeZoneDataDto, error) {
-
-  ePrefix := "TimeZoneDataDto.NewSubTimeZone() - ERROR:\n"
-
-  if tzClass < 1 || tzClass > 3 {
-    return TimeZoneDataDto{},
-      fmt.Errorf(ePrefix + "Input Parameter tzClass is out of bounds and INVALID!\n" +
-        "Valid values are 1-3!\ntzClass='%v'", tzClass)
-  }
-
-  tzDto := TimeZoneDataDto{}
-  tzDto.MajorGroup = majorGroup
-  tzDto.SubTzName = subTimeZoneName
-  tzDto.TzName = tzName
-  tzDto.TzValue = tzValue
-  tzDto.TzClass = tzClass
-
-  return tzDto, nil
-
-}
-
-//ByTzDtoName - Sort by MajorGroup, TzName
-type ByTzDtoName []TimeZoneDataDto
-
-func (byTzDtoName ByTzDtoName) Len() int {
-  return len(byTzDtoName)
-}
-
-func (byTzDtoName ByTzDtoName) Swap(i, j int) {
-  byTzDtoName[i], byTzDtoName[j] = byTzDtoName[j], byTzDtoName[i]
-}
-
-func (byTzDtoName ByTzDtoName) Less(i, j int) bool {
-
-  if byTzDtoName[i].MajorGroup == byTzDtoName[j].MajorGroup {
-    return byTzDtoName[i].TzName < byTzDtoName[j].TzName
-  }
-
-  return byTzDtoName[i].MajorGroup < byTzDtoName[j].MajorGroup
-}
-
-//SelectTzDto - Select from array TimeZoneDataDto
-type SelectTzDto []TimeZoneDataDto
-
-func (selTzDto SelectTzDto) GroupExists(majorGroupName string) bool{
-
-  for i:=0; i < len(selTzDto); i++ {
-
-    if selTzDto[i].MajorGroup == majorGroupName {
-      return true
-    }
-
-  }
-
-  return false
-}
-
-func (selTzDto SelectTzDto) TzNameExists(tzName string) bool {
-
-  for i:=0; i < len(selTzDto); i++ {
-
-    if selTzDto[i].TzName == tzName {
-      return true
-    }
-
-  }
-  return false
-}
-
-
-const commentCharStr = "#"
-const zoneLabel = "Zone"
-const linkLabel = "Link"
-
-// For IANA Time Zone Files the white space characters which delimit fields
-// are space, form feed, carriage return, newline, tab, and  vertical tab.
-//
-// ' ' = space
-// \f = form feed
-// \r = carriage return
-// \n = new line
-// \t = tab
-// \v = vertical tab
-
-var fieldSeparators = []rune{
-  ' ',
-  '\f',
-  '\r',
-  '\n',
-  '\t',
-  '\v'}
-
-var fieldSeparatorsLen = len(fieldSeparators)
-
-var tzMajorGroupArray TimeZoneMajorGroups = make([]string, 0, 100)
-
-var tzMajorGroupMap = make(map[string]string)
 
 var tzDataArray = make([]TimeZoneDataDto, 0, 700)
 
@@ -191,6 +54,51 @@ var subTzArray = make([]TimeZoneDataDto, 0, 700)
 
 var tzLinkArray = make([]TimeZoneDataDto, 0, 300)
 
+/*
+  tzMajorGroupArray Format
+    Africa,
+    America,
+    Antarctica,
+    Artic,
+    Asia,
+    Atlantic,
+    Australia,
+      ...
+    UCT,
+    W_SU,
+    WET,
+    Zulu
+    ------------------------------------------
+
+    tzDataArray Format
+      Standard Time Zone -
+      ====================
+          MajorGroup  = America
+          SubTzName   = ""
+          TzName      = Chicago
+          TzValue     = America/Chicago
+          TzClass     = 1
+                        // 0 = Unknown
+                        // 1 = Canonical
+                        // 2 = Alias
+                        // 3 = Sub-Group
+          Deprecated  = false
+
+        Sub-Zone Place Holder -
+        =======================
+          MajorGroup  = America
+          SubTzName   = Argentina
+          TzName      = Argentina
+          TzValue     = America/Argentina
+          TzClass     = 3
+                        // 0 = Unknown
+                        // 1 = Canonical
+                        // 2 = Alias
+                        // 3 = Sub-Group
+          Deprecated  = false
+
+
+*/
 
 type ParseIanaTzData struct {
   input string
@@ -202,11 +110,13 @@ type ParseIanaTzData struct {
 // IANA Time Zone files.
 func (parseTz *ParseIanaTzData) ParseTzAndLinks(
   dirFileInfo pathfileops.FileMgrCollection) (
-                      TimeZoneMajorGroups, // Time Zone Group string array [] string
-                      []TimeZoneDataDto, // Time Zone Data Array
+                      []TimeZoneMajorGroupDto, // Time Zone Major Group array
+                      []TimeZoneDataDto, // Time Zone Data Dto Array
                       []TimeZoneDataDto, // Sub-Zone Array
                       []TimeZoneDataDto, // Alias Link Array
                       error)  {
+
+
 
 
 
@@ -215,6 +125,9 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
   numOfFiles := dirFileInfo.GetNumOfFileMgrs()
   fmt.Println("Number of Target Files: ", numOfFiles)
+
+
+
 
   for i:=0; i < numOfFiles; i++ {
 
@@ -269,31 +182,195 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 }
 
+func (parseTz *ParseIanaTzData) extractDataElement(
+  rawString string) (dataElement string,
+                      lengthDataElement int,
+                      lastIdx int,
+                      err error) {
+
+  ePrefix := "ParseIanaTzData.extractDataElement() "
+
+  dataElement = ""
+  lengthDataElement = 0
+  lastIdx = 0
+  err = nil
+
+  rawRunes := []rune(rawString)
+  rawRunesLen := len(rawRunes)
+
+  if rawRunesLen == 0 {
+    err = errors.New(ePrefix +
+      "Input parameter 'rawString' is EMPTY! Zero string length!\n")
+    return dataElement, lengthDataElement, lastIdx, err
+  }
+
+  dataElementRunes := make([]rune,0, 30)
+
+  isFieldSeparator := false
+  startString := false
+
+  for i:=0; i < rawRunesLen; i++ {
+
+    isFieldSeparator = false
+
+    for j:= 0; j < fieldSeparatorsLen; j++ {
+      if rawRunes[i] == FieldSeparators[j] {
+        isFieldSeparator = true
+        break
+      }
+    }
+
+    if isFieldSeparator && !startString {
+      continue
+    } else if isFieldSeparator && startString {
+      lastIdx = i
+      break
+    }
+
+    // isFieldSeparator == false
+    // Capture rune which is part of
+    // data element.
+    startString = true
+
+    dataElementRunes = append(dataElementRunes, rawRunes[i])
+  }
+
+  dataElement = string(dataElementRunes)
+  lengthDataElement = len(dataElement)
+
+  return dataElement, lengthDataElement, lastIdx, err
+}
 
 // extractLink - Extracts link data from IANA Time Zone files.
 // Format for Link:
 // Link -> Canonical -> Alias
 // Link  America/Panama America/Cayman
-func (parseTz *ParseIanaTzData) extractLink(rawString string) {
+func (parseTz *ParseIanaTzData) extractLink(rawString string) error {
+
+  ePrefix := "ParseIanaTzData.extractLink() "
 
   lenRawStr := len(rawString)
 
-  if lenRawStr < 3 {
-    return
+  if lenRawStr < lenLinkLabel {
+    return nil
   }
 
-  linkIdx := strings.Index(rawString, linkLabel)
+  linkIdx := strings.Index(rawString, LinkLabel)
 
   if linkIdx == -1 {
-    return
+    return nil
   }
 
-  commentIdx := strings.Index(rawString, commentCharStr)
+  commentIdx := strings.Index(rawString, CommentCharStr)
 
   if commentIdx > -1 &&
     commentIdx < linkIdx {
-    return
+    return nil
   }
+
+  rawStrLen := len(rawString)
+  lastRawStrIdx := rawStrLen - 1
+
+  linkIdx += len(LinkLabel)
+
+  if linkIdx >= lastRawStrIdx {
+    return nil
+  }
+
+  rawString = rawString[linkIdx:]
+
+  rawRunes := []rune(rawString)
+
+  linkRunes := make([]rune, 0, 30)
+
+  isFieldSeparator := false
+  startString := false
+
+  rawStrLen = len(rawRunes)
+
+  for i:=0; i < rawStrLen; i++ {
+    isFieldSeparator = false
+
+    for j:=0; j < fieldSeparatorsLen; j++ {
+      if rawRunes[i] == FieldSeparators[j] {
+        isFieldSeparator = true
+        break
+      }
+    }
+
+    if isFieldSeparator && !startString {
+      continue
+    } else if isFieldSeparator && startString {
+      linkIdx = i
+      break
+    }
+
+    startString = true
+    linkRunes = append(linkRunes, rawRunes[i])
+  }
+
+  linkStr := string(linkRunes)
+
+  if len(linkStr) == 0 {
+    return fmt.Errorf(ePrefix +
+      "Invalid Linked Time Zone!\n" +
+      "Raw Link String: %v", rawString)
+
+  }
+
+  linkZoneArray := strings.Split(linkStr, "/")
+  lenLinkZoneArray := len(linkZoneArray)
+
+
+  if lenLinkZoneArray == 0 {
+    return fmt.Errorf(ePrefix +
+      "Link Zone Elements Equal ZERO!\n" +
+      "Raw Link Zone String: %v\n", rawString)
+  }
+
+  if lenLinkZoneArray == 1 {
+    return fmt.Errorf(ePrefix +
+      "Link Zone has ONLY one element!\n" +
+      "Raw Link Zone String: %v\n", rawString)
+  }
+
+  if lenLinkZoneArray > 2 {
+    return fmt.Errorf(ePrefix +
+      "Link Zone has more than 2 elements!\n" +
+      "Raw Link Zone String: %v\n", rawString)
+  }
+
+  rawString = rawString[linkIdx:]
+  rawRunes = []rune(rawString)
+  rawStrLen = len(rawRunes)
+  lastRawStrIdx = rawStrLen - 1
+  linkRunes = make([]rune, 0, 30)
+
+  for i:=0; i < rawStrLen; i++ {
+    isFieldSeparator = false
+
+    for j:=0; j < fieldSeparatorsLen; j++ {
+      if rawRunes[i] == FieldSeparators[j] {
+        isFieldSeparator = true
+        break
+      }
+    }
+
+    if isFieldSeparator && !startString {
+      continue
+    } else if isFieldSeparator && startString {
+      linkIdx = i
+      break
+    }
+
+    startString = true
+    linkRunes = append(linkRunes, rawRunes[i])
+  }
+
+
+  // lenLinkZoneArray
+
+
 
   str1Status := 0
   str2Status := 0
@@ -390,64 +467,50 @@ func (parseTz *ParseIanaTzData) extractZone(rawString string) error  {
 
   lenRawStr := len(rawString)
 
-  if lenRawStr < 3 {
+  if lenRawStr < lenZoneLabel {
     return nil
   }
 
-  idx := strings.Index(rawString, zoneLabel)
+  zoneIdx := strings.Index(rawString, ZoneLabel)
 
-  if idx == -1 {
+  if zoneIdx == -1 {
     return nil
   }
 
-  poundIdx := strings.Index(rawString, commentCharStr)
+  commentIdx := strings.Index(rawString, CommentCharStr)
 
-  if poundIdx < idx {
+  if commentIdx > -1 &&
+    commentIdx < zoneIdx {
     return nil
   }
 
   rawStrLen := len(rawString)
   lastRawStrIdx := rawStrLen - 1
 
-  idx += len(zoneLabel)
+  zoneIdx += len(ZoneLabel)
 
-  if idx >= lastRawStrIdx {
+  if zoneIdx >= lastRawStrIdx {
     return nil
   }
 
-  rawString = rawString[idx:]
+  rawString = rawString[zoneIdx:]
 
-  rawRunes := []rune(rawString)
-
-  rawStrLen = len(rawRunes)
-
-  zoneRunes := make([]rune,0, 30)
-
-  isFieldSeparator := false
-  startString := false
-
-  for i:=0; i < rawStrLen; i++ {
-    isFieldSeparator = false
-
-    for j:= 0; j < fieldSeparatorsLen; j++ {
-      if rawRunes[i] == fieldSeparators[j] {
-        isFieldSeparator = true
-        break
-      }
-    }
-
-    if isFieldSeparator && !startString {
-      continue
-    } else if isFieldSeparator && startString {
-      break
-    }
-
-    startString = true
-
-    zoneRunes = append(zoneRunes, rawRunes[i])
+  if len(rawString) == 0 {
+    return errors.New(ePrefix +
+      "'rawString' is an empty string!\n")
   }
 
-  zoneStr := string(zoneRunes)
+  zoneStr,
+  lenZoneStr,
+  lastIdx,
+  err := parseTz.extractDataElement(rawString)
+
+  if err != nil {
+    return fmt.Errorf("Zone Extraction Error!\n" +
+      "rawString='%v'\nError='%v'\n",
+      rawString, err.Error())
+  }
+
 
   if len(zoneStr) == 0 {
     return fmt.Errorf(ePrefix + "Invalid Time Zone!\n" +
@@ -460,8 +523,9 @@ func (parseTz *ParseIanaTzData) extractZone(rawString string) error  {
 
   if lenZoneArray < 2 ||
     lenZoneArray > 3 {
-    return fmt.Errorf(ePrefix + "Invalid Time Zone!\n" +
-      "Raw Zone String: %v", rawString)
+    return fmt.Errorf(ePrefix +
+      "Invalid Time Zone!\n" +
+      "Raw Zone String: %v\n", rawString)
   }
 
   _, ok := tzMajorGroupMap[zoneArray[0]]
@@ -525,6 +589,8 @@ func (parseTz *ParseIanaTzData) extractZone(rawString string) error  {
         "Error: %v\n", zoneStr, err.Error())
     }
 
+    tzDataDto.SubTzName = zoneArray[1] // Argentina
+
     tzDataArray = append(tzDataArray, tzDataDto)
   }
 
@@ -570,8 +636,8 @@ func (parseTz *ParseIanaTzData) isSkipFile(fMgr pathfileops.FileMgr) (bool, erro
   fileName := strings.ToLower(fMgr.GetFileName())
   isSkipFile := false
 
-  for k:=0; k < len(skipFiles); k++ {
-    if fileName == strings.ToLower(skipFiles[k]) {
+  for k:=0; k < len(skipTzFiles); k++ {
+    if fileName == strings.ToLower(skipTzFiles[k]) {
       isSkipFile = true
       break
     }
@@ -615,11 +681,11 @@ func (parseTz *ParseIanaTzData) processFileBytes(fMgr pathfileops.FileMgr) error
     fmt.Printf("str No %v: %v\n", cntr, extractedString)
     cntr++
 
-    cmtIdx := strings.Index(extractedString, commentCharStr)
+    cmtIdx := strings.Index(extractedString, CommentCharStr)
 
-    zoneIdx := strings.Index(extractedString, zoneLabel)
+    zoneIdx := strings.Index(extractedString, ZoneLabel)
 
-    linkIdx := strings.Index(extractedString, linkLabel)
+    linkIdx := strings.Index(extractedString, LinkLabel)
 
     if zoneIdx > -1 {
 

@@ -30,22 +30,11 @@ import (
   "strings"
 )
 
-var TimeZoneGroups TimeZoneMajorGroups
+var TimeZoneGroups []TimeZoneMajorGroupDto
 var TimeZoneData []TimeZoneDataDto
 var SubTimeZoneData []TimeZoneDataDto
 var AliasTimeZoneData []TimeZoneDataDto
 
-var skipFiles = []string{
-  "backzone",
-  "calendars",
-  "CONTRIBUTING",
-  "leapseconds",
-  "LICENSE",
-  "Makefile",
-  "NEWS",
-  "README",
-  "systemv",
-  "version"   }
 
 
 

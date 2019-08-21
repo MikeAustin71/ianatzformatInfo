@@ -98,7 +98,7 @@ func getDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection
     return dirFileInfo, err
   }
 
-  lenSkipFiles := len(skipFiles)
+  lenSkipFiles := len(skipTzFiles)
 
   var fmgr pathfileops.FileMgr
 
@@ -120,7 +120,7 @@ func getDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection
 
       for j:=0; j < lenSkipFiles; j++ {
 
-        if fName == skipFiles[j] {
+        if fName == skipTzFiles[j] {
           isInvalidFile = true
           break
         }
