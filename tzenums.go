@@ -1,33 +1,36 @@
 package main
 
 import (
-  "errors"
-  "fmt"
-  "strings"
+	"errors"
+	"fmt"
+	"strings"
 )
 
 var mTimeZoneClassStringToCode = map[string]TimeZoneClass{
-  "Unknown"       : TimeZoneClass(0).Unknown(),
-  "Canonical"     : TimeZoneClass(0).Canonical(),
-  "Alias"         : TimeZoneClass(0).Alias(),
-  "SubGroup"      : TimeZoneClass(0).SubGroup(),
-  "Artificial"      : TimeZoneClass(0).Artificial(),
+	"Unknown"             : TimeZoneClass(0).Unknown(),
+	"Canonical"           : TimeZoneClass(0).Canonical(),
+	"Alias"               : TimeZoneClass(0).Alias(),
+	"SubTimeZone"         : TimeZoneClass(0).SubTimeZone(),
+	"SubGroup"            : TimeZoneClass(0).SubGroup(),
+	"Artificial"          : TimeZoneClass(0).Artificial(),
 }
 
 var mTimeZoneClassLwrCaseStringToCode = map[string]TimeZoneClass{
-  "unknown"       : TimeZoneClass(0).Unknown(),
-  "canonical"     : TimeZoneClass(0).Canonical(),
-  "alias"         : TimeZoneClass(0).Alias(),
-  "subgroup"      : TimeZoneClass(0).SubGroup(),
-  "artificial"      : TimeZoneClass(0).Artificial(),
+	"unknown"             : TimeZoneClass(0).Unknown(),
+	"canonical"           : TimeZoneClass(0).Canonical(),
+	"alias"               : TimeZoneClass(0).Alias(),
+	"subtimezone"         : TimeZoneClass(0).SubTimeZone(),
+	"subgroup"            : TimeZoneClass(0).SubGroup(),
+	"artificial"          : TimeZoneClass(0).Artificial(),
 }
 
 var mTimeZoneClassToString = map[TimeZoneClass]string{
-  TimeZoneClass(0).Unknown()        : "Unknown",
-  TimeZoneClass(0).Canonical()      : "Canonical",
-  TimeZoneClass(0).Alias()          : "Alias",
-  TimeZoneClass(0).SubGroup()       : "SubGroup",
-  TimeZoneClass(0).Artificial()       : "Artificial",
+	TimeZoneClass(0).Unknown()          : "Unknown",
+	TimeZoneClass(0).Canonical()        : "Canonical",
+	TimeZoneClass(0).Alias()            : "Alias",
+	TimeZoneClass(0).SubTimeZone()      : "SubTimeZone",
+	TimeZoneClass(0).SubGroup()         : "SubGroup",
+	TimeZoneClass(0).Artificial()       : "Artificial",
 }
 
 
@@ -48,12 +51,27 @@ func (tzClass TimeZoneClass) Canonical() TimeZoneClass { return TimeZoneClass(1)
 //
 func (tzClass TimeZoneClass) Alias() TimeZoneClass { return TimeZoneClass(2)}
 
-// SubGroup() = This Time Zone is a place holder referencing a group of valid 
-// time zones.
+// SubTimeZone() = This Time Zone is a subsidiary of a SubGroup.
+// Example: 'America/Argentina/Buenos_Aires' is a Sub-Time Zone.
 //
 // This method is part of the standard TimeZoneClass enumeration.
 //
-func (tzClass TimeZoneClass) SubGroup() TimeZoneClass {return TimeZoneClass(3)}
+func (tzClass TimeZoneClass) SubTimeZone() TimeZoneClass {return TimeZoneClass(3)}
+
+// SubGroup() = This Time Zone element is a place holder referencing a group containing
+// multiple valid time zones.
+//
+// Example: 'America/Argentina/Buenos_Aires' is a 'Sub-Time Zone' which would have
+// a time zone Sub-Group place holder named, 'America/Argentina'. This Sub-Group
+// would reference all instances of sub-groups classified under 'America/Argentina'
+// such as 'America/Argentina/Buenos_Aires', 'America/Argentina/Catamarca' and
+// 'America/Argentina/Cordoba'.
+//
+// This method is part of the standard TimeZoneClass enumeration.
+//
+func (tzClass TimeZoneClass) SubGroup() TimeZoneClass {return TimeZoneClass(4)}
+
+
 
 // Artificial() = This Time Zone is a valid time that is not part of the standard
 // IANA collection of time zones. One example is Military Time Zones which are
@@ -61,7 +79,7 @@ func (tzClass TimeZoneClass) SubGroup() TimeZoneClass {return TimeZoneClass(3)}
 //
 // This method is part of the standard TimeZoneClass enumeration.
 //
-func (tzClass TimeZoneClass) Artificial() TimeZoneClass {return TimeZoneClass(4)}
+func (tzClass TimeZoneClass) Artificial() TimeZoneClass {return TimeZoneClass(5)}
 
 // =============================================================================
 // Utility Methods
@@ -114,64 +132,64 @@ func (tzClass TimeZoneClass) Artificial() TimeZoneClass {return TimeZoneClass(4)
 //
 //  t, err := TimeZoneClass(0).ParseString("Canonical", true)
 //                            OR
-//  t, err := PathValidityStatusCode(0).ParseString("Canonical()", true)
+//  t, err := TimeZoneClass(0).ParseString("Canonical()", true)
 //                            OR
-//  t, err := PathValidityStatusCode(0).ParseString("canonical", false)
+//  t, err := TimeZoneClass(0).ParseString("canonical", false)
 //
 //  For all of the cases shown above,
 //  t is now equal to TimeZoneClass(0).Canonical()
 //
 func (tzClass TimeZoneClass) ParseString(
-  valueString string,
-  caseSensitive bool) (TimeZoneClass, error) {
+	valueString string,
+	caseSensitive bool) (TimeZoneClass, error) {
 
-  ePrefix := "TimeZoneClass.ParseString() "
+	ePrefix := "TimeZoneClass.ParseString() "
 
-  lenValueStr := len(valueString)
+	lenValueStr := len(valueString)
 
-  if strings.HasSuffix(valueString, "()") {
-    valueString = valueString[0 : lenValueStr-2]
-    lenValueStr -= 2
-  }
+	if strings.HasSuffix(valueString, "()") {
+		valueString = valueString[0 : lenValueStr-2]
+		lenValueStr -= 2
+	}
 
-  if lenValueStr < 3 {
-    return TimeZoneClass(0).Unknown(),
-      fmt.Errorf(ePrefix+
-        "Input parameter 'valueString' is INVALID! Length Less than 3-characters\n"+
-        "valueString='%v'\n", valueString)
-  }
+	if lenValueStr < 3 {
+		return TimeZoneClass(0).Unknown(),
+			fmt.Errorf(ePrefix+
+				"Input parameter 'valueString' is INVALID! Length Less than 3-characters\n"+
+				"valueString='%v'\n", valueString)
+	}
 
-  var ok bool
+	var ok bool
 
-  var tzClassCode TimeZoneClass
+	var tzClassCode TimeZoneClass
 
-  if caseSensitive {
+	if caseSensitive {
 
-    tzClassCode, ok = mTimeZoneClassStringToCode[valueString]
+		tzClassCode, ok = mTimeZoneClassStringToCode[valueString]
 
-    if !ok {
-      return TimeZoneClass(0).Unknown(),
-        errors.New(ePrefix + "Invalid Permission Code!")
-    }
+		if !ok {
+			return TimeZoneClass(0).Unknown(),
+				errors.New(ePrefix + "Invalid Permission Code!")
+		}
 
-  } else {
+	} else {
 
-    valueString = strings.ToLower(valueString)
+		valueString = strings.ToLower(valueString)
 
-    tzClassCode, ok = mTimeZoneClassLwrCaseStringToCode[valueString]
+		tzClassCode, ok = mTimeZoneClassLwrCaseStringToCode[valueString]
 
-    if !ok {
-      return TimeZoneClass(0).Unknown(),
-        errors.New(ePrefix + "Invalid Permission Code!")
-    }
+		if !ok {
+			return TimeZoneClass(0).Unknown(),
+				errors.New(ePrefix + "Invalid Permission Code!")
+		}
 
-  }
+	}
 
-  return tzClassCode, nil
+	return tzClassCode, nil
 }
 
 
-// StatusIsValid - If the value of the current TimeZoneClass instance
+// ClassIsValid - If the value of the current TimeZoneClass instance
 // is 'invalid', this method will return an error.
 //
 // If the TimeZoneClass is instance is 'valid', this method will
@@ -180,18 +198,18 @@ func (tzClass TimeZoneClass) ParseString(
 // This is a standard utility method and is not part of the valid enumerations
 // for this type.
 //
-func (tzClass TimeZoneClass) StatusIsValid() error {
+func (tzClass TimeZoneClass) ClassIsValid() error {
 
-  _, ok := mTimeZoneClassToString[tzClass]
+	_, ok := mTimeZoneClassToString[tzClass]
 
-  if !ok {
-    ePrefix := "TimeZoneClass.StatusIsValid()\n"
-    return fmt.Errorf(ePrefix+
-      "Error: The current TimeZoneClass is INVALID! "+
-      "TimeZoneClass Value='%v'", int(tzClass))
-  }
+	if !ok {
+		ePrefix := "TimeZoneClass.TypeIsValid()\n"
+		return fmt.Errorf(ePrefix+
+			"Error: The current TimeZoneClass is INVALID! "+
+			"TimeZoneClass StatusValue='%v'", int(tzClass))
+	}
 
-  return nil
+	return nil
 }
 
 // String - Returns a string with the name of the enumeration associated
@@ -202,7 +220,7 @@ func (tzClass TimeZoneClass) StatusIsValid() error {
 //
 // ------------------------------------------------------------------------
 //
-// Return Value:
+// Return StatusValue:
 //
 //  string - The string label or description for the current enumeration
 //           value. If, the TimeZoneClass value is invalid, this
@@ -218,24 +236,24 @@ func (tzClass TimeZoneClass) StatusIsValid() error {
 //
 func (tzClass TimeZoneClass) String() string {
 
-  label, ok := mTimeZoneClassToString[tzClass]
+	label, ok := mTimeZoneClassToString[tzClass]
 
-  if !ok {
-    return ""
-  }
+	if !ok {
+		return ""
+	}
 
-  return label
+	return label
 }
 
-// Value - Returns the value of the PathFileTypeCode instance
-// as type PathFileTypeCode.
+// StatusValue - Returns the value of the TimeZoneClass instance
+// as type TimeZoneClass.
 //
-func (tzClass TimeZoneClass) Value() TimeZoneClass {
+func (tzClass TimeZoneClass) ClassValue() TimeZoneClass {
 
-  return tzClass
+	return tzClass
 }
 
-// TZClassCode - public global variable of
+// TZClass - public global variable of
 // type TimeZoneClass.
 //
 // This variable serves as an easier, short hand
@@ -243,30 +261,30 @@ func (tzClass TimeZoneClass) Value() TimeZoneClass {
 // values.
 //
 // Usage:
-//  TZClassCode.Unknown()
-//  TZClassCode.Canonical()
-//  TZClassCode.Alias()
+//  TZClass.Unknown()
+//  TZClass.Canonical()
+//  TZClass.Alias()
 //
-type TZClassCode TimeZoneClass
+var TZClass TimeZoneClass
 
 
 var mTimeZoneDeprecationStatusStringToCode = map[string]TimeZoneDeprecationStatus{
-  "Unknown"       : TimeZoneDeprecationStatus(0).Unknown(),
-  "Deprecated"    : TimeZoneDeprecationStatus(0).Deprecated(),
-  "Alias"         : TimeZoneDeprecationStatus(0).Alias(),
-  "Valid"         : TimeZoneDeprecationStatus(0).Valid() }
+	"Unknown"       : TimeZoneDeprecationStatus(0).Unknown(),
+	"Deprecated"    : TimeZoneDeprecationStatus(0).Deprecated(),
+	"Alias"         : TimeZoneDeprecationStatus(0).Alias(),
+	"Valid"         : TimeZoneDeprecationStatus(0).Valid() }
 
 var mTimeZoneDeprecationStatusLwrCaseStringToCode = map[string]TimeZoneDeprecationStatus{
-  "unknown"       : TimeZoneDeprecationStatus(0).Unknown(),
-  "deprecated"    : TimeZoneDeprecationStatus(0).Deprecated(),
-  "alias"         : TimeZoneDeprecationStatus(0).Alias(),
-  "valid"         : TimeZoneDeprecationStatus(0).Valid() }
+	"unknown"       : TimeZoneDeprecationStatus(0).Unknown(),
+	"deprecated"    : TimeZoneDeprecationStatus(0).Deprecated(),
+	"alias"         : TimeZoneDeprecationStatus(0).Alias(),
+	"valid"         : TimeZoneDeprecationStatus(0).Valid() }
 
 var mTimeZoneDeprecationStatusToString = map[TimeZoneDeprecationStatus]string{
-  TimeZoneDeprecationStatus(0).Unknown()        : "Unknown",
-  TimeZoneDeprecationStatus(0).Deprecated()     : "Deprecated",
-  TimeZoneDeprecationStatus(0).Alias()          : "Alias",
-  TimeZoneDeprecationStatus(0).Valid()          : "Valid" }
+	TimeZoneDeprecationStatus(0).Unknown()        : "Unknown",
+	TimeZoneDeprecationStatus(0).Deprecated()     : "Deprecated",
+	TimeZoneDeprecationStatus(0).Alias()          : "Alias",
+	TimeZoneDeprecationStatus(0).Valid()          : "Valid" }
 
 
 type TimeZoneDeprecationStatus int
@@ -276,7 +294,7 @@ type TimeZoneDeprecationStatus int
 // This method is part of the standard TimeZoneDeprecationStatus enumeration.
 //
 func (depStatus TimeZoneDeprecationStatus) Unknown() TimeZoneDeprecationStatus {
-  return TimeZoneDeprecationStatus(0)
+	return TimeZoneDeprecationStatus(0)
 }
 
 // Deprecated - 1 = Time Zone is outdated and no longer supported. Time Zone
@@ -286,7 +304,7 @@ func (depStatus TimeZoneDeprecationStatus) Unknown() TimeZoneDeprecationStatus {
 // This method is part of the standard TimeZoneDeprecationStatus enumeration.
 //
 func (depStatus TimeZoneDeprecationStatus) Deprecated() TimeZoneDeprecationStatus {
-  return TimeZoneDeprecationStatus(1)
+	return TimeZoneDeprecationStatus(1)
 }
 
 // Alias - 2 = Outdated Time Zone which is NOT deprecated and is still supported
@@ -297,8 +315,8 @@ func (depStatus TimeZoneDeprecationStatus) Deprecated() TimeZoneDeprecationStatu
 //
 // This method is part of the standard TimeZoneDeprecationStatus enumeration.
 //
-func (depStatus TimeZoneDeprecationStatus) Alias() TimeZoneDeprecationStatus { 
-  return TimeZoneDeprecationStatus(2)
+func (depStatus TimeZoneDeprecationStatus) Alias() TimeZoneDeprecationStatus {
+	return TimeZoneDeprecationStatus(2)
 }
 
 // Valid() = This Time Zone is NOT deprecated and as such, is a current
@@ -307,7 +325,7 @@ func (depStatus TimeZoneDeprecationStatus) Alias() TimeZoneDeprecationStatus {
 // This method is part of the standard TimeZoneDeprecationStatus enumeration.
 //
 func (depStatus TimeZoneDeprecationStatus) Valid() TimeZoneDeprecationStatus {
-  return TimeZoneDeprecationStatus(3)
+	return TimeZoneDeprecationStatus(3)
 }
 
 // =============================================================================
@@ -369,55 +387,55 @@ func (depStatus TimeZoneDeprecationStatus) Valid() TimeZoneDeprecationStatus {
 //  t is now equal to TimeZoneDeprecationStatus(0).Canonical()
 //
 func (depStatus TimeZoneDeprecationStatus) ParseString(
-  valueString string,
-  caseSensitive bool) (TimeZoneDeprecationStatus, error) {
+	valueString string,
+	caseSensitive bool) (TimeZoneDeprecationStatus, error) {
 
-  ePrefix := "TimeZoneDeprecationStatus.ParseString() "
+	ePrefix := "TimeZoneDeprecationStatus.ParseString() "
 
-  lenValueStr := len(valueString)
+	lenValueStr := len(valueString)
 
-  if strings.HasSuffix(valueString, "()") {
-    valueString = valueString[0 : lenValueStr-2]
-    lenValueStr -= 2
-  }
+	if strings.HasSuffix(valueString, "()") {
+		valueString = valueString[0 : lenValueStr-2]
+		lenValueStr -= 2
+	}
 
-  if lenValueStr < 3 {
-    return TimeZoneDeprecationStatus(0).Unknown(),
-      fmt.Errorf(ePrefix+
-        "Input parameter 'valueString' is INVALID! Length Less than 3-characters\n"+
-        "valueString='%v'\n", valueString)
-  }
+	if lenValueStr < 3 {
+		return TimeZoneDeprecationStatus(0).Unknown(),
+			fmt.Errorf(ePrefix+
+				"Input parameter 'valueString' is INVALID! Length Less than 3-characters\n"+
+				"valueString='%v'\n", valueString)
+	}
 
-  var ok bool
+	var ok bool
 
-  var depStatusCode TimeZoneDeprecationStatus
+	var depStatusCode TimeZoneDeprecationStatus
 
-  if caseSensitive {
+	if caseSensitive {
 
-    depStatusCode, ok = mTimeZoneDeprecationStatusStringToCode[valueString]
+		depStatusCode, ok = mTimeZoneDeprecationStatusStringToCode[valueString]
 
-    if !ok {
-      return TimeZoneDeprecationStatus(0).Unknown(),
-        errors.New(ePrefix + "Invalid Permission Code!")
-    }
+		if !ok {
+			return TimeZoneDeprecationStatus(0).Unknown(),
+				errors.New(ePrefix + "Invalid Permission Code!")
+		}
 
-  } else {
+	} else {
 
-    valueString = strings.ToLower(valueString)
+		valueString = strings.ToLower(valueString)
 
-    depStatusCode, ok = mTimeZoneDeprecationStatusLwrCaseStringToCode[valueString]
+		depStatusCode, ok = mTimeZoneDeprecationStatusLwrCaseStringToCode[valueString]
 
-    if !ok {
-      return TimeZoneDeprecationStatus(0).Unknown(),
-        errors.New(ePrefix + "Invalid Permission Code!")
-    }
+		if !ok {
+			return TimeZoneDeprecationStatus(0).Unknown(),
+				errors.New(ePrefix + "Invalid Permission Code!")
+		}
 
-  }
+	}
 
-  return depStatusCode, nil
+	return depStatusCode, nil
 }
 
-// StatusIsValid - If the value of the current TimeZoneDeprecationStatus instance
+// TypeIsValid - If the value of the current TimeZoneDeprecationStatus instance
 // is 'invalid', this method will return an error.
 //
 // If the TimeZoneDeprecationStatus is instance is 'valid', this method will
@@ -428,16 +446,16 @@ func (depStatus TimeZoneDeprecationStatus) ParseString(
 //
 func (depStatus TimeZoneDeprecationStatus) StatusIsValid() error {
 
-  _, ok := mTimeZoneDeprecationStatusToString[depStatus]
+	_, ok := mTimeZoneDeprecationStatusToString[depStatus]
 
-  if !ok {
-    ePrefix := "TimeZoneDeprecationStatus.StatusIsValid()\n"
-    return fmt.Errorf(ePrefix+
-      "Error: The current TimeZoneDeprecationStatus is INVALID! "+
-      "TimeZoneDeprecationStatus Value='%v'", int(depStatus))
-  }
+	if !ok {
+		ePrefix := "TimeZoneDeprecationStatus.TypeIsValid()\n"
+		return fmt.Errorf(ePrefix+
+			"Error: The current TimeZoneDeprecationStatus is INVALID! "+
+			"TimeZoneDeprecationStatus StatusValue='%v'", int(depStatus))
+	}
 
-  return nil
+	return nil
 }
 
 
@@ -449,7 +467,7 @@ func (depStatus TimeZoneDeprecationStatus) StatusIsValid() error {
 //
 // ------------------------------------------------------------------------
 //
-// Return Value:
+// Return StatusValue:
 //
 //  string - The string label or description for the current enumeration
 //           value. If, the TimeZoneDeprecationStatus value is invalid, this
@@ -465,21 +483,21 @@ func (depStatus TimeZoneDeprecationStatus) StatusIsValid() error {
 //
 func (depStatus TimeZoneDeprecationStatus) String() string {
 
-  label, ok := mTimeZoneDeprecationStatusToString[depStatus]
+	label, ok := mTimeZoneDeprecationStatusToString[depStatus]
 
-  if !ok {
-    return ""
-  }
+	if !ok {
+		return ""
+	}
 
-  return label
+	return label
 }
 
-// Value - Returns the value of the PathFileTypeCode instance
+// StatusValue - Returns the value of the PathFileTypeCode instance
 // as type PathFileTypeCode.
 //
-func (depStatus TimeZoneDeprecationStatus) Value() TimeZoneDeprecationStatus {
+func (depStatus TimeZoneDeprecationStatus) StatusValue() TimeZoneDeprecationStatus {
 
-  return depStatus
+	return depStatus
 }
 
 // DepStatusCode - public global variable of
@@ -493,65 +511,66 @@ func (depStatus TimeZoneDeprecationStatus) Value() TimeZoneDeprecationStatus {
 //  DepStatusCode.Unknown()
 //  DepStatusCode.Deprecated()
 //  DepStatusCode.Alias()
+//  DepStatusCode.Valid()
 //
-type DepStatusCode TimeZoneDeprecationStatus
+var DepStatusCode TimeZoneDeprecationStatus
 
 
-var mMajorTimeZoneGroupTypeStringToCode = map[string]MajorTimeZoneGroupType{
-  "Unknown"       : MajorTimeZoneGroupType(0).Unknown(),
-  "IANA"          : MajorTimeZoneGroupType(0).IANA(),
-  "Artificial"    : MajorTimeZoneGroupType(0).Artificial(),
-  "SubGroup"      : MajorTimeZoneGroupType(0).SubGroup() }
+var mMajorTimeZoneGroupTypeStringToCode = map[string]TimeZoneGroupType{
+	"Unknown"       : TimeZoneGroupType(0).Unknown(),
+	"IANA"          : TimeZoneGroupType(0).IANA(),
+	"Artificial"    : TimeZoneGroupType(0).Artificial(),
+	"SubGroup"      : TimeZoneGroupType(0).SubGroup() }
 
-var mMajorTimeZoneGroupTypeLwrCaseStringToCode = map[string]MajorTimeZoneGroupType{
-  "unknown"       : MajorTimeZoneGroupType(0).Unknown(),
-  "iana"          : MajorTimeZoneGroupType(0).IANA(),
-  "artificial"    : MajorTimeZoneGroupType(0).Artificial(),
-  "subGroup"      : MajorTimeZoneGroupType(0).SubGroup() }
+var mMajorTimeZoneGroupTypeLwrCaseStringToCode = map[string]TimeZoneGroupType{
+	"unknown"       : TimeZoneGroupType(0).Unknown(),
+	"iana"          : TimeZoneGroupType(0).IANA(),
+	"artificial"    : TimeZoneGroupType(0).Artificial(),
+	"subGroup"      : TimeZoneGroupType(0).SubGroup() }
 
-var mMajorTimeZoneGroupTypeToString = map[MajorTimeZoneGroupType]string{
-  MajorTimeZoneGroupType(0).Unknown()         : "Unknown",
-  MajorTimeZoneGroupType(0).IANA()            : "IANA",
-  MajorTimeZoneGroupType(0).Artificial()      : "Artificial",
-  MajorTimeZoneGroupType(0).SubGroup()        : "SubGroup" }
+var mMajorTimeZoneGroupTypeToString = map[TimeZoneGroupType]string{
+	TimeZoneGroupType(0).Unknown()         : "Unknown",
+	TimeZoneGroupType(0).IANA()            : "IANA",
+	TimeZoneGroupType(0).Artificial()      : "Artificial",
+	TimeZoneGroupType(0).SubGroup()        : "SubGroup" }
 
 
-type MajorTimeZoneGroupType int
+type TimeZoneGroupType int
 
 // Unknown - 0 = Unknown or uninitialized Time Zone
 //
-// This method is part of the standard MajorTimeZoneGroupType enumeration.
+// This method is part of the standard TimeZoneGroupType enumeration.
 //
-func (majgrpstat MajorTimeZoneGroupType) Unknown() MajorTimeZoneGroupType {
-  return MajorTimeZoneGroupType(0)
+func (majgrpstat TimeZoneGroupType) Unknown() TimeZoneGroupType {
+	return TimeZoneGroupType(0)
 }
 
 // IANA - 1 = This Time Zone Group is a standard collection of IANA Time
 // Zones.
 //
-// This method is part of the standard MajorTimeZoneGroupType enumeration.
+// This method is part of the standard TimeZoneGroupType enumeration.
 //
-func (majgrpstat MajorTimeZoneGroupType) IANA() MajorTimeZoneGroupType {
-  return MajorTimeZoneGroupType(1)
+func (majgrpstat TimeZoneGroupType) IANA() TimeZoneGroupType {
+	return TimeZoneGroupType(1)
 }
 
 // Artificial - 2 = A Non-IANA Time Zone Group which was constructed to
 // add usable time zone information. For example, "Military" Time Zones
 // are added but are not recognized by the IANA.
 //
-// This method is part of the standard MajorTimeZoneGroupType enumeration.
+// This method is part of the standard TimeZoneGroupType enumeration.
 //
-func (majgrpstat MajorTimeZoneGroupType) Artificial() MajorTimeZoneGroupType {
-  return MajorTimeZoneGroupType(2)
+func (majgrpstat TimeZoneGroupType) Artificial() TimeZoneGroupType {
+	return TimeZoneGroupType(2)
 }
 
-// SubGroup() = This Time Zone is NOT an IANA group but represents another
+// SubTimeZone() = This Time Zone is NOT an IANA group but represents another
 // means of classifying sub-groups of time zones.
 //
-// This method is part of the standard MajorTimeZoneGroupType enumeration.
+// This method is part of the standard TimeZoneGroupType enumeration.
 //
-func (majgrpstat MajorTimeZoneGroupType) SubGroup() MajorTimeZoneGroupType {
-  return MajorTimeZoneGroupType(3)
+func (majgrpstat TimeZoneGroupType) SubGroup() TimeZoneGroupType {
+	return TimeZoneGroupType(3)
 }
 
 // =============================================================================
@@ -560,7 +579,7 @@ func (majgrpstat MajorTimeZoneGroupType) SubGroup() MajorTimeZoneGroupType {
 
 // ParseString - Receives a string and attempts to match it with
 // the string value of the supported enumeration. If successful,
-// a new instance of MajorTimeZoneGroupType is returned set to
+// a new instance of TimeZoneGroupType is returned set to
 // the value of the associated enumeration.
 //
 // This is a standard utility method and is not part of the subGroup
@@ -578,19 +597,19 @@ func (majgrpstat MajorTimeZoneGroupType) SubGroup() MajorTimeZoneGroupType {
 //	caseSensitive   bool - If 'true' the search for enumeration names
 //	                       will be case sensitive and will require an
 //	                       exact match. Therefore, 'subGroup' will NOT
-//	                       match the enumeration name, 'SubGroup'.
+//	                       match the enumeration name, 'SubTimeZone'.
 //
 //	                       If 'false' a case insensitive search is
 //	                       conducted for the enumeration name. In
 //	                       this case, 'subGroup' will match the
-//	                       enumeration name 'SubGroup'.
+//	                       enumeration name 'SubTimeZone'.
 //
 // ------------------------------------------------------------------------
 //
 // Return Values:
 //
-//	MajorTimeZoneGroupType           - Upon successful completion, this method will return a new
-//	                          instance of MajorTimeZoneGroupType set to the value of the
+//	TimeZoneGroupType       - Upon successful completion, this method will return a new
+//	                          instance of TimeZoneGroupType set to the value of the
 //	                          enumeration matched by the string search performed on
 //	                          input parameter,'valueString'.
 //
@@ -603,140 +622,141 @@ func (majgrpstat MajorTimeZoneGroupType) SubGroup() MajorTimeZoneGroupType {
 //
 // Usage:
 //
-//  t, err := MajorTimeZoneGroupType(0).ParseString("Canonical", true)
+//  t, err := TimeZoneGroupType(0).ParseString("Canonical", true)
 //                            OR
 //  t, err := PathSubGroupityStatusCode(0).ParseString("Canonical()", true)
 //                            OR
 //  t, err := PathSubGroupityStatusCode(0).ParseString("canonical", false)
 //
 //  For all of the cases shown above,
-//  t is now equal to MajorTimeZoneGroupType(0).Canonical()
+//  t is now equal to TimeZoneGroupType(0).Canonical()
 //
-func (majgrpstat MajorTimeZoneGroupType) ParseString(
-  valueString string,
-  caseSensitive bool) (MajorTimeZoneGroupType, error) {
+func (majgrpstat TimeZoneGroupType) ParseString(
+	valueString string,
+	caseSensitive bool) (TimeZoneGroupType, error) {
 
-  ePrefix := "MajorTimeZoneGroupType.ParseString() "
+	ePrefix := "TimeZoneGroupType.ParseString() "
 
-  lenValueStr := len(valueString)
+	lenValueStr := len(valueString)
 
-  if strings.HasSuffix(valueString, "()") {
-    valueString = valueString[0 : lenValueStr-2]
-    lenValueStr -= 2
-  }
+	if strings.HasSuffix(valueString, "()") {
+		valueString = valueString[0 : lenValueStr-2]
+		lenValueStr -= 2
+	}
 
-  if lenValueStr < 3 {
-    return MajorTimeZoneGroupType(0).Unknown(),
-      fmt.Errorf(ePrefix+
-        "Input parameter 'valueString' is INVALID! Length Less than 3-characters\n"+
-        "valueString='%v'\n", valueString)
-  }
+	if lenValueStr < 3 {
+		return TimeZoneGroupType(0).Unknown(),
+			fmt.Errorf(ePrefix+
+				"Input parameter 'valueString' is INVALID! Length Less than 3-characters\n"+
+				"valueString='%v'\n", valueString)
+	}
 
-  var ok bool
+	var ok bool
 
-  var majorTZGroupType MajorTimeZoneGroupType
+	var majorTZGroupType TimeZoneGroupType
 
-  if caseSensitive {
+	if caseSensitive {
 
-    majorTZGroupType, ok = mMajorTimeZoneGroupTypeStringToCode[valueString]
+		majorTZGroupType, ok = mMajorTimeZoneGroupTypeStringToCode[valueString]
 
-    if !ok {
-      return MajorTimeZoneGroupType(0).Unknown(),
-        errors.New(ePrefix + "InsubGroup Permission Code!")
-    }
+		if !ok {
+			return TimeZoneGroupType(0).Unknown(),
+				errors.New(ePrefix + "InsubGroup Permission Code!")
+		}
 
-  } else {
+	} else {
 
-    valueString = strings.ToLower(valueString)
+		valueString = strings.ToLower(valueString)
 
-    majorTZGroupType, ok = mMajorTimeZoneGroupTypeLwrCaseStringToCode[valueString]
+		majorTZGroupType, ok = mMajorTimeZoneGroupTypeLwrCaseStringToCode[valueString]
 
-    if !ok {
-      return MajorTimeZoneGroupType(0).Unknown(),
-        errors.New(ePrefix + "InsubGroup Permission Code!")
-    }
+		if !ok {
+			return TimeZoneGroupType(0).Unknown(),
+				errors.New(ePrefix + "InsubGroup Permission Code!")
+		}
 
-  }
+	}
 
-  return majorTZGroupType, nil
+	return majorTZGroupType, nil
 }
 
-// StatusIsValid - If the value of the current MajorTimeZoneGroupType instance
+// TypeIsValid - If the value of the current TimeZoneGroupType instance
 // is 'invalid', this method will return an error.
 //
-// If the MajorTimeZoneGroupType is instance is 'valid', this method will
+// If the TimeZoneGroupType is instance is 'valid', this method will
 // return a value of 'nil'.
 //
 // This is a standard utility method and is not part of the subGroup enumerations
 // for this type.
 //
-func (majgrpstat MajorTimeZoneGroupType) StatusIsValid() error {
+func (majgrpstat TimeZoneGroupType) TypeIsValid() error {
 
-  _, ok := mMajorTimeZoneGroupTypeToString[majgrpstat]
+	_, ok := mMajorTimeZoneGroupTypeToString[majgrpstat]
 
-  if !ok {
-    ePrefix := "MajorTimeZoneGroupType.StatusIsValid()\n"
-    return fmt.Errorf(ePrefix+
-      "Error: The current MajorTimeZoneGroupType is INVALID! "+
-      "MajorTimeZoneGroupType Value='%v'", int(majgrpstat))
-  }
+	if !ok {
+		ePrefix := "TimeZoneGroupType.TypeIsValid()\n"
+		return fmt.Errorf(ePrefix+
+			"Error: The current TimeZoneGroupType is INVALID! "+
+			"TimeZoneGroupType StatusValue='%v'", int(majgrpstat))
+	}
 
-  return nil
+	return nil
 }
 
 
 // String - Returns a string with the name of the enumeration associated
-// with this instance of 'MajorTimeZoneGroupType'.
+// with this instance of 'TimeZoneGroupType'.
 //
 // This is a standard utility method and is not part of the subGroup enumerations
 // for this type.
 //
 // ------------------------------------------------------------------------
 //
-// Return Value:
+// Return StatusValue:
 //
 //  string - The string label or description for the current enumeration
-//           value. If, the MajorTimeZoneGroupType value is insubGroup, this
+//           value. If, the TimeZoneGroupType value is insubGroup, this
 //           method will return an empty string.
 //
 // ------------------------------------------------------------------------
 //
 // Usage
 //
-//	t:= MajorTimeZoneGroupType(0).Canonical()
+//	t:= TimeZoneGroupType(0).Canonical()
 //	str := t.String()
 //	    str is now equal to "Canonical"
 //
-func (majgrpstat MajorTimeZoneGroupType) String() string {
+func (majgrpstat TimeZoneGroupType) String() string {
 
-  label, ok := mMajorTimeZoneGroupTypeToString[majgrpstat]
+	label, ok := mMajorTimeZoneGroupTypeToString[majgrpstat]
 
-  if !ok {
-    return ""
-  }
+	if !ok {
+		return ""
+	}
 
-  return label
+	return label
 }
 
-// Value - Returns the value of the PathFileTypeCode instance
+// TypeValue - Returns the value of the PathFileTypeCode instance
 // as type PathFileTypeCode.
 //
-func (majgrpstat MajorTimeZoneGroupType) Value() MajorTimeZoneGroupType {
+func (majgrpstat TimeZoneGroupType) TypeValue() TimeZoneGroupType {
 
-  return majgrpstat
+	return majgrpstat
 }
 
-// DepStatusCode - public global variable of
-// type MajorTimeZoneGroupType.
+// MajorTzGrpType - public global variable of
+// type TimeZoneGroupType.
 //
 // This variable serves as an easier, short hand
-// technique for accessing MajorTimeZoneGroupType
+// technique for accessing TimeZoneGroupType
 // values.
 //
 // Usage:
-//  DepStatusCode.Unknown()
-//  DepStatusCode.IANA()
-//  DepStatusCode.Artifical()
+//  TzGrpType.Unknown()
+//  TzGrpType.IANA()
+//  TzGrpType.Artifical()
+//  TzGrpType.SubGroup()
 //
-type MajorTZGroup MajorTimeZoneGroupType
+var TzGrpType TimeZoneGroupType
 
