@@ -49,6 +49,8 @@ import (
 
 var tzMajorGroupCol TimeZoneGroupCollection
 
+var tzMinorGroupCol TimeZoneGroupCollection
+
 var tzDataCol TimeZoneDataCollection
 
 var subTzDataCol TimeZoneDataCollection
@@ -112,6 +114,7 @@ type ParseIanaTzData struct {
 func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	dirFileInfo pathfileops.FileMgrCollection) (
 	TimeZoneGroupCollection, // Time Zone Major Group Collection
+	TimeZoneGroupCollection, // Time Zone Minor Group Collection
 	TimeZoneDataCollection,  // Time Zone Data Collection
 	TimeZoneDataCollection,  // Sub-Zone Data Collection
 	TimeZoneDataCollection,  // Alias Link Data Collection
@@ -494,19 +497,16 @@ func (parseTz *ParseIanaTzData) extractZone(
 		return nil
 	}
 
-	tzMjrGrp, err := TimeZoneGroupDto{}.New(
+
+	var tzDataDto TimeZoneDataDto
+
+	_, err = tzMajorGroupCol.AddIfNewByDetail(
+		zoneArray[0],
+		"",
 		zoneArray[0],
 		fMgr.GetFileNameExt(),
 		TzGrpType.IANA(),
 		DepStatusCode.Valid())
-
-	if err != nil {
-		return fmt.Errorf(ePrefix + "Invalid Time Zone!\n" +
-			"Raw Zone String: %v\n" +
-			"FileName: %v\n", rawString, fMgr.GetFileNameExt())
-	}
-
-	_, err = tzMajorGroupCol.AddIfNew(tzMjrGrp)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "\n" +
@@ -514,27 +514,18 @@ func (parseTz *ParseIanaTzData) extractZone(
 			"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 	}
 
-	var tzDataDto TimeZoneDataDto
 
 	if lenZoneArray == 2 {
 
-		tzDataDto, err = TimeZoneDataDto{}.New(
-			zoneArray[0], // America
-			"", // No Sub Time Zone
-			zoneArray[1], // Chicago
-			dFProfile.DataFieldStr, // America/Chicago
+
+		_, err = tzDataCol.AddIfNewByDetail(
+			zoneArray[0],
+			"",
+			zoneArray[1],
+			zoneArray[0] + "/" + zoneArray[1],
 			fMgr.GetFileNameExt(),
 			TZClass.Canonical(),
 			DepStatusCode.Valid())
-
-
-		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
-		}
-
-		_, err = tzDataCol.AddIfNew(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -549,19 +540,33 @@ func (parseTz *ParseIanaTzData) extractZone(
 	// This is a sub zone
 	// America/Argentina/Buenos_Aires
 
-	// First set up the Sub-Zone Placeholder
-	zoneSubValue := zoneArray[0] + "/" + zoneArray[1]
+	// Add To Sub-Groups
+	// America/Argentina
+_,
+err = tzMinorGroupCol.AddIfNewByDetail(
+	zoneArray[0],
+	zoneArray[1],
+	zoneArray[0] + "/" + zoneArray[1],
+	fMgr.GetFileNameExt(),
+	TzGrpType.SubGroup(),
+	DepStatusCode.Valid())
 
-		// Add reference to this group of time zones
-		// in the main Time Zone Data Array
-		// Example IANA Time Zones for Argentina
-		tzDataDto, err = TimeZoneDataDto{}.New(
-			zoneArray[0], // America
-			zoneArray[1], // Argentina Sub-Zone
-			zoneArray[1], // Argentina Tz Name
-			zoneSubValue, // America/Argentina TzCanonicalValue
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error: %v\n" +
+			"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+	}
+
+	// Add Place Holder To main Tz Collection
+
+		// Add to main time zone collection
+		_, err = tzDataCol.AddIfNewByDetail(
+			zoneArray[0],
+			zoneArray[1],
+			zoneArray[1],
+			zoneArray[0] + "/" + zoneArray[1],
 			fMgr.GetFileNameExt(),
-			TZClass.SubGroup(), // SubGroup Place Holder
+			TZClass.SubGroup(),
 			DepStatusCode.Valid())
 
 		if err != nil {
@@ -570,42 +575,19 @@ func (parseTz *ParseIanaTzData) extractZone(
 				"Error: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
 
-		// Add to main time zone collection
-		_, err = tzDataCol.AddIfNew(tzDataDto)
-
-		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"FileName: %v\n" +
-				"Error: %v\n", err.Error(), fMgr.GetFileNameExt())
-		}
-
-		// Now, set up subsidiary detail time zone
-		// America/Argentina/Buenos_Aires as
-		// Argentina/Buenos_Aires
-		tzDataDto, err = TimeZoneDataDto{}.New(
-			zoneArray[0])
-
-		tzDataDto.SubTzName = zoneArray[1] // Argentina
-
-		tzDataCol = append(tzDataCol, tzDataDto)
-
 	// Finally, add the Sub Time Zone to the
 	// Sub Time Zone Array (subTzDataCol)
 	//America/Argentina/Buenos_Aires
-	tzDataDtoSubTz, err := TimeZoneDataDto{}.NewSubTimeZone(
-		zoneArray[0],   // America
-		zoneArray[1],   // Argentina subTzName
-		zoneArray[1],   // Argentina tzName
-		zoneStr,        // America/Argentina/Buenos_Aires
-		3)
 
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"Sub Array Addition Error - Zone String: %v\n" +
-			"Error: %v\n", zoneStr, err.Error())
-	}
-
-	subTzDataCol = append(subTzDataCol, tzDataDtoSubTz)
+	_,
+	err = subTzDataCol.AddIfNewByDetail(
+		zoneArray[0],
+		zoneArray[1],
+		zoneArray[0] + "/" + zoneArray[1],
+		zoneArray[0] + "/" + zoneArray[1] + "/" + zoneArray[2],
+		fMgr.GetFileNameExt(),
+		TZClass.SubTimeZone(),
+		DepStatusCode.Valid())
 
 	return nil
 }
