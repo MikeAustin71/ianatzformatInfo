@@ -111,7 +111,7 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNewByDetail(
 	tzClass TimeZoneClass,
 	deprecationStatus TimeZoneDeprecationStatus) (isNew bool, err error) {
 
-	ePrefix := "TimeZoneDataCollection) AddIfNewByDetail() "
+	ePrefix := "TimeZoneDataCollection.AddIfNewByDetail() "
 	isNew = false
 	err = nil
 

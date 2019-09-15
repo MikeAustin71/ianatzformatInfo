@@ -109,3 +109,13 @@ func (tzGrpCol *TimeZoneGroupCollection) Add(
 
 	return isNew, err
 	}
+
+// New - Creates and returns a correctly initialized TimeZoneGroupCollection.
+//
+func (tzGrpCol TimeZoneGroupCollection) New() TimeZoneGroupCollection {
+	newTzGrp := TimeZoneGroupCollection{}
+
+	newTzGrp.tzGroups = make([]TimeZoneGroupDto, 0, 300)
+
+	return newTzGrp
+}

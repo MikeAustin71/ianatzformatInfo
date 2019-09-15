@@ -12,22 +12,10 @@ package main
 // \t = tab
 // \v = vertical tab
 
-var FieldSeparators = []rune{
-	' ',
-	'\f',
-	'\r',
-	'\n',
-	'\t',
-	'\v'}
-
-var fieldSeparatorsLen = len(FieldSeparators)
-
 var LeadingFieldSeparators = []string {
 	" ",
 	"\t",
 	"\v"}
-
-var lenLedingFieldSeparators = len(LeadingFieldSeparators)
 
 
 var TrailingFieldSeparators = []string {
@@ -35,7 +23,6 @@ var TrailingFieldSeparators = []string {
 	"\t",
 	"\v"}
 
-var lenTraililngFieldSeparators = len(TrailingFieldSeparators)
 
 var EndOfLineDelimiters = []string{
 	"\n",  // new line 0x0A - 10
@@ -43,10 +30,6 @@ var EndOfLineDelimiters = []string{
 	"\f" } // form feed 0x0D - 13
 
 var CommentDelimiters = []string {CommentCharStr}
-
-var tzMajorGroupArray = make([]TimeZoneGroupDto, 0, 100)
-
-
 
 var skipTzFiles = []string{
 	"checklinks.awk",
@@ -99,11 +82,6 @@ var skipTzFiles = []string{
 	"zic.c",
 	"ziguard.awk",
 	"zishrink.awk",
-	"zone.tab", // Country Zone Tab
-	"zone1970.tab", // Country Zone
+	"zone.tab", // Country Zone Tab Deprecated
+	"zone1970.tab", // Country Zone New
 	"zoneinfo2tdf.pl" }
-
-
-var filesToDoLast = []string{
-	"backward",
-	"backzone" }
