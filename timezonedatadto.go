@@ -1,8 +1,10 @@
 package main
 
 import (
+	"MikeAustin71/stringopsgo/strops/v2"
 	"errors"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -12,6 +14,8 @@ type TimeZoneDataDto struct {
 	TzName            string
 	TzAliasValue      string
 	TzCanonicalValue  string
+	TzValue           string
+	TzSortValue       string
 	SourceFileNameExt string
 	TzClass           TimeZoneClass   // 0 = Unknown
 	// 1 = Canonical
@@ -40,6 +44,9 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.SubTzName = tzDataDto.SubTzName
 	newTzDto.TzName = tzDataDto.TzName
 	newTzDto.TzCanonicalValue = tzDataDto.TzCanonicalValue
+	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
+	newTzDto.TzValue = tzDataDto.TzValue
+	newTzDto.TzSortValue = tzDataDto.TzSortValue
 	newTzDto.SourceFileNameExt = tzDataDto.SourceFileNameExt
 	newTzDto.TzClass = tzDataDto.TzClass
 	newTzDto.DeprecationStatus = tzDataDto.DeprecationStatus
@@ -59,6 +66,9 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.SubTzName = inTzDataDto.SubTzName
 	tzDataDto.TzName = inTzDataDto.TzName
 	tzDataDto.TzCanonicalValue = inTzDataDto.TzCanonicalValue
+	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
+	tzDataDto.TzValue = inTzDataDto.TzValue
+	tzDataDto.TzSortValue = inTzDataDto.TzSortValue
 	tzDataDto.SourceFileNameExt = inTzDataDto.SourceFileNameExt
 	tzDataDto.TzClass = inTzDataDto.TzClass
 	tzDataDto.DeprecationStatus = inTzDataDto.DeprecationStatus
@@ -67,7 +77,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 }
 
 // TimeZoneDataDto - Compares isInitialized, MajorGroup, SubTzName,
-// TzName, TzAliasValue and TzCanonicalValue data elements
+// TzName, TzAliasValuem TzCanonicalValue and TzValue data elements
 // encapsulated by input parameter 'tzDDto' and the current
 // TimeZoneDataDto instance.  If these values are identical,
 // this method returns 'true'.
@@ -82,7 +92,8 @@ func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 		tzDataDto.SubTzName == tzDDto.SubTzName &&
 		tzDataDto.TzName == tzDDto.TzName &&
 		tzDataDto.TzAliasValue == tzDDto.TzAliasValue &&
-		tzDataDto.TzCanonicalValue == tzDDto.TzCanonicalValue {
+		tzDataDto.TzCanonicalValue == tzDDto.TzCanonicalValue &&
+		tzDataDto.TzValue == tzDDto.TzValue {
 		return true
 	}
 
@@ -128,7 +139,10 @@ func (tzDataDto TimeZoneDataDto) New(
 	majorGroup,
 	subTzName,
 	tzName,
+	tzCanonicalValue,
+	tzAliasValue,
 	tzValue,
+	tzSortName,
 	srcFileNameExt string,
 	tzClass TimeZoneClass,
 	deprecationStatus TimeZoneDeprecationStatus) (TimeZoneDataDto, error) {
@@ -148,9 +162,9 @@ func (tzDataDto TimeZoneDataDto) New(
 			errors.New(ePrefix + "Input Parameter 'tzName' is an EMPTY string!\n")
 	}
 
-	if len(tzValue) == 0 {
+	if len(tzCanonicalValue) == 0 {
 		return newTzDto,
-			errors.New(ePrefix + "Input Parameter 'tzValue' is an EMPTY string!\n")
+			errors.New(ePrefix + "Input Parameter 'tzCanonicalValue' is an EMPTY string!\n")
 	}
 
 	err := tzClass.ClassIsValid()
@@ -173,7 +187,10 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.MajorGroup = majorGroup
 	newTzDto.SubTzName = subTzName
 	newTzDto.TzName = tzName
-	newTzDto.TzCanonicalValue = tzValue
+	newTzDto.TzCanonicalValue = tzCanonicalValue
+	newTzDto.TzAliasValue = tzAliasValue
+	newTzDto.TzValue = tzValue
+	newTzDto.TzSortValue = tzSortName
 	newTzDto.SourceFileNameExt = srcFileNameExt
 	newTzDto.TzClass = tzClass
 	newTzDto.DeprecationStatus = deprecationStatus
@@ -182,6 +199,39 @@ func (tzDataDto TimeZoneDataDto) New(
 	return newTzDto, nil
 }
 
+// NewSortValue - Creates and returns a new time zone sort value
+// based on a time zone value passed in parameter, 'tzValue'.
+//
+func (tzDataDto TimeZoneDataDto) NewSortValue(tzValue string) string {
+	numStrProfile,
+	err := strops.StrOps{}.ExtractNumericDigits(
+			tzValue,
+			0,
+			"",
+			"",
+			"")
+
+	if err != nil {
+		return tzValue
+	}
+
+	if numStrProfile.NumStrLen < 1 {
+		return tzValue
+	}
+
+	str1 := tzValue[:numStrProfile.FirstNumCharIndex]
+	str2 := tzValue[numStrProfile.FirstNumCharIndex + numStrProfile.NumStrLen:]
+
+	number, err := strconv.Atoi(numStrProfile.NumStr)
+
+	if err != nil {
+		return tzValue
+	}
+
+	sortName := fmt.Sprintf(str1 + "%0d" + str2, number)
+
+	return sortName
+}
 // SetIsInitialized - Sets the value of internal data field
 // TimeZoneDataDto.isInitialized .
 func (tzDataDto *TimeZoneDataDto) SetIsInitialized(isInitialized bool) {

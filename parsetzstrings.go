@@ -208,12 +208,6 @@ func (parseTz *ParseIanaTzData) extractLink(
 
 	ePrefix := "ParseIanaTzData.extractLink() "
 
-	lenRawStr := len(rawString)
-
-	if lenRawStr < lenLinkLabel {
-		return nil
-	}
-
 	startIdx := 0
 // Extract Field 1 - Canonical Field
 	dFProfile,
@@ -232,9 +226,10 @@ func (parseTz *ParseIanaTzData) extractLink(
 	}
 
 	if dFProfile.DataFieldLength < 1 {
-		fmt.Printf(ePrefix + "Empty Link Data Field #1\n" +
-			"rawString='%v'\nFileName='%v'\n",
-			rawString, fMgr.GetFileNameExt())
+		return nil
+	}
+
+	if strings.Index(dFProfile.DataFieldStr, ZoneSeparator) == -1 {
 		return nil
 	}
 
@@ -258,15 +253,16 @@ func (parseTz *ParseIanaTzData) extractLink(
 	}
 
 	if dFProfile.DataFieldLength < 1 {
-		fmt.Printf(ePrefix + "Empty Link Data Field #2\n" +
-			"rawString='%v'\nFileName='%v'\n",
-			rawString, fMgr.GetFileNameExt())
+		return nil
+	}
+
+	if strings.Index(dFProfile.DataFieldStr, ZoneSeparator) == -1 {
 		return nil
 	}
 
 	tzLink := dFProfile.DataFieldStr
 
-	zoneArray := strings.Split(tzLink, "/")
+	zoneArray := strings.Split(tzLink, ZoneSeparator)
 
 	lenZoneArray := len(zoneArray)
 
@@ -416,13 +412,14 @@ func (parseTz *ParseIanaTzData) extractZone(
 	}
 
 	if dFProfile.DataFieldLength < 1 {
-		fmt.Printf(ePrefix + "Empty Data Field\n" +
-			"rawString='%v'\nFileName='%v'\n",
-			rawString, fMgr.GetFileNameExt())
 		return nil
 	}
 
-	zoneArray := strings.Split(dFProfile.DataFieldStr, "/")
+	if strings.Index(dFProfile.DataFieldStr, ZoneSeparator) == -1 {
+		return nil
+	}
+
+	zoneArray := strings.Split(dFProfile.DataFieldStr, ZoneSeparator)
 
 	lenZoneArray := len(zoneArray)
 
