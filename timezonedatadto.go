@@ -203,13 +203,14 @@ func (tzDataDto TimeZoneDataDto) New(
 // based on a time zone value passed in parameter, 'tzValue'.
 //
 func (tzDataDto TimeZoneDataDto) NewSortValue(tzValue string) string {
+
 	numStrProfile,
 	err := strops.StrOps{}.ExtractNumericDigits(
-			tzValue,
-			0,
-			"",
-			"",
-			"")
+		tzValue,
+		0,
+		"",
+		"",
+		"")
 
 	if err != nil {
 		return tzValue
@@ -228,7 +229,7 @@ func (tzDataDto TimeZoneDataDto) NewSortValue(tzValue string) string {
 		return tzValue
 	}
 
-	sortName := fmt.Sprintf(str1 + "%0d" + str2, number)
+	sortName := fmt.Sprintf(str1 + "%02d" + str2, number)
 
 	return sortName
 }
