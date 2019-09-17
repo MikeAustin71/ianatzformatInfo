@@ -27,51 +27,42 @@ To update the package run:
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"local.com/amarillomike/ianatzformatInfo/filemgrs"
+	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
 )
-
-var TimeZoneGroups []TimeZoneGroupDto
-var TimeZoneData []TimeZoneDataDto
-var SubTimeZoneData []TimeZoneDataDto
-var AliasTimeZoneData []TimeZoneDataDto
-
-
-
 
 // [linked Zone] primary zone
 var mapTzLinks map[string]string
 
-var DEBUG = 0
-
+var timezoneArray = make([]string, 100, 100)
 
 const inputFileName = "targettzdata.txt"
 
-const outputfilename = "timezonedata.go"
 
-const homeDir = "D:\\gowork\\src\\MikeAustin71\\ianatzoneinfo\\parsetzdata"
-
-var curWorkingDirectory pathfileops.DirMgr
 
 func main() {
 	ePrefix := "parsetzdata.main() "
 
+	tzdatastructs.DEBUG = 0
+
 	mapTzLinks = make(map[string]string, 0)
 
-	err := setCurrentWorkingDirectory()
+	err := filemgrs.SetCurrentWorkingDirectory()
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
 
-	inputFileMgr, err := createInputFileMgr(inputFileName)
+	inputFileMgr, err := filemgrs.CreateInputFileMgr(inputFileName)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
 
-	baseDir, err := getTargetDirectory(inputFileMgr)
+	baseDir, err := filemgrs.GetTargetDirectory(inputFileMgr)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
@@ -80,19 +71,21 @@ func main() {
 
 	fmt.Println("baseDir: ", baseDir)
 
-	dirFileInfo, err := getDirectoryInfo(baseDir)
+	dirFileInfo, err := filemgrs.GetDirectoryInfo(baseDir)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
 
-	TimeZoneGroups,
-		TimeZoneData,
-		SubTimeZoneData,
-		AliasTimeZoneData,
+	tzdatastructs.TimeZoneMajorGroups,
+	tzdatastructs.TimeZoneMinorGroups,
+	tzdatastructs.TimeZoneData,
+	tzdatastructs.SubTimeZoneData,
+	tzdatastructs.LinkAliasTimeZoneData,
 		err =
-		ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo)
+		 filemgrs.ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo)
+
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return

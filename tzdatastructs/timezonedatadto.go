@@ -1,9 +1,9 @@
-package main
+package tzdatastructs
 
 import (
-	"MikeAustin71/stringopsgo/strops/v2"
 	"errors"
 	"fmt"
+	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"strconv"
 	"strings"
 )
@@ -17,12 +17,12 @@ type TimeZoneDataDto struct {
 	TzValue           string
 	TzSortValue       string
 	SourceFileNameExt string
-	TzClass           TimeZoneClass   // 0 = Unknown
+	TzClass           TimeZoneClass // 0 = Unknown
 	// 1 = Canonical
 	// 2 = Alias
 	// 3 = Sub-Group Place Holder
 
-	DeprecationStatus TimeZoneDeprecationStatus   // 0 = Unknown
+	DeprecationStatus TimeZoneDeprecationStatus // 0 = Unknown
 	// 1 = Deprecated
 	// 2 = Alias
 	// 3 = Valid, Current Time Zone

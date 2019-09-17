@@ -1,9 +1,10 @@
-package main
+package filemgrs
 
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
+	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
 )
 
@@ -46,15 +47,15 @@ import (
 
 */
 
-var tzMajorGroupCol TimeZoneGroupCollection
+var tzMajorGroupCol tzdatastructs.TimeZoneGroupCollection
 
-var tzMinorGroupCol TimeZoneGroupCollection
+var tzMinorGroupCol tzdatastructs.TimeZoneGroupCollection
 
-var tzDataCol TimeZoneDataCollection
+var tzDataCol tzdatastructs.TimeZoneDataCollection
 
-var subTzDataCol TimeZoneDataCollection
+var subTzDataCol tzdatastructs.TimeZoneDataCollection
 
-var tzLinkDataCol TimeZoneDataCollection
+var tzLinkDataCol tzdatastructs.TimeZoneDataCollection
 
 /*
   tzMajorGroupArray Format
@@ -112,20 +113,20 @@ type ParseIanaTzData struct {
 // IANA Time Zone files.
 func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	dirFileInfo pathfileops.FileMgrCollection) (
-	TimeZoneGroupCollection, // Time Zone Major Group Collection
-	TimeZoneGroupCollection, // Time Zone Minor Group Collection
-	TimeZoneDataCollection,  // Time Zone Data Collection
-	TimeZoneDataCollection,  // Sub-Zone Data Collection
-	TimeZoneDataCollection,  // Alias Link Data Collection
+	tzdatastructs.TimeZoneGroupCollection, // Time Zone Major Group Collection
+	tzdatastructs.TimeZoneGroupCollection, // Time Zone Minor Group Collection
+	tzdatastructs.TimeZoneDataCollection,  // Time Zone Data Collection
+	tzdatastructs.TimeZoneDataCollection,  // Sub-Zone Data Collection
+	tzdatastructs.TimeZoneDataCollection,  // Alias Link Data Collection
 	error)  {
 
 	ePrefix := "ParseIanaTzData.ParseTzAndLinks() "
 
-	tzMajorGroupCol = TimeZoneGroupCollection{}.New()
-	tzMinorGroupCol = TimeZoneGroupCollection{}.New()
-	tzDataCol = TimeZoneDataCollection{}.New()
-	subTzDataCol = TimeZoneDataCollection{}.New()
-	tzLinkDataCol = TimeZoneDataCollection{}.New()
+	tzMajorGroupCol = tzdatastructs.TimeZoneGroupCollection{}.New()
+	tzMinorGroupCol = tzdatastructs.TimeZoneGroupCollection{}.New()
+	tzDataCol = tzdatastructs.TimeZoneDataCollection{}.New()
+	subTzDataCol = tzdatastructs.TimeZoneDataCollection{}.New()
+	tzLinkDataCol = tzdatastructs.TimeZoneDataCollection{}.New()
 
 	numOfFiles := dirFileInfo.GetNumOfFileMgrs()
 
@@ -214,12 +215,12 @@ func (parseTz *ParseIanaTzData) extractLink(
 	err :=
 		strops.StrOps{}.ExtractDataField(
 			rawString,
-			[]string{LinkLabel},
+			[]string{tzdatastructs.LinkLabel},
 			startIdx,
-			LeadingFieldSeparators,
-			TrailingFieldSeparators,
-			CommentDelimiters,
-			EndOfLineDelimiters)
+			tzdatastructs.LeadingFieldSeparators,
+			tzdatastructs.TrailingFieldSeparators,
+			tzdatastructs.CommentDelimiters,
+			tzdatastructs.EndOfLineDelimiters)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "%v\n", err.Error())
@@ -229,7 +230,7 @@ func (parseTz *ParseIanaTzData) extractLink(
 		return nil
 	}
 
-	if strings.Index(dFProfile.DataFieldStr, ZoneSeparator) == -1 {
+	if strings.Index(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator) == -1 {
 		return nil
 	}
 
@@ -241,12 +242,12 @@ func (parseTz *ParseIanaTzData) extractLink(
 	err =
 		strops.StrOps{}.ExtractDataField(
 			rawString,
-			[]string{LinkLabel},
+			[]string{tzdatastructs.LinkLabel},
 			startIdx,
-			LeadingFieldSeparators,
-			TrailingFieldSeparators,
-			CommentDelimiters,
-			EndOfLineDelimiters)
+			tzdatastructs.LeadingFieldSeparators,
+			tzdatastructs.TrailingFieldSeparators,
+			tzdatastructs.CommentDelimiters,
+			tzdatastructs.EndOfLineDelimiters)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "%v\n", err.Error())
@@ -256,13 +257,13 @@ func (parseTz *ParseIanaTzData) extractLink(
 		return nil
 	}
 
-	if strings.Index(dFProfile.DataFieldStr, ZoneSeparator) == -1 {
+	if strings.Index(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator) == -1 {
 		return nil
 	}
 
 	tzLink := dFProfile.DataFieldStr
 
-	zoneArray := strings.Split(tzLink, ZoneSeparator)
+	zoneArray := strings.Split(tzLink, tzdatastructs.ZoneSeparator)
 
 	lenZoneArray := len(zoneArray)
 
@@ -281,8 +282,8 @@ func (parseTz *ParseIanaTzData) extractLink(
 		"",
 		zoneArray[0],
 		fMgr.GetFileNameExt(),
-		TzGrpType.IANA(),
-		DepStatusCode.Valid())
+		tzdatastructs.TzGrpType.IANA(),
+		tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "\n" +
@@ -300,8 +301,8 @@ func (parseTz *ParseIanaTzData) extractLink(
 			zoneArray[1],
 			tzCanonical,
 			fMgr.GetFileNameExt(),
-			TZClass.Alias(),
-			DepStatusCode.Valid())
+			tzdatastructs.TZClass.Alias(),
+			tzdatastructs.DepStatusCode.Valid())
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -315,8 +316,8 @@ func (parseTz *ParseIanaTzData) extractLink(
 			zoneArray[1],
 			tzCanonical,
 			fMgr.GetFileNameExt(),
-			TZClass.Alias(),
-			DepStatusCode.Valid())
+			tzdatastructs.TZClass.Alias(),
+			tzdatastructs.DepStatusCode.Valid())
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -339,8 +340,8 @@ func (parseTz *ParseIanaTzData) extractLink(
 		zoneArray[1],  // minorGroupName
 		zoneArray[0] + "/" + zoneArray[1], // CompositeGroupName
 		fMgr.GetFileNameExt(),
-		TzGrpType.SubGroup(),
-		DepStatusCode.Valid())
+		tzdatastructs.TzGrpType.SubGroup(),
+		tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -357,8 +358,8 @@ func (parseTz *ParseIanaTzData) extractLink(
 		zoneArray[1], // Argentina - tzName
 		tzCanonical, // America/Argentina - tzValue
 		fMgr.GetFileNameExt(),
-		TZClass.SubGroup(),
-		DepStatusCode.Valid())
+		tzdatastructs.TZClass.SubGroup(),
+		tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -377,8 +378,8 @@ func (parseTz *ParseIanaTzData) extractLink(
 		zoneArray[0] + "/" + zoneArray[1],  // America/Argentina - tzName
 		tzCanonical, // America/Argentina/Buenos_Aires - tzValue
 		fMgr.GetFileNameExt(),
-		TZClass.SubTimeZone(),
-		DepStatusCode.Valid())
+		tzdatastructs.TZClass.SubTimeZone(),
+		tzdatastructs.DepStatusCode.Valid())
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -400,12 +401,12 @@ func (parseTz *ParseIanaTzData) extractZone(
 	err :=
 		strops.StrOps{}.ExtractDataField(
 			rawString,
-			[]string{ZoneLabel},
+			[]string{tzdatastructs.ZoneLabel},
 			0,
-			LeadingFieldSeparators,
-			TrailingFieldSeparators,
-			CommentDelimiters,
-			EndOfLineDelimiters)
+			tzdatastructs.LeadingFieldSeparators,
+			tzdatastructs.TrailingFieldSeparators,
+			tzdatastructs.CommentDelimiters,
+			tzdatastructs.EndOfLineDelimiters)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "%v\n", err.Error())
@@ -415,11 +416,11 @@ func (parseTz *ParseIanaTzData) extractZone(
 		return nil
 	}
 
-	if strings.Index(dFProfile.DataFieldStr, ZoneSeparator) == -1 {
+	if strings.Index(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator) == -1 {
 		return nil
 	}
 
-	zoneArray := strings.Split(dFProfile.DataFieldStr, ZoneSeparator)
+	zoneArray := strings.Split(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator)
 
 	lenZoneArray := len(zoneArray)
 
@@ -437,8 +438,8 @@ func (parseTz *ParseIanaTzData) extractZone(
 		"",
 		zoneArray[0],
 		fMgr.GetFileNameExt(),
-		TzGrpType.IANA(),
-		DepStatusCode.Valid())
+		tzdatastructs.TzGrpType.IANA(),
+		tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "\n" +
@@ -456,8 +457,8 @@ func (parseTz *ParseIanaTzData) extractZone(
 			zoneArray[1],
 			zoneArray[0] + "/" + zoneArray[1],
 			fMgr.GetFileNameExt(),
-			TZClass.Canonical(),
-			DepStatusCode.Valid())
+			tzdatastructs.TZClass.Canonical(),
+			tzdatastructs.DepStatusCode.Valid())
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -480,8 +481,8 @@ err = tzMinorGroupCol.AddIfNewByDetail(
 	zoneArray[1],  // minorGroupName
 	zoneArray[0] + "/" + zoneArray[1], // CompositeGroupName
 	fMgr.GetFileNameExt(),
-	TzGrpType.SubGroup(),
-	DepStatusCode.Valid())
+	tzdatastructs.TzGrpType.SubGroup(),
+	tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "tzMinorGroupCol Error.\n" +
@@ -498,8 +499,8 @@ err = tzMinorGroupCol.AddIfNewByDetail(
 			zoneArray[1], // Argentina - tzName
 			zoneArray[0] + "/" + zoneArray[1], // America/Argentina - tzValue
 			fMgr.GetFileNameExt(),
-			TZClass.SubGroup(),
-			DepStatusCode.Valid())
+			tzdatastructs.TZClass.SubGroup(),
+			tzdatastructs.DepStatusCode.Valid())
 
 		if err != nil {
 			return fmt.Errorf(ePrefix + "tzDataCol Error.\n" +
@@ -518,8 +519,8 @@ err = tzMinorGroupCol.AddIfNewByDetail(
 		zoneArray[0] + "/" + zoneArray[1],  // America/Argentina - tzName
 		zoneArray[0] + "/" + zoneArray[1] + "/" + zoneArray[2], // America/Argentina/Buenos_Aires - tzValue
 		fMgr.GetFileNameExt(),
-		TZClass.SubTimeZone(),
-		DepStatusCode.Valid())
+		tzdatastructs.TZClass.SubTimeZone(),
+		tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "subTzDataCol Error.\n" +
@@ -551,8 +552,8 @@ func (parseTz *ParseIanaTzData) isSkipFile(fMgr pathfileops.FileMgr) (bool, erro
 	fileName := strings.ToLower(fMgr.GetFileName())
 	isSkipFile := false
 
-	for k:=0; k < len(skipTzFiles); k++ {
-		if fileName == strings.ToLower(skipTzFiles[k]) {
+	for k:=0; k < len(tzdatastructs.SkipTzFiles); k++ {
+		if fileName == strings.ToLower(tzdatastructs.SkipTzFiles[k]) {
 			isSkipFile = true
 			break
 		}
@@ -596,11 +597,11 @@ func (parseTz *ParseIanaTzData) processFileBytes(fMgr pathfileops.FileMgr) error
 		fmt.Printf("str No %v: %v\n", cntr, extractedString)
 		cntr++
 
-		cmtIdx := strings.Index(extractedString, CommentCharStr)
+		cmtIdx := strings.Index(extractedString, tzdatastructs.CommentCharStr)
 
-		zoneIdx := strings.Index(extractedString, ZoneLabel)
+		zoneIdx := strings.Index(extractedString, tzdatastructs.ZoneLabel)
 
-		linkIdx := strings.Index(extractedString, LinkLabel)
+		linkIdx := strings.Index(extractedString, tzdatastructs.LinkLabel)
 
 		if zoneIdx > -1 {
 

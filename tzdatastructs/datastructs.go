@@ -1,9 +1,7 @@
-package main
+package tzdatastructs
 
 import (
-  "errors"
-  "fmt"
-  "strings"
+	"strings"
 )
 
 // TzMajorGrpMgr - This type provides methods for managing arrays of

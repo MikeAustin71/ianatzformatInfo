@@ -1,25 +1,27 @@
-package main
+package filemgrs
 
 import (
   "errors"
   "fmt"
   "github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
   "github.com/MikeAustin71/stringopsgo/strops/v2"
+  "local.com/amarillomike/ianatzformatInfo/tzdatastructs"
   "strings"
 )
 
 
-func createInputFileMgr(targetFileName string) (inputFileMgr pathfileops.FileMgr, err error) {
+func CreateInputFileMgr(targetFileName string) (inputFileMgr pathfileops.FileMgr, err error) {
 
   inputFileMgr = pathfileops.FileMgr{}
   err = nil
 
-  ePrefix := "parsetzdata.createInputFileMgr() Error: "
+  ePrefix := "parsetzdata.CreateInputFileMgr() Error: "
   var err2 error
 
   //targetFile := "D:\gowork\src\MikeAustin71\ianatzformatInfo\targettzdata.txt"
 
-  inputFileMgr, err2 = pathfileops.FileMgr{}.NewFromDirMgrFileNameExt(curWorkingDirectory, targetFileName)
+  inputFileMgr, err2 = pathfileops.FileMgr{}.NewFromDirMgrFileNameExt(
+    tzdatastructs.CurWorkingDirectory, targetFileName)
 
   if err2 != nil {
 
@@ -49,12 +51,12 @@ func createInputFileMgr(targetFileName string) (inputFileMgr pathfileops.FileMgr
   return inputFileMgr, err
 }
 
-// getDirectoryInfo - Walks the 'baseDir' and returns information on all directories and
+// GetDirectoryInfo - Walks the 'baseDir' and returns information on all directories and
 // files. Note: Input parameter 'baseDir' MUST BE formatted in all lower case characters.
 //
-func getDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection, err error) {
+func GetDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection, err error) {
 
-  ePrefix := "parsetzdata.getDirectoryInfo() "
+  ePrefix := "parsetzdata.GetDirectoryInfo() "
 
   dirFileInfo = pathfileops.FileMgrCollection{}.New()
   err = nil
@@ -98,7 +100,7 @@ func getDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection
     return dirFileInfo, err
   }
 
-  lenSkipFiles := len(skipTzFiles)
+  lenSkipFiles := len(tzdatastructs.SkipTzFiles)
 
   var fmgr pathfileops.FileMgr
 
@@ -120,7 +122,7 @@ func getDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection
 
       for j:=0; j < lenSkipFiles; j++ {
 
-        if fName == skipTzFiles[j] {
+        if fName == tzdatastructs.SkipTzFiles[j] {
           isInvalidFile = true
           break
         }
@@ -149,14 +151,14 @@ func getDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection
   return dirFileInfo, err
 }
 
-// getTargetDirectory - Reads the targettzdata.txt file to get the target directory
+// GetTargetDirectory - Reads the targettzdata.txt file to get the target directory
 // where IANA Time Zone data is located.
 //
-func getTargetDirectory(inputFileMgr pathfileops.FileMgr) (baseDir string, err error) {
+func GetTargetDirectory(inputFileMgr pathfileops.FileMgr) (baseDir string, err error) {
   baseDir = ""
   err = nil
 
-  ePrefix := "parsetzdata.getTargetDirectory() Error: "
+  ePrefix := "parsetzdata.GetTargetDirectory() Error: "
 
   err2 := inputFileMgr.OpenThisFileReadWrite()
 
@@ -213,18 +215,18 @@ func getTargetDirectory(inputFileMgr pathfileops.FileMgr) (baseDir string, err e
   return baseDir, err
 }
 
-// setCurrentWorkingDirectory - Identifies and
+// SetCurrentWorkingDirectory - Identifies and
 // initializes global variables with the current
 // working directory
-func setCurrentWorkingDirectory() error {
+func SetCurrentWorkingDirectory() error {
 
-  ePrefix := "parsetzdata.setCurrentWorkingDirectory() "
+  ePrefix := "parsetzdata.SetCurrentWorkingDirectory() "
 
   var err error
 
   crDir := ""
 
-  if DEBUG == 0 {
+  if tzdatastructs.DEBUG == 0 {
     // DEBUG is OFF!
 
     crDir, err = pathfileops.FileHelper{}.GetCurrentDir()
@@ -237,18 +239,18 @@ func setCurrentWorkingDirectory() error {
   } else {
 
     // DEBUG MUST BE ON
-    crDir = homeDir
+    crDir = main.homeDir
 
   }
 
-  curWorkingDirectory, err = pathfileops.DirMgr{}.New(crDir)
+  main.curWorkingDirectory, err = pathfileops.DirMgr{}.New(crDir)
 
   if err != nil {
 
     return fmt.Errorf(ePrefix+"%v\n", err.Error())
   }
 
-  curWorkDirDoesExist, err := curWorkingDirectory.DoesThisDirectoryExist()
+  curWorkDirDoesExist, err := main.curWorkingDirectory.DoesThisDirectoryExist()
 
   if err != nil {
     return fmt.Errorf(ePrefix + "Error returned by curWorkingDirectory.DoesThisDirectoryExist()\n" +
@@ -259,7 +261,7 @@ func setCurrentWorkingDirectory() error {
 
     return fmt.Errorf(ePrefix+
       "Current Working Directory DOES NOT EXIST!"+
-      "CurWorkingDir: %v", curWorkingDirectory.GetAbsolutePath())
+      "CurWorkingDir: %v", main.curWorkingDirectory.GetAbsolutePath())
 
   }
 

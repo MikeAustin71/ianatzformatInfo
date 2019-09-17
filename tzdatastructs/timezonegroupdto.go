@@ -1,4 +1,4 @@
-package main
+package tzdatastructs
 
 import (
 	"errors"
@@ -6,13 +6,13 @@ import (
 )
 
 type TimeZoneGroupDto struct {
-	MajorGroupName       string
-	MinorGroupName       string
-	CompositeGroupName   string
-	SourceFileNameExt    string
-	GroupType            TimeZoneGroupType
-	DeprecationStatus    TimeZoneDeprecationStatus
-	isInitialized        bool
+	MajorGroupName     string
+	MinorGroupName     string
+	CompositeGroupName string
+	SourceFileNameExt  string
+	GroupType          TimeZoneGroupType
+	DeprecationStatus  TimeZoneDeprecationStatus
+	isInitialized      bool
 }
 
 // CopyOut - Creates and returns a deep copy of the current

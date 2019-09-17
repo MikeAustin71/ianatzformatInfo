@@ -1,5 +1,17 @@
-package main
+package tzdatastructs
 
+import 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+
+
+var TimeZoneMajorGroups TimeZoneGroupCollection
+var TimeZoneMinorGroups TimeZoneGroupCollection
+var TimeZoneData TimeZoneDataCollection
+var SubTimeZoneData TimeZoneDataCollection
+var LinkAliasTimeZoneData TimeZoneDataCollection
+var CurWorkingDirectory pathfileops.DirMgr
+
+
+var DEBUG = 0
 
 
 // For IANA Time Zone Files the white space characters which delimit fields
@@ -31,7 +43,7 @@ var EndOfLineDelimiters = []string{
 
 var CommentDelimiters = []string {CommentCharStr}
 
-var skipTzFiles = []string{
+var SkipTzFiles = []string{
 	"checklinks.awk",
 	"checktab.awk",
 	"calendars",
