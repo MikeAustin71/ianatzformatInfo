@@ -16,6 +16,9 @@ type TimeZoneDataDto struct {
 	TzCanonicalValue  string
 	TzValue           string
 	TzSortValue       string
+	FuncType          string
+	FuncName          string
+	FuncReturnValue   string
 	SourceFileNameExt string
 	TzClass           TimeZoneClass // 0 = Unknown
 	// 1 = Canonical
@@ -47,6 +50,9 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
 	newTzDto.TzValue = tzDataDto.TzValue
 	newTzDto.TzSortValue = tzDataDto.TzSortValue
+	newTzDto.FuncType = tzDataDto.FuncType
+	newTzDto.FuncName = tzDataDto.FuncName
+	newTzDto.FuncReturnValue = tzDataDto.FuncReturnValue
 	newTzDto.SourceFileNameExt = tzDataDto.SourceFileNameExt
 	newTzDto.TzClass = tzDataDto.TzClass
 	newTzDto.DeprecationStatus = tzDataDto.DeprecationStatus
@@ -69,6 +75,9 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
 	tzDataDto.TzValue = inTzDataDto.TzValue
 	tzDataDto.TzSortValue = inTzDataDto.TzSortValue
+	tzDataDto.FuncName = inTzDataDto.FuncName
+	tzDataDto.FuncType = inTzDataDto.FuncType
+	tzDataDto.FuncReturnValue = inTzDataDto.FuncReturnValue
 	tzDataDto.SourceFileNameExt = inTzDataDto.SourceFileNameExt
 	tzDataDto.TzClass = inTzDataDto.TzClass
 	tzDataDto.DeprecationStatus = inTzDataDto.DeprecationStatus
@@ -77,7 +86,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 }
 
 // TimeZoneDataDto - Compares isInitialized, MajorGroup, SubTzName,
-// TzName, TzAliasValuem TzCanonicalValue and TzValue data elements
+// TzName, TzAliasValue TzCanonicalValue and TzValue data elements
 // encapsulated by input parameter 'tzDDto' and the current
 // TimeZoneDataDto instance.  If these values are identical,
 // this method returns 'true'.
@@ -125,13 +134,11 @@ func (tzDataDto *TimeZoneDataDto) EqualDeprecationStatus(tzDDto TimeZoneDataDto)
 }
 
 
-
 // IsInitialized - Returns the value of internal data field
 // TimeZoneDataDto.isInitialized .
 func (tzDataDto *TimeZoneDataDto) IsInitialized() bool {
 	return tzDataDto.isInitialized
 }
-
 
 // New - Creates and returns a new instance of the TimeZoneDataDto Type.
 //
@@ -143,6 +150,9 @@ func (tzDataDto TimeZoneDataDto) New(
 	tzAliasValue,
 	tzValue,
 	tzSortName,
+	funcType,
+	funcName,
+	funcReturnValue,
 	srcFileNameExt string,
 	tzClass TimeZoneClass,
 	deprecationStatus TimeZoneDeprecationStatus) (TimeZoneDataDto, error) {
@@ -191,6 +201,9 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.TzAliasValue = tzAliasValue
 	newTzDto.TzValue = tzValue
 	newTzDto.TzSortValue = tzSortName
+	newTzDto.FuncType = funcType
+	newTzDto.FuncName = funcName
+	newTzDto.FuncReturnValue = funcReturnValue
 	newTzDto.SourceFileNameExt = srcFileNameExt
 	newTzDto.TzClass = tzClass
 	newTzDto.DeprecationStatus = deprecationStatus
@@ -233,6 +246,7 @@ func (tzDataDto TimeZoneDataDto) NewSortValue(tzValue string) string {
 
 	return sortName
 }
+
 // SetIsInitialized - Sets the value of internal data field
 // TimeZoneDataDto.isInitialized .
 func (tzDataDto *TimeZoneDataDto) SetIsInitialized(isInitialized bool) {

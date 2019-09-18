@@ -3,16 +3,21 @@ package tzdatastructs
 import (
 	"errors"
 	"fmt"
+	"github.com/MikeAustin71/stringopsgo/strops/v2"
+	"strconv"
 )
 
 type TimeZoneGroupDto struct {
-	MajorGroupName     string
-	MinorGroupName     string
-	CompositeGroupName string
-	SourceFileNameExt  string
-	GroupType          TimeZoneGroupType
-	DeprecationStatus  TimeZoneDeprecationStatus
-	isInitialized      bool
+	MajorGroupName    string
+	MinorGroupName    string
+	GroupNameValue    string
+	GroupSortValue    string
+	TypeName          string
+	IanaVariableName  string
+	SourceFileNameExt string
+	GroupType         TimeZoneGroupType
+	DeprecationStatus TimeZoneDeprecationStatus
+	isInitialized     bool
 }
 
 // CopyOut - Creates and returns a deep copy of the current
@@ -28,9 +33,12 @@ func (tzGrpDto *TimeZoneGroupDto) CopyOut() TimeZoneGroupDto {
 
 	newTzGrpDto.MajorGroupName        = tzGrpDto.MajorGroupName
 	newTzGrpDto.MinorGroupName        = tzGrpDto.MinorGroupName
-	newTzGrpDto.CompositeGroupName    = tzGrpDto.CompositeGroupName
-	newTzGrpDto.GroupType             = tzGrpDto.GroupType
+	newTzGrpDto.GroupNameValue        = tzGrpDto.GroupNameValue
+	newTzGrpDto.GroupSortValue        = tzGrpDto.GroupSortValue
+	newTzGrpDto.TypeName              = tzGrpDto.TypeName
+	newTzGrpDto.IanaVariableName      = tzGrpDto.IanaVariableName
 	newTzGrpDto.SourceFileNameExt     = tzGrpDto.SourceFileNameExt
+	newTzGrpDto.GroupType             = tzGrpDto.GroupType
 	newTzGrpDto.DeprecationStatus     = tzGrpDto.DeprecationStatus
 	newTzGrpDto.isInitialized         = true
 
@@ -48,9 +56,12 @@ func (tzGrpDto *TimeZoneGroupDto) CopyIn(
 
 	tzGrpDto.MajorGroupName      = inGrpDto.MajorGroupName
 	tzGrpDto.MinorGroupName      = inGrpDto.MinorGroupName
-	tzGrpDto.CompositeGroupName  = inGrpDto.CompositeGroupName
-	tzGrpDto.GroupType           = inGrpDto.GroupType
+	tzGrpDto.GroupNameValue      = inGrpDto.GroupNameValue
+	tzGrpDto.GroupSortValue      = inGrpDto.GroupSortValue
+	tzGrpDto.TypeName            = inGrpDto.TypeName
+	tzGrpDto.IanaVariableName    = inGrpDto.IanaVariableName
 	tzGrpDto.SourceFileNameExt   = inGrpDto.SourceFileNameExt
+	tzGrpDto.GroupType           = inGrpDto.GroupType
 	tzGrpDto.DeprecationStatus   = inGrpDto.DeprecationStatus
 	tzGrpDto.isInitialized       = inGrpDto.isInitialized
 }
@@ -87,13 +98,13 @@ func (tzGrpDto *TimeZoneGroupDto) EqualDeprecationStatus(
 	return false
 }
 
-// EqualNameValues - Compares the CompositeGroupName data values for input
+// EqualNameValues - Compares the GroupNameValue data values for input
 // parameter 'tzGrpDto2' and the current TimeZoneGroupDto. If
 // they are equivalent, this method returns 'true'.
 func (tzGrpDto *TimeZoneGroupDto) EqualNameValues(
 	tzGrpDto2 TimeZoneGroupDto) bool {
 
-		if tzGrpDto.CompositeGroupName == tzGrpDto2.CompositeGroupName {
+		if tzGrpDto.GroupNameValue == tzGrpDto2.GroupNameValue {
 			return true
 		}
 
@@ -105,7 +116,10 @@ func (tzGrpDto *TimeZoneGroupDto) EqualNameValues(
 func (tzGrpDto TimeZoneGroupDto) New(
 	majorGroupName,
 	minorGroupName,
-	compositeGroupName,
+	groupNameValue,
+	groupSortValue,
+	typeName,
+	ianaVariableName,
 	sourceFileNameExt string,
 	groupType TimeZoneGroupType,
 	deprecationStatus TimeZoneDeprecationStatus) (TimeZoneGroupDto, error) {
@@ -114,7 +128,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 
 	newTzGroupDto := TimeZoneGroupDto{}
 
-	if len(compositeGroupName) == 0 {
+	if len(groupNameValue) == 0 {
 		return newTzGroupDto,
 			errors.New(ePrefix + "Input Parameter 'compositeGroupName' is an EMPTY string!\n")
 	}
@@ -137,12 +151,54 @@ func (tzGrpDto TimeZoneGroupDto) New(
 
 	newTzGroupDto.MajorGroupName = majorGroupName
 	newTzGroupDto.MinorGroupName = minorGroupName
-	newTzGroupDto.CompositeGroupName = compositeGroupName
+	newTzGroupDto.GroupNameValue = groupNameValue
+	newTzGroupDto.GroupSortValue = groupSortValue
+	newTzGroupDto.TypeName = typeName
+
+	newTzGroupDto.IanaVariableName =
+		ianaVariableName
+
 	newTzGroupDto.GroupType = groupType
 	newTzGroupDto.DeprecationStatus = deprecationStatus
 	newTzGroupDto.isInitialized = true
 
 	return newTzGroupDto, nil
+}
+
+// NewSortValue - Creates and returns a new time zone group
+// sort value based on a time zone value passed in parameter,
+// 'groupValue'.
+//
+func (tzGrpDto TimeZoneGroupDto) NewSortValue(groupValue string) string {
+
+	numStrProfile,
+	err := strops.StrOps{}.ExtractNumericDigits(
+		groupValue,
+		0,
+		"",
+		"",
+		"")
+
+	if err != nil {
+		return groupValue
+	}
+
+	if numStrProfile.NumStrLen < 1 {
+		return groupValue
+	}
+
+	str1 := groupValue[:numStrProfile.FirstNumCharIndex]
+	str2 := groupValue[numStrProfile.FirstNumCharIndex + numStrProfile.NumStrLen:]
+
+	number, err := strconv.Atoi(numStrProfile.NumStr)
+
+	if err != nil {
+		return groupValue
+	}
+
+	sortName := fmt.Sprintf(str1 + "%02d" + str2, number)
+
+	return sortName
 }
 
 // SetIsInitialized - sets the value of internal data field

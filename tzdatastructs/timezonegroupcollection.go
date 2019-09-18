@@ -2,7 +2,6 @@ package tzdatastructs
 
 import (
 	"errors"
-	"fmt"
 )
 
 // TimeZoneGroupCollection a collection of TimeZoneGroupDto
@@ -45,36 +44,6 @@ func (tzGrpCol *TimeZoneGroupCollection) AddIfNew(
 
 	return isNew, err
 	}
-
-func (tzGrpCol *TimeZoneGroupCollection) AddIfNewByDetail(
-	majorGroupName,
-	minorGroupName,
-	compositeGroupName,
-	sourceFileNameExt string,
-	groupType TimeZoneGroupType,
-	deprecationStatus TimeZoneDeprecationStatus) (isNew bool, err error) {
-
-	ePrefix := "TimeZoneGroupCollection.AddIfNewByDetail() "
-
-	isNew = false
-	err = nil
-
-	tzGrpDto, err2 := TimeZoneGroupDto{}.New(
-		majorGroupName,
-		minorGroupName,
-		compositeGroupName,
-		sourceFileNameExt,
-		groupType,
-		deprecationStatus)
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix +
-			"%v\n", err2.Error())
-		return isNew, err
-	}
-
-	return tzGrpCol.AddIfNew(tzGrpDto)
-}
 
 // Adds a TimeZoneGroupDto to the collection. This allows
 // duplicate TimeZoneGroupDto objects to be added to the

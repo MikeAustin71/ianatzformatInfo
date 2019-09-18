@@ -98,47 +98,6 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNew(
 	return isNew, err
 }
 
-// AddIfNewByDetail - Adds a new TimeZoneDataDto to the collection. The
-// TimeZoneDataDto instance to be added is first created using the detail
-// input parameters. 
-//
-func (tzDataCol *TimeZoneDataCollection) AddIfNewByDetail(
-	majorGroup,
-	subTzName,
-	tzName,
-	tzAliasValue,
-	tzCanonicalValue,
-	tzValue,
-	tzSortValue,
-	srcFileNameExt string,
-	tzClass TimeZoneClass,
-	deprecationStatus TimeZoneDeprecationStatus) (isNew bool, err error) {
-
-	ePrefix := "TimeZoneDataCollection.AddIfNewByDetail() "
-	isNew = false
-	err = nil
-
-	tzDataDto, err2 := TimeZoneDataDto{}.New(
-		majorGroup,
-		subTzName,
-		tzName,
-		tzAliasValue,
-		tzCanonicalValue,
-		tzValue,
-		tzSortValue,
-		srcFileNameExt,
-		tzClass,
-		deprecationStatus)
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix +
-			"%v\n", err2.Error())
-		return isNew, err
-	}
-
-	return tzDataCol.AddIfNew(tzDataDto)
-}
-
 // MajorGroupExists - Performs a search for on the internal TimeZoneDataDto
 // array for a match on TimeZoneDataDto.MajorGroup. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
