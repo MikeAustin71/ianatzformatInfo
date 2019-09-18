@@ -463,14 +463,15 @@ func (parseTz *ParseIanaTzData) extractZone(
 		return nil
 	}
 
+tzGroup := tzdatastructs.TimeZoneGroupDto{}
+tzGroup.MajorGroupName = zoneArray[0]
+tzGroup.MinorGroupName = ""
+tzGroup.CompositeGroupName = zoneArray[0]
+tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
+tzGroup.GroupType = tzdatastructs.TzGrpType.IANA()
+tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 
-	_, err = tzMajorGroupCol.AddIfNewByDetail(
-		zoneArray[0],
-		"",
-		zoneArray[0],
-		fMgr.GetFileNameExt(),
-		tzdatastructs.TzGrpType.IANA(),
-		tzdatastructs.DepStatusCode.Valid())
+	_, err = tzMajorGroupCol.AddIfNew(tzGroup)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "\n" +
@@ -486,16 +487,15 @@ func (parseTz *ParseIanaTzData) extractZone(
 
 		tzDataDto.MajorGroup = zoneArray[0] // America - majorGroup
 		tzDataDto.SubTzName = ""
-		tzDataDto.TzName = zoneArray[1] // Argentina - tzName
+		tzDataDto.TzName = zoneArray[1] // Chicago - tzName
 		tzDataDto.TzAliasValue = ""
 		tzDataDto.TzCanonicalValue =
-			zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
-		tzDataDto.TzValue = zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
+			zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]  // 'America/Chicago'
+		tzDataDto.TzValue = tzDataDto.TzCanonicalValue // 'America/Chicago'
 		tzDataDto.TzSortValue =
-			tzdatastructs.TimeZoneDataDto{}.NewSortValue(
-				zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1])
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzDataDto.TzCanonicalValue)
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
-		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+		tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 
 		_, err = tzDataCol.AddIfNew(tzDataDto)
