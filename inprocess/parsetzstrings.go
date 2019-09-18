@@ -1,4 +1,4 @@
-package filemgrs
+package inprocess
 
 import (
 	"fmt"
@@ -267,7 +267,7 @@ func (parseTz *ParseIanaTzData) extractLink(
 
 	lenZoneArray := len(zoneArray)
 
-	if lenZoneArray < 2 ||
+	if lenZoneArray < 1 ||
 		lenZoneArray > 3 {
 		fmt.Printf(ePrefix + "Invalid Link Time Zone!\n" +
 			"FileName: %v\n" +
@@ -277,6 +277,7 @@ func (parseTz *ParseIanaTzData) extractLink(
 		return nil
 	}
 
+	// Add Major Group if it does not previously exist
 	_, err = tzMajorGroupCol.AddIfNewByDetail(
 		zoneArray[0],
 		"",
@@ -291,18 +292,22 @@ func (parseTz *ParseIanaTzData) extractLink(
 			"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 	}
 
-	// Link Time Zone Array has two elements
-	// Example: 'America/Cayman'
-	if lenZoneArray == 2 {
+	if lenZoneArray == 1 {
+		// Link Time Zone Array has one element
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
+		tzDataDto.MajorGroup = "Link"
+		tzDataDto.SubTzName = ""
+		tzDataDto.TzName = tzLink
+		tzDataDto.TzAliasValue = tzLink
+		tzDataDto.TzCanonicalValue = tzCanonical
+		tzDataDto.TzValue = tzLink
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzLink)
+		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 
-		_, err = tzDataCol.AddIfNewByDetail(
-			zoneArray[0],
-			"",
-			zoneArray[1],
-			tzCanonical,
-			fMgr.GetFileNameExt(),
-			tzdatastructs.TZClass.Alias(),
-			tzdatastructs.DepStatusCode.Valid())
+		_, err = tzLinkDataCol.AddIfNew(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -310,14 +315,27 @@ func (parseTz *ParseIanaTzData) extractLink(
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
 
-		_, err = tzLinkDataCol.AddIfNewByDetail(
-			zoneArray[0],
-			"",
-			zoneArray[1],
-			tzCanonical,
-			fMgr.GetFileNameExt(),
-			tzdatastructs.TZClass.Alias(),
-			tzdatastructs.DepStatusCode.Valid())
+		return nil
+	}
+
+	// Link Time Zone Array has two elements
+	// Example: 'America/Cayman'
+	if lenZoneArray == 2 {
+		// This is two element link
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
+		tzDataDto.MajorGroup = zoneArray[0]
+		tzDataDto.SubTzName = ""
+		tzDataDto.TzName = zoneArray[1]
+		tzDataDto.TzAliasValue = tzLink
+		tzDataDto.TzCanonicalValue = tzCanonical
+		tzDataDto.TzValue = tzCanonical
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzCanonical)
+		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+
+		_, err = tzDataCol.AddIfNew(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -352,14 +370,21 @@ func (parseTz *ParseIanaTzData) extractLink(
 	// Add Place Holder To main Tz Collection
 	// Add to main time zone collection
 	//  America/Argentina/Buenos_Aires
-	_, err = tzDataCol.AddIfNewByDetail(
-		zoneArray[0], // America - majorGroup
-		zoneArray[1], // Argentina - subTzName
-		zoneArray[1], // Argentina - tzName
-		tzCanonical, // America/Argentina - tzValue
-		fMgr.GetFileNameExt(),
-		tzdatastructs.TZClass.SubGroup(),
-		tzdatastructs.DepStatusCode.Valid())
+	tzDataDto := tzdatastructs.TimeZoneDataDto{}
+	tzDataDto.MajorGroup = zoneArray[0] // America - majorGroup
+	tzDataDto.SubTzName = zoneArray[1] // Argentina - subTzName
+	tzDataDto.TzName = zoneArray[1] // Argentina - tzName
+	tzDataDto.TzAliasValue = tzLink
+	tzDataDto.TzCanonicalValue = tzCanonical
+	tzDataDto.TzValue = tzCanonical
+	tzDataDto.TzSortValue =
+		tzdatastructs.TimeZoneDataDto{}.NewSortValue(
+			zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1])
+	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+
+	_, err = tzDataCol.AddIfNew(tzDataDto)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -370,16 +395,22 @@ func (parseTz *ParseIanaTzData) extractLink(
 	// Finally, add the Sub Time Zone to the
 	// Sub Time Zone Array (subTzDataCol)
 	// America/Argentina/Buenos_Aires
+	tzDataDto = tzdatastructs.TimeZoneDataDto{}
+	tzDataDto.MajorGroup = zoneArray[0] // America - majorGroup
+	tzDataDto.SubTzName = zoneArray[1] // Argentina - subTzName
+	tzDataDto.TzName = zoneArray[2] // Argentina - tzName
+	tzDataDto.TzAliasValue = tzLink
+	tzDataDto.TzCanonicalValue = tzCanonical
+	tzDataDto.TzValue = tzCanonical
+	tzDataDto.TzSortValue =
+		tzdatastructs.TimeZoneDataDto{}.NewSortValue(
+			tzLink)
+	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 
 	_,
-		err = subTzDataCol.AddIfNewByDetail(
-		zoneArray[0],  // America - majorGroup
-		zoneArray[1],  // Argentina - subTzName
-		zoneArray[0] + "/" + zoneArray[1],  // America/Argentina - tzName
-		tzCanonical, // America/Argentina/Buenos_Aires - tzValue
-		fMgr.GetFileNameExt(),
-		tzdatastructs.TZClass.SubTimeZone(),
-		tzdatastructs.DepStatusCode.Valid())
+		err = subTzDataCol.AddIfNew(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -451,14 +482,23 @@ func (parseTz *ParseIanaTzData) extractZone(
 // Example: 'America/Chicago'
 	if lenZoneArray == 2 {
 
-		_, err = tzDataCol.AddIfNewByDetail(
-			zoneArray[0],
-			"",
-			zoneArray[1],
-			zoneArray[0] + "/" + zoneArray[1],
-			fMgr.GetFileNameExt(),
-			tzdatastructs.TZClass.Canonical(),
-			tzdatastructs.DepStatusCode.Valid())
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
+
+		tzDataDto.MajorGroup = zoneArray[0] // America - majorGroup
+		tzDataDto.SubTzName = ""
+		tzDataDto.TzName = zoneArray[1] // Argentina - tzName
+		tzDataDto.TzAliasValue = ""
+		tzDataDto.TzCanonicalValue =
+			zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
+		tzDataDto.TzValue = zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(
+				zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1])
+		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+
+		_, err = tzDataCol.AddIfNew(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -493,14 +533,23 @@ err = tzMinorGroupCol.AddIfNewByDetail(
 	// Add Place Holder To main Tz Collection
 	// Add to main time zone collection
 	//  America/Argentina/Buenos_Aires
-		_, err = tzDataCol.AddIfNewByDetail(
-			zoneArray[0], // America - majorGroup
-			zoneArray[1], // Argentina - subTzName
-			zoneArray[1], // Argentina - tzName
-			zoneArray[0] + "/" + zoneArray[1], // America/Argentina - tzValue
-			fMgr.GetFileNameExt(),
-			tzdatastructs.TZClass.SubGroup(),
-			tzdatastructs.DepStatusCode.Valid())
+	tzDataDto := tzdatastructs.TimeZoneDataDto{}
+
+	tzDataDto.MajorGroup = zoneArray[0] // America - majorGroup
+	tzDataDto.SubTzName = zoneArray[1] // Argentina - subTzName
+	tzDataDto.TzName = zoneArray[1] // Argentina - tzName
+	tzDataDto.TzAliasValue = ""
+	tzDataDto.TzCanonicalValue =
+		zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
+	tzDataDto.TzValue = zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
+	tzDataDto.TzSortValue =
+		tzdatastructs.TimeZoneDataDto{}.NewSortValue(
+			zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1])
+	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+
+	_, err = tzDataCol.AddIfNew(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix + "tzDataCol Error.\n" +
@@ -511,16 +560,24 @@ err = tzMinorGroupCol.AddIfNewByDetail(
 	// Finally, add the Sub Time Zone to the
 	// Sub Time Zone Array (subTzDataCol)
 	// America/Argentina/Buenos_Aires
+	tzDataDto = tzdatastructs.TimeZoneDataDto{}
+
+	tzDataDto.MajorGroup = zoneArray[0] // America - majorGroup
+	tzDataDto.SubTzName = zoneArray[1] // Argentina - subTzName
+	tzDataDto.TzName = zoneArray[1] // Argentina - tzName
+	tzDataDto.TzAliasValue = ""
+	tzDataDto.TzCanonicalValue =
+		zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]
+	tzDataDto.TzValue = zoneArray[0] + tzdatastructs.ZoneSeparator +
+		zoneArray[1] + tzdatastructs.ZoneSeparator + zoneArray[2]
+	tzDataDto.TzSortValue =
+		tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzDataDto.TzValue)
+	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+	tzDataDto.TzClass = tzdatastructs.TZClass.SubTimeZone()
+	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 
 	_,
-	err = subTzDataCol.AddIfNewByDetail(
-		zoneArray[0],  // America - majorGroup
-		zoneArray[1],  // Argentina - subTzName
-		zoneArray[0] + "/" + zoneArray[1],  // America/Argentina - tzName
-		zoneArray[0] + "/" + zoneArray[1] + "/" + zoneArray[2], // America/Argentina/Buenos_Aires - tzValue
-		fMgr.GetFileNameExt(),
-		tzdatastructs.TZClass.SubTimeZone(),
-		tzdatastructs.DepStatusCode.Valid())
+	err = subTzDataCol.AddIfNew(tzDataDto)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix + "subTzDataCol Error.\n" +

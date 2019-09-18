@@ -106,7 +106,10 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNewByDetail(
 	majorGroup,
 	subTzName,
 	tzName,
+	tzAliasValue,
+	tzCanonicalValue,
 	tzValue,
+	tzSortValue,
 	srcFileNameExt string,
 	tzClass TimeZoneClass,
 	deprecationStatus TimeZoneDeprecationStatus) (isNew bool, err error) {
@@ -119,7 +122,10 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNewByDetail(
 		majorGroup,
 		subTzName,
 		tzName,
+		tzAliasValue,
+		tzCanonicalValue,
 		tzValue,
+		tzSortValue,
 		srcFileNameExt,
 		tzClass,
 		deprecationStatus)
