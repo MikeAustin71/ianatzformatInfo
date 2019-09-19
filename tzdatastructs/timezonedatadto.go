@@ -9,27 +9,29 @@ import (
 )
 
 type TimeZoneDataDto struct {
-	MajorGroup        string
-	SubTzName         string
-	TzName            string
-	TzAliasValue      string
-	TzCanonicalValue  string
-	TzValue           string
-	TzSortValue       string
-	FuncType          string
-	FuncName          string
-	FuncReturnValue   string
-	SourceFileNameExt string
-	TzClass           TimeZoneClass // 0 = Unknown
+	MajorGroup                 string
+	SubTzName                  string
+	TzName                     string
+	TzAliasValue               string
+	TzCanonicalValue           string
+	TzValue                    string
+	TzSortValue                string
+	FuncSelfReferenceVariable  string
+	FuncType                   string
+	FuncName                   string
+	FuncReturnType             string
+	FuncReturnValue            string
+	SourceFileNameExt          string
+	TzClass                    TimeZoneClass // 0 = Unknown
 	// 1 = Canonical
 	// 2 = Alias
 	// 3 = Sub-Group Place Holder
 
-	DeprecationStatus TimeZoneDeprecationStatus // 0 = Unknown
+	DeprecationStatus          TimeZoneDeprecationStatus // 0 = Unknown
 	// 1 = Deprecated
 	// 2 = Alias
 	// 3 = Valid, Current Time Zone
-	isInitialized bool
+	isInitialized              bool
 }
 
 // CopyOut - Creates and returns a deep copy of the current
@@ -50,8 +52,10 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
 	newTzDto.TzValue = tzDataDto.TzValue
 	newTzDto.TzSortValue = tzDataDto.TzSortValue
+	newTzDto.FuncSelfReferenceVariable = tzDataDto.FuncSelfReferenceVariable
 	newTzDto.FuncType = tzDataDto.FuncType
 	newTzDto.FuncName = tzDataDto.FuncName
+	newTzDto.FuncReturnType = tzDataDto.FuncReturnType
 	newTzDto.FuncReturnValue = tzDataDto.FuncReturnValue
 	newTzDto.SourceFileNameExt = tzDataDto.SourceFileNameExt
 	newTzDto.TzClass = tzDataDto.TzClass
@@ -75,8 +79,10 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
 	tzDataDto.TzValue = inTzDataDto.TzValue
 	tzDataDto.TzSortValue = inTzDataDto.TzSortValue
-	tzDataDto.FuncName = inTzDataDto.FuncName
+	tzDataDto.FuncSelfReferenceVariable = inTzDataDto.FuncSelfReferenceVariable
 	tzDataDto.FuncType = inTzDataDto.FuncType
+	tzDataDto.FuncName = inTzDataDto.FuncName
+	tzDataDto.FuncReturnType = inTzDataDto.FuncReturnType
 	tzDataDto.FuncReturnValue = inTzDataDto.FuncReturnValue
 	tzDataDto.SourceFileNameExt = inTzDataDto.SourceFileNameExt
 	tzDataDto.TzClass = inTzDataDto.TzClass
@@ -149,9 +155,11 @@ func (tzDataDto TimeZoneDataDto) New(
 	tzCanonicalValue,
 	tzAliasValue,
 	tzValue,
-	tzSortName,
+	tzSortValue,
+	funcSelfReferenceVariable,
 	funcType,
 	funcName,
+	funcReturnType,
 	funcReturnValue,
 	srcFileNameExt string,
 	tzClass TimeZoneClass,
@@ -193,16 +201,17 @@ func (tzDataDto TimeZoneDataDto) New(
 				"deprecationStatus='%v'", int(deprecationStatus))
 	}
 
-
 	newTzDto.MajorGroup = majorGroup
 	newTzDto.SubTzName = subTzName
 	newTzDto.TzName = tzName
 	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzAliasValue = tzAliasValue
 	newTzDto.TzValue = tzValue
-	newTzDto.TzSortValue = tzSortName
+	newTzDto.TzSortValue = tzSortValue
+	newTzDto.FuncSelfReferenceVariable = funcSelfReferenceVariable
 	newTzDto.FuncType = funcType
 	newTzDto.FuncName = funcName
+	newTzDto.FuncReturnType = funcReturnType
 	newTzDto.FuncReturnValue = funcReturnValue
 	newTzDto.SourceFileNameExt = srcFileNameExt
 	newTzDto.TzClass = tzClass
