@@ -68,11 +68,8 @@ func main() {
 		return
 	}
 
-	tzdatastructs.TimeZoneMajorGroups,
-	tzdatastructs.TimeZoneMinorGroups,
-	tzdatastructs.TimeZoneData,
-	tzdatastructs.SubTimeZoneData,
-	tzdatastructs.LinkAliasTimeZoneData,
+	tzdatastructs.TimeZoneGroups,
+	tzdatastructs.TimeZones,
 		err =
 		 inprocess.ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo)
 

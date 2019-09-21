@@ -8,16 +8,15 @@ import (
 )
 
 type TimeZoneGroupDto struct {
-	MajorGroupName    string
-	MinorGroupName    string
-	GroupNameValue    string
-	GroupSortValue    string
-	TypeName          string
-	IanaVariableName  string
-	SourceFileNameExt string
-	GroupType         TimeZoneGroupType
-	DeprecationStatus TimeZoneDeprecationStatus
-	isInitialized     bool
+	ParentGroupName    string
+	GroupName          string
+	GroupSortValue     string
+	TypeName           string
+	IanaVariableName   string
+	SourceFileNameExt  string
+	GroupType          TimeZoneGroupType
+	DeprecationStatus  TimeZoneDeprecationStatus
+	isInitialized      bool
 }
 
 // CopyOut - Creates and returns a deep copy of the current
@@ -31,9 +30,8 @@ func (tzGrpDto *TimeZoneGroupDto) CopyOut() TimeZoneGroupDto {
 		return newTzGrpDto
 	}
 
-	newTzGrpDto.MajorGroupName        = tzGrpDto.MajorGroupName
-	newTzGrpDto.MinorGroupName        = tzGrpDto.MinorGroupName
-	newTzGrpDto.GroupNameValue        = tzGrpDto.GroupNameValue
+	newTzGrpDto.ParentGroupName       = tzGrpDto.ParentGroupName
+	newTzGrpDto.GroupName             = tzGrpDto.GroupName
 	newTzGrpDto.GroupSortValue        = tzGrpDto.GroupSortValue
 	newTzGrpDto.TypeName              = tzGrpDto.TypeName
 	newTzGrpDto.IanaVariableName      = tzGrpDto.IanaVariableName
@@ -54,9 +52,8 @@ func (tzGrpDto *TimeZoneGroupDto) CopyOut() TimeZoneGroupDto {
 func (tzGrpDto *TimeZoneGroupDto) CopyIn(
 	inGrpDto *TimeZoneGroupDto) {
 
-	tzGrpDto.MajorGroupName      = inGrpDto.MajorGroupName
-	tzGrpDto.MinorGroupName      = inGrpDto.MinorGroupName
-	tzGrpDto.GroupNameValue      = inGrpDto.GroupNameValue
+	tzGrpDto.ParentGroupName     = inGrpDto.ParentGroupName
+	tzGrpDto.GroupName           = inGrpDto.GroupName
 	tzGrpDto.GroupSortValue      = inGrpDto.GroupSortValue
 	tzGrpDto.TypeName            = inGrpDto.TypeName
 	tzGrpDto.IanaVariableName    = inGrpDto.IanaVariableName
@@ -104,7 +101,7 @@ func (tzGrpDto *TimeZoneGroupDto) EqualDeprecationStatus(
 func (tzGrpDto *TimeZoneGroupDto) EqualNameValues(
 	tzGrpDto2 TimeZoneGroupDto) bool {
 
-		if tzGrpDto.GroupNameValue == tzGrpDto2.GroupNameValue {
+		if tzGrpDto.GroupName == tzGrpDto2.GroupName {
 			return true
 		}
 
@@ -114,9 +111,8 @@ func (tzGrpDto *TimeZoneGroupDto) EqualNameValues(
 // Creates and returns a new instance of TimeZoneGroupDto.
 //
 func (tzGrpDto TimeZoneGroupDto) New(
-	majorGroupName,
-	minorGroupName,
-	groupNameValue,
+	parentGroupName,
+	groupName,
 	groupSortValue,
 	typeName,
 	ianaVariableName,
@@ -128,7 +124,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 
 	newTzGroupDto := TimeZoneGroupDto{}
 
-	if len(groupNameValue) == 0 {
+	if len(groupName) == 0 {
 		return newTzGroupDto,
 			errors.New(ePrefix + "Input Parameter 'compositeGroupName' is an EMPTY string!\n")
 	}
@@ -149,15 +145,11 @@ func (tzGrpDto TimeZoneGroupDto) New(
 				"deprecationStatus='%v'", int(deprecationStatus))
 	}
 
-	newTzGroupDto.MajorGroupName = majorGroupName
-	newTzGroupDto.MinorGroupName = minorGroupName
-	newTzGroupDto.GroupNameValue = groupNameValue
+	newTzGroupDto.ParentGroupName = parentGroupName
+	newTzGroupDto.GroupName = groupName
 	newTzGroupDto.GroupSortValue = groupSortValue
 	newTzGroupDto.TypeName = typeName
-
-	newTzGroupDto.IanaVariableName =
-		ianaVariableName
-
+	newTzGroupDto.IanaVariableName = ianaVariableName
 	newTzGroupDto.GroupType = groupType
 	newTzGroupDto.DeprecationStatus = deprecationStatus
 	newTzGroupDto.isInitialized = true
@@ -208,26 +200,26 @@ func (tzGrpDto *TimeZoneGroupDto) SetIsInitialized(isInitialized bool) {
 }
 
 
-// SortByTzMajorGroupName - This type provides support methods for
+// SortByTzGroupName - This type provides support methods for
 // sorting Time Zone Major Group Dto Arrays by Major Group Name.
 //
 // Example Usage:
-//    sort.Sort(SortByTzMajorGroupName(tzMajorGroupDtoArray))
+//    sort.Sort(SortByTzGroupName(tzMajorGroupDtoArray))
 //
-type SortByTzMajorGroupName []TimeZoneGroupDto
+type SortByTzGroupName []TimeZoneGroupDto
 
 // Len - Required by the sort.Interface
-func (sortMjrGrpName SortByTzMajorGroupName) len() int {
+func (sortMjrGrpName SortByTzGroupName) len() int {
 	return len(sortMjrGrpName)
 }
 
 // Swap - Required by the sort.Interface
-func (sortMjrGrpName SortByTzMajorGroupName) Swap(i, j int) {
+func (sortMjrGrpName SortByTzGroupName) Swap(i, j int) {
 	sortMjrGrpName[i], sortMjrGrpName[j] = sortMjrGrpName[j], sortMjrGrpName[i]
 }
 
 // Less - Required by the sort.Interface
-func (sortMjrGrpName SortByTzMajorGroupName) Less(i, j int) bool {
-	return sortMjrGrpName[i].MajorGroupName < sortMjrGrpName[j].MajorGroupName
+func (sortMjrGrpName SortByTzGroupName) Less(i, j int) bool {
+	return sortMjrGrpName[i].GroupName < sortMjrGrpName[j].GroupName
 }
 

@@ -9,20 +9,19 @@ import (
 )
 
 type TimeZoneDataDto struct {
-	MajorGroup                 string
-	SubTzName                  string
-	TzName                     string
-	TzAliasValue               string
-	TzCanonicalValue           string
-	TzValue                    string
-	TzSortValue                string
-	FuncSelfReferenceVariable  string
-	FuncType                   string
-	FuncName                   string
-	FuncReturnType             string
-	FuncReturnValue            string
-	SourceFileNameExt          string
-	TzClass                    TimeZoneClass // 0 = Unknown
+	GroupName                 string
+	TzName                    string
+	TzAliasValue              string
+	TzCanonicalValue          string
+	TzValue                   string
+	TzSortValue               string
+	FuncSelfReferenceVariable string
+	FuncType                  string
+	FuncName                  string
+	FuncReturnType            string
+	FuncReturnValue           string
+	SourceFileNameExt         string
+	TzClass                   TimeZoneClass // 0 = Unknown
 	// 1 = Canonical
 	// 2 = Alias
 	// 3 = Sub-Group Place Holder
@@ -45,8 +44,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 		return newTzDto
 	}
 
-	newTzDto.MajorGroup = tzDataDto.MajorGroup
-	newTzDto.SubTzName = tzDataDto.SubTzName
+	newTzDto.GroupName = tzDataDto.GroupName
 	newTzDto.TzName = tzDataDto.TzName
 	newTzDto.TzCanonicalValue = tzDataDto.TzCanonicalValue
 	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
@@ -72,8 +70,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 func (tzDataDto *TimeZoneDataDto) CopyIn(
 	inTzDataDto *TimeZoneDataDto) {
 
-	tzDataDto.MajorGroup = inTzDataDto.MajorGroup
-	tzDataDto.SubTzName = inTzDataDto.SubTzName
+	tzDataDto.GroupName = inTzDataDto.GroupName
 	tzDataDto.TzName = inTzDataDto.TzName
 	tzDataDto.TzCanonicalValue = inTzDataDto.TzCanonicalValue
 	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
@@ -91,7 +88,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 
 }
 
-// TimeZoneDataDto - Compares isInitialized, MajorGroup, SubTzName,
+// TimeZoneDataDto - Compares isInitialized, GroupName, SubTzName,
 // TzName, TzAliasValue TzCanonicalValue and TzValue data elements
 // encapsulated by input parameter 'tzDDto' and the current
 // TimeZoneDataDto instance.  If these values are identical,
@@ -103,8 +100,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 
 	if tzDataDto.isInitialized == tzDDto.isInitialized &&
-		tzDataDto.MajorGroup == tzDDto.MajorGroup &&
-		tzDataDto.SubTzName == tzDDto.SubTzName &&
+		tzDataDto.GroupName == tzDDto.GroupName &&
 		tzDataDto.TzName == tzDDto.TzName &&
 		tzDataDto.TzAliasValue == tzDDto.TzAliasValue &&
 		tzDataDto.TzCanonicalValue == tzDDto.TzCanonicalValue &&
@@ -149,7 +145,7 @@ func (tzDataDto *TimeZoneDataDto) IsInitialized() bool {
 // New - Creates and returns a new instance of the TimeZoneDataDto Type.
 //
 func (tzDataDto TimeZoneDataDto) New(
-	majorGroup,
+	groupName,
 	subTzName,
 	tzName,
 	tzCanonicalValue,
@@ -168,9 +164,9 @@ func (tzDataDto TimeZoneDataDto) New(
 	ePrefix := "TimeZoneDataDto.NewTimeZone() - ERROR:\n"
 	newTzDto := TimeZoneDataDto{}
 
-	if len(majorGroup) == 0 {
+	if len(groupName) == 0 {
 		return newTzDto,
-			errors.New(ePrefix + "Input Parameter 'majorGroup' is an EMPTY string!\n")
+			errors.New(ePrefix + "Input Parameter 'groupName' is an EMPTY string!\n")
 	}
 
 	// subTzName empty strings are allowed.
@@ -201,8 +197,7 @@ func (tzDataDto TimeZoneDataDto) New(
 				"deprecationStatus='%v'", int(deprecationStatus))
 	}
 
-	newTzDto.MajorGroup = majorGroup
-	newTzDto.SubTzName = subTzName
+	newTzDto.GroupName = groupName
 	newTzDto.TzName = tzName
 	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzAliasValue = tzAliasValue
@@ -266,7 +261,7 @@ func (tzDataDto *TimeZoneDataDto) SetIsInitialized(isInitialized bool) {
 type SelectTzDto []TimeZoneDataDto
 
 // MajorGroupExists - Performs a search for on TimeZoneDataDto array
-// for a match on TimeZoneDataDto.MajorGroup. If the search is successful,
+// for a match on TimeZoneDataDto.GroupName. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
 // value of the found TimeZoneDataDto instance.
 //
@@ -283,10 +278,10 @@ func (selTzDto SelectTzDto) MajorGroupExists(majorGroupName string, useLwrCase b
 
 		if useLwrCase {
 
-			if strings.ToLower(selTzDto[i].MajorGroup) == majorGroupName {
+			if strings.ToLower(selTzDto[i].GroupName) == majorGroupName {
 				return true, i
 			}
-		} else if selTzDto[i].MajorGroup == majorGroupName {
+		} else if selTzDto[i].GroupName == majorGroupName {
 
 			return true, i
 		}
@@ -296,39 +291,7 @@ func (selTzDto SelectTzDto) MajorGroupExists(majorGroupName string, useLwrCase b
 	return false, -1
 }
 
-// SubTzNameExists - Performs a search for on TimeZoneDataDto array
-// for a match on TimeZoneDataDto.SubTzName. If the search is successful,
-// this method returns a boolean value of 'true' and the integer index
-// value of the found TimeZoneDataDto instance.
-//
-// If the search fails, a boolean value of false is returned and the
-// integer index value is set to -1.
-//
-func (selTzDto SelectTzDto) SubTzNameExists(
-	subTzName string, useLwrCase bool) (bool, int) {
-
-	if useLwrCase {
-		subTzName = strings.ToLower(subTzName)
-	}
-
-	for i:=0; i < len(selTzDto); i++ {
-
-		if useLwrCase {
-			if strings.ToLower(selTzDto[i].SubTzName) == subTzName{
-				return true, i
-			}
-		} else if selTzDto[i].SubTzName == subTzName {
-
-			return true, i
-		}
-
-	}
-
-	return false, -1
-
-}
-
-// SubTzNameExists - Performs a search for on TimeZoneDataDto array
+// TzNameExists - Performs a search for on TimeZoneDataDto array
 // for a match on TimeZoneDataDto.TzName. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
 // value of the found TimeZoneDataDto instance.

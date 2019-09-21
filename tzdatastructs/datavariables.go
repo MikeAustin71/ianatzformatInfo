@@ -3,11 +3,8 @@ package tzdatastructs
 import 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 
 
-var TimeZoneMajorGroups TimeZoneGroupCollection
-var TimeZoneMinorGroups TimeZoneGroupCollection
-var TimeZoneData TimeZoneDataCollection
-var SubTimeZoneData TimeZoneDataCollection
-var LinkAliasTimeZoneData TimeZoneDataCollection
+var TimeZoneGroups [] TimeZoneGroupCollection
+var TimeZones [] TimeZoneDataCollection
 var CurWorkingDirectory pathfileops.DirMgr
 
 

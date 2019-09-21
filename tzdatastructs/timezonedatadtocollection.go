@@ -8,10 +8,10 @@ import (
 	"strings"
 )
 
-// SortTimeZoneDataByMjrGrpTzName - Sort by MajorGroup Name, TzName
+// SortTimeZoneDataByMjrGrpTzName - Sort by GroupName Name, TzName
 //
 // Example Usage:
-//    sort.Sort(SortByTzMajorGroupName(tzMajorGroupDtoArray))
+//    sort.Sort(SortByTzGroupName(tzMajorGroupDtoArray))
 //
 type SortTimeZoneDataByMjrGrpTzName []TimeZoneDataDto
 
@@ -28,11 +28,11 @@ func (sortByTzDtoName SortTimeZoneDataByMjrGrpTzName) Swap(i, j int) {
 // Less - required by the sort.Interface
 func (sortByTzDtoName SortTimeZoneDataByMjrGrpTzName) Less(i, j int) bool {
 
-	if sortByTzDtoName[i].MajorGroup == sortByTzDtoName[j].MajorGroup {
+	if sortByTzDtoName[i].GroupName == sortByTzDtoName[j].GroupName {
 		return sortByTzDtoName[i].TzName < sortByTzDtoName[j].TzName
 	}
 
-	return sortByTzDtoName[i].MajorGroup < sortByTzDtoName[j].MajorGroup
+	return sortByTzDtoName[i].GroupName < sortByTzDtoName[j].GroupName
 }
 
 
@@ -99,7 +99,7 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNew(
 }
 
 // MajorGroupExists - Performs a search for on the internal TimeZoneDataDto
-// array for a match on TimeZoneDataDto.MajorGroup. If the search is successful,
+// array for a match on TimeZoneDataDto.GroupName. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
 // value of the found TimeZoneDataDto instance.
 //
@@ -107,7 +107,7 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNew(
 // integer index value is set to -1.
 //
 // If the input parameter 'caseInsensitiveSearch' is set to 'true', the search for
-// TimeZoneDataDto.MajorGroup will be conducted as a case insensitive search.
+// TimeZoneDataDto.GroupName will be conducted as a case insensitive search.
 // This means that both strings are converted to lower case before the comparison
 // is performed.
 //
@@ -140,10 +140,10 @@ func (tzDataCol *TimeZoneDataCollection) MajorGroupExists(
 	for i:=0; i < lenTzDataDtoArray; i++ {
 
 		if caseInsensitiveSearch {
-			if majorGroupName == strings.ToLower(tzDataCol.tzDataDtos[i].MajorGroup) {
+			if majorGroupName == strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) {
 				return true, i
 			}
-		} else if majorGroupName == tzDataCol.tzDataDtos[i].MajorGroup {
+		} else if majorGroupName == tzDataCol.tzDataDtos[i].GroupName {
 			return true, i
 		}
 
@@ -324,11 +324,11 @@ func (tzDataCol *TimeZoneDataCollection) SortByMjrGrpTzName(caseSensitiveSort bo
 
 	if !caseSensitiveSort {
 		less = func(i, j int) bool {
-			if strings.ToLower(tzDataCol.tzDataDtos[i].MajorGroup) !=
-				strings.ToLower(tzDataCol.tzDataDtos[j].MajorGroup) {
+			if strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) !=
+				strings.ToLower(tzDataCol.tzDataDtos[j].GroupName) {
 
-				return strings.ToLower(tzDataCol.tzDataDtos[i].MajorGroup) <
-					strings.ToLower(tzDataCol.tzDataDtos[j].MajorGroup)
+				return strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) <
+					strings.ToLower(tzDataCol.tzDataDtos[j].GroupName)
 			}
 
 			return strings.ToLower(tzDataCol.tzDataDtos[i].TzName) <
@@ -336,11 +336,11 @@ func (tzDataCol *TimeZoneDataCollection) SortByMjrGrpTzName(caseSensitiveSort bo
 		}
 	} else {
 		less = func(i, j int) bool {
-			if tzDataCol.tzDataDtos[i].MajorGroup !=
-				tzDataCol.tzDataDtos[j].MajorGroup {
+			if tzDataCol.tzDataDtos[i].GroupName !=
+				tzDataCol.tzDataDtos[j].GroupName {
 
-				return tzDataCol.tzDataDtos[i].MajorGroup <
-					tzDataCol.tzDataDtos[j].MajorGroup
+				return tzDataCol.tzDataDtos[i].GroupName <
+					tzDataCol.tzDataDtos[j].GroupName
 			}
 
 			return tzDataCol.tzDataDtos[i].TzName <
