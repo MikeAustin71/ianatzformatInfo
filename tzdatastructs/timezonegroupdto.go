@@ -12,6 +12,7 @@ type TimeZoneGroupDto struct {
 	GroupName          string
 	GroupSortValue     string
 	TypeName           string
+	TypeValue          string
 	IanaVariableName   string
 	SourceFileNameExt  string
 	GroupType          TimeZoneGroupType
@@ -34,6 +35,7 @@ func (tzGrpDto *TimeZoneGroupDto) CopyOut() TimeZoneGroupDto {
 	newTzGrpDto.GroupName             = tzGrpDto.GroupName
 	newTzGrpDto.GroupSortValue        = tzGrpDto.GroupSortValue
 	newTzGrpDto.TypeName              = tzGrpDto.TypeName
+	newTzGrpDto.TypeValue             = tzGrpDto.TypeValue
 	newTzGrpDto.IanaVariableName      = tzGrpDto.IanaVariableName
 	newTzGrpDto.SourceFileNameExt     = tzGrpDto.SourceFileNameExt
 	newTzGrpDto.GroupType             = tzGrpDto.GroupType
@@ -56,6 +58,7 @@ func (tzGrpDto *TimeZoneGroupDto) CopyIn(
 	tzGrpDto.GroupName           = inGrpDto.GroupName
 	tzGrpDto.GroupSortValue      = inGrpDto.GroupSortValue
 	tzGrpDto.TypeName            = inGrpDto.TypeName
+	tzGrpDto.TypeValue           = inGrpDto.TypeValue
 	tzGrpDto.IanaVariableName    = inGrpDto.IanaVariableName
 	tzGrpDto.SourceFileNameExt   = inGrpDto.SourceFileNameExt
 	tzGrpDto.GroupType           = inGrpDto.GroupType
@@ -115,6 +118,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 	groupName,
 	groupSortValue,
 	typeName,
+	typeValue,
 	ianaVariableName,
 	sourceFileNameExt string,
 	groupType TimeZoneGroupType,
@@ -149,6 +153,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 	newTzGroupDto.GroupName = groupName
 	newTzGroupDto.GroupSortValue = groupSortValue
 	newTzGroupDto.TypeName = typeName
+	newTzGroupDto.TypeValue = typeValue
 	newTzGroupDto.IanaVariableName = ianaVariableName
 	newTzGroupDto.GroupType = groupType
 	newTzGroupDto.DeprecationStatus = deprecationStatus
