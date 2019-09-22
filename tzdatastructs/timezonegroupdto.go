@@ -16,6 +16,7 @@ type TimeZoneGroupDto struct {
 	IanaVariableName   string
 	SourceFileNameExt  string
 	GroupType          TimeZoneGroupType
+	GroupClass         TimeZoneGroupClass
 	DeprecationStatus  TimeZoneDeprecationStatus
 	isInitialized      bool
 }
@@ -39,6 +40,7 @@ func (tzGrpDto *TimeZoneGroupDto) CopyOut() TimeZoneGroupDto {
 	newTzGrpDto.IanaVariableName      = tzGrpDto.IanaVariableName
 	newTzGrpDto.SourceFileNameExt     = tzGrpDto.SourceFileNameExt
 	newTzGrpDto.GroupType             = tzGrpDto.GroupType
+	newTzGrpDto.GroupClass             = tzGrpDto.GroupClass
 	newTzGrpDto.DeprecationStatus     = tzGrpDto.DeprecationStatus
 	newTzGrpDto.isInitialized         = true
 
@@ -62,6 +64,7 @@ func (tzGrpDto *TimeZoneGroupDto) CopyIn(
 	tzGrpDto.IanaVariableName    = inGrpDto.IanaVariableName
 	tzGrpDto.SourceFileNameExt   = inGrpDto.SourceFileNameExt
 	tzGrpDto.GroupType           = inGrpDto.GroupType
+	tzGrpDto.GroupClass           = inGrpDto.GroupClass
 	tzGrpDto.DeprecationStatus   = inGrpDto.DeprecationStatus
 	tzGrpDto.isInitialized       = inGrpDto.isInitialized
 }
@@ -72,13 +75,26 @@ func (tzGrpDto *TimeZoneGroupDto) IsInitialized() bool {
 	return tzGrpDto.isInitialized
 }
 
-// EqualNameValues - Compares the GroupType data values for input
-// parameter 'tzMajorGrp2' and the current TimeZoneGroupDto. If
+// EqualGroupTypes - Compares the GroupType data values for input
+// parameter 'tzGrp2' and the current TimeZoneGroupDto. If
 // they are equivalent, this method returns 'true'.
 func (tzGrpDto *TimeZoneGroupDto) EqualGroupTypes(
-	tzMajorGrp2 TimeZoneGroupDto) bool {
+	tzGrp2 TimeZoneGroupDto) bool {
 
-	if tzGrpDto.GroupType == tzMajorGrp2.GroupType {
+	if tzGrpDto.GroupType == tzGrp2.GroupType {
+		return true
+	}
+
+	return false
+}
+
+// EqualGroupClass - Compares the GroupClass data values for input
+// parameter 'tzGrp2' and the current TimeZoneGroupDto. If
+// they are equivalent, this method returns 'true'.
+func (tzGrpDto *TimeZoneGroupDto) EqualGroupClass(
+	tzGrp2 TimeZoneGroupDto) bool {
+
+	if tzGrpDto.GroupClass == tzGrp2.GroupClass {
 		return true
 	}
 
@@ -122,6 +138,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 	ianaVariableName,
 	sourceFileNameExt string,
 	groupType TimeZoneGroupType,
+	groupClass TimeZoneGroupClass,
 	deprecationStatus TimeZoneDeprecationStatus) (TimeZoneGroupDto, error) {
 
 	ePrefix := "TimeZoneGroupDto.New() "
@@ -156,6 +173,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 	newTzGroupDto.TypeValue = typeValue
 	newTzGroupDto.IanaVariableName = ianaVariableName
 	newTzGroupDto.GroupType = groupType
+	newTzGroupDto.GroupClass = groupClass
 	newTzGroupDto.DeprecationStatus = deprecationStatus
 	newTzGroupDto.isInitialized = true
 
@@ -203,7 +221,6 @@ func (tzGrpDto TimeZoneGroupDto) NewSortValue(groupValue string) string {
 func (tzGrpDto *TimeZoneGroupDto) SetIsInitialized(isInitialized bool) {
 	tzGrpDto.isInitialized = isInitialized
 }
-
 
 // SortByTzGroupName - This type provides support methods for
 // sorting Time Zone Major Group Dto Arrays by Major Group Name.

@@ -21,10 +21,19 @@ type TimeZoneDataDto struct {
 	FuncReturnType            string
 	FuncReturnValue           string
 	SourceFileNameExt         string
-	TzClass                   TimeZoneClass // 0 = Unknown
+
+	// 0 = Unknown
 	// 1 = Canonical
 	// 2 = Alias
-	// 3 = Sub-Group Place Holder
+	// 3 = Artificial
+	TzClass                   TimeZoneClass
+
+	// 0 = Unknown
+	// 1 = Standard
+	// 2 = Group
+	// 3 = SubZone
+	TzType                    TimeZoneType
+
 
 	DeprecationStatus          TimeZoneDeprecationStatus // 0 = Unknown
 	// 1 = Deprecated
@@ -57,6 +66,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.FuncReturnValue = tzDataDto.FuncReturnValue
 	newTzDto.SourceFileNameExt = tzDataDto.SourceFileNameExt
 	newTzDto.TzClass = tzDataDto.TzClass
+	newTzDto.TzType = tzDataDto.TzType
 	newTzDto.DeprecationStatus = tzDataDto.DeprecationStatus
 	newTzDto.isInitialized = tzDataDto.isInitialized
 
@@ -83,6 +93,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.FuncReturnValue = inTzDataDto.FuncReturnValue
 	tzDataDto.SourceFileNameExt = inTzDataDto.SourceFileNameExt
 	tzDataDto.TzClass = inTzDataDto.TzClass
+	tzDataDto.TzType = inTzDataDto.TzType
 	tzDataDto.DeprecationStatus = inTzDataDto.DeprecationStatus
 	tzDataDto.isInitialized = inTzDataDto.isInitialized
 
@@ -117,6 +128,18 @@ func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 func (tzDataDto *TimeZoneDataDto) EqualClass(tzDDto TimeZoneDataDto) bool {
 
 	if tzDataDto.TzClass == tzDDto.TzClass {
+		return true
+	}
+
+	return false
+}
+
+// EqualType - Compares the Time Zone Type values for input parameter
+// 'TzDDto' and the current TimeZoneDataDto instance. If they
+// are equivalent, this method returns true.
+func (tzDataDto *TimeZoneDataDto) EqualType(tzDDto TimeZoneDataDto) bool {
+
+	if tzDataDto.TzType == tzDDto.TzType {
 		return true
 	}
 
@@ -159,6 +182,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	funcReturnValue,
 	srcFileNameExt string,
 	tzClass TimeZoneClass,
+	tzType TimeZoneType,
 	deprecationStatus TimeZoneDeprecationStatus) (TimeZoneDataDto, error) {
 
 	ePrefix := "TimeZoneDataDto.NewTimeZone() - ERROR:\n"
@@ -210,6 +234,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.FuncReturnValue = funcReturnValue
 	newTzDto.SourceFileNameExt = srcFileNameExt
 	newTzDto.TzClass = tzClass
+	newTzDto.TzType = tzType
 	newTzDto.DeprecationStatus = deprecationStatus
 	newTzDto.isInitialized = true
 

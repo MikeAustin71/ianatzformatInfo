@@ -312,7 +312,8 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 
 	tzGroup.IanaVariableName = tzGroup.GroupName
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.IANA()
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzGroup.SetIsInitialized(true)
 
@@ -362,6 +363,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.TzType = tzdatastructs.TZType.Standard()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzDataDto.SetIsInitialized(true)
 
@@ -419,7 +421,8 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 	tzGroup.IanaVariableName = tzGroup.GroupName
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.IANA()
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzGroup.SetIsInitialized(true)
 
@@ -483,6 +486,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.TzType = tzdatastructs.TZType.Group()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzDataDto.SetIsInitialized(true)
 
@@ -521,6 +525,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 	tzGroup.IanaVariableName = tzGroup.GroupName
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzGroup.GroupType = tzdatastructs.TzGrpType.SubGroup()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzGroup.SetIsInitialized(true)
 
@@ -587,6 +592,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.TzType = tzdatastructs.TZType.SubZone()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzDataDto.SetIsInitialized(true)
 
@@ -653,7 +659,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 
 	tzGroup.IanaVariableName = tzGroup.GroupName
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.IANA()
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzGroup.SetIsInitialized(true)
 
@@ -729,6 +736,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.TzType = tzdatastructs.TZType.Group()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzDataDto.SetIsInitialized(true)
 
@@ -771,6 +779,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	tzGroup.IanaVariableName = tzGroup.GroupName
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzGroup.GroupType = tzdatastructs.TzGrpType.SubGroup()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzGroup.SetIsInitialized(true)
 
@@ -849,6 +858,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.TzType = tzdatastructs.TZType.Group()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzDataDto.SetIsInitialized(true)
 
@@ -873,7 +883,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	//
 	tzGroup = tzdatastructs.TimeZoneGroupDto{}
 
-	// "Deprecated"
+	// "America"
 	tzGroup.ParentGroupName = linkZoneArray[0] // America
 
 	tzGroup.GroupName = linkZoneArray[1] // Argentina
@@ -891,6 +901,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	tzGroup.IanaVariableName = tzGroup.GroupName
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzGroup.GroupType = tzdatastructs.TzGrpType.SubGroup()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzGroup.SetIsInitialized(true)
 
@@ -969,6 +980,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+	tzDataDto.TzType = tzdatastructs.TZType.SubZone()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 	tzDataDto.SetIsInitialized(true)
 
@@ -1078,7 +1090,8 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 		strops.StrOps{}.UpperCaseFirstLetter(zoneArray[0])
 
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.IANA()
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzGroup.SetIsInitialized(true)
 
@@ -1126,6 +1139,7 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
+	tzDataDto.TzType = tzdatastructs.TZType.Standard()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzDataDto.SetIsInitialized(true)
 
@@ -1191,7 +1205,8 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		strops.StrOps{}.UpperCaseFirstLetter(zoneArray[0])
 
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.IANA()
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzGroup.SetIsInitialized(true)
 
@@ -1255,7 +1270,8 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		tzDataDto.FuncReturnType)
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzDataDto.TzClass = tzdatastructs.TZClass.SubGroup()
+	tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
+	tzDataDto.TzType = tzdatastructs.TZType.Group()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzDataDto.SetIsInitialized(true)
 
@@ -1289,6 +1305,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 	tzGroup.IanaVariableName = ""
 	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzGroup.GroupType = tzdatastructs.TzGrpType.SubGroup()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzGroup.SetIsInitialized(true)
 
@@ -1342,7 +1359,8 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		fmt.Sprintf("\"%v\"", tzDataDto.TzCanonicalValue)
 
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzDataDto.TzClass = tzdatastructs.TZClass.SubTimeZone()
+	tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
+	tzDataDto.TzType = tzdatastructs.TZType.SubZone()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzDataDto.SetIsInitialized(true)
 	_,
