@@ -7,7 +7,6 @@ const OutputFileName = "timezonedata.go"
 const HomeDir = "D:\\gowork\\src\\MikeAustin71\\ianatzoneinfo\\parsetzdata"
 
 const MasterGroupTypeSuffix = "TimeZones"
-const SubGroupTypeSuffix = "SubTimeZones"
 const CommentCharStr = "#"
 const ZoneLabel = "Zone"
 const LinkLabel = "Link"
