@@ -18,6 +18,7 @@ type TimeZoneGroupDto struct {
 	GroupType          TimeZoneGroupType
 	GroupClass         TimeZoneGroupClass
 	DeprecationStatus  TimeZoneDeprecationStatus
+	Comments           []byte
 	isInitialized      bool
 }
 
