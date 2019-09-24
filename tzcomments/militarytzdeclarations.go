@@ -2,6 +2,7 @@ package tzcomments
 
 import (
 	"fmt"
+	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 )
 
@@ -9,11 +10,12 @@ type TzComments struct {
 	Comments []string
 }
 
-// formatWriteTypeMilitaryZones - Writes military time zone type
+// MilitaryTypeDeclaration - Writes military time zone type
 //
-func (tzComment TzComments) CreateTypeMilitaryZoneComments(militaryTzType tzdatastructs.TimeZoneGroupDto, ePrefix string) error {
+func (tzComment TzComments) MilitaryTypeDeclaration(
+	militaryTzType tzdatastructs.TimeZoneGroupDto, ePrefix string) error {
 
-	ePrefix += "TzComments.CreateTypeMilitaryZoneComments() "
+	ePrefix += "TzComments.MilitaryTypeDeclaration() "
 
 	outputStr := fmt.Sprintf(tzdatastructs.CommentLead + "%v - Military Time Zone Names.\n", militaryTzType.GroupName)
 	outputStr += tzdatastructs.CommentBlankLine
@@ -73,9 +75,73 @@ func (tzComment TzComments) CreateTypeMilitaryZoneComments(militaryTzType tzdata
 	outputStr += tzdatastructs.CommentLead + "  Reference:\n"
 	outputStr += tzdatastructs.CommentLead + "    https://en.wikipedia.org/wiki/Tz_database#Area\n"
 	outputStr += tzdatastructs.CommentBlankLine
+	outputStr += "type " + militaryTzType.TypeName + "  " + militaryTzType.TypeValue + "\n\n"
 
+	militaryTzType.TypeDeclaration = append(militaryTzType.TypeDeclaration, []byte(outputStr) ...)
 
-	militaryTzType.Comments = append(militaryTzType.Comments, []byte(outputStr) ...)
+	return nil
+}
+
+// MilitaryTzFuncDeclaration - Generates function declarations and file output
+// for Military Time Zones
+// ---------------------------------------------------------------------------
+//
+// Example:
+//   Alpha - Military Time Zone 'A' or 'Alpha' is equivalent
+//   IANA Time Zone "Etc/GMT+1"
+//
+//   Offset from UTC is computed at +1 hours.
+//
+//   func (umtz militaryTimeZones)Alpha() string { return "Etc/GMT+1" }
+//
+// ----------------------------------------------------------------------------
+//
+func (tzComment TzComments) MilitaryTzFuncDeclaration(
+	tzData tzdatastructs.TimeZoneDataDto, ePrefix string) error {
+
+	ePrefix += "TzComments.MilitaryTypeDeclaration() "
+	firstLetter := tzData.TzName[:1]
+
+	nStrDto, err := strops.StrOps{}.ExtractNumericDigits(
+		tzData.TzValue, 0, "+-","", "")
+
+	if err != nil {
+		return fmt.Errorf(ePrefix + "\n%v\n", err.Error())
+	}
+
+	if nStrDto.NumStrLen == 0 {
+		return fmt.Errorf(ePrefix + "Military Time Zone does NOT contain a number string!\n" +
+			"Time Zone Name: %v\nTime Zone Value: %v\n",
+			tzData.TzName, tzData.TzValue)
+	}
+
+	outputStr := tzdatastructs.CommentLead +
+		fmt.Sprintf("%v - Military Time Zone '%v' or '%v' is equivalent to\n",
+			tzData.TzName, firstLetter, tzData.TzName)
+
+	outputStr = tzdatastructs.CommentLead +
+		fmt.Sprintf("to IANA Time Zone \"%v\".\n", tzData.TzValue)
+
+	utcOffset := nStrDto.NumStr + " hours."
+
+	if nStrDto.NumStr == "+1" || nStrDto.NumStr == "-1" {
+		utcOffset = nStrDto.NumStr + " hour."
+	}
+	outputStr += tzdatastructs.CommentBlankLine
+	outputStr +=
+		fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v\n",
+			utcOffset)
+
+	outputStr += tzdatastructs.CommentBlankLine
+	outputStr +=
+		fmt.Sprintf("func (%v %v) %v %v {return %v }\n\n",
+			tzData.FuncSelfReferenceVariable,
+			tzData.FuncType,
+			tzData.FuncName,
+			tzData.FuncReturnType,
+			tzData.FuncReturnValue)
+
+	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
 
 	return nil
 }

@@ -8,18 +8,18 @@ import (
 )
 
 type TimeZoneGroupDto struct {
-	ParentGroupName    string
-	GroupName          string
-	GroupSortValue     string
-	TypeName           string
-	TypeValue          string
-	IanaVariableName   string
-	SourceFileNameExt  string
-	GroupType          TimeZoneGroupType
-	GroupClass         TimeZoneGroupClass
-	DeprecationStatus  TimeZoneDeprecationStatus
-	Comments           []byte
-	isInitialized      bool
+	ParentGroupName   string
+	GroupName         string
+	GroupSortValue    string
+	TypeName          string
+	TypeValue         string
+	IanaVariableName  string
+	SourceFileNameExt string
+	GroupType         TimeZoneGroupType
+	GroupClass        TimeZoneGroupClass
+	DeprecationStatus TimeZoneDeprecationStatus
+	TypeDeclaration   []byte
+	isInitialized     bool
 }
 
 // CopyOut - Creates and returns a deep copy of the current

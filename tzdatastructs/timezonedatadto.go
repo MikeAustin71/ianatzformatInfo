@@ -39,6 +39,9 @@ type TimeZoneDataDto struct {
 	// 1 = Deprecated
 	// 2 = Alias
 	// 3 = Valid, Current Time Zone
+
+	FuncDeclaration            []byte
+
 	isInitialized              bool
 }
 
