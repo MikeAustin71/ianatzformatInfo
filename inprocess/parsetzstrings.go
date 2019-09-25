@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
+	"local.com/amarillomike/ianatzformatInfo/tzcomments"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strconv"
 	"strings"
@@ -165,9 +166,120 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 	}
 
+	err := parseTz.configMilitaryTimeZones(ePrefix)
+
 	return tzGroups,
 		tzData,
-		nil
+		err
+}
+
+// configMilitaryTimeZones - Creates and stores Military Time Zones
+//
+func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
+	ePrefix += "ParseIanaTzData.configMilitaryTimeZones() "
+
+	// Configure Time Zone Level-1 Major Group
+	// for Military Time Zones
+	tzGroup := tzdatastructs.TimeZoneGroupDto{}
+	tzGroup.ParentGroupName = ""
+	tzGroup.GroupName = "Military"
+	tzGroup.GroupSortValue = "Military"
+
+	// Example: 'militaryTimeZones'
+	tzGroup.TypeName = "military" +
+			tzdatastructs.MasterGroupTypeSuffix
+
+	tzGroup.TypeValue = "string"
+
+	// Example: 'America'
+	tzGroup.IanaVariableName = "Military"
+
+	tzGroup.SourceFileNameExt = "None"
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.Artificial()
+	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+	tzGroup.SetIsInitialized(true)
+
+	err := tzcomments.TzComments{}.MilitaryTypeDeclaration(&tzGroup, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = tzGroups[tzdatastructs.Level_01_Idx].AddIfNew(tzGroup)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
+			"Error: %v\n", err.Error() )
+	}
+
+	for i:=0; i < len(tzdatastructs.MilitaryTzArray); i++ {
+
+		// Configure Standard Level-1 Iana Time Zone Data Dto
+		// For Military Time Zone
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
+
+		tzDataDto.GroupName = "Military" // Military - majorGroup
+		tzDataDto.TzName = tzdatastructs.MilitaryTzArray[i] // Alpha - tzName
+		tzDataDto.TzAliasValue = ""
+		canonicalValue, ok := tzdatastructs.MilitaryTzMap[tzdatastructs.MilitaryTzArray[i]]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"tzdatastructs.MilitaryTzMap[] look-up error. Military Time Zone missing!\n" +
+				"Military Time Zone: %v\n", tzdatastructs.MilitaryTzArray[i])
+		}
+
+		tzDataDto.TzCanonicalValue = canonicalValue
+		tzDataDto.TzValue = tzDataDto.TzCanonicalValue // 'Etc/GMT-1'
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzdatastructs.MilitaryTzArray[i])
+
+		// Example func signature
+		// func (milTz militaryTimeZones) Alpha() string { return "Etc/GMT+1" }
+
+		// Example: militaryTimeZones
+		tzDataDto.FuncType =
+			"military" +
+				tzdatastructs.MasterGroupTypeSuffix
+
+		// Example: 'milTz'
+		tzDataDto.FuncSelfReferenceVariable = "milTz"
+
+		// FuncName: Alpha()
+		tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(tzdatastructs.MilitaryTzArray[i])
+
+		tzDataDto.FuncReturnType = "string"
+
+		// Example Function Return Value = "Etc/GMT+1"
+		tzDataDto.FuncReturnValue =
+			fmt.Sprintf("\"%v\"", tzDataDto.TzCanonicalValue)
+
+		tzDataDto.SourceFileNameExt = "None"
+		tzDataDto.TzClass = tzdatastructs.TZClass.Artificial()
+		tzDataDto.TzType = tzdatastructs.TZType.Standard()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+		tzDataDto.SetIsInitialized(true)
+
+		err = tzcomments.TzComments{}.MilitaryTzFuncDeclaration(&tzDataDto, ePrefix)
+
+		if err != nil {
+			return err
+		}
+
+		_, err = tzData[tzdatastructs.Level_01_Idx].AddIfNew(tzDataDto)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzData[tzdatastructs.Level_01_Idx] Error\n" +
+				"Military Time Zone: %v\n" +
+				"Error: %v\n", tzdatastructs.MilitaryTzArray[i], err.Error())
+		}
+
+	}
+
+	return nil
 }
 
 // extractLink - Extracts link data from IANA Time Zone files.
@@ -277,6 +389,64 @@ func (parseTz *ParseIanaTzData) extractLink(
 
 	return parseTz.linkCfgThreeElements(fMgr, linkZoneArray, tzCanonical, ePrefix)
 
+}
+
+
+// extractZone - Extracts standard time zones and sub time zones.
+// Data is stored in tzMajorGroupMap, tzDataCol and
+// or subTzDataCol.
+func (parseTz *ParseIanaTzData) extractZone(
+	fMgr pathfileops.FileMgr, rawString string) error {
+
+	ePrefix := "ParseIanaTzData.extractZone() "
+
+	dFProfile,
+	err :=
+		strops.StrOps{}.ExtractDataField(
+			rawString,
+			[]string{tzdatastructs.ZoneLabel},
+			0,
+			tzdatastructs.LeadingFieldSeparators,
+			tzdatastructs.TrailingFieldSeparators,
+			tzdatastructs.CommentDelimiters,
+			tzdatastructs.EndOfLineDelimiters)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix+"%v\n", err.Error())
+	}
+
+	if dFProfile.DataFieldLength < 1 {
+		return nil
+	}
+
+	if strings.Index(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator) == -1 {
+		return nil
+	}
+
+	zoneArray := strings.Split(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator)
+
+	lenZoneArray := len(zoneArray)
+
+	if lenZoneArray < 2 ||
+		lenZoneArray > 3 {
+		fmt.Printf(ePrefix+"Invalid Time Zone!\n"+
+			"FileName: %v\n"+
+			"Raw Zone String: %v\n", fMgr.GetFileNameExt(), rawString)
+		return nil
+	}
+
+	// Zone Array has two elements
+	// Example: 'America/Chicago'
+	if lenZoneArray == 2 {
+
+		return parseTz.zoneCfgTwoElements(fMgr, zoneArray, ePrefix)
+	}
+
+	// lenZoneArray must == 3
+	// This is a sub zone
+	// America/Argentina/Buenos_Aires
+
+	return parseTz.zoneCfgThreeElements(fMgr, zoneArray, ePrefix)
 }
 
 // linkCfgOneElement - Configures and stores data associated
@@ -994,63 +1164,6 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	}
 
 	return nil
-}
-
-// extractZone - Extracts standard time zones and sub time zones.
-// Data is stored in tzMajorGroupMap, tzDataCol and
-// or subTzDataCol.
-func (parseTz *ParseIanaTzData) extractZone(
-	fMgr pathfileops.FileMgr, rawString string) error {
-
-	ePrefix := "ParseIanaTzData.extractZone() "
-
-	dFProfile,
-	err :=
-		strops.StrOps{}.ExtractDataField(
-			rawString,
-			[]string{tzdatastructs.ZoneLabel},
-			0,
-			tzdatastructs.LeadingFieldSeparators,
-			tzdatastructs.TrailingFieldSeparators,
-			tzdatastructs.CommentDelimiters,
-			tzdatastructs.EndOfLineDelimiters)
-
-	if err != nil {
-		return fmt.Errorf(ePrefix+"%v\n", err.Error())
-	}
-
-	if dFProfile.DataFieldLength < 1 {
-		return nil
-	}
-
-	if strings.Index(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator) == -1 {
-		return nil
-	}
-
-	zoneArray := strings.Split(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator)
-
-	lenZoneArray := len(zoneArray)
-
-	if lenZoneArray < 2 ||
-		lenZoneArray > 3 {
-		fmt.Printf(ePrefix+"Invalid Time Zone!\n"+
-			"FileName: %v\n"+
-			"Raw Zone String: %v\n", fMgr.GetFileNameExt(), rawString)
-		return nil
-	}
-
-	// Zone Array has two elements
-	// Example: 'America/Chicago'
-	if lenZoneArray == 2 {
-
-		return parseTz.zoneCfgTwoElements(fMgr, zoneArray, ePrefix)
-	}
-
-	// lenZoneArray must == 3
-	// This is a sub zone
-	// America/Argentina/Buenos_Aires
-
-	return parseTz.zoneCfgThreeElements(fMgr, zoneArray, ePrefix)
 }
 
 // zoneCfgTwoElements - Configures and stores data for a two element time zone

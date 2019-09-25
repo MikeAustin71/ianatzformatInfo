@@ -13,7 +13,7 @@ type TzComments struct {
 // MilitaryTypeDeclaration - Writes military time zone type
 //
 func (tzComment TzComments) MilitaryTypeDeclaration(
-	militaryTzType tzdatastructs.TimeZoneGroupDto, ePrefix string) error {
+	militaryTzType *tzdatastructs.TimeZoneGroupDto, ePrefix string) error {
 
 	ePrefix += "TzComments.MilitaryTypeDeclaration() "
 
@@ -92,12 +92,12 @@ func (tzComment TzComments) MilitaryTypeDeclaration(
 //
 //   Offset from UTC is computed at +1 hours.
 //
-//   func (umtz militaryTimeZones)Alpha() string { return "Etc/GMT+1" }
+//   func (milTz militaryTimeZones)Alpha() string { return "Etc/GMT+1" }
 //
 // ----------------------------------------------------------------------------
 //
 func (tzComment TzComments) MilitaryTzFuncDeclaration(
-	tzData tzdatastructs.TimeZoneDataDto, ePrefix string) error {
+	tzData *tzdatastructs.TimeZoneDataDto, ePrefix string) error {
 
 	ePrefix += "TzComments.MilitaryTypeDeclaration() "
 	firstLetter := tzData.TzName[:1]
