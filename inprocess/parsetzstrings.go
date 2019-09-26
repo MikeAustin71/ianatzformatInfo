@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
-	"local.com/amarillomike/ianatzformatInfo/tzcomments"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"local.com/amarillomike/ianatzformatInfo/tzdeclarations"
 	"strconv"
 	"strings"
 )
@@ -200,7 +200,7 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzGroup.SetIsInitialized(true)
 
-	err := tzcomments.TzComments{}.MilitaryTypeDeclaration(&tzGroup, ePrefix)
+	err := tzdeclarations.TzMilitaryDeclarations{}.MilitaryTypeDeclaration(&tzGroup, ePrefix)
 
 	if err != nil {
 		return err
@@ -262,7 +262,7 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 		tzDataDto.SetIsInitialized(true)
 
-		err = tzcomments.TzComments{}.MilitaryTzFuncDeclaration(&tzDataDto, ePrefix)
+		err = tzdeclarations.TzMilitaryDeclarations{}.MilitaryTzFuncDeclaration(&tzDataDto, ePrefix)
 
 		if err != nil {
 			return err
@@ -1184,37 +1184,55 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 			"zoneArray length='%v'\n", len(zoneArray))
 	}
 
+	groupAlreadyExists, _ := tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(zoneArray[0])
+
+	if !groupAlreadyExists{
+
 	// Configure Time Zone Level-1 Major Group
 	// Example: 'America/Chicago'
-	tzGroup := tzdatastructs.TimeZoneGroupDto{}
-	tzGroup.ParentGroupName = ""
-	tzGroup.GroupName = zoneArray[0] // America
-	tzGroup.GroupSortValue = tzGroup.NewSortValue(zoneArray[0])
+		tzGroup := tzdatastructs.TimeZoneGroupDto{}
+		tzGroup.ParentGroupName = ""
+		tzGroup.GroupName = zoneArray[0] // America
 
-	// Example: 'americaTimeZones'
-	tzGroup.TypeName =
-		strops.StrOps{}.LowerCaseFirstLetter(zoneArray[0])  +
-			tzdatastructs.MasterGroupTypeSuffix
+		tzGroup.GroupSortValue = tzGroup.NewSortValue(zoneArray[0])
 
-	tzGroup.TypeValue = "string"
+		// Example: 'americaTimeZones'
+		tzGroup.TypeName =
+			strops.StrOps{}.LowerCaseFirstLetter(zoneArray[0])  +
+				tzdatastructs.MasterGroupTypeSuffix
 
-	// Example: 'America'
-	tzGroup.IanaVariableName =
-		strops.StrOps{}.UpperCaseFirstLetter(zoneArray[0])
+		tzGroup.TypeValue = "string"
 
-	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
-	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
-	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
-	tzGroup.SetIsInitialized(true)
+		// Example: 'America'
+		tzGroup.IanaVariableName =
+			strops.StrOps{}.UpperCaseFirstLetter(zoneArray[0])
 
-	_, err := tzGroups[tzdatastructs.Level_01_Idx].AddIfNew(tzGroup)
+		tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+		tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
+		tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+		tzGroup.SetIsInitialized(true)
+		err := tzdeclarations.TzGroupDeclarations{}.StandardGrpDeclaration(&tzGroup, ePrefix)
 
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-			"FileName: %v\n" +
-			"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		if err != nil {
+			return err
+		}
+
+		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
+				"FileName: %v\n" +
+				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		}
+
+	}
+
+	containsZone, _ := tzData[tzdatastructs.Level_01_Idx].ContainsTzName(zoneArray[0], zoneArray[1])
+
+	if containsZone {
+		return nil
 	}
 
 	// Configure Standard Level-1 Iana Time Zone Data Dto
@@ -1256,7 +1274,13 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzDataDto.SetIsInitialized(true)
 
-	_, err = tzData[tzdatastructs.Level_01_Idx].AddIfNew(tzDataDto)
+	err := tzdeclarations.TzZoneDeclarations{}.StandardGrpDeclaration(&tzDataDto, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +

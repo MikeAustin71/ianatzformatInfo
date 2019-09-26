@@ -42,8 +42,6 @@ type TimeZoneDataCollection struct {
 	tzDataDtos []TimeZoneDataDto
 }
 
-
-
 // Add - Adds a TimeZoneDataDto object to the collection. This method will add
 // duplicate TimeZoneDataDto instances to the collection.
 func (tzDataCol *TimeZoneDataCollection) Add(tzDataDto TimeZoneDataDto) error {
@@ -96,6 +94,32 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNew(
 	tzDataCol.tzDataDtos = append(tzDataCol.tzDataDtos, tzDataDto)
 
 	return isNew, err
+}
+
+// ContainsTzName - Determines if the collection contains a TimeZoneDataDto with a group name and
+// time zone name equal to input parameters, 'groupName' and 'tzName'.
+//
+func (tzDataCol *TimeZoneDataCollection) ContainsTzName(
+	groupName, tzName string) (containsTz bool, index int) {
+
+	containsTz = false
+	index = -1
+
+	if tzDataCol.tzDataDtos == nil {
+		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+		return containsTz, index
+	}
+
+	for i:=0; i < len(tzDataCol.tzDataDtos); i++ {
+		if tzDataCol.tzDataDtos[i].GroupName == groupName &&
+			tzDataCol.tzDataDtos[i].TzName == tzName {
+			containsTz = true
+			index = i
+			return containsTz, index
+		}
+	}
+
+	return containsTz, index
 }
 
 // MajorGroupExists - Performs a search for on the internal TimeZoneDataDto

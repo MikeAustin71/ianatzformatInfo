@@ -1,4 +1,4 @@
-package tzcomments
+package tzdeclarations
 
 import (
 	"fmt"
@@ -6,16 +6,16 @@ import (
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 )
 
-type TzComments struct {
+type TzMilitaryDeclarations struct {
 	Comments []string
 }
 
 // MilitaryTypeDeclaration - Writes military time zone type
 //
-func (tzComment TzComments) MilitaryTypeDeclaration(
+func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 	militaryTzType *tzdatastructs.TimeZoneGroupDto, ePrefix string) error {
 
-	ePrefix += "TzComments.MilitaryTypeDeclaration() "
+	ePrefix += "TzMilitaryDeclarations.MilitaryTypeDeclaration() "
 
 	outputStr := fmt.Sprintf(tzdatastructs.CommentLead + "%v - Military Time Zone Names.\n", militaryTzType.GroupName)
 	outputStr += tzdatastructs.CommentBlankLine
@@ -96,10 +96,10 @@ func (tzComment TzComments) MilitaryTypeDeclaration(
 //
 // ----------------------------------------------------------------------------
 //
-func (tzComment TzComments) MilitaryTzFuncDeclaration(
+func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	tzData *tzdatastructs.TimeZoneDataDto, ePrefix string) error {
 
-	ePrefix += "TzComments.MilitaryTypeDeclaration() "
+	ePrefix += "TzMilitaryDeclarations.MilitaryTypeDeclaration() "
 	firstLetter := tzData.TzName[:1]
 
 	nStrDto, err := strops.StrOps{}.ExtractNumericDigits(

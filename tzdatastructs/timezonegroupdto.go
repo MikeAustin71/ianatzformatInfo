@@ -115,11 +115,11 @@ func (tzGrpDto *TimeZoneGroupDto) EqualDeprecationStatus(
 	return false
 }
 
-// EqualNameValues - Compares the GroupNameValue data values for input
+// EqualNames - Compares the GroupName data values for input
 // parameter 'tzGrpDto2' and the current TimeZoneGroupDto. If
 // they are equivalent, this method returns 'true'.
-func (tzGrpDto *TimeZoneGroupDto) EqualNameValues(
-	tzGrpDto2 TimeZoneGroupDto) bool {
+func (tzGrpDto *TimeZoneGroupDto) EqualNames(
+	tzGrpDto2 *TimeZoneGroupDto) bool {
 
 		if tzGrpDto.GroupName == tzGrpDto2.GroupName {
 			return true
