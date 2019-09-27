@@ -9,6 +9,65 @@ type TzZoneDeclarations struct {
 	Comments []string
 }
 
+// LinkTimeZoneDeclaration - Produces function declarations for
+// 'Link' time zones. 'Link' time zones identify deprecated or
+// obsolete time zones. These time zone links are mapped to valid
+// current time zones.
+//
+// Example
+//
+//
+// --------------------------------------------------------------------
+//
+// Egypt - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//
+// Linked Deprecated Time Zone: 'Egypt'
+// Maps To Valid Time Zone: 'Africa/Cairo'
+//
+// func (depri deprecatedTimeZones) Egypt() string { return "Africa/Cairo" }
+//
+func (tZoneDecs TzZoneDeclarations) LinkTimeZoneDeclaration(
+	tzData *tzdatastructs.TimeZoneDataDto, ePrefix string) error {
+
+	ePrefix += "TzZoneDeclarations.LinkTimeZoneDeclaration() "
+
+	outputStr := tzdatastructs.CommentLead +
+		fmt.Sprintf("%v - This is an IANA 'Link' Time Zone. 'Link' Time Zones\n",
+			tzData.TzName)
+
+	outputStr += tzdatastructs.CommentLead +
+		"Zones identify deprecated or obsolete time zones. These\n"
+
+	outputStr += tzdatastructs.CommentLead +
+		"obsolete time zones are mapped to valid current time zones.\n"
+
+	outputStr += tzdatastructs.CommentBlankLine
+
+	outputStr += tzdatastructs.CommentLead +
+		fmt.Sprintf("Linked Deprecated Time Zone: '%v'\n",
+			tzData.TzName)
+
+	outputStr += tzdatastructs.CommentLead +
+		fmt.Sprintf("Maps To Valid Time Zone: '%v'\n",
+			tzData.TzCanonicalValue)
+
+	outputStr += tzdatastructs.CommentBlankLine +
+	fmt.Sprintf("func (%v %v) %v %v { return %v }",
+		tzData.FuncSelfReferenceVariable,
+		tzData.FuncType,
+		tzData.FuncName,
+		tzData.FuncReturnType,
+		tzData.FuncReturnValue)
+
+	outputStr += "\n"
+
+	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+
+	return nil
+}
+
 // PlaceHolderZoneFuncDeclaration
 // Example
 //
@@ -42,9 +101,13 @@ func (tZoneDecs TzZoneDeclarations) PlaceHolderZoneFuncDeclaration(
 
 	outputStr += "\n"
 
+	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+
 	return nil
 }
-// StandardZoneFuncDeclaration
+
+// StandardZoneFuncDeclaration - Produces function declarations for
+// standard IANA time zones.
 //
 // Example
 //
@@ -60,7 +123,10 @@ func (tZoneDecs TzZoneDeclarations) StandardZoneFuncDeclaration(
 	ePrefix += "TzZoneDeclarations.StandardGrpDeclaration() "
 
 	outputStr := tzdatastructs.CommentLead +
-		fmt.Sprintf("%v - IANA Time Zone '%v'.\n", tzData.TzName, tzData.TzCanonicalValue)
+		fmt.Sprintf("%v - IANA Time Zone '%v'.\n",
+			tzData.TzName,
+			tzData.TzCanonicalValue)
+
 	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("func (%v %v) %v %v {return %v }\n",
