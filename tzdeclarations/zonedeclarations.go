@@ -106,6 +106,52 @@ func (tZoneDecs TzZoneDeclarations) PlaceHolderZoneFuncDeclaration(
 	return nil
 }
 
+// PlaceHolderLinkFuncDeclaration - Generates a function
+// declaration for a 'Link' Zone which defines a group of
+// 'link' zones.
+//
+// 'Link' Time Zones identify deprecated or obsolete time
+// zones. These obsolete time zones are mapped to valid
+// current time zones.
+//
+// --------------------------------------------------------------------
+//
+// Example:
+//
+//   Link        -> canonical time zone
+//   'US/Alaska' -> 'America/Anchorage'
+//
+//   func (depre deprecatedTimeZones)
+//    US() uSDeprecatedTimeZones { return uSDeprecatedTimeZones("") }
+//
+func (tZoneDecs TzZoneDeclarations) PlaceHolderLinkFuncDeclaration(
+	tzData *tzdatastructs.TimeZoneDataDto, ePrefix string) error {
+
+	ePrefix += "TzZoneDeclarations.PlaceHolderZoneFuncDeclaration() "
+
+	outputStr := tzdatastructs.CommentLead +
+		fmt.Sprintf("%v - A place holder which defines a sub-group\n",
+			tzData.TzName)
+
+	outputStr += tzdatastructs.CommentLead +
+		"of IANA 'Link' Time Zones.\n"
+
+	outputStr += tzdatastructs.CommentBlankLine
+
+	outputStr += fmt.Sprintf("func (%v %v) %v %v {return %v }\n",
+		tzData.FuncSelfReferenceVariable,
+		tzData.FuncType,
+		tzData.FuncName,
+		tzData.FuncReturnType,
+		tzData.FuncReturnValue)
+
+	outputStr += "\n"
+
+	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+
+	return nil
+}
+
 // StandardZoneFuncDeclaration - Produces function declarations for
 // standard IANA time zones.
 //

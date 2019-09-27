@@ -534,7 +534,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 			strops.StrOps{}.LowerCaseFirstLetter(tzDataDto.GroupName) +
 				tzdatastructs.MasterGroupTypeSuffix
 
-		// Example: 'depri'
+		// Example: 'depre'
 		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
 
 		// Example: link -> canonical time zone
@@ -596,102 +596,127 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			"linkZoneArray length='%v'\n", len(linkZoneArray))
 	}
 
+	groupAlreadyExists, _ := tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(tzdatastructs.DeprecatedTzGroup)
+
 	// Configure Level-1 Data
 	// Configure Time Zone Level-1 Group
 	// Example: link -> canonical time zone
 	//          'US/Alaska' -> 'America/Anchorage'
-	tzGroup := tzdatastructs.TimeZoneGroupDto{}
-	tzGroup.ParentGroupName = ""
 
-	// "Deprecated"
-	tzGroup.GroupName = tzdatastructs.DeprecatedTzGroup
-	tzGroup.GroupSortValue = tzdatastructs.DeprecatedTzGroup
+	if !groupAlreadyExists {
 
-	// deprecatedTimeZones
-	tzGroup.TypeName =
-		strops.StrOps{}.LowerCaseFirstLetter(tzdatastructs.DeprecatedTzGroup)  +
-			tzdatastructs.MasterGroupTypeSuffix
+		tzGroup := tzdatastructs.TimeZoneGroupDto{}
+		tzGroup.ParentGroupName = ""
 
-	tzGroup.TypeValue = "string"
+		// "Deprecated"
+		tzGroup.GroupName = tzdatastructs.DeprecatedTzGroup
+		tzGroup.GroupSortValue = tzdatastructs.DeprecatedTzGroup
 
-	tzGroup.IanaVariableName = tzGroup.GroupName
-	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
-	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
-	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
-	tzGroup.SetIsInitialized(true)
+		// deprecatedTimeZones
+		tzGroup.TypeName =
+			strops.StrOps{}.LowerCaseFirstLetter(tzdatastructs.DeprecatedTzGroup)  +
+				tzdatastructs.MasterGroupTypeSuffix
 
-	_, err := tzGroups[tzdatastructs.Level_01_Idx].AddIfNew(tzGroup)
+		tzGroup.TypeValue = "string"
 
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-			"FileName: %v\n" +
-			"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		tzGroup.IanaVariableName = tzGroup.GroupName
+		tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+		tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
+		tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+		tzGroup.SetIsInitialized(true)
+
+		err := tzdeclarations.TzGroupDeclarations{}.DeprecatedGrpDeclaration(&tzGroup, ePrefix)
+
+		if err != nil {
+			return err
+		}
+
+		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
+				"FileName: %v\n" +
+				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		}
+
 	}
 
-	// Level - 1 Time Zone Data for single element
-	//   Deprecated Time Zone Place Holder
-	//
-	// Configure Deprecated Link - Time Zone Data Dto
-	// Example: link -> canonical time zone
-	//          'US/Alaska' -> 'America/Anchorage'
-	tzDataDto := tzdatastructs.TimeZoneDataDto{}
+	containsZone, _ :=
+		tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+			tzdatastructs.DeprecatedTzGroup, linkZoneArray[0])
 
-	tzDataDto.GroupName = tzdatastructs.DeprecatedTzGroup // Deprecated
-	tzDataDto.TzName = linkZoneArray[0] // US
-	tzDataDto.TzAliasValue =
-		linkZoneArray[0] +
-			tzdatastructs.ZoneSeparator + linkZoneArray[1] // US/Alaska
-	tzDataDto.TzCanonicalValue = linkZoneArray[0] // US
-	tzDataDto.TzValue = linkZoneArray[0] // US
-	tzDataDto.TzSortValue =
-		tzdatastructs.TimeZoneDataDto{}.NewSortValue(linkZoneArray[0])
+	if !containsZone {
+		// Level - 1 Time Zone Data for single element
+		//   Deprecated Time Zone Place Holder
+		//
+		// Configure Deprecated Link - Time Zone Data Dto
+		// Example: link -> canonical time zone
+		//          'US/Alaska' -> 'America/Anchorage'
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
 
-	// Example:  link       -> canonical time zone
-	//          'US/Alaska' -> 'America/Anchorage'
-	// func (depri deprecatedTimeZones)
-	//     US() uSDeprecatedTimeZones { return uSDeprecatedTimeZones("") }
+		tzDataDto.GroupName = tzdatastructs.DeprecatedTzGroup // Deprecated
+		tzDataDto.TzName = linkZoneArray[0] // US
+		tzDataDto.TzAliasValue =
+			linkZoneArray[0] +
+				tzdatastructs.ZoneSeparator + linkZoneArray[1] // US/Alaska
+		tzDataDto.TzCanonicalValue = linkZoneArray[0] // US
+		tzDataDto.TzValue = linkZoneArray[0] // US
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(linkZoneArray[0])
 
-	// Example: deprecatedTimeZones
-	tzDataDto.FuncType =
-		strops.StrOps{}.LowerCaseFirstLetter(tzDataDto.GroupName) +
-			tzdatastructs.MasterGroupTypeSuffix
+		// Example:  link       -> canonical time zone
+		//          'US/Alaska' -> 'America/Anchorage'
+		// func (depre deprecatedTimeZones)
+		//     US() uSDeprecatedTimeZones { return uSDeprecatedTimeZones("") }
 
-	// Example: 'depre'
-	tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		// Example: deprecatedTimeZones
+		tzDataDto.FuncType =
+			strops.StrOps{}.LowerCaseFirstLetter(tzDataDto.GroupName) +
+				tzdatastructs.MasterGroupTypeSuffix
 
-	// Example:  link       -> canonical time zone
-	//          'US/Alaska' -> 'America/Anchorage'
-	// Link            = 'US/Alaska'
-	// Canonical Value = 'America/Anchorage'
-	// Func Name: US()
-	tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(linkZoneArray[0])
+		// Example: 'depre'
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
 
-	// Example: uSDeprecatedTimeZones
-	tzDataDto.FuncReturnType =
-		strops.StrOps{}.LowerCaseFirstLetter(
-			linkZoneArray[0]) +
-			tzdatastructs.DeprecatedTzGroup +
-			tzdatastructs.MasterGroupTypeSuffix
+		// Example:  link       -> canonical time zone
+		//          'US/Alaska' -> 'America/Anchorage'
+		// Link            = 'US/Alaska'
+		// Canonical Value = 'America/Anchorage'
+		// Func Name: US()
+		tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(linkZoneArray[0])
 
-	// Example Function Return Value = uSDeprecatedTimeZones("")
-	tzDataDto.FuncReturnValue =
-		fmt.Sprintf("%v(\"\")", tzDataDto.FuncReturnType)
+		// Example: uSDeprecatedTimeZones
+		tzDataDto.FuncReturnType =
+			strops.StrOps{}.LowerCaseFirstLetter(
+				linkZoneArray[0]) +
+				tzdatastructs.DeprecatedTzGroup +
+				tzdatastructs.MasterGroupTypeSuffix
 
-	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
-	tzDataDto.TzType = tzdatastructs.TZType.Group()
-	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
-	tzDataDto.SetIsInitialized(true)
+		// Example Function Return Value = uSDeprecatedTimeZones("")
+		tzDataDto.FuncReturnValue =
+			fmt.Sprintf("%v(\"\")", tzDataDto.FuncReturnType)
 
-	_, err = tzData[tzdatastructs.Level_01_Idx].AddIfNew(tzDataDto)
+		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+		tzDataDto.TzType = tzdatastructs.TZType.Group()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+		tzDataDto.SetIsInitialized(true)
 
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzData[tzdatastructs.Level_01_Idx] Error\n"+
-			"Error: %v\n" +
-			"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+		err := tzdeclarations.TzZoneDeclarations{}.PlaceHolderLinkFuncDeclaration(&tzDataDto, ePrefix)
+
+		if err != nil {
+			return err
+		}
+
+		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzData[tzdatastructs.Level_01_Idx] Error\n"+
+				"Error: %v\n" +
+				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+		}
 	}
 
 	// Configure Level-2 Data
@@ -700,104 +725,128 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 	//
 	// Configure Level-2 Group Dto
 	//
-	tzGroup = tzdatastructs.TimeZoneGroupDto{}
 
-	// "Deprecated"
-	tzGroup.ParentGroupName = tzdatastructs.DeprecatedTzGroup
+	// linkZoneArray[0] == US
+	groupAlreadyExists, _ = tzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(linkZoneArray[0])
 
-	tzGroup.GroupName = linkZoneArray[0] // US
-	tzGroup.GroupSortValue = linkZoneArray[0] // US
+	if !groupAlreadyExists {
+		tzGroup := tzdatastructs.TimeZoneGroupDto{}
 
-	// Example: uSDeprecatedTimeZones
-	tzGroup.TypeName =
-		strops.StrOps{}.LowerCaseFirstLetter(
-			linkZoneArray[0]) +
-			tzdatastructs.DeprecatedTzGroup +
-			tzdatastructs.MasterGroupTypeSuffix
+		// "Deprecated"
+		tzGroup.ParentGroupName = tzdatastructs.DeprecatedTzGroup
 
-	tzGroup.TypeValue = "string"
+		tzGroup.GroupName = linkZoneArray[0] // US
+		tzGroup.GroupSortValue = linkZoneArray[0] // US
 
-	tzGroup.IanaVariableName = tzGroup.GroupName
-	tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzGroup.GroupType = tzdatastructs.TzGrpType.SubGroup()
-	tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
-	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
-	tzGroup.SetIsInitialized(true)
+		// Example: uSDeprecatedTimeZones
+		tzGroup.TypeName =
+			strops.StrOps{}.LowerCaseFirstLetter(
+				linkZoneArray[0]) +
+				tzdatastructs.DeprecatedTzGroup +
+				tzdatastructs.MasterGroupTypeSuffix
 
-	_, err = tzGroups[tzdatastructs.Level_02_Idx].AddIfNew(tzGroup)
+		tzGroup.TypeValue = "string"
 
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzGroups[tzdatastructs.Level_02_Idx] Error\n" +
-			"FileName: %v\n" +
-			"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		tzGroup.IanaVariableName = tzGroup.GroupName
+		tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzGroup.GroupType = tzdatastructs.TzGrpType.SubGroup()
+		tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
+		tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+		tzGroup.SetIsInitialized(true)
+
+		err := tzdeclarations.TzGroupDeclarations{}.DeprecatedSubGrpDeclaration(&tzGroup, ePrefix)
+
+		if err != nil {
+			return err
+		}
+
+		err = tzGroups[tzdatastructs.Level_02_Idx].Add(tzGroup)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzGroups[tzdatastructs.Level_02_Idx] Error\n" +
+				"FileName: %v\n" +
+				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		}
 	}
 
-	// Level - 2 Time Zone Data
-	//   Deprecated Time Zone Canonical Value
-	//
-	// Configure Deprecated Link - Time Zone Data Dto
-	// Example: link -> canonical time zone
-	//          'US/Alaska' -> 'America/Anchorage'
+	containsZone, _ =
+		tzData[tzdatastructs.Level_02_Idx].ContainsTzName(
+			linkZoneArray[0], linkZoneArray[1])
 
-	tzDataDto = tzdatastructs.TimeZoneDataDto{}
+		if !containsZone {
+			// Level - 2 Time Zone Data
+			//   Deprecated Time Zone Canonical Value
+			//
+			// Configure Deprecated Link - Time Zone Data Dto
+			// Example: link -> canonical time zone
+			//          'US/Alaska' -> 'America/Anchorage'
 
-	tzDataDto.GroupName = linkZoneArray[0] // US
-	tzDataDto.TzName = linkZoneArray[1] // Alaska
-	tzDataDto.TzAliasValue =
-		linkZoneArray[0] +
-			tzdatastructs.ZoneSeparator + linkZoneArray[1] // US/Alaska
-	tzDataDto.TzCanonicalValue = canonicalZone // America/Anchorage
-	tzDataDto.TzValue = linkZoneArray[1] // Alaska
-	tzDataDto.TzSortValue =
-		tzdatastructs.TimeZoneDataDto{}.NewSortValue(linkZoneArray[1])
+			tzDataDto := tzdatastructs.TimeZoneDataDto{}
 
-	// Example: link -> canonical time zone
-	//          'US/Alaska' -> 'America/Anchorage'
-	// Link            = 'US/Alaska'
-	// Canonical Value = 'America/Anchorage'
-	//
-	// func (uSDep uSDeprecatedTimeZones)
-	//     Alaska() string { return "America/Anchorage" }
+			tzDataDto.GroupName = linkZoneArray[0] // US
+			tzDataDto.TzName = linkZoneArray[1] // Alaska
+			tzDataDto.TzAliasValue =
+				linkZoneArray[0] +
+					tzdatastructs.ZoneSeparator + linkZoneArray[1] // US/Alaska
+			tzDataDto.TzCanonicalValue = canonicalZone // America/Anchorage
+			tzDataDto.TzValue = linkZoneArray[1] // Alaska
+			tzDataDto.TzSortValue =
+				tzdatastructs.TimeZoneDataDto{}.NewSortValue(linkZoneArray[1])
 
-	// Example: uSDeprecatedTimeZones
-	tzDataDto.FuncType =
-		strops.StrOps{}.LowerCaseFirstLetter(
-			linkZoneArray[0]) +
-			tzdatastructs.DeprecatedTzGroup +
-			tzdatastructs.MasterGroupTypeSuffix
+			// Example: link -> canonical time zone
+			//          'US/Alaska' -> 'America/Anchorage'
+			// Link            = 'US/Alaska'
+			// Canonical Value = 'America/Anchorage'
+			//
+			// func (uSDep uSDeprecatedTimeZones)
+			//     Alaska() string { return "America/Anchorage" }
 
-	// Example: 'uSDepr'
-	tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+			// Example: uSDeprecatedTimeZones
+			tzDataDto.FuncType =
+				strops.StrOps{}.LowerCaseFirstLetter(
+					linkZoneArray[0]) +
+					tzdatastructs.DeprecatedTzGroup +
+					tzdatastructs.MasterGroupTypeSuffix
 
-	// Example: link -> canonical time zone
-	//          'US/Alaska' -> 'America/Anchorage'
-	// Link            = 'US/Alaska'
-	// Canonical Value = 'America/Anchorage'
-	//
-	// Func Name: Alaska()
-	tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(linkZoneArray[1])
+			// Example: 'uSDepr'
+			tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
 
-	// Example: string
-	tzDataDto.FuncReturnType = "string"
+			// Example: link -> canonical time zone
+			//          'US/Alaska' -> 'America/Anchorage'
+			// Link            = 'US/Alaska'
+			// Canonical Value = 'America/Anchorage'
+			//
+			// Func Name: Alaska()
+			tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(linkZoneArray[1])
 
-	// Example Function Return Value = "America/Anchorage"
-	tzDataDto.FuncReturnValue =
-		fmt.Sprintf("\"%v\"", canonicalZone)
+			// Example: string
+			tzDataDto.FuncReturnType = "string"
 
-	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
-	tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
-	tzDataDto.TzType = tzdatastructs.TZType.SubZone()
-	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
-	tzDataDto.SetIsInitialized(true)
+			// Example Function Return Value = "America/Anchorage"
+			tzDataDto.FuncReturnValue =
+				fmt.Sprintf("\"%v\"", canonicalZone)
 
-	_, err = tzData[tzdatastructs.Level_02_Idx].AddIfNew(tzDataDto)
+			tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+			tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+			tzDataDto.TzType = tzdatastructs.TZType.SubZone()
+			tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+			tzDataDto.SetIsInitialized(true)
 
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzData[tzdatastructs.Level_01_Idx] Error\n"+
-			"Error: %v\n" +
-			"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			err := tzdeclarations.TzZoneDeclarations{}.LinkTimeZoneDeclaration(&tzDataDto, ePrefix)
+
+			if err != nil {
+				return err
+			}
+
+			err = tzData[tzdatastructs.Level_02_Idx].Add(tzDataDto)
+
+			if err != nil {
+				return fmt.Errorf(ePrefix +
+					"tzData[tzdatastructs.Level_01_Idx] Error\n"+
+					"Error: %v\n" +
+					"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			}
 	}
 
 	return nil
