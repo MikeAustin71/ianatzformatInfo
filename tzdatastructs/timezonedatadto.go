@@ -9,6 +9,7 @@ import (
 )
 
 type TimeZoneDataDto struct {
+	ParentGroupName           string
 	GroupName                 string
 	TzName                    string
 	TzAliasValue              string
@@ -56,6 +57,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 		return newTzDto
 	}
 
+	newTzDto.ParentGroupName = tzDataDto.ParentGroupName
 	newTzDto.GroupName = tzDataDto.GroupName
 	newTzDto.TzName = tzDataDto.TzName
 	newTzDto.TzCanonicalValue = tzDataDto.TzCanonicalValue
@@ -83,6 +85,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 func (tzDataDto *TimeZoneDataDto) CopyIn(
 	inTzDataDto *TimeZoneDataDto) {
 
+	tzDataDto.ParentGroupName = inTzDataDto.ParentGroupName
 	tzDataDto.GroupName = inTzDataDto.GroupName
 	tzDataDto.TzName = inTzDataDto.TzName
 	tzDataDto.TzCanonicalValue = inTzDataDto.TzCanonicalValue
@@ -114,6 +117,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 
 	if tzDataDto.isInitialized == tzDDto.isInitialized &&
+		tzDataDto.ParentGroupName == tzDDto.ParentGroupName &&
 		tzDataDto.GroupName == tzDDto.GroupName &&
 		tzDataDto.TzName == tzDDto.TzName &&
 		tzDataDto.TzAliasValue == tzDDto.TzAliasValue &&
@@ -171,11 +175,11 @@ func (tzDataDto *TimeZoneDataDto) IsInitialized() bool {
 // New - Creates and returns a new instance of the TimeZoneDataDto Type.
 //
 func (tzDataDto TimeZoneDataDto) New(
+	parentGroupName,
 	groupName,
-	subTzName,
 	tzName,
-	tzCanonicalValue,
 	tzAliasValue,
+	tzCanonicalValue,
 	tzValue,
 	tzSortValue,
 	funcSelfReferenceVariable,
@@ -224,10 +228,11 @@ func (tzDataDto TimeZoneDataDto) New(
 				"deprecationStatus='%v'", int(deprecationStatus))
 	}
 
+	newTzDto.ParentGroupName = parentGroupName
 	newTzDto.GroupName = groupName
 	newTzDto.TzName = tzName
-	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzAliasValue = tzAliasValue
+	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzValue = tzValue
 	newTzDto.TzSortValue = tzSortValue
 	newTzDto.FuncSelfReferenceVariable = funcSelfReferenceVariable
@@ -288,7 +293,7 @@ func (tzDataDto *TimeZoneDataDto) SetIsInitialized(isInitialized bool) {
 //SelectTzDto - Select from an array TimeZoneDataDto objects.
 type SelectTzDto []TimeZoneDataDto
 
-// MajorGroupExists - Performs a search for on TimeZoneDataDto array
+// GroupExists - Performs a search for on TimeZoneDataDto array
 // for a match on TimeZoneDataDto.GroupName. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
 // value of the found TimeZoneDataDto instance.

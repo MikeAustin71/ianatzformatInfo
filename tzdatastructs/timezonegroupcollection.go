@@ -97,7 +97,7 @@ func (tzGrpCol *TimeZoneGroupCollection) ContainsGroup(
 // ContainsGroupName - Returns true if the group name in question is
 // already part of the group collection.
 func (tzGrpCol *TimeZoneGroupCollection) ContainsGroupName(
-	groupName string) (containsGroupName bool, index int) {
+	parentGroupName, groupName string) (containsGroupName bool, index int) {
 
 	containsGroupName = false
 	index = -1
@@ -108,7 +108,9 @@ func (tzGrpCol *TimeZoneGroupCollection) ContainsGroupName(
 	}
 
 	for i:= 0; i < len(tzGrpCol.tzGroups); i++ {
-		if tzGrpCol.tzGroups[i].GroupName == groupName {
+
+		if tzGrpCol.tzGroups[i].GroupName == groupName &&
+			tzGrpCol.tzGroups[i].ParentGroupName == parentGroupName {
 			containsGroupName = true
 			return containsGroupName, i
 		}

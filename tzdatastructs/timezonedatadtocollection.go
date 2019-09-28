@@ -100,7 +100,7 @@ func (tzDataCol *TimeZoneDataCollection) AddIfNew(
 // time zone name equal to input parameters, 'groupName' and 'tzName'.
 //
 func (tzDataCol *TimeZoneDataCollection) ContainsTzName(
-	groupName, tzName string) (containsTz bool, index int) {
+	parentGroupName, groupName, tzName string) (containsTz bool, index int) {
 
 	containsTz = false
 	index = -1
@@ -111,7 +111,8 @@ func (tzDataCol *TimeZoneDataCollection) ContainsTzName(
 	}
 
 	for i:=0; i < len(tzDataCol.tzDataDtos); i++ {
-		if tzDataCol.tzDataDtos[i].GroupName == groupName &&
+		if tzDataCol.tzDataDtos[i].ParentGroupName == parentGroupName &&
+			tzDataCol.tzDataDtos[i].GroupName == groupName &&
 			tzDataCol.tzDataDtos[i].TzName == tzName {
 			containsTz = true
 			index = i
@@ -122,7 +123,7 @@ func (tzDataCol *TimeZoneDataCollection) ContainsTzName(
 	return containsTz, index
 }
 
-// MajorGroupExists - Performs a search for on the internal TimeZoneDataDto
+// GroupExists - Performs a search for on the internal TimeZoneDataDto
 // array for a match on TimeZoneDataDto.GroupName. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
 // value of the found TimeZoneDataDto instance.
@@ -139,10 +140,10 @@ func (tzDataCol *TimeZoneDataCollection) ContainsTzName(
 // is conducted as a case sensitive comparison where upper and lower case
 // characters are significant.
 //
-func (tzDataCol *TimeZoneDataCollection) MajorGroupExists(
-	majorGroupName string, caseInsensitiveSearch bool) (majorGrpExists bool, index int) {
+func (tzDataCol *TimeZoneDataCollection) GroupExists(
+	parentGroupName, groupName string) (groupExists bool, index int) {
 
-	majorGrpExists = false
+	groupExists = false
 	index = -1
 
 	if tzDataCol.tzDataDtos == nil {
@@ -154,20 +155,14 @@ func (tzDataCol *TimeZoneDataCollection) MajorGroupExists(
 	lenTzDataDtoArray := len(tzDataCol.tzDataDtos)
 
 	if lenTzDataDtoArray == 0 {
-		return false, -1
+		return groupExists, index
 	}
 
-	if caseInsensitiveSearch {
-		majorGroupName = strings.ToLower(majorGroupName)
-	}
 
 	for i:=0; i < lenTzDataDtoArray; i++ {
 
-		if caseInsensitiveSearch {
-			if majorGroupName == strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) {
-				return true, i
-			}
-		} else if majorGroupName == tzDataCol.tzDataDtos[i].GroupName {
+		if parentGroupName == tzDataCol.tzDataDtos[i].ParentGroupName &&
+			groupName == tzDataCol.tzDataDtos[i].GroupName {
 			return true, i
 		}
 
