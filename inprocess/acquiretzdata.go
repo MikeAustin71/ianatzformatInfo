@@ -9,40 +9,99 @@ import (
 	"strings"
 )
 
+type AcquireTzData struct {
+	input          string
+	output         string
+}
 
-func CreateInputFileMgr(targetFileName string) (inputFileMgr pathfileops.FileMgr, err error) {
+// AcquireDirectoryInfo - Returns directory and file information on the Time Zone
+// source data directory as well as and 'outputDirMgr' describing the output directory
+// where output time zone format data will be stored.
+//
+func (acTzDat AcquireTzData) AcquireDirectoryInfo(
+	targetParameterPathFileName,
+	ePrefix string) (dirFileInfo pathfileops.FileMgrCollection, outputDirMgr pathfileops.DirMgr, err error) {
+
+	ePrefix += "AcquireTzData.AcquireInputOutputDirectories() "
+	dirFileInfo = pathfileops.FileMgrCollection{}.New()
+	outputDirMgr = pathfileops.DirMgr{}
+	inputPathName := ""
+	outputPathName := ""
+
+	inputFileMgr, err2 :=
+		AcquireTzData{}.createInputFileMgr(targetParameterPathFileName, ePrefix)
+
+	if err2 != nil {
+		err = fmt.Errorf("%v", err2.Error())
+		return dirFileInfo, outputDirMgr, err
+	}
+
+	inputPathName, outputPathName, err2 =
+		AcquireTzData{}.getTargetDirectories(inputFileMgr, ePrefix)
+
+	if err2 != nil {
+		err = fmt.Errorf("%v", err2.Error())
+		return dirFileInfo, outputDirMgr, err
+	}
+
+	dirFileInfo, err2 = AcquireTzData{}.getDirectoryInfo(inputPathName, ePrefix)
+
+	if err2 != nil {
+		err = fmt.Errorf("%v", err2.Error())
+		return dirFileInfo, outputDirMgr, err
+	}
+
+	outputDirMgr, err2 = pathfileops.DirMgr{}.New(outputPathName)
+
+	if err2 != nil {
+		err = fmt.Errorf("%v", err2.Error())
+		return dirFileInfo, outputDirMgr, err
+	}
+
+	return dirFileInfo, outputDirMgr, err
+}
+// createInputFileMgr - Creates the File Manager for the input data
+// file.
+func (acTzDat AcquireTzData) createInputFileMgr(
+	targetPathFileName, ePrefix string) (inputFileMgr pathfileops.FileMgr, err error) {
 
 	inputFileMgr = pathfileops.FileMgr{}
 	err = nil
 
-	ePrefix := "parsetzdata.CreateInputFileMgr() Error: "
+	ePrefix += "AcquireTzData.CreateInputFileMgr() "
+
 	var err2 error
 
-	//targetFile := "D:\gowork\src\MikeAustin71\ianatzformatInfo\targettzdata.txt"
+	// Example targetPathFileName
+	// "D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt"
 
-	inputFileMgr, err2 = pathfileops.FileMgr{}.NewFromDirMgrFileNameExt(
-		tzdatastructs.CurWorkingDirectory, targetFileName)
+	inputFileMgr, err2 = pathfileops.FileMgr{}.New(targetPathFileName)
 
 	if err2 != nil {
 
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
+		err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
 
 		return inputFileMgr, err
 	}
 
-	ok, err2 := inputFileMgr.DoesThisFileExist()
+	var fileDoesExist bool
+
+	fileDoesExist, err2 = inputFileMgr.DoesThisFileExist()
 
 	if err2 != nil {
 
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
+		err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
 
 		return inputFileMgr, err
 	}
 
-	if !ok {
+	if !fileDoesExist {
 		err = fmt.Errorf(ePrefix+
-			"Target File DOES NOT EXIST! targetFile='%v' ",
-			inputFileMgr.GetAbsolutePathFileName())
+			"\nTarget File DOES NOT EXIST!\n" +
+			"targetPathFileName='%v'\n" +
+			"inputFileMgr='%v'\n",
+			targetPathFileName, inputFileMgr.GetAbsolutePathFileName())
+
 		return inputFileMgr, err
 	}
 
@@ -52,19 +111,22 @@ func CreateInputFileMgr(targetFileName string) (inputFileMgr pathfileops.FileMgr
 }
 
 // GetDirectoryInfo - Walks the 'baseDir' and returns information on all directories and
-// files. Note: Input parameter 'baseDir' MUST BE formatted in all lower case characters.
+// files found in the target input parameter 'baseDir'.
 //
-func GetDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection, err error) {
+func (acTzDat AcquireTzData) getDirectoryInfo(
+	baseDir, ePrefix string) (dirFileInfo pathfileops.FileMgrCollection, err error) {
 
-	ePrefix := "parsetzdata.GetDirectoryInfo() "
-
+	ePrefix += "AcquireTzData.GetDirectoryInfo() "
 	dirFileInfo = pathfileops.FileMgrCollection{}.New()
 	err = nil
 
-	if len(baseDir) < 3 {
-		err = fmt.Errorf(ePrefix+"Input parameter 'baseDir' is INVALID! baseDir='%v' ", baseDir)
+	if len(baseDir) == 0 {
+		err = errors.New(ePrefix + "\n" +
+			"Input Parameter 'baseDir' is an EMPTY string!\n")
 		return dirFileInfo, err
 	}
+
+	baseDir = strings.ToLower(baseDir)
 
 	baseDirMgr, err2 := pathfileops.DirMgr{}.New(baseDir)
 
@@ -73,105 +135,71 @@ func GetDirectoryInfo(baseDir string) (dirFileInfo pathfileops.FileMgrCollection
 		return dirFileInfo, err
 	}
 
-	baseDMgrDoesExist, err2 := baseDirMgr.DoesThisDirectoryExist()
+	var baseDMgrDoesExist bool
+
+	baseDMgrDoesExist, err2 = baseDirMgr.DoesThisDirectoryExist()
 
 	if err2 != nil {
-		err = fmt.Errorf(ePrefix + "baseDirMgr Non-Path Error\n" +
-			"%v", err2.Error())
+		err = fmt.Errorf(ePrefix + "\n'baseDirMgr' Non-Path Error.\n" +
+			"%v\n", err2.Error())
 		return dirFileInfo, err
 	}
 
 	if !baseDMgrDoesExist {
-		err = fmt.Errorf(ePrefix+"baseDirMgr Path DOES NOT EXIST! baseDir= %v ", baseDir)
+		err = fmt.Errorf(ePrefix+"'baseDirMgr' Path DOES NOT EXIST!\nbaseDirMgr= %v\n",
+			baseDirMgr.GetAbsolutePath())
 		return dirFileInfo, err
 	}
 
-	initialFMgrCol, err2 := baseDirMgr.FindFilesByNamePattern("*")
+	dirFileInfo, err2 = baseDirMgr.FindFilesByNamePattern("*")
 
 	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v", err2.Error())
+		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
 		return dirFileInfo, err
 	}
 
-	lenInitialFMgrs := initialFMgrCol.GetNumOfFileMgrs()
-
-	if lenInitialFMgrs < 1 {
-		err = errors.New(ePrefix + "Error: Zero Files Found in Target Directory!")
-		return dirFileInfo, err
+	if dirFileInfo.GetNumOfFileMgrs() < 1 {
+		err = fmt.Errorf(ePrefix + "Error: No files located in target 'baseDirMgr'.\n" +
+			"'baseDirMgr='%v'\n", baseDirMgr.GetAbsolutePath())
 	}
-
-	lenSkipFiles := len(tzdatastructs.SkipTzFiles)
-
-	var fmgr pathfileops.FileMgr
-
-	for i:=0; i< lenInitialFMgrs; i++ {
-
-		fmgr, err2 = initialFMgrCol.PeekFileMgrAtIndex(i)
-
-		if err2 != nil {
-			err = fmt.Errorf(ePrefix + "Error returned by initialFMgrCol.PeekFileMgrAtIndex(i)\n" +
-				"i='%v'\n" +
-				"Error='%v'\n", i, err2.Error())
-			return dirFileInfo, err
-		}
-
-		fName := fmgr.GetFileName()
-		isInvalidFile := false
-
-		if fmgr.GetFileExt() == "" {
-
-			for j:=0; j < lenSkipFiles; j++ {
-
-				if fName == tzdatastructs.SkipTzFiles[j] {
-					isInvalidFile = true
-					break
-				}
-			}
-
-			if !isInvalidFile && fName == "asia" {
-				dirFileInfo.AddFileMgr(fmgr.CopyOut())
-			}
-		}
-
-	}
-
-	/*
-	   if dirFileInfo.GetNumOfFileMgrs() < 2 {
-	     err = fmt.Errorf(ePrefix +
-	       "Error: Number of Valid Files Found in Target Directory is INVALID! " +
-	       "Number of valid files= '%v' ", dirFileInfo.GetNumOfFileMgrs())
-
-	     dirFileInfo = pathfileops.FileMgrCollection{}.New()
-
-	     return dirFileInfo, err
-	   }
-	*/
 
 	err = nil
 	return dirFileInfo, err
 }
 
-// GetTargetDirectory - Reads the targettzdata.txt file to get the target directory
-// where IANA Time Zone data is located.
+// getTargetDirectories - Reads the input text file and extracts the input directory
+// where IANA Time Zone data is located plus the output directory where formatted
+// time zones will be created.
 //
-func GetTargetDirectory(inputFileMgr pathfileops.FileMgr) (baseDir string, err error) {
-	baseDir = ""
+func (acTzDat AcquireTzData) getTargetDirectories(
+	inputFileMgr pathfileops.FileMgr,
+	ePrefix string) (inputDir, outputDir string, err error) {
+
+	inputDir = ""
+	outputDir = ""
 	err = nil
 
-	ePrefix := "parsetzdata.GetTargetDirectory() Error: "
+	ePrefix += "AcquireTzData.GetTargetDirectories() "
 
 	err2 := inputFileMgr.OpenThisFileReadWrite()
 
 	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
-		return baseDir, err
+		err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
+		return inputDir, outputDir, err
 	}
 
-	bArray, err2 := inputFileMgr.ReadAllFile()
+	var bArray []byte
+
+	bArray, err2 = inputFileMgr.ReadAllFile()
 
 	if err2 != nil {
 
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
+		err = fmt.Errorf(ePrefix+
+			"\n" +
+			"inputFileMgr: %v\n" +
+			"Error: %v\n",
+			inputFileMgr.GetAbsolutePath(),
+			err2.Error())
 
 		err2 = inputFileMgr.CloseThisFile()
 
@@ -182,58 +210,116 @@ func GetTargetDirectory(inputFileMgr pathfileops.FileMgr) (baseDir string, err e
 			err = errors.New(errStr)
 		}
 
-		return baseDir, err
+		return inputDir, outputDir, err
+	}
+
+	err2 = inputFileMgr.CloseThisFile()
+
+	if err2 != nil {
+		err = fmt.Errorf(ePrefix + "\n" +
+			"Error closing 'inputFileMgr'.\n" +
+			"inputFileMgr='%v'\n" +
+			"Error='%v'\n", inputFileMgr.GetAbsolutePath(), err2.Error())
+		return inputDir, outputDir, err
 	}
 
 	lBArray := len(bArray)
 
 	if lBArray < 3 {
-		err = fmt.Errorf(ePrefix+"Read Zero bytes from file %v", inputFileMgr)
-		_ = inputFileMgr.CloseThisFile()
-		return baseDir, err
+		err = fmt.Errorf(ePrefix+"Read Zero bytes from file 'inputFileMgr'\n" +
+			"inputFileMgr='%v'\n", inputFileMgr)
+		return inputDir, outputDir, err
 	}
 
-	baseDir, _ = strops.StrOps{}.ReadStringFromBytes(bArray, 0)
+	startIndex := 0
+	readDir := ""
 
-	err2 = inputFileMgr.CloseThisFile()
+	readDir, startIndex = strops.StrOps{}.ReadStringFromBytes(bArray, startIndex)
 
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
-		return baseDir, err
+	inputFieldName := "InputDirectory:"
+
+	idx := strings.Index(readDir, inputFieldName)
+
+	if idx == -1 {
+		err = fmt.Errorf(ePrefix + "\n" +
+			"Error: Input Directory Field Name '%v' was not found in first\n" +
+			"string read from 'inputFileMgr'.\n" +
+			"inputFileMgr='%v'\n", inputFieldName, inputFileMgr.GetAbsolutePath())
+		return inputDir, outputDir, err
 	}
 
-	doesExist := pathfileops.FileHelper{}.DoesFileExist(baseDir)
+	idx += len(inputFieldName)
+	inputDir = readDir[idx:]
+	inputDir = strings.TrimLeft(inputDir, " ")
+	inputDir = strings.TrimRight(inputDir, " ")
+	inputDir = strings.ToLower(inputDir)
+
+	doesExist := pathfileops.FileHelper{}.DoesFileExist(inputDir)
 
 	if !doesExist {
-		err = fmt.Errorf("Target Directory: %v DOES NOT EXIST!", baseDir)
-		return baseDir, err
+		err = fmt.Errorf(ePrefix +
+			"\nTarget Zone Input Directory DOES NOT EXIST!\n" +
+			"inputDir='%v'\n" +
+			"inputFileMgr='%v'", inputDir, inputFileMgr.GetAbsolutePath())
 
+		return inputDir, outputDir, err
 	}
 
-	baseDir = strings.ToLower(baseDir)
+	readDir, _ = strops.StrOps{}.ReadStringFromBytes(bArray, startIndex)
 
-	return baseDir, err
+	outputFieldName := "OutputDirectory:"
+
+	idx = strings.Index(readDir, outputFieldName)
+
+	if idx == -1 {
+		err = fmt.Errorf(ePrefix + "\n" +
+			"Error: Output Directory Field Name '%v' was not found in second\n" +
+			"string read from 'inputFileMgr'.\n" +
+			"inputFileMgr='%v'\n", inputFieldName, inputFileMgr.GetAbsolutePath())
+		return inputDir, outputDir, err
+	}
+
+	idx += len(outputFieldName)
+	outputDir = readDir[idx:]
+	outputDir = strings.TrimLeft(outputDir, " ")
+	outputDir = strings.TrimRight(outputDir, " ")
+
+	doesExist = pathfileops.FileHelper{}.DoesFileExist(outputDir)
+
+	if !doesExist {
+		err = fmt.Errorf(ePrefix +
+			"\nTarget Zone Output Directory DOES NOT EXIST!\n" +
+			"outputDir='%v'\n" +
+			"inputFileMgr='%v'",
+			outputDir, inputFileMgr.GetAbsolutePath())
+
+		return inputDir, outputDir, err
+	}
+
+	return inputDir, outputDir, err
 }
 
 // SetCurrentWorkingDirectory - Identifies and
 // initializes global variables with the current
 // working directory
-func SetCurrentWorkingDirectory() error {
+func (acTzDat AcquireTzData) SetCurrentWorkingDirectory(
+	ePrefix string) (currWorkingDirMgr pathfileops.DirMgr, err error) {
 
-	ePrefix := "parsetzdata.SetCurrentWorkingDirectory() "
-
-	var err error
+	ePrefix += "AcquireTzData.SetCurrentWorkingDirectory() "
+	currWorkingDirMgr = pathfileops.DirMgr{}
+	err = nil
+	var err2 error
 
 	crDir := ""
 
 	if tzdatastructs.DEBUG == 0 {
 		// DEBUG is OFF!
 
-		crDir, err = pathfileops.FileHelper{}.GetCurrentDir()
+		crDir, err2 = pathfileops.FileHelper{}.GetCurrentDir()
 
-		if err != nil {
-
-			return fmt.Errorf(ePrefix+"%v\n", err.Error())
+		if err2 != nil {
+			err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
+			return currWorkingDirMgr, err
 		}
 
 	} else {
@@ -243,28 +329,34 @@ func SetCurrentWorkingDirectory() error {
 
 	}
 
-	tzdatastructs.CurWorkingDirectory, err = pathfileops.DirMgr{}.New(crDir)
+	tzdatastructs.CurWorkingDirectory, err2 = pathfileops.DirMgr{}.New(crDir)
 
-	if err != nil {
-
-		return fmt.Errorf(ePrefix+"%v\n", err.Error())
+	if err2 != nil {
+		err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
+		return currWorkingDirMgr, err
 	}
 
-	curWorkDirDoesExist, err := tzdatastructs.CurWorkingDirectory.DoesThisDirectoryExist()
+	var curWorkDirDoesExist bool
+	curWorkDirDoesExist, err2 = tzdatastructs.CurWorkingDirectory.DoesThisDirectoryExist()
 
-	if err != nil {
-		return fmt.Errorf(ePrefix + "Error returned by curWorkingDirectory.DoesThisDirectoryExist()\n" +
-			"%v", err.Error())
+	if err2 != nil {
+		err = fmt.Errorf(ePrefix + "Error returned by curWorkingDirectory.DoesThisDirectoryExist()\n" +
+			"Current Working Directory: %v\n" +
+			"Error: %v\n",
+			tzdatastructs.CurWorkingDirectory.GetAbsolutePath(), err2.Error())
+		return currWorkingDirMgr, err
 	}
 
 	if !curWorkDirDoesExist {
 
-		return fmt.Errorf(ePrefix+
+		err = fmt.Errorf(ePrefix+
 			"Current Working Directory DOES NOT EXIST!"+
 			"CurWorkingDir: %v", tzdatastructs.CurWorkingDirectory.GetAbsolutePath())
-
+		return currWorkingDirMgr, err
 	}
 
+	currWorkingDirMgr = tzdatastructs.CurWorkingDirectory.CopyOut()
+	err = nil
 
-	return nil
+	return currWorkingDirMgr, err
 }

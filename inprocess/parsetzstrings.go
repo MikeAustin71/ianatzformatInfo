@@ -108,12 +108,13 @@ type ParseIanaTzData struct {
 // ParseTzAndLinks - Parses Time Zone Data from
 // IANA Time Zone files.
 func (parseTz *ParseIanaTzData) ParseTzAndLinks(
-	dirFileInfo pathfileops.FileMgrCollection) (
+	dirFileInfo pathfileops.FileMgrCollection,
+	ePrefix string) (
 	[] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
 	[] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
 	error)  {
 
-	ePrefix := "ParseIanaTzData.ParseTzAndLinks() "
+	ePrefix += "ParseIanaTzData.ParseTzAndLinks() "
 
 	tzGroups =  make([]tzdatastructs.TimeZoneGroupCollection, 3, 10)
 	tzData = make([]tzdatastructs.TimeZoneDataCollection, 3, 10)
@@ -139,12 +140,10 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 				fmt.Errorf(ePrefix+"%v\n", err.Error())
 		}
 
-		isSkipFile, err := parseTz.isSkipFile(fMgr)
+		isSkipFile, err := parseTz.isSkipFile(fMgr, ePrefix)
 
 		if err != nil {
-			return tzGroups,
-				tzData,
-				fmt.Errorf(ePrefix+"%v\n", err.Error())
+			return tzGroups, tzData, err
 		}
 
 		if isSkipFile {
@@ -153,7 +152,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 		fmt.Println("Valid File: ", fMgr.GetFileNameExt())
 
-		err =  parseTz.processFileBytes(fMgr)
+		err =  parseTz.processFileBytes(fMgr, ePrefix)
 
 		if err != nil {
 			return tzGroups,
@@ -163,7 +162,6 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 					"Error=%v\n",
 					fMgr.GetAbsolutePathFileName(),  err.Error())
 		}
-
 	}
 
 	err := parseTz.configMilitaryTimeZones(ePrefix)
@@ -1809,9 +1807,10 @@ if !strings.HasSuffix(actualFuncName,"()") {
 // file and determines whether the file should be skipped 
 // for processing.
 //
-func (parseTz *ParseIanaTzData) isSkipFile(fMgr pathfileops.FileMgr) (bool, error) {
+func (parseTz *ParseIanaTzData) isSkipFile(
+	fMgr pathfileops.FileMgr, ePrefix string) (bool, error) {
 
-	ePrefix := "ParseIanaTzData.isSkipFile() "
+	ePrefix += "ParseIanaTzData.isSkipFile() "
 
 	err := fMgr.IsFileMgrValid(ePrefix)
 
@@ -1838,9 +1837,10 @@ func (parseTz *ParseIanaTzData) isSkipFile(fMgr pathfileops.FileMgr) (bool, erro
 
 // ProcessFileBytes - Process all the bytes in a time zone file
 //
-func (parseTz *ParseIanaTzData) processFileBytes(fMgr pathfileops.FileMgr) error {
+func (parseTz *ParseIanaTzData) processFileBytes(
+	fMgr pathfileops.FileMgr, ePrefix string) error {
 
-	ePrefix := "ParseIanaTzData.processFileBytes() "
+	ePrefix += "ParseIanaTzData.processFileBytes() "
 
 	err := fMgr.OpenThisFileReadOnly()
 

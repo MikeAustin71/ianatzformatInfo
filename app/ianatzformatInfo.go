@@ -26,6 +26,7 @@ To update the package run:
 
 import (
 	"fmt"
+	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
@@ -34,52 +35,49 @@ import (
 
 
 func main() {
+
 	ePrefix := "ianaTzFormatInfo.main() "
 
 	tzdatastructs.DEBUG = 0
 
-	err := inprocess.SetCurrentWorkingDirectory()
+	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
 
-	inputFileMgr, err := inprocess.CreateInputFileMgr(tzdatastructs.InputFileName)
+	targetParameterPathFileName :=
+		pathfileops.FileHelper{}.JoinPathsAdjustSeparators(
+			currWorkingDirMgr.GetAbsolutePath(),
+			tzdatastructs.AppInputParametersFileName)
+
+	var dirFileInfo pathfileops.FileMgrCollection
+	var outputFileDirMgr pathfileops.DirMgr
+
+	dirFileInfo, outputFileDirMgr, err =
+		inprocess.AcquireTzData{}.AcquireDirectoryInfo(targetParameterPathFileName, ePrefix)
 
 	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-
-	baseDir, err := inprocess.GetTargetDirectory(inputFileMgr)
-
-	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-
-	fmt.Println("baseDir: ", baseDir)
-
-	dirFileInfo, err := inprocess.GetDirectoryInfo(baseDir)
-
-	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
+		fmt.Printf("%v\n", err.Error())
 		return
 	}
 
 	tzdatastructs.TimeZoneGroups,
 	tzdatastructs.TimeZones,
 		err =
-		 inprocess.ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo)
+		 inprocess.ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo, ePrefix)
 
 	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
+		fmt.Printf("%v\n", err.Error())
 		return
 	}
 
-	f, err := outprocess.TzOutProcess{}.CreateOpenOutputFile(
-		inputFileMgr.GetDirMgr(), tzdatastructs.OutputFileName)
+	var f pathfileops.FileMgr
+
+	f, err = outprocess.TzOutProcess{}.CreateOpenOutputFile(
+		outputFileDirMgr,
+		tzdatastructs.OutputFileName)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())

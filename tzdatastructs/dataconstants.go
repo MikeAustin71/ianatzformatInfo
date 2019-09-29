@@ -1,10 +1,10 @@
 package tzdatastructs
 
-const InputFileName = "targettzdata.txt"
+const AppInputParametersFileName = "targettzdata.txt"
 
 const OutputFileName = "timezonedata.go"
 
-const HomeDir = "D:\\gowork\\src\\MikeAustin71\\ianatzoneinfo\\parsetzdata"
+const HomeDir = "D:\\GoProjects\\ianatzformatInfo\\app"
 
 const PrimaryTimeZoneType = "TimeZones"
 
