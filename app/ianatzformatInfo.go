@@ -75,40 +75,12 @@ func main() {
 
 	var f pathfileops.FileMgr
 
-	f, err = outprocess.TzOutProcess{}.CreateOpenOutputFile(
+	err = outprocess.TzOutProcess{}.WriteOutput(
 		outputFileDirMgr,
-		tzdatastructs.OutputFileName)
-
-	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-
-	err = outprocess.TzOutProcess{}.WriteHeadersToOutputFile(f)
-
-	if err != nil {
-		_ = f.CloseThisFile()
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-
-	err = outprocess.TzOutProcess{}.WriteTimeZoneArrayToOutputFile(f)
-
-	if err != nil {
-		_ = f.CloseThisFile()
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-
-	err = outprocess.TzOutProcess{}.WriteLinkMapToOutputFile(f)
-
-	if err != nil {
-		_ = f.CloseThisFile()
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-
-	err = f.CloseThisFile()
+		tzdatastructs.OutputFileName,
+		tzdatastructs.TimeZoneGroups,
+		tzdatastructs.TimeZones,
+		ePrefix)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())

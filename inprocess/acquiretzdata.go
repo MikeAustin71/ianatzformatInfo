@@ -189,25 +189,31 @@ func (acTzDat AcquireTzData) getTargetDirectories(
 	}
 
 	var bArray []byte
+	var errArray []error
 
 	bArray, err2 = inputFileMgr.ReadAllFile()
 
 	if err2 != nil {
 
-		err = fmt.Errorf(ePrefix+
+		err3 := fmt.Errorf(ePrefix+
 			"\n" +
 			"inputFileMgr: %v\n" +
 			"Error: %v\n",
 			inputFileMgr.GetAbsolutePath(),
 			err2.Error())
 
+		errArray = append(errArray, err3)
+
 		err2 = inputFileMgr.CloseThisFile()
 
 		if err2 != nil {
-			errStr := err.Error()
-			errStr += "\n"
-			errStr += err2.Error()
-			err = errors.New(errStr)
+			err3 := fmt.Errorf("\n" + ePrefix +
+				"\n%v", err2)
+			errArray = append(errArray, err3)
+		}
+
+		if len(errArray) > 0 {
+			err = pathfileops.FileHelper{}.ConsolidateErrors(errArray)
 		}
 
 		return inputDir, outputDir, err

@@ -3,6 +3,7 @@ package outprocess
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
 )
 
@@ -15,12 +16,36 @@ type TzOutProcess struct {
 	input string
 }
 
-
-func (tzOut TzOutProcess) CreateOpenOutputFile(
+func (tzOut TzOutProcess) WriteOutput(
 	outputPathDirMgr pathfileops.DirMgr,
-	fileNameExt string) (f pathfileops.FileMgr, err error) {
+	fileNameExt string,
+	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
+	tzZonesAry [] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
+	ePrefix string) error {
 
-	ePrefix := "TzOutProcess.CreateOutputFile() Error: "
+	ePrefix += "TzOutProcess.WriteOutput() "
+
+	f, err := tzOut.createOpenOutputFile(outputPathDirMgr, fileNameExt, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzOut.writeHeadersToOutputFile(f, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+
+	return nil
+}
+
+func (tzOut TzOutProcess) createOpenOutputFile(
+	outputPathDirMgr pathfileops.DirMgr,
+	fileNameExt, ePrefix string) (f pathfileops.FileMgr, err error) {
+
+	ePrefix += "TzOutProcess.CreateOutputFile() "
 
 	f = pathfileops.FileMgr{}
 	err = nil
@@ -90,14 +115,18 @@ func (tzOut TzOutProcess) CreateOpenOutputFile(
 	return f, err
 }
 
-
-// outputFileMgr MUST be open and ready for Write operations.
-func (tzOut TzOutProcess) WriteHeadersToOutputFile(
-	outputFileMgr pathfileops.FileMgr) (err error) {
+// writeHeadersToOutputFile - Writes header information to the
+// output file. This includes the 'package' statement.
+//
+// Input parameter 'outputFileMgr' MUST be open and ready for
+// Write operations.
+//
+func (tzOut TzOutProcess) writeHeadersToOutputFile(
+	outputFileMgr pathfileops.FileMgr, ePrefix string) (err error) {
 
 		err = nil
 
-	ePrefix := "TzOutProcess.WriteHeadersToOutputFile() Error: "
+	ePrefix += "TzOutProcess.writeHeadersToOutputFile() "
 
 	if !outputFileMgr.IsInitialized() {
 		err = fmt.Errorf(ePrefix +
@@ -109,40 +138,45 @@ func (tzOut TzOutProcess) WriteHeadersToOutputFile(
 			"'outputFileMagr IS NOT OPEN!")
 	}
 
-	_, err2 := outputFileMgr.WriteStrToFile("package main\n\n")
+	var errorArray []error
+
+	_, err2 := outputFileMgr.WriteBytesToFile ([]byte("package main\n\n\n\n\n"))
 
 	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"Line1: %v", err2.Error())
+
+		errorArray = append(errorArray, fmt.Errorf(ePrefix+"Line1: %v", err2.Error()))
+
 		err2 = outputFileMgr.CloseThisFile()
 
 		if err2 != nil {
-			err = pathfileops.FileHelper{}.ConsolidateErrors([]error{err, err2})
+			errorArray = append(errorArray, err2)
+			err = pathfileops.FileHelper{}.ConsolidateErrors(errorArray)
 		}
 
 		return err
 	}
 
-	_, err2 = outputFileMgr.WriteStrToFile("\n\n\n")
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"Line5: %v", err2.Error())
-		err2 = outputFileMgr.CloseThisFile()
-
-		if err2 != nil {
-			err = pathfileops.FileHelper{}.ConsolidateErrors([]error{err, err2})
-		}
-
-		return err
-	}
 
 	err = nil
 	return err
 }
 
-func (tzOut TzOutProcess) WriteLinkMapToOutputFile(
-	outputFileMgr pathfileops.FileMgr) error {
+func (tzOut TzOutProcess) writeLevelOneTimeZones(
+	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
+	tzZonesAry [] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections)
+	ePrefix string) error {
 
-	ePrefix := "TzOutProcess.WriteTimeZoneArrayToOutputFile() "
+	ePrefix += "TzOutProcess.writeLevelOneTimeZones() "
+
+	//tzGroupsAry[tzdatastructs.Level_01_Idx].Sort
+
+	return nil
+}
+
+func (tzOut TzOutProcess) WriteLinkMapToOutputFile(
+	outputFileMgr pathfileops.FileMgr, ePrefix string) error {
+
+	ePrefix += "TzOutProcess.WriteTimeZoneArrayToOutputFile() "
 
 
 	sb := strings.Builder{}
@@ -175,9 +209,9 @@ func (tzOut TzOutProcess) WriteLinkMapToOutputFile(
 }
 
 func (tzOut TzOutProcess) WriteTimeZoneArrayToOutputFile(
-	outputFileMgr pathfileops.FileMgr) error {
+	outputFileMgr pathfileops.FileMgr, ePrefix string) error {
 
-	ePrefix := "TzOutProcess.WriteTimeZoneArrayToOutputFile() "
+	ePrefix += "TzOutProcess.WriteTimeZoneArrayToOutputFile() "
 	lenTzAry := len(timezoneArray)
 
 	sb := strings.Builder{}
