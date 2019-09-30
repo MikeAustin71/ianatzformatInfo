@@ -2,6 +2,9 @@ package tzdatastructs
 
 import (
 	"errors"
+	"fmt"
+	"sort"
+	"strings"
 )
 
 // TimeZoneGroupCollection a collection of TimeZoneGroupDto
@@ -119,6 +122,19 @@ func (tzGrpCol *TimeZoneGroupCollection) ContainsGroupName(
 	return containsGroupName, index
 }
 
+// GetNumberOfGroups - Returns the number of group elements
+// in this collection.
+//
+func (tzGrpCol *TimeZoneGroupCollection) GetNumberOfGroups() int {
+
+	if tzGrpCol.tzGroups == nil {
+		tzGrpCol.tzGroups = make([]TimeZoneGroupDto, 0, 300)
+		return 0
+	}
+
+	return len(tzGrpCol.tzGroups)
+}
+
 // New - Creates and returns a correctly initialized TimeZoneGroupCollection.
 //
 func (tzGrpCol TimeZoneGroupCollection) New() TimeZoneGroupCollection {
@@ -127,4 +143,85 @@ func (tzGrpCol TimeZoneGroupCollection) New() TimeZoneGroupCollection {
 	newTzGrp.tzGroups = make([]TimeZoneGroupDto, 0, 300)
 
 	return newTzGrp
+}
+
+// Peek - Returns a deep copy of the TimeZoneGroupDto
+// element located at input parameter 'index' within
+// the collection.
+//
+func (tzGrpCol *TimeZoneGroupCollection) Peek(
+	index int) (TimeZoneGroupDto, error) {
+
+	ePrefix := "TimeZoneGroupCollection.Peek() "
+
+	if tzGrpCol.tzGroups == nil {
+		tzGrpCol.tzGroups = make([]TimeZoneGroupDto, 0, 300)
+	}
+
+	lenGroupAry := len(tzGrpCol.tzGroups)
+
+	if lenGroupAry == 0 {
+		return TimeZoneGroupDto{},
+			errors.New (ePrefix + "Collection is EMPTY!\n")
+	}
+
+	if index >= lenGroupAry {
+		return TimeZoneGroupDto{},
+			fmt.Errorf(ePrefix + "Error: Input parameter 'index'\n" +
+				"exceeds collection upper limit.\n" +
+				"TimeZoneGroupDto Array last index='%v'\n" +
+				"Input parameter 'index'='%v'\n",
+				lenGroupAry-1, index)
+	}
+
+	return tzGrpCol.tzGroups[index].CopyOut(), nil
+}
+
+// Sort - Sorts the collection (TimeZoneGroupCollection.tzGroups)
+// by Parent Group and Group.
+//
+// If input parameter, 'caseSensitive' is false, all strings will
+// be converted to lower case before string comparisons are executed.
+//
+func (tzGrpCol *TimeZoneGroupCollection) Sort(caseSensitiveSort bool) {
+
+	if tzGrpCol.tzGroups == nil {
+		tzGrpCol.tzGroups = make([]TimeZoneGroupDto, 0, 300)
+		return
+	}
+
+	if len(tzGrpCol.tzGroups) < 2 {
+		return
+	}
+
+	var less func(i, j int) bool
+
+	if !caseSensitiveSort {
+		less = func(i, j int) bool {
+
+			strI := strings.ToLower(tzGrpCol.tzGroups[i].ParentGroupName) + "/" +
+				strings.ToLower(tzGrpCol.tzGroups[i].GroupSortValue)
+
+			strJ := strings.ToLower(tzGrpCol.tzGroups[j].ParentGroupName) + "/" +
+				strings.ToLower(tzGrpCol.tzGroups[j].GroupSortValue)
+
+			return strI < strJ
+		}
+	} else {
+
+		less = func(i, j int) bool {
+
+			strI := tzGrpCol.tzGroups[i].ParentGroupName + "/" +
+				tzGrpCol.tzGroups[i].GroupSortValue
+
+			strJ := tzGrpCol.tzGroups[j].ParentGroupName + "/" +
+				tzGrpCol.tzGroups[j].GroupSortValue
+
+			return strI < strJ
+		}
+	}
+
+	sort.Slice(tzGrpCol.tzGroups, less)
+
+	return
 }

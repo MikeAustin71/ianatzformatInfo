@@ -73,8 +73,6 @@ func main() {
 		return
 	}
 
-	var f pathfileops.FileMgr
-
 	err = outprocess.TzOutProcess{}.WriteOutput(
 		outputFileDirMgr,
 		tzdatastructs.OutputFileName,

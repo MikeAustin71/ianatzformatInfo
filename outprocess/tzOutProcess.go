@@ -3,14 +3,9 @@ package outprocess
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
-	"strings"
 )
-
-// [linked Zone] primary zone
-var mapTzLinks map[string]string
-
-var timezoneArray = make([]string, 100, 100)
 
 type TzOutProcess struct {
 	input string
@@ -37,6 +32,30 @@ func (tzOut TzOutProcess) WriteOutput(
 		return err
 	}
 
+	err = tzOut.writeTimeZones(
+		f,
+		tzGroupsAry,
+		tzZonesAry,
+		ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzOut.writeTimeZoneMasterType(
+		f,
+		tzGroupsAry,
+		ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzOut.writeTimeZoneGlobalType(f,ePrefix)
+
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -161,80 +180,212 @@ func (tzOut TzOutProcess) writeHeadersToOutputFile(
 	return err
 }
 
-func (tzOut TzOutProcess) writeLevelOneTimeZones(
+func (tzOut TzOutProcess) writeTimeZones(
+	outputFileMgr pathfileops.FileMgr,
 	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
 	tzZonesAry [] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections)
 	ePrefix string) error {
 
 	ePrefix += "TzOutProcess.writeLevelOneTimeZones() "
 
-	//tzGroupsAry[tzdatastructs.Level_01_Idx].Sort
+	var grp tzdatastructs.TimeZoneGroupDto
+	var tzCol tzdatastructs.TimeZoneDataCollection
+	var tZone tzdatastructs.TimeZoneDataDto
+	var err error
+
+	for i:=0; i < tzdatastructs.Level_03_Idx; i++ {
+
+		tzGroupsAry[i].Sort(false)
+
+		tzZonesAry[i].SortByGroupTzName(false)
+
+		lenGrpAry := tzGroupsAry[i].GetNumberOfGroups()
+
+		for j:= 0; j < lenGrpAry; j++ {
+
+			grp, err = tzGroupsAry[i].Peek(j)
+
+			if err != nil {
+				return fmt.Errorf(ePrefix +
+					"\nError returned by tzGroupsAry[i].Peek(j).\n" +
+					"i='%v' j='%v'\n" +
+					"Error='%v'\n", i, j, err.Error())
+			}
+
+			if len(grp.TypeDeclaration) == 0 {
+				return fmt.Errorf(ePrefix +
+					"\nError: Group Type Declaration has Zero Bytes!\n" +
+					"i='%v' j='%v'\n" +
+					"Parent Group Name='%v'\n" +
+					"Group Name='%v'\n", i, j, grp.ParentGroupName, grp.GroupName)
+			}
+
+			_, err = outputFileMgr.WriteBytesToFile(grp.TypeDeclaration)
+
+			if err != nil {
+				return fmt.Errorf(ePrefix +
+					"\nError returned by outputFileMgr.WriteBytesToFile()\n" +
+					"i='%v' j='%v'\n" +
+					"Parent Group Name='%v'\n" +
+					"Group Name='%v'\n" +
+					"Error='%v'\n",
+					i, j, grp.ParentGroupName, grp.GroupName, err.Error())
+			}
+
+			tzCol, err = tzZonesAry[i].GetZoneGroupCol(grp)
+
+			if err != nil {
+				return fmt.Errorf(ePrefix)
+			}
+
+			tzCol.SortByGroupTzName(false)
+
+			numOfTimeZones := tzCol.GetNumberOfTimeZones()
+
+			if numOfTimeZones == 0 {
+				return fmt.Errorf(ePrefix +
+					"\nTime Zone Collection is EMPTY!\n" +
+					"Parent Group='%v'\n" +
+					"Group Name='%v'\n",
+					grp.ParentGroupName, grp.GroupName)
+			}
+
+			for k:=0; k < numOfTimeZones; k++ {
+
+				tZone, err = tzCol.Peek(k)
+
+				if err != nil {
+					return fmt.Errorf(ePrefix +
+						"\nError returned by tzCol.Peek(k)\n" +
+						"k='%v'\n" +
+						"Parent Group='%v'\n" +
+						"Group Name='%v'\n",
+						k, grp.ParentGroupName, grp.GroupName)
+				}
+
+				if len(tZone.FuncDeclaration) == 0 {
+					return fmt.Errorf(ePrefix +
+						"\nTime Zone Func Declaration has Zero Bytes!\n" +
+						"Time Zone Name='%v'\n" +
+						"Parent Group='%v'\n" +
+						"Group Name='%v'\n",
+						tZone.TzName, grp.ParentGroupName, grp.GroupName)
+				}
+
+				_, err = outputFileMgr.WriteBytesToFile(tZone.FuncDeclaration)
+
+			}
+		}
+	}
 
 	return nil
 }
 
-func (tzOut TzOutProcess) WriteLinkMapToOutputFile(
-	outputFileMgr pathfileops.FileMgr, ePrefix string) error {
+func (tzOut TzOutProcess) writeTimeZoneGlobalType(
+	outputFileMgr pathfileops.FileMgr,
+	ePrefix string) error {
 
-	ePrefix += "TzOutProcess.WriteTimeZoneArrayToOutputFile() "
+	ePrefix += "TzOutProcess.writeTimeZoneGlobalType() "
 
+	var err error
 
-	sb := strings.Builder{}
-	lenMapTzLinks := len(mapTzLinks)
-	sb.Grow( lenMapTzLinks * 40)
+	outBytes := []byte("var TZones = TimeZones{}\n\n")
 
-	sb.WriteString("// mapTzLinks - A listing of deprecated time zones with links to active \n")
-	sb.WriteString("// IANA time zones. key='deprecated time zone' value='current active time zone'\n")
-	sb.WriteString(fmt.Sprintf("// The number of links is: %v\n", lenMapTzLinks))
-	// var linkMap = map[string]string{
-	//  "America/Buenos_Aires":             "America/Argentina/Buenos_Aires",
-
-	sb.WriteString("var linkMap = map[string]string {\n")
-
-	for key, value := range mapTzLinks {
-
-		sb.WriteString("   \"" + key + "\":         \"" + value +"\", \n")
-
-	}
-
-	sb.WriteString("    }\n\n\n")
-
-	_, err := outputFileMgr.WriteStrToFile(sb.String())
+	_, err = outputFileMgr.WriteBytesToFile(outBytes)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix + "%v", err.Error())
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile(outBytes)\n" +
+			"Error='%v'\n", err.Error())
 	}
 
 	return nil
 }
 
-func (tzOut TzOutProcess) WriteTimeZoneArrayToOutputFile(
-	outputFileMgr pathfileops.FileMgr, ePrefix string) error {
+func (tzOut TzOutProcess) writeTimeZoneMasterType(
+	outputFileMgr pathfileops.FileMgr,
+	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection,
+	ePrefix string) error {
 
-	ePrefix += "TzOutProcess.WriteTimeZoneArrayToOutputFile() "
-	lenTzAry := len(timezoneArray)
+	ePrefix += "TzOutProcess.writeTimeZoneMasterType() "
 
-	sb := strings.Builder{}
-	sb.Grow(lenTzAry * 30)
+	lenMasterGrps := tzGroupsAry[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
 
-	sb.WriteString("// timeZoneArray - This array contains time zones from the IANA database. \n")
-	sb.WriteString(fmt.Sprintf("// The total number of time zones is %v\n", lenTzAry ))
-	sb.WriteString("var timeZoneAry = []string {\n")
+	var outBytes []byte
 
-	for i:=0; i < lenTzAry; i++ {
-		if i == lenTzAry - 1 {
-			sb.WriteString("           \"" + timezoneArray[i] + "\"}\n\n\n")
-		} else {
-			sb.WriteString("           \"" + timezoneArray[i] + "\",\n")
+	outBytes = []byte("type TimeZones struct {\n")
+
+	var err error
+	var leftMarginStr string
+	var centerMarginStr string
+	const centerMarginLen = 35
+
+	_, err = outputFileMgr.WriteBytesToFile(outBytes)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile(typeDeclaration)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	leftMarginStr, err = strops.StrOps{}.MakeSingleCharString(' ', 5)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by StrOps{}.MakeSingleCharString(' ', 5)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+
+	var grp tzdatastructs.TimeZoneGroupDto
+
+	for i:=0; i < lenMasterGrps; i++ {
+
+		grp, err = tzGroupsAry[tzdatastructs.Level_01_Idx].Peek(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by tzGroupsAry[tzdatastructs.Level_01_Idx].Peek(i)\n" +
+				"i='%v'\n" +
+				"Error='%v'\n", i, err.Error())
+		}
+
+		centerLen := centerMarginLen - len(grp.GroupName)
+
+		if centerLen < 1 {
+			centerLen = 5
+		}
+
+		centerMarginStr, err = strops.StrOps{}.MakeSingleCharString(' ', centerLen)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by StrOps{}.MakeSingleCharString(' ', centerLen)\n" +
+				"Error='%v'\n", err.Error())
+		}
+
+		outBytes = []byte(leftMarginStr + grp.GroupName + centerMarginStr + grp.TypeName + "\n")
+
+		_, err = outputFileMgr.WriteBytesToFile(outBytes)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\n Error returned by outputFileMgr.WriteBytesToFile(TzGroupBytes)\n" +
+				"Error='%v'\n", err.Error())
 		}
 
 	}
 
-	_, err := outputFileMgr.WriteStrToFile(sb.String())
+	outBytes = []byte("}\n\n\n")
+
+	_, err = outputFileMgr.WriteBytesToFile(outBytes)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix + "%v", err.Error())
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by outputFileMgr.WriteBytesToFile(EndOfMasterType)\n" +
+			"Error='%v'\n", err.Error())
 	}
+
 
 	return nil
 }

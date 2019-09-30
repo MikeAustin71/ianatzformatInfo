@@ -123,6 +123,68 @@ func (tzDataCol *TimeZoneDataCollection) ContainsTzName(
 	return containsTz, index
 }
 
+// GetNumberOfTimeZones - Returns the number of time zone elements
+// in this collection.
+//
+func (tzDataCol *TimeZoneDataCollection) GetNumberOfTimeZones() int {
+
+	if tzDataCol.tzDataDtos == nil {
+		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+		return 0
+	}
+
+	return len(tzDataCol.tzDataDtos)
+}
+
+// GetZoneGroupCol - Returns a collection of time zones which
+// match the Time Zone Group input parameter.
+//
+func (tzDataCol *TimeZoneDataCollection) GetZoneGroupCol(
+	tzGroup TimeZoneGroupDto ) (TimeZoneDataCollection, error) {
+
+	ePrefix := "TimeZoneDataCollection) GetZoneGroupCol() "
+
+	if tzDataCol.tzDataDtos == nil {
+
+		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+
+	}
+
+	tzCol := TimeZoneDataCollection{}.New()
+
+	lenTzDataDtos := len(tzDataCol.tzDataDtos)
+
+	if lenTzDataDtos == 0 {
+		return tzCol,
+		errors.New(ePrefix +
+			"Time Zone Data Collection is EMPTY!\n")
+	}
+
+	for i:=0; i < lenTzDataDtos; i++ {
+		if tzDataCol.tzDataDtos[i].ParentGroupName ==
+			tzGroup.ParentGroupName &&
+			tzDataCol.tzDataDtos[i].GroupName ==
+			tzGroup.GroupName {
+
+			err := tzCol.Add(tzDataCol.tzDataDtos[i].CopyOut())
+
+			if err != nil {
+				return TimeZoneDataCollection{}.New(),
+					fmt.Errorf(ePrefix +
+						"Error returned by tzCol.Add()\n" +
+						"Group Name='%v'\n" +
+						"Tz Name='%v'\n" +
+						"Error='%v'\n",
+						tzGroup.GroupName,
+						tzDataCol.tzDataDtos[i].TzName,
+						err.Error())
+			}
+		}
+	}
+
+	return tzCol, nil
+}
+
 // GroupExists - Performs a search for on the internal TimeZoneDataDto
 // array for a match on TimeZoneDataDto.GroupName. If the search is successful,
 // this method returns a boolean value of 'true' and the integer index
@@ -196,18 +258,18 @@ func (tzDataCol *TimeZoneDataCollection) Peek(index int) (TimeZoneDataDto, error
 
 	}
 
-	lenTzDataDtos := len(tzDataCol.tzDataDtos)
-
-	if lenTzDataDtos == 0 {
-		return TimeZoneDataDto{}, fmt.Errorf(ePrefix +
-			"ERROR: The Time Zone Data Collection is EMPTY!")
-	}
-
 	if index < 0 {
 		return TimeZoneDataDto{},
 			fmt.Errorf(ePrefix +
 				"ERROR: Input parameter 'index' is less than zero and INVALID!\n" +
 				"index='%v'", index)
+	}
+
+	lenTzDataDtos := len(tzDataCol.tzDataDtos)
+
+	if lenTzDataDtos == 0 {
+		return TimeZoneDataDto{}, errors.New(ePrefix +
+			"ERROR: The Time Zone Data Collection is EMPTY!")
 	}
 
 	if index > (lenTzDataDtos - 1) {
@@ -327,15 +389,16 @@ func (tzDataCol *TimeZoneDataCollection) PopLast() (TimeZoneDataDto, error) {
 	return newTzDataDto, nil
 }
 
-// SortByMjrGrpTzName - Sort the collection by TimeZone Major Group and
+// SortByGroupTzName - Sort the collection by TimeZone Parent Group, Group and
 // Time Zone Name.
-func (tzDataCol *TimeZoneDataCollection) SortByMjrGrpTzName(caseSensitiveSort bool) {
+//
+func (tzDataCol *TimeZoneDataCollection) SortByGroupTzName(caseSensitiveSort bool) {
 
 	if tzDataCol.tzDataDtos == nil {
 		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
 	}
 
-	if len(tzDataCol.tzDataDtos) == 0 {
+	if len(tzDataCol.tzDataDtos) < 2 {
 		return
 	}
 
@@ -343,27 +406,30 @@ func (tzDataCol *TimeZoneDataCollection) SortByMjrGrpTzName(caseSensitiveSort bo
 
 	if !caseSensitiveSort {
 		less = func(i, j int) bool {
-			if strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) !=
-				strings.ToLower(tzDataCol.tzDataDtos[j].GroupName) {
 
-				return strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) <
-					strings.ToLower(tzDataCol.tzDataDtos[j].GroupName)
+			strI := strings.ToLower(tzDataCol.tzDataDtos[i].ParentGroupName) + "/" +
+				strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) + "/" +
+					strings.ToLower(tzDataCol.tzDataDtos[i].TzSortValue)
+
+			strJ := strings.ToLower(tzDataCol.tzDataDtos[j].ParentGroupName) + "/" +
+				strings.ToLower(tzDataCol.tzDataDtos[j].GroupName) + "/" +
+					strings.ToLower(tzDataCol.tzDataDtos[j].TzSortValue)
+
+				return strI < strJ
 			}
-
-			return strings.ToLower(tzDataCol.tzDataDtos[i].TzName) <
-				strings.ToLower(tzDataCol.tzDataDtos[j].TzName)
-		}
 	} else {
+
 		less = func(i, j int) bool {
-			if tzDataCol.tzDataDtos[i].GroupName !=
-				tzDataCol.tzDataDtos[j].GroupName {
 
-				return tzDataCol.tzDataDtos[i].GroupName <
-					tzDataCol.tzDataDtos[j].GroupName
-			}
+			strI := tzDataCol.tzDataDtos[i].ParentGroupName + "/" +
+				tzDataCol.tzDataDtos[i].GroupName + "/" +
+				tzDataCol.tzDataDtos[i].TzSortValue
 
-			return tzDataCol.tzDataDtos[i].TzName <
-				tzDataCol.tzDataDtos[j].TzName
+			strJ := tzDataCol.tzDataDtos[j].ParentGroupName + "/" +
+				tzDataCol.tzDataDtos[j].GroupName + "/" +
+				tzDataCol.tzDataDtos[j].TzSortValue
+
+			return strI < strJ
 		}
 	}
 
