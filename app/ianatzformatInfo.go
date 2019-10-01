@@ -1,29 +1,5 @@
 package main
 
-/*
-- strops -
-Use this command to down load and install the *pathfileops* package
-locally.
-
-    go get github.com/MikeAustin71/stringopsgo/strops/v2
-
-To update the package run:
-
-    go get -u github.com/MikeAustin71/stringopsgo/strops/v2
-
-
-- pathfileops -
-Use this command to down load and install the *pathfileops* package
-locally. Note: Version 2+ supports *Go* modules.
-
-    go get github.com/MikeAustin71/pathfileopsgo/pathfileops/v2
-
-To update the package run:
-
-    go get -u github.com/MikeAustin71/pathfileopsgo/pathfileops/v2
-
-*/
-
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
@@ -33,12 +9,14 @@ import (
 )
 
 
-
 func main() {
 
 	ePrefix := "ianaTzFormatInfo.main() "
 
-	tzdatastructs.DEBUG = 0
+	// /////////////////////////////////////////
+	//  IMPORTANT!!! SET CORRECT VALUE!!!    //
+	// ////////////////////////////////////////
+	tzdatastructs.DEBUG = 1
 
 	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
 
@@ -63,8 +41,11 @@ func main() {
 		return
 	}
 
-	tzdatastructs.TimeZoneGroups,
-	tzdatastructs.TimeZones,
+	var timeZoneGroups []tzdatastructs.TimeZoneGroupCollection
+	var timeZones []tzdatastructs.TimeZoneDataCollection
+
+	timeZoneGroups,
+	timeZones,
 		err =
 		 inprocess.ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo, ePrefix)
 
@@ -76,8 +57,8 @@ func main() {
 	err = outprocess.TzOutProcess{}.WriteOutput(
 		outputFileDirMgr,
 		tzdatastructs.OutputFileName,
-		tzdatastructs.TimeZoneGroups,
-		tzdatastructs.TimeZones,
+		timeZoneGroups,
+		timeZones,
 		ePrefix)
 
 	if err != nil {

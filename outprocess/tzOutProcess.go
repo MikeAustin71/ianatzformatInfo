@@ -11,6 +11,7 @@ type TzOutProcess struct {
 	input string
 }
 
+// WriteOutput - Writes all formatted time zone data to the output file.
 func (tzOut TzOutProcess) WriteOutput(
 	outputPathDirMgr pathfileops.DirMgr,
 	fileNameExt string,
@@ -57,7 +58,31 @@ func (tzOut TzOutProcess) WriteOutput(
 		return err
 	}
 
-	return nil
+	err = nil
+
+	errArray := make([]error, 0)
+
+	err2 := f.FlushBytesToDisk()
+
+	if err2 != nil {
+
+		errArray = append(errArray, fmt.Errorf(ePrefix +
+			"\nError returned by f.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err2.Error()))
+	}
+
+	err2 = f.CloseThisFile()
+
+	if err2 != nil {
+		errArray = append(errArray, fmt.Errorf(ePrefix +
+			"\nError returned by f.CloseThisFile()"))
+	}
+
+	if len(errArray) > 0 {
+		err = pathfileops.FileHelper{}.ConsolidateErrors(errArray)
+	}
+
+	return err
 }
 
 func (tzOut TzOutProcess) createOpenOutputFile(

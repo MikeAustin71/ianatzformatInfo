@@ -115,9 +115,12 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	error)  {
 
 	ePrefix += "ParseIanaTzData.ParseTzAndLinks() "
+	var err error
 
 	tzGroups =  make([]tzdatastructs.TimeZoneGroupCollection, 3, 10)
 	tzData = make([]tzdatastructs.TimeZoneDataCollection, 3, 10)
+
+	dirFileInfo.SortByAbsPathFileName(true)
 
 	numOfFiles := dirFileInfo.GetNumOfFileMgrs()
 
@@ -130,17 +133,22 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 				"Number of Files='%v'", numOfFiles)
 	}
 
+	var isSkipFile bool
+	var fMgr pathfileops.FileMgr
+
 	for i:=0; i < numOfFiles; i++ {
 
-		fMgr, err := dirFileInfo.PeekFileMgrAtIndex(i)
+		fMgr, err = dirFileInfo.PeekFileMgrAtIndex(i)
 
 		if err != nil {
 			return tzGroups,
 				tzData,
-				fmt.Errorf(ePrefix+"%v\n", err.Error())
+				fmt.Errorf(ePrefix+
+					"Error returned by dirFileInfo.PeekFileMgrAtIndex(i)\n" +
+					"Error='%v'\n", err.Error())
 		}
 
-		isSkipFile, err := parseTz.isSkipFile(fMgr, ePrefix)
+		isSkipFile, err = parseTz.isSkipFile(fMgr, ePrefix)
 
 		if err != nil {
 			return tzGroups, tzData, err
@@ -155,16 +163,11 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		err =  parseTz.processFileBytes(fMgr, ePrefix)
 
 		if err != nil {
-			return tzGroups,
-				tzData,
-				fmt.Errorf(ePrefix+
-					"File Name: %v\n" +
-					"Error=%v\n",
-					fMgr.GetAbsolutePathFileName(),  err.Error())
+			return tzGroups, tzData, err
 		}
 	}
 
-	err := parseTz.configMilitaryTimeZones(ePrefix)
+	err = parseTz.configMilitaryTimeZones(ePrefix)
 
 	return tzGroups,
 		tzData,
@@ -287,9 +290,9 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 // Canonical =  America/Panama
 // Link = America/Cayman
 func (parseTz *ParseIanaTzData) extractLink(
-	fMgr pathfileops.FileMgr ,rawString string) error {
+	fMgr pathfileops.FileMgr ,rawString, ePrefix string) error {
 
-	ePrefix := "ParseIanaTzData.extractLink() "
+	ePrefix += "ParseIanaTzData.extractLink() "
 
 	startIdx := 0
 // Extract Field 1 - Canonical Field
@@ -305,7 +308,9 @@ func (parseTz *ParseIanaTzData) extractLink(
 			tzdatastructs.EndOfLineDelimiters)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix + "%v\n", err.Error())
+		return fmt.Errorf(ePrefix + "\n" +
+			"Error returned by StrOps{}.ExtractDataField()\n" +
+			"Error='%v'\n", err.Error())
 	}
 
 	if dFProfile.DataFieldLength < 1 {
@@ -332,7 +337,9 @@ func (parseTz *ParseIanaTzData) extractLink(
 			tzdatastructs.EndOfLineDelimiters)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix + "%v\n", err.Error())
+		return fmt.Errorf(ePrefix +
+			"\nError returned by StrOps{}.ExtractDataField()\n" +
+			"Error='%v'\n", err.Error())
 	}
 
 	if dFProfile.DataFieldLength < 1 {
@@ -351,12 +358,11 @@ func (parseTz *ParseIanaTzData) extractLink(
 
 	if lenZoneArray < 1 ||
 		lenZoneArray > 3 {
-		fmt.Printf(ePrefix + "Invalid Link Time Zone!\n" +
+		return fmt.Errorf(ePrefix + "Invalid Link Time Zone!\n" +
 			"FileName: %v\n" +
 			"Tz Link String: %v\n" +
 			"Tz Canonical String: %v\n",
 			fMgr.GetFileNameExt(), tzLink, tzCanonical)
-		return nil
 	}
 
 	if lenZoneArray == 1 {
@@ -386,7 +392,6 @@ func (parseTz *ParseIanaTzData) extractLink(
 	// Link      = America/Argentina/ComodRivadavia
 
 	return parseTz.linkCfgThreeElements(fMgr, linkZoneArray, tzCanonical, ePrefix)
-
 }
 
 
@@ -394,9 +399,9 @@ func (parseTz *ParseIanaTzData) extractLink(
 // Data is stored in tzMajorGroupMap, tzDataCol and
 // or subTzDataCol.
 func (parseTz *ParseIanaTzData) extractZone(
-	fMgr pathfileops.FileMgr, rawString string) error {
+	fMgr pathfileops.FileMgr, rawString, ePrefix string) error {
 
-	ePrefix := "ParseIanaTzData.extractZone() "
+	ePrefix += "ParseIanaTzData.extractZone() "
 
 	dFProfile,
 	err :=
@@ -410,7 +415,9 @@ func (parseTz *ParseIanaTzData) extractZone(
 			tzdatastructs.EndOfLineDelimiters)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix+"%v\n", err.Error())
+		return fmt.Errorf(ePrefix+"\n" +
+			"Error returned by StrOps{}.ExtractDataField()\n" +
+			"Error='%v'\n", err.Error())
 	}
 
 	if dFProfile.DataFieldLength < 1 {
@@ -1842,34 +1849,48 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 
 	ePrefix += "ParseIanaTzData.processFileBytes() "
 
-	err := fMgr.OpenThisFileReadOnly()
+	var err error
+
+	err = fMgr.OpenThisFileReadOnly()
 
 	if err != nil {
-		return fmt.Errorf(ePrefix+"%v\n", err.Error())
+		return fmt.Errorf(ePrefix+
+			"Error returned by fMgr.OpenThisFileReadOnly()\n" +
+			"Error='%v'\n", err.Error())
 	}
 
-	bytes, err := fMgr.ReadAllFile()
+	errArray := make([]error, 0)
+	var bytes []byte
 
-	if err != nil {
-		_ = fMgr.CloseThisFile()
-		return fmt.Errorf(ePrefix+"%v\n", err.Error())
+	bytes, err = fMgr.ReadAllFile()
+
+	if err!= nil {
+
+		errArray = append(errArray, fmt.Errorf(ePrefix+
+			"\nError returned by fMgr.ReadAllFile()\n" +
+			"Error='%v'\n", err.Error()))
 	}
 
 	err = fMgr.CloseThisFile()
 
 	if err != nil {
-		return fmt.Errorf(ePrefix+"Error closing file. File='%v' Error='%v'\n",
-			fMgr.GetAbsolutePathFileName(), err.Error())
+		errArray = append(errArray,
+			fmt.Errorf(ePrefix+"Error closing file. File='%v' Error='%v'\n",
+				fMgr.GetAbsolutePathFileName(), err.Error()))
+	}
+
+	if len(errArray) > 0 {
+		return pathfileops.FileHelper{}.ConsolidateErrors(errArray)
 	}
 
 	nextStartIdx := 0
 	extractedString := ""
-	cntr := 1
+	// cntr := 1
 	for nextStartIdx > -1 {
 
 		extractedString, nextStartIdx = strops.StrOps{}.ReadStringFromBytes(bytes, nextStartIdx)
-		fmt.Printf("str No %v: %v\n", cntr, extractedString)
-		cntr++
+		// fmt.Printf("str No %v: %v\n", cntr, extractedString)
+		//cntr++
 
 		cmtIdx := strings.Index(extractedString, tzdatastructs.CommentCharStr)
 
@@ -1885,11 +1906,10 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 				continue
 			}
 
-			err = parseTz.extractZone(fMgr, extractedString)
+			err = parseTz.extractZone(fMgr, extractedString, ePrefix)
 
 			if err != nil {
-				fmt.Printf("Zone Extraction Error: %v\n" +
-					"%v\n", fMgr.GetAbsolutePathFileName(), err.Error())
+				return err
 			}
 
 			continue
@@ -1902,7 +1922,7 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 				continue
 			}
 
-			err = parseTz.extractLink(fMgr, extractedString)
+			err = parseTz.extractLink(fMgr, extractedString, ePrefix)
 			if err != nil {
 				fmt.Printf("Link Extraction Error: %v\n" +
 					"%v\n", fMgr.GetAbsolutePathFileName(), err.Error())
