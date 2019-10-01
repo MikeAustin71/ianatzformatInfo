@@ -99,7 +99,7 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	tzData *tzdatastructs.TimeZoneDataDto, ePrefix string) error {
 
-	ePrefix += "TzMilitaryDeclarations.MilitaryTypeDeclaration() "
+	ePrefix += "TzMilitaryDeclarations.MilitaryTzFuncDeclaration() "
 	firstLetter := tzData.TzName[:1]
 
 	nStrDto, err := strops.StrOps{}.ExtractNumericDigits(
@@ -110,9 +110,12 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	}
 
 	if nStrDto.NumStrLen == 0 {
+		/*
 		return fmt.Errorf(ePrefix + "Military Time Zone does NOT contain a number string!\n" +
 			"Time Zone Name: %v\nTime Zone Value: %v\n",
 			tzData.TzName, tzData.TzValue)
+		*/
+		nStrDto.NumStr = "0"
 	}
 
 	outputStr := tzdatastructs.CommentLead +

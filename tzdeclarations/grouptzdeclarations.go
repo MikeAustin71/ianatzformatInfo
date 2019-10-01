@@ -173,7 +173,8 @@ func (tzGrpDecs TzGroupDeclarations) StandardGrpDeclaration(
 
 	outputStr += "\n"
 
-	tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	//tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	tzGroup.TypeDeclaration = []byte(outputStr)
 
 	return nil
 }

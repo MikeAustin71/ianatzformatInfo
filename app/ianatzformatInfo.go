@@ -6,6 +6,7 @@ import (
 	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"os"
 )
 
 
@@ -25,9 +26,12 @@ func main() {
 		return
 	}
 
+	targetInputDir :=
+		currWorkingDirMgr.GetAbsolutePath() + string(os.PathSeparator) + "input"
+
 	targetParameterPathFileName :=
 		pathfileops.FileHelper{}.JoinPathsAdjustSeparators(
-			currWorkingDirMgr.GetAbsolutePath(),
+			targetInputDir,
 			tzdatastructs.AppInputParametersFileName)
 
 	var dirFileInfo pathfileops.FileMgrCollection
@@ -44,10 +48,12 @@ func main() {
 	var timeZoneGroups []tzdatastructs.TimeZoneGroupCollection
 	var timeZones []tzdatastructs.TimeZoneDataCollection
 
+parser := inprocess.ParseIanaTzData{}
+
 	timeZoneGroups,
 	timeZones,
 		err =
-		 inprocess.ParseIanaTzData{}.ParseTzAndLinks(dirFileInfo, ePrefix)
+		 parser.ParseTzAndLinks(dirFileInfo, ePrefix)
 
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
@@ -67,3 +73,24 @@ func main() {
 	}
 
 }
+
+/*
+$ go run ianatzformatInfo.go
+Number of Target Files:  33
+Valid File:  africa
+Valid File:  antarctica
+Valid File:  asia
+Valid File:  australasia
+Valid File:  backward
+Valid File:  backzone
+Valid File:  etcetera
+Valid File:  europe
+Valid File:  northamerica
+Valid File:  pacificnew
+Valid File:  southamerica
+ianaTzFormatInfo.main() ianaTzFormatInfo.main() TzOutProcess.WriteOutput() TzOutProcess.writeLevelOneTimeZones()
+
+Time Zone Collection is EMPTY!
+Parent Group='America'
+Group Name='Argentina'
+ */

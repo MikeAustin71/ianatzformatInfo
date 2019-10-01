@@ -43,6 +43,8 @@ func (tzGrpDto *TimeZoneGroupDto) CopyOut() TimeZoneGroupDto {
 	newTzGrpDto.GroupType             = tzGrpDto.GroupType
 	newTzGrpDto.GroupClass             = tzGrpDto.GroupClass
 	newTzGrpDto.DeprecationStatus     = tzGrpDto.DeprecationStatus
+	newTzGrpDto.TypeDeclaration = make([]byte, len(tzGrpDto.TypeDeclaration))
+	copy(newTzGrpDto.TypeDeclaration, tzGrpDto.TypeDeclaration)
 	newTzGrpDto.isInitialized         = true
 
 	return newTzGrpDto
@@ -67,6 +69,8 @@ func (tzGrpDto *TimeZoneGroupDto) CopyIn(
 	tzGrpDto.GroupType           = inGrpDto.GroupType
 	tzGrpDto.GroupClass           = inGrpDto.GroupClass
 	tzGrpDto.DeprecationStatus   = inGrpDto.DeprecationStatus
+	tzGrpDto.TypeDeclaration = make([]byte, len(inGrpDto.TypeDeclaration))
+	copy(tzGrpDto.TypeDeclaration, inGrpDto.TypeDeclaration)
 	tzGrpDto.isInitialized       = inGrpDto.isInitialized
 }
 

@@ -174,8 +174,7 @@ func (tZoneDecs TzZoneDeclarations) StandardZoneFuncDeclaration(
 			tzData.TzCanonicalValue)
 
 	outputStr += tzdatastructs.CommentBlankLine
-	outputStr += tzdatastructs.CommentLead +
-		fmt.Sprintf("func (%v %v) %v %v {return %v }\n",
+	outputStr += fmt.Sprintf("func (%v %v) %v %v {return %v }\n",
 			tzData.FuncSelfReferenceVariable,
 			tzData.FuncDeclaration,
 			tzData.FuncName,

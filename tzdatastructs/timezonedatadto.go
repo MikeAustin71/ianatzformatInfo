@@ -73,6 +73,8 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.TzClass = tzDataDto.TzClass
 	newTzDto.TzType = tzDataDto.TzType
 	newTzDto.DeprecationStatus = tzDataDto.DeprecationStatus
+	newTzDto.FuncDeclaration = make([]byte, len(tzDataDto.FuncDeclaration))
+	copy(newTzDto.FuncDeclaration, tzDataDto.FuncDeclaration)
 	newTzDto.isInitialized = tzDataDto.isInitialized
 
 	return newTzDto
@@ -101,6 +103,8 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.TzClass = inTzDataDto.TzClass
 	tzDataDto.TzType = inTzDataDto.TzType
 	tzDataDto.DeprecationStatus = inTzDataDto.DeprecationStatus
+	tzDataDto.FuncDeclaration = make([]byte, len(inTzDataDto.FuncDeclaration))
+	copy(tzDataDto.FuncDeclaration, inTzDataDto.FuncDeclaration)
 	tzDataDto.isInitialized = inTzDataDto.isInitialized
 
 }
