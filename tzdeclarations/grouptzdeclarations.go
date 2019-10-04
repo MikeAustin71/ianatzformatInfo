@@ -63,7 +63,8 @@ func (tzGrpDecs TzGroupDeclarations) DeprecatedGrpDeclaration(
 
 	outputStr += "\n"
 
-	tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	// tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	tzGroup.TypeDeclaration = []byte(outputStr)
 
 	return nil
 }
@@ -122,7 +123,8 @@ func (tzGrpDecs TzGroupDeclarations) DeprecatedSubGrpDeclaration(
 
 	outputStr += "\n"
 
-	tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	// tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	tzGroup.TypeDeclaration = []byte(outputStr)
 
 	return nil
 }
@@ -172,6 +174,7 @@ func (tzGrpDecs TzGroupDeclarations) StandardGrpDeclaration(
 		tzGroup.TypeName, tzGroup.TypeValue)
 
 	outputStr += "\n"
+
 
 	//tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
 	tzGroup.TypeDeclaration = []byte(outputStr)
@@ -231,7 +234,8 @@ func (tzGrpDecs TzGroupDeclarations) SubGroupDeclaration(
 
 	outputStr += "\n"
 
-	tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	// tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
+	tzGroup.TypeDeclaration = []byte(outputStr)
 
 	return nil
 }

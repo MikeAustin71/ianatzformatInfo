@@ -527,7 +527,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 		//
 		// Configure Deprecated Link - Time Zone Data Dto
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+		tzDataDto.ParentGroupName = ""
 		tzDataDto.GroupName = tzdatastructs.DeprecatedTzGroup
 		tzDataDto.TzName = linkZone // Egypt
 		tzDataDto.TzAliasValue = linkZone // Egypt
@@ -544,7 +544,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 				tzdatastructs.MasterGroupTypeSuffix
 
 		// Example: 'depre'
-		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 		// Example: link -> canonical time zone
 		//          'Egypt' -> 'Africa/Cairo'
@@ -618,7 +618,6 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 		tzGroup := tzdatastructs.TimeZoneGroupDto{}
 		tzGroup.ParentGroupName = ""
-
 		// "Deprecated"
 		tzGroup.GroupName = tzdatastructs.DeprecatedTzGroup
 		tzGroup.GroupSortValue = tzdatastructs.DeprecatedTzGroup
@@ -667,7 +666,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 		// Example: link -> canonical time zone
 		//          'US/Alaska' -> 'America/Anchorage'
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+		tzDataDto.ParentGroupName = ""
 		tzDataDto.GroupName = tzdatastructs.DeprecatedTzGroup // Deprecated
 		tzDataDto.TzName = linkZoneArray[0] // US
 		tzDataDto.TzAliasValue =
@@ -689,7 +688,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 				tzdatastructs.MasterGroupTypeSuffix
 
 		// Example: 'depre'
-		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 		// Example:  link       -> canonical time zone
 		//          'US/Alaska' -> 'America/Anchorage'
@@ -707,7 +706,6 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 		// Example Function Return Value = ""
 		tzDataDto.FuncReturnValue = "\"\""
-
 
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
@@ -749,7 +747,6 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 		// "Deprecated"
 		tzGroup.ParentGroupName = tzdatastructs.DeprecatedTzGroup
-
 		tzGroup.GroupName = linkZoneArray[0] // US
 		tzGroup.GroupSortValue = linkZoneArray[0] // US
 
@@ -800,7 +797,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			//          'US/Alaska' -> 'America/Anchorage'
 
 			tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+			tzDataDto.ParentGroupName = tzdatastructs.DeprecatedTzGroup // 'Deprecated'
 			tzDataDto.GroupName = linkZoneArray[0] // US
 			tzDataDto.TzName = linkZoneArray[1] // Alaska
 			tzDataDto.TzAliasValue =
@@ -827,7 +824,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 					tzdatastructs.MasterGroupTypeSuffix
 
 			// Example: 'uSDep'
-			tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+			tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 			// Example: link -> canonical time zone
 			//          'US/Alaska' -> 'America/Anchorage'
@@ -969,7 +966,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	if !containsZone {
 
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+		tzDataDto.ParentGroupName = ""
 		tzDataDto.GroupName = tzdatastructs.DeprecatedTzGroup
 		tzDataDto.TzName = linkZoneArray[0] // America
 		tzDataDto.TzAliasValue =
@@ -997,7 +994,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				tzdatastructs.MasterGroupTypeSuffix
 
 		// Example: 'depre'
-		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 		// Example:
 		// link                               -> canonical time zone
@@ -1059,8 +1056,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 		tzGroup := tzdatastructs.TimeZoneGroupDto{}
 
 		// "Deprecated"
-		tzGroup.ParentGroupName = tzdatastructs.DeprecatedTzGroup
-
+		tzGroup.ParentGroupName = tzdatastructs.DeprecatedTzGroup // 'Deprecated'
 		tzGroup.GroupName = linkZoneArray[0] // America
 		tzGroup.GroupSortValue = linkZoneArray[0] // America
 
@@ -1096,7 +1092,6 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 		}
 	}
 
-
 	containsZone, _ =
 		tzData[tzdatastructs.Level_02_Idx].ContainsTzName(
 			tzdatastructs.DeprecatedTzGroup, // Parent Group Name - 'Deprecated'
@@ -1118,7 +1113,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 		// Canonical Time Zone = 'America/Argentina/Catamarca'
 		//
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+		tzDataDto.ParentGroupName = tzdatastructs.DeprecatedTzGroup // Parent Group Name - 'Deprecated'
 		tzDataDto.GroupName = linkZoneArray[0] // America
 		tzDataDto.TzName = linkZoneArray[1] // Argentina
 		tzDataDto.TzAliasValue =
@@ -1147,7 +1142,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				tzdatastructs.MasterGroupTypeSuffix
 
 		// Example: 'ameri'
-		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 		// Example:
 		// link                               -> canonical time zone
@@ -1267,8 +1262,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 
 	if !containsZone {
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
-		tzDataDto.GroupName = linkZoneArray[1] // Argentina // US
+		tzDataDto.ParentGroupName = linkZoneArray[0] // America
+		tzDataDto.GroupName = linkZoneArray[1] // Argentina
 		tzDataDto.TzName = linkZoneArray[2] // ComodRivadavia
 
 		// America/Argentina/ComodRivadavia
@@ -1300,7 +1295,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				tzdatastructs.MasterGroupTypeSuffix
 
 		// Example: 'argen'
-		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 		// Example:
 		// link                               -> canonical time zone
@@ -1439,7 +1434,7 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 			tzdatastructs.MasterGroupTypeSuffix
 
 	// Example: 'ameri'
-	tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+	tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 	// Example: 'America/Chicago'
 	// FuncName: Chicago()
@@ -1595,7 +1590,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 
 		// Example: 'ameri'
 		tzDataDto.FuncSelfReferenceVariable =
-			tzDataDto.FuncType[:6]
+			tzDataDto.FuncType[:5]
 
 		// Example Time Zone: America/Argentina/Buenos_Aires
 		// FuncName: Argentina()
@@ -1690,7 +1685,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		// Sub Time Zone Array (subTzDataCol)
 		// Example: America/Argentina/Buenos_Aires
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+		tzDataDto.ParentGroupName = zoneArray[0] // America
 		tzDataDto.GroupName = zoneArray[1] // Argentina
 		tzDataDto.TzName = zoneArray[2]    // Buenos_Aires - tzName
 		tzDataDto.TzAliasValue = ""
@@ -1715,7 +1710,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 			tzdatastructs.MasterGroupTypeSuffix
 
 		// Example: 'argen'
-		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:6]
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
 		// Example: America/Argentina/Buenos_Aires
 		// Func Name: Buenos_Aires()

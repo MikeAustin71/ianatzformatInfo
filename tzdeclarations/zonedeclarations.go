@@ -63,7 +63,8 @@ func (tZoneDecs TzZoneDeclarations) LinkTimeZoneDeclaration(
 
 	outputStr += "\n"
 
-	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	// tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	tzData.FuncDeclaration = []byte(outputStr)
 
 	return nil
 }
@@ -101,7 +102,8 @@ func (tZoneDecs TzZoneDeclarations) PlaceHolderZoneFuncDeclaration(
 
 	outputStr += "\n"
 
-	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	// tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	tzData.FuncDeclaration = []byte(outputStr)
 
 	return nil
 }
@@ -147,7 +149,9 @@ func (tZoneDecs TzZoneDeclarations) PlaceHolderLinkFuncDeclaration(
 
 	outputStr += "\n"
 
-	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	// tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+
+	tzData.FuncDeclaration = []byte(outputStr)
 
 	return nil
 }
@@ -176,14 +180,15 @@ func (tZoneDecs TzZoneDeclarations) StandardZoneFuncDeclaration(
 	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += fmt.Sprintf("func (%v %v) %v %v {return %v }\n",
 			tzData.FuncSelfReferenceVariable,
-			tzData.FuncDeclaration,
+			tzData.FuncType,
 			tzData.FuncName,
 			tzData.FuncReturnType,
 			tzData.FuncReturnValue)
 
 	outputStr += "\n"
 
-	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	// tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	tzData.FuncDeclaration = []byte(outputStr)
 
 	return nil
 }

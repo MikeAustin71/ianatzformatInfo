@@ -122,7 +122,7 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 		fmt.Sprintf("%v - Military Time Zone '%v' or '%v' is equivalent to\n",
 			tzData.TzName, firstLetter, tzData.TzName)
 
-	outputStr = tzdatastructs.CommentLead +
+	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("to IANA Time Zone \"%v\".\n", tzData.TzValue)
 
 	utcOffset := nStrDto.NumStr + " hours."
@@ -130,9 +130,8 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	if nStrDto.NumStr == "+1" || nStrDto.NumStr == "-1" {
 		utcOffset = nStrDto.NumStr + " hour."
 	}
-	outputStr += tzdatastructs.CommentBlankLine
-	outputStr +=
-		fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v\n",
+	outputStr += tzdatastructs.CommentLead +
+			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v\n",
 			utcOffset)
 
 	outputStr += tzdatastructs.CommentBlankLine
