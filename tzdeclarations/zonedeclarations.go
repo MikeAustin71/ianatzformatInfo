@@ -54,7 +54,7 @@ func (tZoneDecs TzZoneDeclarations) LinkTimeZoneDeclaration(
 			tzData.TzCanonicalValue)
 
 	outputStr += tzdatastructs.CommentBlankLine +
-	fmt.Sprintf("func (%v %v) %v %v { return %v }",
+	fmt.Sprintf("func (%v %v) %v %v { return %v }\n",
 		tzData.FuncSelfReferenceVariable,
 		tzData.FuncType,
 		tzData.FuncName,

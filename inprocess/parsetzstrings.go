@@ -135,6 +135,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 	var isSkipFile bool
 	var fMgr pathfileops.FileMgr
+	validFileCnt := 0
 
 	for i:=0; i < numOfFiles; i++ {
 
@@ -159,13 +160,15 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		}
 
 		fmt.Println("Valid File: ", fMgr.GetFileNameExt())
-
+		validFileCnt++
 		err =  parseTz.processFileBytes(fMgr, ePrefix)
 
 		if err != nil {
 			return tzGroups, tzData, err
 		}
 	}
+
+	fmt.Printf("Number Of Valid Files: %v\n", validFileCnt)
 
 	err = parseTz.configMilitaryTimeZones(ePrefix)
 
@@ -329,7 +332,7 @@ func (parseTz *ParseIanaTzData) extractLink(
 	err =
 		strops.StrOps{}.ExtractDataField(
 			rawString,
-			[]string{tzdatastructs.LinkLabel},
+			[]string{},
 			startIdx,
 			tzdatastructs.LeadingFieldSeparators,
 			tzdatastructs.TrailingFieldSeparators,
@@ -1132,7 +1135,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 		// Canonical Time Zone = 'America/Argentina/Catamarca'
 
 		// func (ameri americaDeprecatedTimeZones)
-		//     Argentina() argentinaDeprecatedTimeZones { return argentinaDeprecatedTimeZones("") }
+		//     Argentina() argentinaDeprecatedTimeZones { return "" }
 
 		// Example: americaDeprecatedTimeZones
 		tzDataDto.FuncType =
@@ -1161,8 +1164,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				tzdatastructs.MasterGroupTypeSuffix
 
 		// Example Function Return Value = ""
-		tzDataDto.FuncReturnValue =
-			fmt.Sprintf("%v(\"\")", tzDataDto.FuncReturnType)
+		tzDataDto.FuncReturnValue =  "\"\""
+
 
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
@@ -1911,6 +1914,7 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 		}
 
 		if linkIdx > -1 {
+
 			if cmtIdx > -1 &&
 				cmtIdx < linkIdx {
 
