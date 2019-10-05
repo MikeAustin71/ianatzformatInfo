@@ -1,7 +1,8 @@
 package tzdatastructs
 
-var timeZoneTypeComments =
-  []byte("// TimeZones - This type and its associated methods encapsulate all 590+\n" +
+var TimeZoneTypeComments =
+  []byte("\n\n" +
+  "// TimeZones - This type and its associated methods encapsulate all 590+\n" +
   "// IANA Time Zones plus Military Time Zones. This type is therefore used as an\n" +
   "// enumeration of the Global Time Zones.\n" +
   "//\n" +
@@ -21,9 +22,8 @@ var timeZoneTypeComments =
   "//\n" +
   "// For easy access to the IANA Time Zones it is recommended that you use\n" +
   "// the global variable 'TZones' declared below. This variable instantiates the\n" +
-  "// 'IanaTimeZones' type. It is therefore much easier to access any of the 590+\n" +
-  "// IANA time zones using dot operators and intelliSense (a.k.a. intelligent code\n" +
-  "// completion).\n" +
+  "// 'TimeZones' type. It is therefore much easier to access any of the 590+ IANA\n" +
+  "// time zones using dot operators and intellisense (a.k.a. intelligent code completion).\n" +
   "//\n" +
   "// Examples:\n" +
   "//   TZones.America.Argentina().Buenos_Aires() - America/Argentina/Buenos_Aires Time Zone\n" +

@@ -3,6 +3,68 @@ package main
 
 
 
+
+
+// TimeZones - This type and its associated methods encapsulate all 590+
+// IANA Time Zones plus Military Time Zones. This type is therefore used as an
+// enumeration of the Global Time Zones.
+//
+// The Go Programming Language uses IANA Time Zones in date-time calculations.
+//  Reference:
+//    https://golang.org/pkg/time/#LoadLocation
+//
+// IANA Time Zones are widely recognized as the the world's leading authority on
+// time zones.
+//
+// Reference:
+//    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+//    https://en.wikipedia.org/wiki/Tz_database
+//
+// The IANA Time Zone data base and reference information is located at:
+//    https://www.iana.org/time-zones.
+//
+// For easy access to the IANA Time Zones it is recommended that you use
+// the global variable 'TZones' declared below. This variable instantiates the
+// 'TimeZones' type. It is therefore much easier to access any of the 590+ IANA
+// time zones using dot operators and intellisense (a.k.a. intelligent code completion).
+//
+// Examples:
+//   TZones.America.Argentina().Buenos_Aires() - America/Argentina/Buenos_Aires Time Zone
+//   TZones.America.Chicago()                  - USA Central Time Zone
+//   TZones.America.New_York()                 - USA Eastern Time Zone
+//   TZones.America.Denver()                   - USA Mountain Time Zone
+//   TZones.America.Los_Angeles()              - USA Pacific Time Zone
+//   TZones.Europe.London()                    - Europe/London Time Zone
+//   TZones.Europe.Paris()                     - Europe/Paris  Time Zone
+//   TZones.Asia.Shanghai()                    - Asia/Shanghai Time Zone
+//
+// 'TimeZones' has been adapted to function as an enumeration of valid time zone
+// values. Since Go does not directly support enumerations, the 'TimeZones' type
+// has been configured to function in a manner similar to classic enumerations found
+// in other languages like C#.
+// For additional information, reference:
+//      Jeffrey Richter Using Reflection to implement enumerated types
+//             https://www.youtube.com/watch?v=DyXJy_0v0_U 
+//
+type TimeZones struct {
+     Africa                             africaTimeZones
+     Atlantic                           atlanticTimeZones
+     Deprecated                         deprecatedTimeZones
+     Indian                             indianTimeZones
+     Antarctica                         antarcticaTimeZones
+     Asia                               asiaTimeZones
+     Australia                          australiaTimeZones
+     Pacific                            pacificTimeZones
+     America                            americaTimeZones
+     Europe                             europeTimeZones
+     Etc                                etcTimeZones
+     Military                           militaryTimeZones
+}
+
+
+var TZones = TimeZones{}
+
+
 // africaTimeZones - IANA Time Zones for 'Africa'.
 //  
 // For documentation on IANA Time Zones, see type
@@ -4133,21 +4195,26 @@ func (uSDep uSDeprecatedTimeZones) PacificMinusNew() string { return "America/Lo
 //  
 func (uSDep uSDeprecatedTimeZones) Samoa() string { return "Pacific/Pago_Pago" }
 
-type TimeZones struct {
-     Africa                             africaTimeZones
-     America                            americaTimeZones
-     Antarctica                         antarcticaTimeZones
-     Asia                               asiaTimeZones
-     Atlantic                           atlanticTimeZones
-     Australia                          australiaTimeZones
-     Deprecated                         deprecatedTimeZones
-     Etc                                etcTimeZones
-     Europe                             europeTimeZones
-     Indian                             indianTimeZones
-     Military                           militaryTimeZones
-     Pacific                            pacificTimeZones
-}
+// argentinaDeprecatedTimeZones - Defines a subsidiary collection
+// of Time Zones which are obsolete and no longer used as
+// primary and accepted time zone designations.
+//  
+// For documentation on IANA Time Zones, see type
+// 'TimeZones'.
+//  
+// Reference:
+//   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+//   https://en.wikipedia.org/wiki/Tz_database
+//   https://www.iana.org/time-zones
+//  
+type argentinaDeprecatedTimeZones string
 
-
-var TZones = TimeZones{}
+// ComodRivadavia - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Argentina/ComodRivadavia'
+//     Maps To Valid Time Zone: 'America/Argentina/Catamarca'
+//  
+func (argen argentinaDeprecatedTimeZones) ComodRivadavia() string { return "America/Argentina/Catamarca" }
 

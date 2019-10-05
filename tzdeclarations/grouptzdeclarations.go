@@ -43,8 +43,16 @@ func (tzGrpDecs TzGroupDeclarations) DeprecatedGrpDeclaration(
 		"Time Zones which are obsolete and no longer used as\n"
 
 	outputStr += tzdatastructs.CommentLead +
-		"primary and accepted time zone designations.\n"
+		"primary and accepted time zone designations. These\n"
+
+	outputStr += tzdatastructs.CommentLead +
+		"time zones are classified as 'Link' Time Zones and\n"
+
+	outputStr += tzdatastructs.CommentLead +
+		"are mapped to current, valid IANA Time Zones.\n"
+
 	outputStr += tzdatastructs.CommentBlankLine
+
 	outputStr += tzdatastructs.CommentLead +
 		"For documentation on IANA Time Zones, see type\n"
 
@@ -103,7 +111,15 @@ func (tzGrpDecs TzGroupDeclarations) DeprecatedSubGrpDeclaration(
 		"of Time Zones which are obsolete and no longer used as\n"
 
 	outputStr += tzdatastructs.CommentLead +
-		"primary and accepted time zone designations.\n"
+		"primary and accepted time zone designations. These\n"
+
+	outputStr += tzdatastructs.CommentLead +
+		"time zones are classified as 'Link' Time Zones and\n"
+
+	outputStr += tzdatastructs.CommentLead +
+		"are mapped to current, valid IANA Time Zones.\n"
+
+
 	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += tzdatastructs.CommentLead +
 		"For documentation on IANA Time Zones, see type\n"

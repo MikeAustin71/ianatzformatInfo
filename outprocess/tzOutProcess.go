@@ -30,6 +30,24 @@ func (tzOut TzOutProcess) WriteOutput(
 	err = tzOut.writeHeadersToOutputFile(f, ePrefix)
 
 	if err != nil {
+		_ = f.CloseThisFile()
+		return err
+	}
+
+	err = tzOut.writeTimeZoneMasterType(
+		f,
+		tzGroupsAry,
+		ePrefix)
+
+	if err != nil {
+		_ = f.CloseThisFile()
+		return err
+	}
+
+	err = tzOut.writeTimeZoneGlobalType(f,ePrefix)
+
+	if err != nil {
+		_ = f.CloseThisFile()
 		return err
 	}
 
@@ -40,21 +58,7 @@ func (tzOut TzOutProcess) WriteOutput(
 		ePrefix)
 
 	if err != nil {
-		return err
-	}
-
-	err = tzOut.writeTimeZoneMasterType(
-		f,
-		tzGroupsAry,
-		ePrefix)
-
-	if err != nil {
-		return err
-	}
-
-	err = tzOut.writeTimeZoneGlobalType(f,ePrefix)
-
-	if err != nil {
+		_ = f.CloseThisFile()
 		return err
 	}
 
@@ -218,7 +222,7 @@ func (tzOut TzOutProcess) writeTimeZones(
 	var tZone tzdatastructs.TimeZoneDataDto
 	var err error
 
-	for i:=0; i < tzdatastructs.Level_03_Idx; i++ {
+	for i:=0; i <= tzdatastructs.Level_03_Idx; i++ {
 
 		tzGroupsAry[i].Sort(false)
 
@@ -314,7 +318,7 @@ func (tzOut TzOutProcess) writeTimeZoneGlobalType(
 
 	var err error
 
-	outBytes := []byte("var TZones = TimeZones{}\n\n")
+	outBytes := []byte("var TZones = TimeZones{}\n\n\n")
 
 	_, err = outputFileMgr.WriteBytesToFile(outBytes)
 
@@ -327,6 +331,7 @@ func (tzOut TzOutProcess) writeTimeZoneGlobalType(
 	return nil
 }
 
+// Writes Master Type: type TimeZones struct
 func (tzOut TzOutProcess) writeTimeZoneMasterType(
 	outputFileMgr pathfileops.FileMgr,
 	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection,
@@ -336,11 +341,20 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 
 	lenMasterGrps := tzGroupsAry[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
 
+	var err error
+
+	_, err = outputFileMgr.WriteBytesToFile(tzdatastructs.TimeZoneTypeComments)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile(typeDeclaration)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
 	var outBytes []byte
 
 	outBytes = []byte("type TimeZones struct {\n")
 
-	var err error
 	var leftMarginStr string
 	var centerMarginStr string
 	const centerMarginLen = 35
