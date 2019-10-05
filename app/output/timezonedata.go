@@ -2370,8 +2370,8 @@ type africaDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Addis_Ababa'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Addis_Ababa'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Addis_Ababa() string { return "Africa/Nairobi" }
 
@@ -2379,8 +2379,8 @@ func (afric africaDeprecatedTimeZones) Addis_Ababa() string { return "Africa/Nai
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Asmara'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Asmara'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Asmara() string { return "Africa/Nairobi" }
 
@@ -2388,8 +2388,8 @@ func (afric africaDeprecatedTimeZones) Asmara() string { return "Africa/Nairobi"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Asmera'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Asmera'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Asmera() string { return "Africa/Nairobi" }
 
@@ -2397,8 +2397,8 @@ func (afric africaDeprecatedTimeZones) Asmera() string { return "Africa/Nairobi"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Bamako'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Bamako'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Bamako() string { return "Africa/Abidjan" }
 
@@ -2406,8 +2406,8 @@ func (afric africaDeprecatedTimeZones) Bamako() string { return "Africa/Abidjan"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Bangui'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Bangui'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Bangui() string { return "Africa/Lagos" }
 
@@ -2415,8 +2415,8 @@ func (afric africaDeprecatedTimeZones) Bangui() string { return "Africa/Lagos" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Banjul'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Banjul'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Banjul() string { return "Africa/Abidjan" }
 
@@ -2424,8 +2424,8 @@ func (afric africaDeprecatedTimeZones) Banjul() string { return "Africa/Abidjan"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Blantyre'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Blantyre'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Blantyre() string { return "Africa/Maputo" }
 
@@ -2433,8 +2433,8 @@ func (afric africaDeprecatedTimeZones) Blantyre() string { return "Africa/Maputo
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Brazzaville'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Brazzaville'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Brazzaville() string { return "Africa/Lagos" }
 
@@ -2442,8 +2442,8 @@ func (afric africaDeprecatedTimeZones) Brazzaville() string { return "Africa/Lag
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Bujumbura'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Bujumbura'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Bujumbura() string { return "Africa/Maputo" }
 
@@ -2451,8 +2451,8 @@ func (afric africaDeprecatedTimeZones) Bujumbura() string { return "Africa/Maput
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Conakry'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Conakry'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Conakry() string { return "Africa/Abidjan" }
 
@@ -2460,8 +2460,8 @@ func (afric africaDeprecatedTimeZones) Conakry() string { return "Africa/Abidjan
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Dakar'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Dakar'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Dakar() string { return "Africa/Abidjan" }
 
@@ -2469,8 +2469,8 @@ func (afric africaDeprecatedTimeZones) Dakar() string { return "Africa/Abidjan" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Dar_es_Salaam'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Dar_es_Salaam'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Dar_es_Salaam() string { return "Africa/Nairobi" }
 
@@ -2478,8 +2478,8 @@ func (afric africaDeprecatedTimeZones) Dar_es_Salaam() string { return "Africa/N
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Djibouti'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Djibouti'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Djibouti() string { return "Africa/Nairobi" }
 
@@ -2487,8 +2487,8 @@ func (afric africaDeprecatedTimeZones) Djibouti() string { return "Africa/Nairob
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Douala'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Douala'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Douala() string { return "Africa/Lagos" }
 
@@ -2496,8 +2496,8 @@ func (afric africaDeprecatedTimeZones) Douala() string { return "Africa/Lagos" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Freetown'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Freetown'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Freetown() string { return "Africa/Abidjan" }
 
@@ -2505,8 +2505,8 @@ func (afric africaDeprecatedTimeZones) Freetown() string { return "Africa/Abidja
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Gaborone'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Gaborone'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Gaborone() string { return "Africa/Maputo" }
 
@@ -2514,8 +2514,8 @@ func (afric africaDeprecatedTimeZones) Gaborone() string { return "Africa/Maputo
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Harare'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Harare'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Harare() string { return "Africa/Maputo" }
 
@@ -2523,8 +2523,8 @@ func (afric africaDeprecatedTimeZones) Harare() string { return "Africa/Maputo" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Kampala'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Kampala'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Kampala() string { return "Africa/Nairobi" }
 
@@ -2532,8 +2532,8 @@ func (afric africaDeprecatedTimeZones) Kampala() string { return "Africa/Nairobi
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Kigali'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Kigali'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Kigali() string { return "Africa/Maputo" }
 
@@ -2541,8 +2541,8 @@ func (afric africaDeprecatedTimeZones) Kigali() string { return "Africa/Maputo" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Kinshasa'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Kinshasa'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Kinshasa() string { return "Africa/Lagos" }
 
@@ -2550,8 +2550,8 @@ func (afric africaDeprecatedTimeZones) Kinshasa() string { return "Africa/Lagos"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Libreville'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Libreville'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Libreville() string { return "Africa/Lagos" }
 
@@ -2559,8 +2559,8 @@ func (afric africaDeprecatedTimeZones) Libreville() string { return "Africa/Lago
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Lome'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Lome'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Lome() string { return "Africa/Abidjan" }
 
@@ -2568,8 +2568,8 @@ func (afric africaDeprecatedTimeZones) Lome() string { return "Africa/Abidjan" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Luanda'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Luanda'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Luanda() string { return "Africa/Lagos" }
 
@@ -2577,8 +2577,8 @@ func (afric africaDeprecatedTimeZones) Luanda() string { return "Africa/Lagos" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Lubumbashi'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Lubumbashi'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Lubumbashi() string { return "Africa/Maputo" }
 
@@ -2586,8 +2586,8 @@ func (afric africaDeprecatedTimeZones) Lubumbashi() string { return "Africa/Mapu
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Lusaka'
-// Maps To Valid Time Zone: 'Africa/Maputo'
+// Linked Deprecated Time Zone: 'Africa/Lusaka'
+//     Maps To Valid Time Zone: 'Africa/Maputo'
 //  
 func (afric africaDeprecatedTimeZones) Lusaka() string { return "Africa/Maputo" }
 
@@ -2595,8 +2595,8 @@ func (afric africaDeprecatedTimeZones) Lusaka() string { return "Africa/Maputo" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Malabo'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Malabo'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Malabo() string { return "Africa/Lagos" }
 
@@ -2604,8 +2604,8 @@ func (afric africaDeprecatedTimeZones) Malabo() string { return "Africa/Lagos" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Maseru'
-// Maps To Valid Time Zone: 'Africa/Johannesburg'
+// Linked Deprecated Time Zone: 'Africa/Maseru'
+//     Maps To Valid Time Zone: 'Africa/Johannesburg'
 //  
 func (afric africaDeprecatedTimeZones) Maseru() string { return "Africa/Johannesburg" }
 
@@ -2613,8 +2613,8 @@ func (afric africaDeprecatedTimeZones) Maseru() string { return "Africa/Johannes
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mbabane'
-// Maps To Valid Time Zone: 'Africa/Johannesburg'
+// Linked Deprecated Time Zone: 'Africa/Mbabane'
+//     Maps To Valid Time Zone: 'Africa/Johannesburg'
 //  
 func (afric africaDeprecatedTimeZones) Mbabane() string { return "Africa/Johannesburg" }
 
@@ -2622,8 +2622,8 @@ func (afric africaDeprecatedTimeZones) Mbabane() string { return "Africa/Johanne
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mogadishu'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Africa/Mogadishu'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (afric africaDeprecatedTimeZones) Mogadishu() string { return "Africa/Nairobi" }
 
@@ -2631,8 +2631,8 @@ func (afric africaDeprecatedTimeZones) Mogadishu() string { return "Africa/Nairo
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Niamey'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Niamey'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) Niamey() string { return "Africa/Lagos" }
 
@@ -2640,8 +2640,8 @@ func (afric africaDeprecatedTimeZones) Niamey() string { return "Africa/Lagos" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Nouakchott'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Nouakchott'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Nouakchott() string { return "Africa/Abidjan" }
 
@@ -2649,8 +2649,8 @@ func (afric africaDeprecatedTimeZones) Nouakchott() string { return "Africa/Abid
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ouagadougou'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Ouagadougou'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Ouagadougou() string { return "Africa/Abidjan" }
 
@@ -2658,8 +2658,8 @@ func (afric africaDeprecatedTimeZones) Ouagadougou() string { return "Africa/Abi
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Porto-Novo'
-// Maps To Valid Time Zone: 'Africa/Lagos'
+// Linked Deprecated Time Zone: 'Africa/Porto-Novo'
+//     Maps To Valid Time Zone: 'Africa/Lagos'
 //  
 func (afric africaDeprecatedTimeZones) PortoMinusNovo() string { return "Africa/Lagos" }
 
@@ -2667,8 +2667,8 @@ func (afric africaDeprecatedTimeZones) PortoMinusNovo() string { return "Africa/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Timbuktu'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Africa/Timbuktu'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (afric africaDeprecatedTimeZones) Timbuktu() string { return "Africa/Abidjan" }
 
@@ -2690,8 +2690,8 @@ type americaDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Anguilla'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Anguilla'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Anguilla() string { return "America/Port_of_Spain" }
 
@@ -2699,8 +2699,8 @@ func (ameri americaDeprecatedTimeZones) Anguilla() string { return "America/Port
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Antigua'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Antigua'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Antigua() string { return "America/Port_of_Spain" }
 
@@ -2711,14 +2711,14 @@ func (ameri americaDeprecatedTimeZones) Antigua() string { return "America/Port_
 // Linked Deprecated Time Zone: 'Argentina'
 // Maps To Valid Time Zone: 'Argentina'
 //  
-func (ameri americaDeprecatedTimeZones) Argentina() americaDeprecatedTimeZones { return "" }
+func (ameri americaDeprecatedTimeZones) Argentina() argentinaDeprecatedTimeZones { return "" }
 
 // Aruba - This is an IANA 'Link' Time Zone. 'Link' Time Zones
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Aruba'
-// Maps To Valid Time Zone: 'America/Curacao'
+// Linked Deprecated Time Zone: 'America/Aruba'
+//     Maps To Valid Time Zone: 'America/Curacao'
 //  
 func (ameri americaDeprecatedTimeZones) Aruba() string { return "America/Curacao" }
 
@@ -2726,8 +2726,8 @@ func (ameri americaDeprecatedTimeZones) Aruba() string { return "America/Curacao
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Atka'
-// Maps To Valid Time Zone: 'America/Adak'
+// Linked Deprecated Time Zone: 'America/Atka'
+//     Maps To Valid Time Zone: 'America/Adak'
 //  
 func (ameri americaDeprecatedTimeZones) Atka() string { return "America/Adak" }
 
@@ -2735,8 +2735,8 @@ func (ameri americaDeprecatedTimeZones) Atka() string { return "America/Adak" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Buenos_Aires'
-// Maps To Valid Time Zone: 'America/Argentina/Buenos_Aires'
+// Linked Deprecated Time Zone: 'America/Buenos_Aires'
+//     Maps To Valid Time Zone: 'America/Argentina/Buenos_Aires'
 //  
 func (ameri americaDeprecatedTimeZones) Buenos_Aires() string { return "America/Argentina/Buenos_Aires" }
 
@@ -2744,8 +2744,8 @@ func (ameri americaDeprecatedTimeZones) Buenos_Aires() string { return "America/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Catamarca'
-// Maps To Valid Time Zone: 'America/Argentina/Catamarca'
+// Linked Deprecated Time Zone: 'America/Catamarca'
+//     Maps To Valid Time Zone: 'America/Argentina/Catamarca'
 //  
 func (ameri americaDeprecatedTimeZones) Catamarca() string { return "America/Argentina/Catamarca" }
 
@@ -2753,8 +2753,8 @@ func (ameri americaDeprecatedTimeZones) Catamarca() string { return "America/Arg
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Cayman'
-// Maps To Valid Time Zone: 'America/Panama'
+// Linked Deprecated Time Zone: 'America/Cayman'
+//     Maps To Valid Time Zone: 'America/Panama'
 //  
 func (ameri americaDeprecatedTimeZones) Cayman() string { return "America/Panama" }
 
@@ -2762,8 +2762,8 @@ func (ameri americaDeprecatedTimeZones) Cayman() string { return "America/Panama
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Coral_Harbour'
-// Maps To Valid Time Zone: 'America/Atikokan'
+// Linked Deprecated Time Zone: 'America/Coral_Harbour'
+//     Maps To Valid Time Zone: 'America/Atikokan'
 //  
 func (ameri americaDeprecatedTimeZones) Coral_Harbour() string { return "America/Atikokan" }
 
@@ -2771,8 +2771,8 @@ func (ameri americaDeprecatedTimeZones) Coral_Harbour() string { return "America
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Cordoba'
-// Maps To Valid Time Zone: 'America/Argentina/Cordoba'
+// Linked Deprecated Time Zone: 'America/Cordoba'
+//     Maps To Valid Time Zone: 'America/Argentina/Cordoba'
 //  
 func (ameri americaDeprecatedTimeZones) Cordoba() string { return "America/Argentina/Cordoba" }
 
@@ -2780,8 +2780,8 @@ func (ameri americaDeprecatedTimeZones) Cordoba() string { return "America/Argen
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Dominica'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Dominica'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Dominica() string { return "America/Port_of_Spain" }
 
@@ -2789,8 +2789,8 @@ func (ameri americaDeprecatedTimeZones) Dominica() string { return "America/Port
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ensenada'
-// Maps To Valid Time Zone: 'America/Tijuana'
+// Linked Deprecated Time Zone: 'America/Ensenada'
+//     Maps To Valid Time Zone: 'America/Tijuana'
 //  
 func (ameri americaDeprecatedTimeZones) Ensenada() string { return "America/Tijuana" }
 
@@ -2798,8 +2798,8 @@ func (ameri americaDeprecatedTimeZones) Ensenada() string { return "America/Tiju
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Fort_Wayne'
-// Maps To Valid Time Zone: 'America/Indiana/Indianapolis'
+// Linked Deprecated Time Zone: 'America/Fort_Wayne'
+//     Maps To Valid Time Zone: 'America/Indiana/Indianapolis'
 //  
 func (ameri americaDeprecatedTimeZones) Fort_Wayne() string { return "America/Indiana/Indianapolis" }
 
@@ -2807,8 +2807,8 @@ func (ameri americaDeprecatedTimeZones) Fort_Wayne() string { return "America/In
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Grenada'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Grenada'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Grenada() string { return "America/Port_of_Spain" }
 
@@ -2816,8 +2816,8 @@ func (ameri americaDeprecatedTimeZones) Grenada() string { return "America/Port_
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Guadeloupe'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Guadeloupe'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Guadeloupe() string { return "America/Port_of_Spain" }
 
@@ -2825,8 +2825,8 @@ func (ameri americaDeprecatedTimeZones) Guadeloupe() string { return "America/Po
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Indianapolis'
-// Maps To Valid Time Zone: 'America/Indiana/Indianapolis'
+// Linked Deprecated Time Zone: 'America/Indianapolis'
+//     Maps To Valid Time Zone: 'America/Indiana/Indianapolis'
 //  
 func (ameri americaDeprecatedTimeZones) Indianapolis() string { return "America/Indiana/Indianapolis" }
 
@@ -2834,8 +2834,8 @@ func (ameri americaDeprecatedTimeZones) Indianapolis() string { return "America/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Jujuy'
-// Maps To Valid Time Zone: 'America/Argentina/Jujuy'
+// Linked Deprecated Time Zone: 'America/Jujuy'
+//     Maps To Valid Time Zone: 'America/Argentina/Jujuy'
 //  
 func (ameri americaDeprecatedTimeZones) Jujuy() string { return "America/Argentina/Jujuy" }
 
@@ -2843,8 +2843,8 @@ func (ameri americaDeprecatedTimeZones) Jujuy() string { return "America/Argenti
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Knox_IN'
-// Maps To Valid Time Zone: 'America/Indiana/Knox'
+// Linked Deprecated Time Zone: 'America/Knox_IN'
+//     Maps To Valid Time Zone: 'America/Indiana/Knox'
 //  
 func (ameri americaDeprecatedTimeZones) Knox_IN() string { return "America/Indiana/Knox" }
 
@@ -2852,8 +2852,8 @@ func (ameri americaDeprecatedTimeZones) Knox_IN() string { return "America/India
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Kralendijk'
-// Maps To Valid Time Zone: 'America/Curacao'
+// Linked Deprecated Time Zone: 'America/Kralendijk'
+//     Maps To Valid Time Zone: 'America/Curacao'
 //  
 func (ameri americaDeprecatedTimeZones) Kralendijk() string { return "America/Curacao" }
 
@@ -2861,8 +2861,8 @@ func (ameri americaDeprecatedTimeZones) Kralendijk() string { return "America/Cu
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Louisville'
-// Maps To Valid Time Zone: 'America/Kentucky/Louisville'
+// Linked Deprecated Time Zone: 'America/Louisville'
+//     Maps To Valid Time Zone: 'America/Kentucky/Louisville'
 //  
 func (ameri americaDeprecatedTimeZones) Louisville() string { return "America/Kentucky/Louisville" }
 
@@ -2870,8 +2870,8 @@ func (ameri americaDeprecatedTimeZones) Louisville() string { return "America/Ke
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Lower_Princes'
-// Maps To Valid Time Zone: 'America/Curacao'
+// Linked Deprecated Time Zone: 'America/Lower_Princes'
+//     Maps To Valid Time Zone: 'America/Curacao'
 //  
 func (ameri americaDeprecatedTimeZones) Lower_Princes() string { return "America/Curacao" }
 
@@ -2879,8 +2879,8 @@ func (ameri americaDeprecatedTimeZones) Lower_Princes() string { return "America
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Marigot'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Marigot'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Marigot() string { return "America/Port_of_Spain" }
 
@@ -2888,8 +2888,8 @@ func (ameri americaDeprecatedTimeZones) Marigot() string { return "America/Port_
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mendoza'
-// Maps To Valid Time Zone: 'America/Argentina/Mendoza'
+// Linked Deprecated Time Zone: 'America/Mendoza'
+//     Maps To Valid Time Zone: 'America/Argentina/Mendoza'
 //  
 func (ameri americaDeprecatedTimeZones) Mendoza() string { return "America/Argentina/Mendoza" }
 
@@ -2897,8 +2897,8 @@ func (ameri americaDeprecatedTimeZones) Mendoza() string { return "America/Argen
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Montreal'
-// Maps To Valid Time Zone: 'America/Toronto'
+// Linked Deprecated Time Zone: 'America/Montreal'
+//     Maps To Valid Time Zone: 'America/Toronto'
 //  
 func (ameri americaDeprecatedTimeZones) Montreal() string { return "America/Toronto" }
 
@@ -2906,8 +2906,8 @@ func (ameri americaDeprecatedTimeZones) Montreal() string { return "America/Toro
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Montserrat'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Montserrat'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Montserrat() string { return "America/Port_of_Spain" }
 
@@ -2915,8 +2915,8 @@ func (ameri americaDeprecatedTimeZones) Montserrat() string { return "America/Po
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Porto_Acre'
-// Maps To Valid Time Zone: 'America/Rio_Branco'
+// Linked Deprecated Time Zone: 'America/Porto_Acre'
+//     Maps To Valid Time Zone: 'America/Rio_Branco'
 //  
 func (ameri americaDeprecatedTimeZones) Porto_Acre() string { return "America/Rio_Branco" }
 
@@ -2924,8 +2924,8 @@ func (ameri americaDeprecatedTimeZones) Porto_Acre() string { return "America/Ri
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Rosario'
-// Maps To Valid Time Zone: 'America/Argentina/Cordoba'
+// Linked Deprecated Time Zone: 'America/Rosario'
+//     Maps To Valid Time Zone: 'America/Argentina/Cordoba'
 //  
 func (ameri americaDeprecatedTimeZones) Rosario() string { return "America/Argentina/Cordoba" }
 
@@ -2933,8 +2933,8 @@ func (ameri americaDeprecatedTimeZones) Rosario() string { return "America/Argen
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Santa_Isabel'
-// Maps To Valid Time Zone: 'America/Tijuana'
+// Linked Deprecated Time Zone: 'America/Santa_Isabel'
+//     Maps To Valid Time Zone: 'America/Tijuana'
 //  
 func (ameri americaDeprecatedTimeZones) Santa_Isabel() string { return "America/Tijuana" }
 
@@ -2942,8 +2942,8 @@ func (ameri americaDeprecatedTimeZones) Santa_Isabel() string { return "America/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Shiprock'
-// Maps To Valid Time Zone: 'America/Denver'
+// Linked Deprecated Time Zone: 'America/Shiprock'
+//     Maps To Valid Time Zone: 'America/Denver'
 //  
 func (ameri americaDeprecatedTimeZones) Shiprock() string { return "America/Denver" }
 
@@ -2951,8 +2951,8 @@ func (ameri americaDeprecatedTimeZones) Shiprock() string { return "America/Denv
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'St_Barthelemy'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/St_Barthelemy'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) St_Barthelemy() string { return "America/Port_of_Spain" }
 
@@ -2960,8 +2960,8 @@ func (ameri americaDeprecatedTimeZones) St_Barthelemy() string { return "America
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'St_Kitts'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/St_Kitts'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) St_Kitts() string { return "America/Port_of_Spain" }
 
@@ -2969,8 +2969,8 @@ func (ameri americaDeprecatedTimeZones) St_Kitts() string { return "America/Port
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'St_Lucia'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/St_Lucia'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) St_Lucia() string { return "America/Port_of_Spain" }
 
@@ -2978,8 +2978,8 @@ func (ameri americaDeprecatedTimeZones) St_Lucia() string { return "America/Port
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'St_Thomas'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/St_Thomas'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) St_Thomas() string { return "America/Port_of_Spain" }
 
@@ -2987,8 +2987,8 @@ func (ameri americaDeprecatedTimeZones) St_Thomas() string { return "America/Por
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'St_Vincent'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/St_Vincent'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) St_Vincent() string { return "America/Port_of_Spain" }
 
@@ -2996,8 +2996,8 @@ func (ameri americaDeprecatedTimeZones) St_Vincent() string { return "America/Po
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Tortola'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Tortola'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Tortola() string { return "America/Port_of_Spain" }
 
@@ -3005,8 +3005,8 @@ func (ameri americaDeprecatedTimeZones) Tortola() string { return "America/Port_
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Virgin'
-// Maps To Valid Time Zone: 'America/Port_of_Spain'
+// Linked Deprecated Time Zone: 'America/Virgin'
+//     Maps To Valid Time Zone: 'America/Port_of_Spain'
 //  
 func (ameri americaDeprecatedTimeZones) Virgin() string { return "America/Port_of_Spain" }
 
@@ -3028,8 +3028,8 @@ type antarcticaDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'McMurdo'
-// Maps To Valid Time Zone: 'Pacific/Auckland'
+// Linked Deprecated Time Zone: 'Antarctica/McMurdo'
+//     Maps To Valid Time Zone: 'Pacific/Auckland'
 //  
 func (antar antarcticaDeprecatedTimeZones) McMurdo() string { return "Pacific/Auckland" }
 
@@ -3037,8 +3037,8 @@ func (antar antarcticaDeprecatedTimeZones) McMurdo() string { return "Pacific/Au
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'South_Pole'
-// Maps To Valid Time Zone: 'Pacific/Auckland'
+// Linked Deprecated Time Zone: 'Antarctica/South_Pole'
+//     Maps To Valid Time Zone: 'Pacific/Auckland'
 //  
 func (antar antarcticaDeprecatedTimeZones) South_Pole() string { return "Pacific/Auckland" }
 
@@ -3060,8 +3060,8 @@ type arcticDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Longyearbyen'
-// Maps To Valid Time Zone: 'Europe/Oslo'
+// Linked Deprecated Time Zone: 'Arctic/Longyearbyen'
+//     Maps To Valid Time Zone: 'Europe/Oslo'
 //  
 func (arcti arcticDeprecatedTimeZones) Longyearbyen() string { return "Europe/Oslo" }
 
@@ -3083,8 +3083,8 @@ type asiaDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Aden'
-// Maps To Valid Time Zone: 'Asia/Riyadh'
+// Linked Deprecated Time Zone: 'Asia/Aden'
+//     Maps To Valid Time Zone: 'Asia/Riyadh'
 //  
 func (asiaD asiaDeprecatedTimeZones) Aden() string { return "Asia/Riyadh" }
 
@@ -3092,8 +3092,8 @@ func (asiaD asiaDeprecatedTimeZones) Aden() string { return "Asia/Riyadh" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ashkhabad'
-// Maps To Valid Time Zone: 'Asia/Ashgabat'
+// Linked Deprecated Time Zone: 'Asia/Ashkhabad'
+//     Maps To Valid Time Zone: 'Asia/Ashgabat'
 //  
 func (asiaD asiaDeprecatedTimeZones) Ashkhabad() string { return "Asia/Ashgabat" }
 
@@ -3101,8 +3101,8 @@ func (asiaD asiaDeprecatedTimeZones) Ashkhabad() string { return "Asia/Ashgabat"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Bahrain'
-// Maps To Valid Time Zone: 'Asia/Qatar'
+// Linked Deprecated Time Zone: 'Asia/Bahrain'
+//     Maps To Valid Time Zone: 'Asia/Qatar'
 //  
 func (asiaD asiaDeprecatedTimeZones) Bahrain() string { return "Asia/Qatar" }
 
@@ -3110,8 +3110,8 @@ func (asiaD asiaDeprecatedTimeZones) Bahrain() string { return "Asia/Qatar" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Calcutta'
-// Maps To Valid Time Zone: 'Asia/Kolkata'
+// Linked Deprecated Time Zone: 'Asia/Calcutta'
+//     Maps To Valid Time Zone: 'Asia/Kolkata'
 //  
 func (asiaD asiaDeprecatedTimeZones) Calcutta() string { return "Asia/Kolkata" }
 
@@ -3119,8 +3119,8 @@ func (asiaD asiaDeprecatedTimeZones) Calcutta() string { return "Asia/Kolkata" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Chongqing'
-// Maps To Valid Time Zone: 'Asia/Shanghai'
+// Linked Deprecated Time Zone: 'Asia/Chongqing'
+//     Maps To Valid Time Zone: 'Asia/Shanghai'
 //  
 func (asiaD asiaDeprecatedTimeZones) Chongqing() string { return "Asia/Shanghai" }
 
@@ -3128,8 +3128,8 @@ func (asiaD asiaDeprecatedTimeZones) Chongqing() string { return "Asia/Shanghai"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Chungking'
-// Maps To Valid Time Zone: 'Asia/Shanghai'
+// Linked Deprecated Time Zone: 'Asia/Chungking'
+//     Maps To Valid Time Zone: 'Asia/Shanghai'
 //  
 func (asiaD asiaDeprecatedTimeZones) Chungking() string { return "Asia/Shanghai" }
 
@@ -3137,8 +3137,8 @@ func (asiaD asiaDeprecatedTimeZones) Chungking() string { return "Asia/Shanghai"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Dacca'
-// Maps To Valid Time Zone: 'Asia/Dhaka'
+// Linked Deprecated Time Zone: 'Asia/Dacca'
+//     Maps To Valid Time Zone: 'Asia/Dhaka'
 //  
 func (asiaD asiaDeprecatedTimeZones) Dacca() string { return "Asia/Dhaka" }
 
@@ -3146,8 +3146,8 @@ func (asiaD asiaDeprecatedTimeZones) Dacca() string { return "Asia/Dhaka" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Harbin'
-// Maps To Valid Time Zone: 'Asia/Shanghai'
+// Linked Deprecated Time Zone: 'Asia/Harbin'
+//     Maps To Valid Time Zone: 'Asia/Shanghai'
 //  
 func (asiaD asiaDeprecatedTimeZones) Harbin() string { return "Asia/Shanghai" }
 
@@ -3155,8 +3155,8 @@ func (asiaD asiaDeprecatedTimeZones) Harbin() string { return "Asia/Shanghai" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Istanbul'
-// Maps To Valid Time Zone: 'Europe/Istanbul'
+// Linked Deprecated Time Zone: 'Asia/Istanbul'
+//     Maps To Valid Time Zone: 'Europe/Istanbul'
 //  
 func (asiaD asiaDeprecatedTimeZones) Istanbul() string { return "Europe/Istanbul" }
 
@@ -3164,8 +3164,8 @@ func (asiaD asiaDeprecatedTimeZones) Istanbul() string { return "Europe/Istanbul
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Kashgar'
-// Maps To Valid Time Zone: 'Asia/Urumqi'
+// Linked Deprecated Time Zone: 'Asia/Kashgar'
+//     Maps To Valid Time Zone: 'Asia/Urumqi'
 //  
 func (asiaD asiaDeprecatedTimeZones) Kashgar() string { return "Asia/Urumqi" }
 
@@ -3173,8 +3173,8 @@ func (asiaD asiaDeprecatedTimeZones) Kashgar() string { return "Asia/Urumqi" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Katmandu'
-// Maps To Valid Time Zone: 'Asia/Kathmandu'
+// Linked Deprecated Time Zone: 'Asia/Katmandu'
+//     Maps To Valid Time Zone: 'Asia/Kathmandu'
 //  
 func (asiaD asiaDeprecatedTimeZones) Katmandu() string { return "Asia/Kathmandu" }
 
@@ -3182,8 +3182,8 @@ func (asiaD asiaDeprecatedTimeZones) Katmandu() string { return "Asia/Kathmandu"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Kuwait'
-// Maps To Valid Time Zone: 'Asia/Riyadh'
+// Linked Deprecated Time Zone: 'Asia/Kuwait'
+//     Maps To Valid Time Zone: 'Asia/Riyadh'
 //  
 func (asiaD asiaDeprecatedTimeZones) Kuwait() string { return "Asia/Riyadh" }
 
@@ -3191,8 +3191,8 @@ func (asiaD asiaDeprecatedTimeZones) Kuwait() string { return "Asia/Riyadh" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Macao'
-// Maps To Valid Time Zone: 'Asia/Macau'
+// Linked Deprecated Time Zone: 'Asia/Macao'
+//     Maps To Valid Time Zone: 'Asia/Macau'
 //  
 func (asiaD asiaDeprecatedTimeZones) Macao() string { return "Asia/Macau" }
 
@@ -3200,8 +3200,8 @@ func (asiaD asiaDeprecatedTimeZones) Macao() string { return "Asia/Macau" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Muscat'
-// Maps To Valid Time Zone: 'Asia/Dubai'
+// Linked Deprecated Time Zone: 'Asia/Muscat'
+//     Maps To Valid Time Zone: 'Asia/Dubai'
 //  
 func (asiaD asiaDeprecatedTimeZones) Muscat() string { return "Asia/Dubai" }
 
@@ -3209,8 +3209,8 @@ func (asiaD asiaDeprecatedTimeZones) Muscat() string { return "Asia/Dubai" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Phnom_Penh'
-// Maps To Valid Time Zone: 'Asia/Bangkok'
+// Linked Deprecated Time Zone: 'Asia/Phnom_Penh'
+//     Maps To Valid Time Zone: 'Asia/Bangkok'
 //  
 func (asiaD asiaDeprecatedTimeZones) Phnom_Penh() string { return "Asia/Bangkok" }
 
@@ -3218,8 +3218,8 @@ func (asiaD asiaDeprecatedTimeZones) Phnom_Penh() string { return "Asia/Bangkok"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Rangoon'
-// Maps To Valid Time Zone: 'Asia/Yangon'
+// Linked Deprecated Time Zone: 'Asia/Rangoon'
+//     Maps To Valid Time Zone: 'Asia/Yangon'
 //  
 func (asiaD asiaDeprecatedTimeZones) Rangoon() string { return "Asia/Yangon" }
 
@@ -3227,8 +3227,8 @@ func (asiaD asiaDeprecatedTimeZones) Rangoon() string { return "Asia/Yangon" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Saigon'
-// Maps To Valid Time Zone: 'Asia/Ho_Chi_Minh'
+// Linked Deprecated Time Zone: 'Asia/Saigon'
+//     Maps To Valid Time Zone: 'Asia/Ho_Chi_Minh'
 //  
 func (asiaD asiaDeprecatedTimeZones) Saigon() string { return "Asia/Ho_Chi_Minh" }
 
@@ -3236,8 +3236,8 @@ func (asiaD asiaDeprecatedTimeZones) Saigon() string { return "Asia/Ho_Chi_Minh"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Tel_Aviv'
-// Maps To Valid Time Zone: 'Asia/Jerusalem'
+// Linked Deprecated Time Zone: 'Asia/Tel_Aviv'
+//     Maps To Valid Time Zone: 'Asia/Jerusalem'
 //  
 func (asiaD asiaDeprecatedTimeZones) Tel_Aviv() string { return "Asia/Jerusalem" }
 
@@ -3245,8 +3245,8 @@ func (asiaD asiaDeprecatedTimeZones) Tel_Aviv() string { return "Asia/Jerusalem"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Thimbu'
-// Maps To Valid Time Zone: 'Asia/Thimphu'
+// Linked Deprecated Time Zone: 'Asia/Thimbu'
+//     Maps To Valid Time Zone: 'Asia/Thimphu'
 //  
 func (asiaD asiaDeprecatedTimeZones) Thimbu() string { return "Asia/Thimphu" }
 
@@ -3254,8 +3254,8 @@ func (asiaD asiaDeprecatedTimeZones) Thimbu() string { return "Asia/Thimphu" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ujung_Pandang'
-// Maps To Valid Time Zone: 'Asia/Makassar'
+// Linked Deprecated Time Zone: 'Asia/Ujung_Pandang'
+//     Maps To Valid Time Zone: 'Asia/Makassar'
 //  
 func (asiaD asiaDeprecatedTimeZones) Ujung_Pandang() string { return "Asia/Makassar" }
 
@@ -3263,8 +3263,8 @@ func (asiaD asiaDeprecatedTimeZones) Ujung_Pandang() string { return "Asia/Makas
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ulan_Bator'
-// Maps To Valid Time Zone: 'Asia/Ulaanbaatar'
+// Linked Deprecated Time Zone: 'Asia/Ulan_Bator'
+//     Maps To Valid Time Zone: 'Asia/Ulaanbaatar'
 //  
 func (asiaD asiaDeprecatedTimeZones) Ulan_Bator() string { return "Asia/Ulaanbaatar" }
 
@@ -3272,8 +3272,8 @@ func (asiaD asiaDeprecatedTimeZones) Ulan_Bator() string { return "Asia/Ulaanbaa
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Vientiane'
-// Maps To Valid Time Zone: 'Asia/Bangkok'
+// Linked Deprecated Time Zone: 'Asia/Vientiane'
+//     Maps To Valid Time Zone: 'Asia/Bangkok'
 //  
 func (asiaD asiaDeprecatedTimeZones) Vientiane() string { return "Asia/Bangkok" }
 
@@ -3295,8 +3295,8 @@ type atlanticDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Faeroe'
-// Maps To Valid Time Zone: 'Atlantic/Faroe'
+// Linked Deprecated Time Zone: 'Atlantic/Faeroe'
+//     Maps To Valid Time Zone: 'Atlantic/Faroe'
 //  
 func (atlan atlanticDeprecatedTimeZones) Faeroe() string { return "Atlantic/Faroe" }
 
@@ -3304,8 +3304,8 @@ func (atlan atlanticDeprecatedTimeZones) Faeroe() string { return "Atlantic/Faro
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Jan_Mayen'
-// Maps To Valid Time Zone: 'Europe/Oslo'
+// Linked Deprecated Time Zone: 'Atlantic/Jan_Mayen'
+//     Maps To Valid Time Zone: 'Europe/Oslo'
 //  
 func (atlan atlanticDeprecatedTimeZones) Jan_Mayen() string { return "Europe/Oslo" }
 
@@ -3313,8 +3313,8 @@ func (atlan atlanticDeprecatedTimeZones) Jan_Mayen() string { return "Europe/Osl
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'St_Helena'
-// Maps To Valid Time Zone: 'Africa/Abidjan'
+// Linked Deprecated Time Zone: 'Atlantic/St_Helena'
+//     Maps To Valid Time Zone: 'Africa/Abidjan'
 //  
 func (atlan atlanticDeprecatedTimeZones) St_Helena() string { return "Africa/Abidjan" }
 
@@ -3336,8 +3336,8 @@ type australiaDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'ACT'
-// Maps To Valid Time Zone: 'Australia/Sydney'
+// Linked Deprecated Time Zone: 'Australia/ACT'
+//     Maps To Valid Time Zone: 'Australia/Sydney'
 //  
 func (austr australiaDeprecatedTimeZones) ACT() string { return "Australia/Sydney" }
 
@@ -3345,8 +3345,8 @@ func (austr australiaDeprecatedTimeZones) ACT() string { return "Australia/Sydne
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Canberra'
-// Maps To Valid Time Zone: 'Australia/Sydney'
+// Linked Deprecated Time Zone: 'Australia/Canberra'
+//     Maps To Valid Time Zone: 'Australia/Sydney'
 //  
 func (austr australiaDeprecatedTimeZones) Canberra() string { return "Australia/Sydney" }
 
@@ -3354,8 +3354,8 @@ func (austr australiaDeprecatedTimeZones) Canberra() string { return "Australia/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'LHI'
-// Maps To Valid Time Zone: 'Australia/Lord_Howe'
+// Linked Deprecated Time Zone: 'Australia/LHI'
+//     Maps To Valid Time Zone: 'Australia/Lord_Howe'
 //  
 func (austr australiaDeprecatedTimeZones) LHI() string { return "Australia/Lord_Howe" }
 
@@ -3363,8 +3363,8 @@ func (austr australiaDeprecatedTimeZones) LHI() string { return "Australia/Lord_
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'North'
-// Maps To Valid Time Zone: 'Australia/Darwin'
+// Linked Deprecated Time Zone: 'Australia/North'
+//     Maps To Valid Time Zone: 'Australia/Darwin'
 //  
 func (austr australiaDeprecatedTimeZones) North() string { return "Australia/Darwin" }
 
@@ -3372,8 +3372,8 @@ func (austr australiaDeprecatedTimeZones) North() string { return "Australia/Dar
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'NSW'
-// Maps To Valid Time Zone: 'Australia/Sydney'
+// Linked Deprecated Time Zone: 'Australia/NSW'
+//     Maps To Valid Time Zone: 'Australia/Sydney'
 //  
 func (austr australiaDeprecatedTimeZones) NSW() string { return "Australia/Sydney" }
 
@@ -3381,8 +3381,8 @@ func (austr australiaDeprecatedTimeZones) NSW() string { return "Australia/Sydne
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Queensland'
-// Maps To Valid Time Zone: 'Australia/Brisbane'
+// Linked Deprecated Time Zone: 'Australia/Queensland'
+//     Maps To Valid Time Zone: 'Australia/Brisbane'
 //  
 func (austr australiaDeprecatedTimeZones) Queensland() string { return "Australia/Brisbane" }
 
@@ -3390,8 +3390,8 @@ func (austr australiaDeprecatedTimeZones) Queensland() string { return "Australi
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'South'
-// Maps To Valid Time Zone: 'Australia/Adelaide'
+// Linked Deprecated Time Zone: 'Australia/South'
+//     Maps To Valid Time Zone: 'Australia/Adelaide'
 //  
 func (austr australiaDeprecatedTimeZones) South() string { return "Australia/Adelaide" }
 
@@ -3399,8 +3399,8 @@ func (austr australiaDeprecatedTimeZones) South() string { return "Australia/Ade
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Tasmania'
-// Maps To Valid Time Zone: 'Australia/Hobart'
+// Linked Deprecated Time Zone: 'Australia/Tasmania'
+//     Maps To Valid Time Zone: 'Australia/Hobart'
 //  
 func (austr australiaDeprecatedTimeZones) Tasmania() string { return "Australia/Hobart" }
 
@@ -3408,8 +3408,8 @@ func (austr australiaDeprecatedTimeZones) Tasmania() string { return "Australia/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Victoria'
-// Maps To Valid Time Zone: 'Australia/Melbourne'
+// Linked Deprecated Time Zone: 'Australia/Victoria'
+//     Maps To Valid Time Zone: 'Australia/Melbourne'
 //  
 func (austr australiaDeprecatedTimeZones) Victoria() string { return "Australia/Melbourne" }
 
@@ -3417,8 +3417,8 @@ func (austr australiaDeprecatedTimeZones) Victoria() string { return "Australia/
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'West'
-// Maps To Valid Time Zone: 'Australia/Perth'
+// Linked Deprecated Time Zone: 'Australia/West'
+//     Maps To Valid Time Zone: 'Australia/Perth'
 //  
 func (austr australiaDeprecatedTimeZones) West() string { return "Australia/Perth" }
 
@@ -3426,8 +3426,8 @@ func (austr australiaDeprecatedTimeZones) West() string { return "Australia/Pert
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Yancowinna'
-// Maps To Valid Time Zone: 'Australia/Broken_Hill'
+// Linked Deprecated Time Zone: 'Australia/Yancowinna'
+//     Maps To Valid Time Zone: 'Australia/Broken_Hill'
 //  
 func (austr australiaDeprecatedTimeZones) Yancowinna() string { return "Australia/Broken_Hill" }
 
@@ -3449,8 +3449,8 @@ type brazilDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Acre'
-// Maps To Valid Time Zone: 'America/Rio_Branco'
+// Linked Deprecated Time Zone: 'Brazil/Acre'
+//     Maps To Valid Time Zone: 'America/Rio_Branco'
 //  
 func (brazi brazilDeprecatedTimeZones) Acre() string { return "America/Rio_Branco" }
 
@@ -3458,8 +3458,8 @@ func (brazi brazilDeprecatedTimeZones) Acre() string { return "America/Rio_Branc
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'DeNoronha'
-// Maps To Valid Time Zone: 'America/Noronha'
+// Linked Deprecated Time Zone: 'Brazil/DeNoronha'
+//     Maps To Valid Time Zone: 'America/Noronha'
 //  
 func (brazi brazilDeprecatedTimeZones) DeNoronha() string { return "America/Noronha" }
 
@@ -3467,8 +3467,8 @@ func (brazi brazilDeprecatedTimeZones) DeNoronha() string { return "America/Noro
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'East'
-// Maps To Valid Time Zone: 'America/Sao_Paulo'
+// Linked Deprecated Time Zone: 'Brazil/East'
+//     Maps To Valid Time Zone: 'America/Sao_Paulo'
 //  
 func (brazi brazilDeprecatedTimeZones) East() string { return "America/Sao_Paulo" }
 
@@ -3476,8 +3476,8 @@ func (brazi brazilDeprecatedTimeZones) East() string { return "America/Sao_Paulo
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'West'
-// Maps To Valid Time Zone: 'America/Manaus'
+// Linked Deprecated Time Zone: 'Brazil/West'
+//     Maps To Valid Time Zone: 'America/Manaus'
 //  
 func (brazi brazilDeprecatedTimeZones) West() string { return "America/Manaus" }
 
@@ -3499,8 +3499,8 @@ type canadaDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Atlantic'
-// Maps To Valid Time Zone: 'America/Halifax'
+// Linked Deprecated Time Zone: 'Canada/Atlantic'
+//     Maps To Valid Time Zone: 'America/Halifax'
 //  
 func (canad canadaDeprecatedTimeZones) Atlantic() string { return "America/Halifax" }
 
@@ -3508,8 +3508,8 @@ func (canad canadaDeprecatedTimeZones) Atlantic() string { return "America/Halif
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Central'
-// Maps To Valid Time Zone: 'America/Winnipeg'
+// Linked Deprecated Time Zone: 'Canada/Central'
+//     Maps To Valid Time Zone: 'America/Winnipeg'
 //  
 func (canad canadaDeprecatedTimeZones) Central() string { return "America/Winnipeg" }
 
@@ -3517,8 +3517,8 @@ func (canad canadaDeprecatedTimeZones) Central() string { return "America/Winnip
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Eastern'
-// Maps To Valid Time Zone: 'America/Toronto'
+// Linked Deprecated Time Zone: 'Canada/Eastern'
+//     Maps To Valid Time Zone: 'America/Toronto'
 //  
 func (canad canadaDeprecatedTimeZones) Eastern() string { return "America/Toronto" }
 
@@ -3526,8 +3526,8 @@ func (canad canadaDeprecatedTimeZones) Eastern() string { return "America/Toront
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mountain'
-// Maps To Valid Time Zone: 'America/Edmonton'
+// Linked Deprecated Time Zone: 'Canada/Mountain'
+//     Maps To Valid Time Zone: 'America/Edmonton'
 //  
 func (canad canadaDeprecatedTimeZones) Mountain() string { return "America/Edmonton" }
 
@@ -3535,8 +3535,8 @@ func (canad canadaDeprecatedTimeZones) Mountain() string { return "America/Edmon
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Newfoundland'
-// Maps To Valid Time Zone: 'America/St_Johns'
+// Linked Deprecated Time Zone: 'Canada/Newfoundland'
+//     Maps To Valid Time Zone: 'America/St_Johns'
 //  
 func (canad canadaDeprecatedTimeZones) Newfoundland() string { return "America/St_Johns" }
 
@@ -3544,8 +3544,8 @@ func (canad canadaDeprecatedTimeZones) Newfoundland() string { return "America/S
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Pacific'
-// Maps To Valid Time Zone: 'America/Vancouver'
+// Linked Deprecated Time Zone: 'Canada/Pacific'
+//     Maps To Valid Time Zone: 'America/Vancouver'
 //  
 func (canad canadaDeprecatedTimeZones) Pacific() string { return "America/Vancouver" }
 
@@ -3553,8 +3553,8 @@ func (canad canadaDeprecatedTimeZones) Pacific() string { return "America/Vancou
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Saskatchewan'
-// Maps To Valid Time Zone: 'America/Regina'
+// Linked Deprecated Time Zone: 'Canada/Saskatchewan'
+//     Maps To Valid Time Zone: 'America/Regina'
 //  
 func (canad canadaDeprecatedTimeZones) Saskatchewan() string { return "America/Regina" }
 
@@ -3562,8 +3562,8 @@ func (canad canadaDeprecatedTimeZones) Saskatchewan() string { return "America/R
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Yukon'
-// Maps To Valid Time Zone: 'America/Whitehorse'
+// Linked Deprecated Time Zone: 'Canada/Yukon'
+//     Maps To Valid Time Zone: 'America/Whitehorse'
 //  
 func (canad canadaDeprecatedTimeZones) Yukon() string { return "America/Whitehorse" }
 
@@ -3585,8 +3585,8 @@ type chileDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Continental'
-// Maps To Valid Time Zone: 'America/Santiago'
+// Linked Deprecated Time Zone: 'Chile/Continental'
+//     Maps To Valid Time Zone: 'America/Santiago'
 //  
 func (chile chileDeprecatedTimeZones) Continental() string { return "America/Santiago" }
 
@@ -3594,8 +3594,8 @@ func (chile chileDeprecatedTimeZones) Continental() string { return "America/San
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'EasterIsland'
-// Maps To Valid Time Zone: 'Pacific/Easter'
+// Linked Deprecated Time Zone: 'Chile/EasterIsland'
+//     Maps To Valid Time Zone: 'Pacific/Easter'
 //  
 func (chile chileDeprecatedTimeZones) EasterIsland() string { return "Pacific/Easter" }
 
@@ -3617,8 +3617,8 @@ type etcDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'GMT+0'
-// Maps To Valid Time Zone: 'Etc/GMT'
+// Linked Deprecated Time Zone: 'Etc/GMT+0'
+//     Maps To Valid Time Zone: 'Etc/GMT'
 //  
 func (etcDe etcDeprecatedTimeZones) GMTPlus00() string { return "Etc/GMT" }
 
@@ -3626,8 +3626,8 @@ func (etcDe etcDeprecatedTimeZones) GMTPlus00() string { return "Etc/GMT" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'GMT-0'
-// Maps To Valid Time Zone: 'Etc/GMT'
+// Linked Deprecated Time Zone: 'Etc/GMT-0'
+//     Maps To Valid Time Zone: 'Etc/GMT'
 //  
 func (etcDe etcDeprecatedTimeZones) GMTMinus00() string { return "Etc/GMT" }
 
@@ -3635,8 +3635,8 @@ func (etcDe etcDeprecatedTimeZones) GMTMinus00() string { return "Etc/GMT" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'GMT0'
-// Maps To Valid Time Zone: 'Etc/GMT'
+// Linked Deprecated Time Zone: 'Etc/GMT0'
+//     Maps To Valid Time Zone: 'Etc/GMT'
 //  
 func (etcDe etcDeprecatedTimeZones) GMT00() string { return "Etc/GMT" }
 
@@ -3644,8 +3644,8 @@ func (etcDe etcDeprecatedTimeZones) GMT00() string { return "Etc/GMT" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Greenwich'
-// Maps To Valid Time Zone: 'Etc/GMT'
+// Linked Deprecated Time Zone: 'Etc/Greenwich'
+//     Maps To Valid Time Zone: 'Etc/GMT'
 //  
 func (etcDe etcDeprecatedTimeZones) Greenwich() string { return "Etc/GMT" }
 
@@ -3653,8 +3653,8 @@ func (etcDe etcDeprecatedTimeZones) Greenwich() string { return "Etc/GMT" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'UCT'
-// Maps To Valid Time Zone: 'Etc/UTC'
+// Linked Deprecated Time Zone: 'Etc/UCT'
+//     Maps To Valid Time Zone: 'Etc/UTC'
 //  
 func (etcDe etcDeprecatedTimeZones) UCT() string { return "Etc/UTC" }
 
@@ -3662,8 +3662,8 @@ func (etcDe etcDeprecatedTimeZones) UCT() string { return "Etc/UTC" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Universal'
-// Maps To Valid Time Zone: 'Etc/UTC'
+// Linked Deprecated Time Zone: 'Etc/Universal'
+//     Maps To Valid Time Zone: 'Etc/UTC'
 //  
 func (etcDe etcDeprecatedTimeZones) Universal() string { return "Etc/UTC" }
 
@@ -3671,8 +3671,8 @@ func (etcDe etcDeprecatedTimeZones) Universal() string { return "Etc/UTC" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Zulu'
-// Maps To Valid Time Zone: 'Etc/UTC'
+// Linked Deprecated Time Zone: 'Etc/Zulu'
+//     Maps To Valid Time Zone: 'Etc/UTC'
 //  
 func (etcDe etcDeprecatedTimeZones) Zulu() string { return "Etc/UTC" }
 
@@ -3694,8 +3694,8 @@ type europeDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Belfast'
-// Maps To Valid Time Zone: 'Europe/London'
+// Linked Deprecated Time Zone: 'Europe/Belfast'
+//     Maps To Valid Time Zone: 'Europe/London'
 //  
 func (europ europeDeprecatedTimeZones) Belfast() string { return "Europe/London" }
 
@@ -3703,8 +3703,8 @@ func (europ europeDeprecatedTimeZones) Belfast() string { return "Europe/London"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Bratislava'
-// Maps To Valid Time Zone: 'Europe/Prague'
+// Linked Deprecated Time Zone: 'Europe/Bratislava'
+//     Maps To Valid Time Zone: 'Europe/Prague'
 //  
 func (europ europeDeprecatedTimeZones) Bratislava() string { return "Europe/Prague" }
 
@@ -3712,8 +3712,8 @@ func (europ europeDeprecatedTimeZones) Bratislava() string { return "Europe/Prag
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Busingen'
-// Maps To Valid Time Zone: 'Europe/Zurich'
+// Linked Deprecated Time Zone: 'Europe/Busingen'
+//     Maps To Valid Time Zone: 'Europe/Zurich'
 //  
 func (europ europeDeprecatedTimeZones) Busingen() string { return "Europe/Zurich" }
 
@@ -3721,8 +3721,8 @@ func (europ europeDeprecatedTimeZones) Busingen() string { return "Europe/Zurich
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Guernsey'
-// Maps To Valid Time Zone: 'Europe/London'
+// Linked Deprecated Time Zone: 'Europe/Guernsey'
+//     Maps To Valid Time Zone: 'Europe/London'
 //  
 func (europ europeDeprecatedTimeZones) Guernsey() string { return "Europe/London" }
 
@@ -3730,8 +3730,8 @@ func (europ europeDeprecatedTimeZones) Guernsey() string { return "Europe/London
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Isle_of_Man'
-// Maps To Valid Time Zone: 'Europe/London'
+// Linked Deprecated Time Zone: 'Europe/Isle_of_Man'
+//     Maps To Valid Time Zone: 'Europe/London'
 //  
 func (europ europeDeprecatedTimeZones) Isle_of_Man() string { return "Europe/London" }
 
@@ -3739,8 +3739,8 @@ func (europ europeDeprecatedTimeZones) Isle_of_Man() string { return "Europe/Lon
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Jersey'
-// Maps To Valid Time Zone: 'Europe/London'
+// Linked Deprecated Time Zone: 'Europe/Jersey'
+//     Maps To Valid Time Zone: 'Europe/London'
 //  
 func (europ europeDeprecatedTimeZones) Jersey() string { return "Europe/London" }
 
@@ -3748,8 +3748,8 @@ func (europ europeDeprecatedTimeZones) Jersey() string { return "Europe/London" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ljubljana'
-// Maps To Valid Time Zone: 'Europe/Belgrade'
+// Linked Deprecated Time Zone: 'Europe/Ljubljana'
+//     Maps To Valid Time Zone: 'Europe/Belgrade'
 //  
 func (europ europeDeprecatedTimeZones) Ljubljana() string { return "Europe/Belgrade" }
 
@@ -3757,8 +3757,8 @@ func (europ europeDeprecatedTimeZones) Ljubljana() string { return "Europe/Belgr
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mariehamn'
-// Maps To Valid Time Zone: 'Europe/Helsinki'
+// Linked Deprecated Time Zone: 'Europe/Mariehamn'
+//     Maps To Valid Time Zone: 'Europe/Helsinki'
 //  
 func (europ europeDeprecatedTimeZones) Mariehamn() string { return "Europe/Helsinki" }
 
@@ -3766,8 +3766,8 @@ func (europ europeDeprecatedTimeZones) Mariehamn() string { return "Europe/Helsi
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Nicosia'
-// Maps To Valid Time Zone: 'Asia/Nicosia'
+// Linked Deprecated Time Zone: 'Europe/Nicosia'
+//     Maps To Valid Time Zone: 'Asia/Nicosia'
 //  
 func (europ europeDeprecatedTimeZones) Nicosia() string { return "Asia/Nicosia" }
 
@@ -3775,8 +3775,8 @@ func (europ europeDeprecatedTimeZones) Nicosia() string { return "Asia/Nicosia" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Podgorica'
-// Maps To Valid Time Zone: 'Europe/Belgrade'
+// Linked Deprecated Time Zone: 'Europe/Podgorica'
+//     Maps To Valid Time Zone: 'Europe/Belgrade'
 //  
 func (europ europeDeprecatedTimeZones) Podgorica() string { return "Europe/Belgrade" }
 
@@ -3784,8 +3784,8 @@ func (europ europeDeprecatedTimeZones) Podgorica() string { return "Europe/Belgr
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'San_Marino'
-// Maps To Valid Time Zone: 'Europe/Rome'
+// Linked Deprecated Time Zone: 'Europe/San_Marino'
+//     Maps To Valid Time Zone: 'Europe/Rome'
 //  
 func (europ europeDeprecatedTimeZones) San_Marino() string { return "Europe/Rome" }
 
@@ -3793,8 +3793,8 @@ func (europ europeDeprecatedTimeZones) San_Marino() string { return "Europe/Rome
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Sarajevo'
-// Maps To Valid Time Zone: 'Europe/Belgrade'
+// Linked Deprecated Time Zone: 'Europe/Sarajevo'
+//     Maps To Valid Time Zone: 'Europe/Belgrade'
 //  
 func (europ europeDeprecatedTimeZones) Sarajevo() string { return "Europe/Belgrade" }
 
@@ -3802,8 +3802,8 @@ func (europ europeDeprecatedTimeZones) Sarajevo() string { return "Europe/Belgra
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Skopje'
-// Maps To Valid Time Zone: 'Europe/Belgrade'
+// Linked Deprecated Time Zone: 'Europe/Skopje'
+//     Maps To Valid Time Zone: 'Europe/Belgrade'
 //  
 func (europ europeDeprecatedTimeZones) Skopje() string { return "Europe/Belgrade" }
 
@@ -3811,8 +3811,8 @@ func (europ europeDeprecatedTimeZones) Skopje() string { return "Europe/Belgrade
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Tiraspol'
-// Maps To Valid Time Zone: 'Europe/Chisinau'
+// Linked Deprecated Time Zone: 'Europe/Tiraspol'
+//     Maps To Valid Time Zone: 'Europe/Chisinau'
 //  
 func (europ europeDeprecatedTimeZones) Tiraspol() string { return "Europe/Chisinau" }
 
@@ -3820,8 +3820,8 @@ func (europ europeDeprecatedTimeZones) Tiraspol() string { return "Europe/Chisin
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Vaduz'
-// Maps To Valid Time Zone: 'Europe/Zurich'
+// Linked Deprecated Time Zone: 'Europe/Vaduz'
+//     Maps To Valid Time Zone: 'Europe/Zurich'
 //  
 func (europ europeDeprecatedTimeZones) Vaduz() string { return "Europe/Zurich" }
 
@@ -3829,8 +3829,8 @@ func (europ europeDeprecatedTimeZones) Vaduz() string { return "Europe/Zurich" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Vatican'
-// Maps To Valid Time Zone: 'Europe/Rome'
+// Linked Deprecated Time Zone: 'Europe/Vatican'
+//     Maps To Valid Time Zone: 'Europe/Rome'
 //  
 func (europ europeDeprecatedTimeZones) Vatican() string { return "Europe/Rome" }
 
@@ -3838,8 +3838,8 @@ func (europ europeDeprecatedTimeZones) Vatican() string { return "Europe/Rome" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Zagreb'
-// Maps To Valid Time Zone: 'Europe/Belgrade'
+// Linked Deprecated Time Zone: 'Europe/Zagreb'
+//     Maps To Valid Time Zone: 'Europe/Belgrade'
 //  
 func (europ europeDeprecatedTimeZones) Zagreb() string { return "Europe/Belgrade" }
 
@@ -3861,8 +3861,8 @@ type indianDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Antananarivo'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Indian/Antananarivo'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (india indianDeprecatedTimeZones) Antananarivo() string { return "Africa/Nairobi" }
 
@@ -3870,8 +3870,8 @@ func (india indianDeprecatedTimeZones) Antananarivo() string { return "Africa/Na
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Comoro'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Indian/Comoro'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (india indianDeprecatedTimeZones) Comoro() string { return "Africa/Nairobi" }
 
@@ -3879,8 +3879,8 @@ func (india indianDeprecatedTimeZones) Comoro() string { return "Africa/Nairobi"
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mayotte'
-// Maps To Valid Time Zone: 'Africa/Nairobi'
+// Linked Deprecated Time Zone: 'Indian/Mayotte'
+//     Maps To Valid Time Zone: 'Africa/Nairobi'
 //  
 func (india indianDeprecatedTimeZones) Mayotte() string { return "Africa/Nairobi" }
 
@@ -3902,8 +3902,8 @@ type mexicoDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'BajaNorte'
-// Maps To Valid Time Zone: 'America/Tijuana'
+// Linked Deprecated Time Zone: 'Mexico/BajaNorte'
+//     Maps To Valid Time Zone: 'America/Tijuana'
 //  
 func (mexic mexicoDeprecatedTimeZones) BajaNorte() string { return "America/Tijuana" }
 
@@ -3911,8 +3911,8 @@ func (mexic mexicoDeprecatedTimeZones) BajaNorte() string { return "America/Tiju
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'BajaSur'
-// Maps To Valid Time Zone: 'America/Mazatlan'
+// Linked Deprecated Time Zone: 'Mexico/BajaSur'
+//     Maps To Valid Time Zone: 'America/Mazatlan'
 //  
 func (mexic mexicoDeprecatedTimeZones) BajaSur() string { return "America/Mazatlan" }
 
@@ -3920,8 +3920,8 @@ func (mexic mexicoDeprecatedTimeZones) BajaSur() string { return "America/Mazatl
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'General'
-// Maps To Valid Time Zone: 'America/Mexico_City'
+// Linked Deprecated Time Zone: 'Mexico/General'
+//     Maps To Valid Time Zone: 'America/Mexico_City'
 //  
 func (mexic mexicoDeprecatedTimeZones) General() string { return "America/Mexico_City" }
 
@@ -3943,8 +3943,8 @@ type pacificDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Johnston'
-// Maps To Valid Time Zone: 'Pacific/Honolulu'
+// Linked Deprecated Time Zone: 'Pacific/Johnston'
+//     Maps To Valid Time Zone: 'Pacific/Honolulu'
 //  
 func (pacif pacificDeprecatedTimeZones) Johnston() string { return "Pacific/Honolulu" }
 
@@ -3952,8 +3952,8 @@ func (pacif pacificDeprecatedTimeZones) Johnston() string { return "Pacific/Hono
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Midway'
-// Maps To Valid Time Zone: 'Pacific/Pago_Pago'
+// Linked Deprecated Time Zone: 'Pacific/Midway'
+//     Maps To Valid Time Zone: 'Pacific/Pago_Pago'
 //  
 func (pacif pacificDeprecatedTimeZones) Midway() string { return "Pacific/Pago_Pago" }
 
@@ -3961,8 +3961,8 @@ func (pacif pacificDeprecatedTimeZones) Midway() string { return "Pacific/Pago_P
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Ponape'
-// Maps To Valid Time Zone: 'Pacific/Pohnpei'
+// Linked Deprecated Time Zone: 'Pacific/Ponape'
+//     Maps To Valid Time Zone: 'Pacific/Pohnpei'
 //  
 func (pacif pacificDeprecatedTimeZones) Ponape() string { return "Pacific/Pohnpei" }
 
@@ -3970,8 +3970,8 @@ func (pacif pacificDeprecatedTimeZones) Ponape() string { return "Pacific/Pohnpe
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Saipan'
-// Maps To Valid Time Zone: 'Pacific/Guam'
+// Linked Deprecated Time Zone: 'Pacific/Saipan'
+//     Maps To Valid Time Zone: 'Pacific/Guam'
 //  
 func (pacif pacificDeprecatedTimeZones) Saipan() string { return "Pacific/Guam" }
 
@@ -3979,8 +3979,8 @@ func (pacif pacificDeprecatedTimeZones) Saipan() string { return "Pacific/Guam" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Samoa'
-// Maps To Valid Time Zone: 'Pacific/Pago_Pago'
+// Linked Deprecated Time Zone: 'Pacific/Samoa'
+//     Maps To Valid Time Zone: 'Pacific/Pago_Pago'
 //  
 func (pacif pacificDeprecatedTimeZones) Samoa() string { return "Pacific/Pago_Pago" }
 
@@ -3988,8 +3988,8 @@ func (pacif pacificDeprecatedTimeZones) Samoa() string { return "Pacific/Pago_Pa
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Truk'
-// Maps To Valid Time Zone: 'Pacific/Chuuk'
+// Linked Deprecated Time Zone: 'Pacific/Truk'
+//     Maps To Valid Time Zone: 'Pacific/Chuuk'
 //  
 func (pacif pacificDeprecatedTimeZones) Truk() string { return "Pacific/Chuuk" }
 
@@ -3997,8 +3997,8 @@ func (pacif pacificDeprecatedTimeZones) Truk() string { return "Pacific/Chuuk" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Yap'
-// Maps To Valid Time Zone: 'Pacific/Chuuk'
+// Linked Deprecated Time Zone: 'Pacific/Yap'
+//     Maps To Valid Time Zone: 'Pacific/Chuuk'
 //  
 func (pacif pacificDeprecatedTimeZones) Yap() string { return "Pacific/Chuuk" }
 
@@ -4020,8 +4020,8 @@ type uSDeprecatedTimeZones string
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Alaska'
-// Maps To Valid Time Zone: 'America/Anchorage'
+// Linked Deprecated Time Zone: 'US/Alaska'
+//     Maps To Valid Time Zone: 'America/Anchorage'
 //  
 func (uSDep uSDeprecatedTimeZones) Alaska() string { return "America/Anchorage" }
 
@@ -4029,8 +4029,8 @@ func (uSDep uSDeprecatedTimeZones) Alaska() string { return "America/Anchorage" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Aleutian'
-// Maps To Valid Time Zone: 'America/Adak'
+// Linked Deprecated Time Zone: 'US/Aleutian'
+//     Maps To Valid Time Zone: 'America/Adak'
 //  
 func (uSDep uSDeprecatedTimeZones) Aleutian() string { return "America/Adak" }
 
@@ -4038,8 +4038,8 @@ func (uSDep uSDeprecatedTimeZones) Aleutian() string { return "America/Adak" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Arizona'
-// Maps To Valid Time Zone: 'America/Phoenix'
+// Linked Deprecated Time Zone: 'US/Arizona'
+//     Maps To Valid Time Zone: 'America/Phoenix'
 //  
 func (uSDep uSDeprecatedTimeZones) Arizona() string { return "America/Phoenix" }
 
@@ -4047,8 +4047,8 @@ func (uSDep uSDeprecatedTimeZones) Arizona() string { return "America/Phoenix" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Central'
-// Maps To Valid Time Zone: 'America/Chicago'
+// Linked Deprecated Time Zone: 'US/Central'
+//     Maps To Valid Time Zone: 'America/Chicago'
 //  
 func (uSDep uSDeprecatedTimeZones) Central() string { return "America/Chicago" }
 
@@ -4056,8 +4056,8 @@ func (uSDep uSDeprecatedTimeZones) Central() string { return "America/Chicago" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'East-Indiana'
-// Maps To Valid Time Zone: 'America/Indiana/Indianapolis'
+// Linked Deprecated Time Zone: 'US/East-Indiana'
+//     Maps To Valid Time Zone: 'America/Indiana/Indianapolis'
 //  
 func (uSDep uSDeprecatedTimeZones) EastMinusIndiana() string { return "America/Indiana/Indianapolis" }
 
@@ -4065,8 +4065,8 @@ func (uSDep uSDeprecatedTimeZones) EastMinusIndiana() string { return "America/I
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Eastern'
-// Maps To Valid Time Zone: 'America/New_York'
+// Linked Deprecated Time Zone: 'US/Eastern'
+//     Maps To Valid Time Zone: 'America/New_York'
 //  
 func (uSDep uSDeprecatedTimeZones) Eastern() string { return "America/New_York" }
 
@@ -4074,8 +4074,8 @@ func (uSDep uSDeprecatedTimeZones) Eastern() string { return "America/New_York" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Hawaii'
-// Maps To Valid Time Zone: 'Pacific/Honolulu'
+// Linked Deprecated Time Zone: 'US/Hawaii'
+//     Maps To Valid Time Zone: 'Pacific/Honolulu'
 //  
 func (uSDep uSDeprecatedTimeZones) Hawaii() string { return "Pacific/Honolulu" }
 
@@ -4083,8 +4083,8 @@ func (uSDep uSDeprecatedTimeZones) Hawaii() string { return "Pacific/Honolulu" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Indiana-Starke'
-// Maps To Valid Time Zone: 'America/Indiana/Knox'
+// Linked Deprecated Time Zone: 'US/Indiana-Starke'
+//     Maps To Valid Time Zone: 'America/Indiana/Knox'
 //  
 func (uSDep uSDeprecatedTimeZones) IndianaMinusStarke() string { return "America/Indiana/Knox" }
 
@@ -4092,8 +4092,8 @@ func (uSDep uSDeprecatedTimeZones) IndianaMinusStarke() string { return "America
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Michigan'
-// Maps To Valid Time Zone: 'America/Detroit'
+// Linked Deprecated Time Zone: 'US/Michigan'
+//     Maps To Valid Time Zone: 'America/Detroit'
 //  
 func (uSDep uSDeprecatedTimeZones) Michigan() string { return "America/Detroit" }
 
@@ -4101,8 +4101,8 @@ func (uSDep uSDeprecatedTimeZones) Michigan() string { return "America/Detroit" 
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Mountain'
-// Maps To Valid Time Zone: 'America/Denver'
+// Linked Deprecated Time Zone: 'US/Mountain'
+//     Maps To Valid Time Zone: 'America/Denver'
 //  
 func (uSDep uSDeprecatedTimeZones) Mountain() string { return "America/Denver" }
 
@@ -4110,8 +4110,8 @@ func (uSDep uSDeprecatedTimeZones) Mountain() string { return "America/Denver" }
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Pacific'
-// Maps To Valid Time Zone: 'America/Los_Angeles'
+// Linked Deprecated Time Zone: 'US/Pacific'
+//     Maps To Valid Time Zone: 'America/Los_Angeles'
 //  
 func (uSDep uSDeprecatedTimeZones) Pacific() string { return "America/Los_Angeles" }
 
@@ -4119,8 +4119,8 @@ func (uSDep uSDeprecatedTimeZones) Pacific() string { return "America/Los_Angele
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Pacific-New'
-// Maps To Valid Time Zone: 'America/Los_Angeles'
+// Linked Deprecated Time Zone: 'US/Pacific-New'
+//     Maps To Valid Time Zone: 'America/Los_Angeles'
 //  
 func (uSDep uSDeprecatedTimeZones) PacificMinusNew() string { return "America/Los_Angeles" }
 
@@ -4128,8 +4128,8 @@ func (uSDep uSDeprecatedTimeZones) PacificMinusNew() string { return "America/Lo
 // Zones identify deprecated or obsolete time zones. These
 // obsolete time zones are mapped to valid current time zones.
 //  
-// Linked Deprecated Time Zone: 'Samoa'
-// Maps To Valid Time Zone: 'Pacific/Pago_Pago'
+// Linked Deprecated Time Zone: 'US/Samoa'
+//     Maps To Valid Time Zone: 'Pacific/Pago_Pago'
 //  
 func (uSDep uSDeprecatedTimeZones) Samoa() string { return "Pacific/Pago_Pago" }
 
@@ -4150,3 +4150,4 @@ type TimeZones struct {
 
 
 var TZones = TimeZones{}
+
