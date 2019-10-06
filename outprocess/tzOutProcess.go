@@ -170,15 +170,15 @@ func (tzOut TzOutProcess) createOpenOutputFile(
 func (tzOut TzOutProcess) createTimeZoneTypeComments(ianaVersion string) []byte {
 	outputStr := fmt.Sprintf("\n" +
 		"// TimeZones - This type and its associated methods encapsulate all 670+\n" +
-		"// IANA Time Zones plus Military Time Zones. This type is therefore used as an\n" +
-		"// enumeration of the Global Time Zones.\n" +
+		"// IANA Time Zones plus 25-Military Time Zones. This type is therefore used\n" +
+		"// as a comprehensive enumeration of Global Time Zones.\n" +
 		"//\n" +
 		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n" +
 		"//  Reference:\n" +
 		"//    https://golang.org/pkg/time/#LoadLocation\n" +
 		"//\n" +
-		"// IANA Time Zones are widely recognized as the the world's leading authority on\n" +
-		"// time zones.\n" +
+		"// IANA Time Zones are widely recognized as the the world's leading authority\n" +
+		"// on time zones.\n" +
 		"//\n"+
 		"// Reference:\n" +
 		"//    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n" +
@@ -210,7 +210,9 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(ianaVersion string) []byte 
 		"//             https://www.youtube.com/watch?v=DyXJy_0v0_U \n" +
 		"//\n" +
 		"// ----------------------------------------------------------------------------\n" +
+		"// \n" +
 		"// This TimeZones Type is based on IANA Time Zone Database Version: %v\n" +
+		"// \n" +
 		"// ----------------------------------------------------------------------------\n" +
 		"// \n",
 		ianaVersion)

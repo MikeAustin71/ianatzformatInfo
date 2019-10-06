@@ -5,15 +5,15 @@ package main
 
 
 // TimeZones - This type and its associated methods encapsulate all 670+
-// IANA Time Zones plus Military Time Zones. This type is therefore used as an
-// enumeration of the Global Time Zones.
+// IANA Time Zones plus 25-Military Time Zones. This type is therefore used
+// as a comprehensive enumeration of Global Time Zones.
 //
 // The Go Programming Language uses IANA Time Zones in date-time calculations.
 //  Reference:
 //    https://golang.org/pkg/time/#LoadLocation
 //
-// IANA Time Zones are widely recognized as the the world's leading authority on
-// time zones.
+// IANA Time Zones are widely recognized as the the world's leading authority
+// on time zones.
 //
 // Reference:
 //    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -45,7 +45,9 @@ package main
 //             https://www.youtube.com/watch?v=DyXJy_0v0_U 
 //
 // ----------------------------------------------------------------------------
+// 
 // This TimeZones Type is based on IANA Time Zone Database Version: 2019c
+// 
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
