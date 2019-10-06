@@ -100,10 +100,10 @@ func (tZoneDecs TzZoneDeclarations) LinkTimeZoneTwoElementDeclaration(
 			tzData.TzName)
 
 	outputStr += tzdatastructs.CommentLead +
-		"Zones identify deprecated or obsolete time zones. These\n"
+		"identify deprecated or obsolete time zones. These obsolete\n"
 
 	outputStr += tzdatastructs.CommentLead +
-		"obsolete time zones are mapped to valid current time zones.\n"
+		"time zones are mapped to valid current time zones.\n"
 
 	outputStr += tzdatastructs.CommentBlankLine
 

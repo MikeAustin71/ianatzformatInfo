@@ -303,10 +303,16 @@ func (tzOut TzOutProcess) writeTimeZones(
 
 				_, err = outputFileMgr.WriteBytesToFile(tZone.FuncDeclaration)
 
+				if tZone.TzType == tzdatastructs.TZType.Standard() ||
+						tZone.TzType == tzdatastructs.TZType.SubZone() {
+					tzdatastructs.NumberOfTimeZones++
+				}
+
 			}
 		}
 	}
 
+	fmt.Println("Number Of Time Zones Captured: ", tzdatastructs.NumberOfTimeZones)
 	return nil
 }
 

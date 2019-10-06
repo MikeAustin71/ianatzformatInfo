@@ -349,10 +349,6 @@ func (parseTz *ParseIanaTzData) extractLink(
 		return nil
 	}
 
-	if strings.Index(dFProfile.DataFieldStr, tzdatastructs.ZoneSeparator) == -1 {
-		return nil
-	}
-
 	tzLink := dFProfile.DataFieldStr
 
 	linkZoneArray := strings.Split(tzLink, tzdatastructs.ZoneSeparator)
@@ -947,7 +943,6 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
 	}
-
 
 	containsZone, _ :=
 		tzData[tzdatastructs.Level_01_Idx].ContainsTzName(

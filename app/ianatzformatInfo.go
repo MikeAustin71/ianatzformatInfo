@@ -75,22 +75,14 @@ parser := inprocess.ParseIanaTzData{}
 }
 
 /*
-$ go run ianatzformatInfo.go
-Number of Target Files:  33
-Valid File:  africa
-Valid File:  antarctica
-Valid File:  asia
-Valid File:  australasia
-Valid File:  backward
-Valid File:  backzone
-Valid File:  etcetera
-Valid File:  europe
-Valid File:  northamerica
-Valid File:  pacificnew
-Valid File:  southamerica
-ianaTzFormatInfo.main() ianaTzFormatInfo.main() TzOutProcess.WriteOutput() TzOutProcess.writeLevelOneTimeZones()
+File: backward
+All Of these links failed.
 
-Time Zone Collection is EMPTY!
-Parent Group='America'
-Group Name='Argentina'
+Link	Europe/Warsaw		Poland
+Link	Europe/Lisbon		Portugal
+Link	Asia/Taipei		ROC
+Link	Asia/Seoul		ROK
+Link	Asia/Singapore		Singapore
+Link	Europe/Istanbul		Turkey
+
  */

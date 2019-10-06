@@ -1347,7 +1347,9 @@ func (austr australiaTimeZones) Sydney() string {return "Australia/Sydney" }
 
 // Deprecated - Defines a collection of IANA
 // Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -1409,6 +1411,33 @@ func (depre deprecatedTimeZones) Canada() canadaDeprecatedTimeZones {return "" }
 //  
 func (depre deprecatedTimeZones) Chile() chileDeprecatedTimeZones {return "" }
 
+// Cuba - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Cuba'
+// Maps To Valid Time Zone: 'America/Havana'
+//  
+func (depre deprecatedTimeZones) Cuba() string { return "America/Havana" }
+
+// Egypt - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Egypt'
+// Maps To Valid Time Zone: 'Africa/Cairo'
+//  
+func (depre deprecatedTimeZones) Egypt() string { return "Africa/Cairo" }
+
+// Eire - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Eire'
+// Maps To Valid Time Zone: 'Europe/Dublin'
+//  
+func (depre deprecatedTimeZones) Eire() string { return "Europe/Dublin" }
+
 // Etc - A place holder which defines a sub-group
 // of IANA 'Link' Time Zones.
 //  
@@ -1419,25 +1448,295 @@ func (depre deprecatedTimeZones) Etc() etcDeprecatedTimeZones {return "" }
 //  
 func (depre deprecatedTimeZones) Europe() europeDeprecatedTimeZones {return "" }
 
+// GB - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'GB'
+// Maps To Valid Time Zone: 'Europe/London'
+//  
+func (depre deprecatedTimeZones) GB() string { return "Europe/London" }
+
+// GB-Eire - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'GB-Eire'
+// Maps To Valid Time Zone: 'Europe/London'
+//  
+func (depre deprecatedTimeZones) GBMinusEire() string { return "Europe/London" }
+
+// GMT - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'GMT'
+// Maps To Valid Time Zone: 'Etc/GMT'
+//  
+func (depre deprecatedTimeZones) GMT() string { return "Etc/GMT" }
+
+// GMT+0 - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'GMT+0'
+// Maps To Valid Time Zone: 'Etc/GMT'
+//  
+func (depre deprecatedTimeZones) GMTPlus00() string { return "Etc/GMT" }
+
+// GMT-0 - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'GMT-0'
+// Maps To Valid Time Zone: 'Etc/GMT'
+//  
+func (depre deprecatedTimeZones) GMTMinus00() string { return "Etc/GMT" }
+
+// GMT0 - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'GMT0'
+// Maps To Valid Time Zone: 'Etc/GMT'
+//  
+func (depre deprecatedTimeZones) GMT00() string { return "Etc/GMT" }
+
+// Greenwich - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Greenwich'
+// Maps To Valid Time Zone: 'Etc/GMT'
+//  
+func (depre deprecatedTimeZones) Greenwich() string { return "Etc/GMT" }
+
+// Hongkong - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Hongkong'
+// Maps To Valid Time Zone: 'Asia/Hong_Kong'
+//  
+func (depre deprecatedTimeZones) Hongkong() string { return "Asia/Hong_Kong" }
+
+// Iceland - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Iceland'
+// Maps To Valid Time Zone: 'Atlantic/Reykjavik'
+//  
+func (depre deprecatedTimeZones) Iceland() string { return "Atlantic/Reykjavik" }
+
 // Indian - A place holder which defines a sub-group
 // of IANA 'Link' Time Zones.
 //  
 func (depre deprecatedTimeZones) Indian() indianDeprecatedTimeZones {return "" }
+
+// Iran - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Iran'
+// Maps To Valid Time Zone: 'Asia/Tehran'
+//  
+func (depre deprecatedTimeZones) Iran() string { return "Asia/Tehran" }
+
+// Israel - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Israel'
+// Maps To Valid Time Zone: 'Asia/Jerusalem'
+//  
+func (depre deprecatedTimeZones) Israel() string { return "Asia/Jerusalem" }
+
+// Jamaica - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Jamaica'
+// Maps To Valid Time Zone: 'America/Jamaica'
+//  
+func (depre deprecatedTimeZones) Jamaica() string { return "America/Jamaica" }
+
+// Japan - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Japan'
+// Maps To Valid Time Zone: 'Asia/Tokyo'
+//  
+func (depre deprecatedTimeZones) Japan() string { return "Asia/Tokyo" }
+
+// Kwajalein - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Kwajalein'
+// Maps To Valid Time Zone: 'Pacific/Kwajalein'
+//  
+func (depre deprecatedTimeZones) Kwajalein() string { return "Pacific/Kwajalein" }
+
+// Libya - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Libya'
+// Maps To Valid Time Zone: 'Africa/Tripoli'
+//  
+func (depre deprecatedTimeZones) Libya() string { return "Africa/Tripoli" }
 
 // Mexico - A place holder which defines a sub-group
 // of IANA 'Link' Time Zones.
 //  
 func (depre deprecatedTimeZones) Mexico() mexicoDeprecatedTimeZones {return "" }
 
+// Navajo - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Navajo'
+// Maps To Valid Time Zone: 'America/Denver'
+//  
+func (depre deprecatedTimeZones) Navajo() string { return "America/Denver" }
+
+// NZ - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'NZ'
+// Maps To Valid Time Zone: 'Pacific/Auckland'
+//  
+func (depre deprecatedTimeZones) NZ() string { return "Pacific/Auckland" }
+
+// NZ-CHAT - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'NZ-CHAT'
+// Maps To Valid Time Zone: 'Pacific/Chatham'
+//  
+func (depre deprecatedTimeZones) NZMinusCHAT() string { return "Pacific/Chatham" }
+
 // Pacific - A place holder which defines a sub-group
 // of IANA 'Link' Time Zones.
 //  
 func (depre deprecatedTimeZones) Pacific() pacificDeprecatedTimeZones {return "" }
 
+// Poland - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Poland'
+// Maps To Valid Time Zone: 'Europe/Warsaw'
+//  
+func (depre deprecatedTimeZones) Poland() string { return "Europe/Warsaw" }
+
+// Portugal - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Portugal'
+// Maps To Valid Time Zone: 'Europe/Lisbon'
+//  
+func (depre deprecatedTimeZones) Portugal() string { return "Europe/Lisbon" }
+
+// PRC - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'PRC'
+// Maps To Valid Time Zone: 'Asia/Shanghai'
+//  
+func (depre deprecatedTimeZones) PRC() string { return "Asia/Shanghai" }
+
+// ROC - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'ROC'
+// Maps To Valid Time Zone: 'Asia/Taipei'
+//  
+func (depre deprecatedTimeZones) ROC() string { return "Asia/Taipei" }
+
+// ROK - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'ROK'
+// Maps To Valid Time Zone: 'Asia/Seoul'
+//  
+func (depre deprecatedTimeZones) ROK() string { return "Asia/Seoul" }
+
+// Singapore - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Singapore'
+// Maps To Valid Time Zone: 'Asia/Singapore'
+//  
+func (depre deprecatedTimeZones) Singapore() string { return "Asia/Singapore" }
+
+// Turkey - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Turkey'
+// Maps To Valid Time Zone: 'Europe/Istanbul'
+//  
+func (depre deprecatedTimeZones) Turkey() string { return "Europe/Istanbul" }
+
+// UCT - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'UCT'
+// Maps To Valid Time Zone: 'Etc/UTC'
+//  
+func (depre deprecatedTimeZones) UCT() string { return "Etc/UTC" }
+
+// Universal - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Universal'
+// Maps To Valid Time Zone: 'Etc/UTC'
+//  
+func (depre deprecatedTimeZones) Universal() string { return "Etc/UTC" }
+
 // US - A place holder which defines a sub-group
 // of IANA 'Link' Time Zones.
 //  
 func (depre deprecatedTimeZones) US() uSDeprecatedTimeZones {return "" }
+
+// UTC - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'UTC'
+// Maps To Valid Time Zone: 'Etc/UTC'
+//  
+func (depre deprecatedTimeZones) UTC() string { return "Etc/UTC" }
+
+// W-SU - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'W-SU'
+// Maps To Valid Time Zone: 'Europe/Moscow'
+//  
+func (depre deprecatedTimeZones) WMinusSU() string { return "Europe/Moscow" }
+
+// Zulu - This is an IANA 'Link' Time Zone. 'Link' Time Zones
+// Zones identify deprecated or obsolete time zones. These
+// obsolete time zones are mapped to valid current time zones.
+//  
+// Linked Deprecated Time Zone: 'Zulu'
+// Maps To Valid Time Zone: 'Etc/UTC'
+//  
+func (depre deprecatedTimeZones) Zulu() string { return "Etc/UTC" }
 
 // etcTimeZones - IANA Time Zones for 'Etc'.
 //  
@@ -2416,7 +2715,9 @@ func (north north_DakotaTimeZones) New_Salem() string {return "America/North_Dak
 
 // africaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -2736,7 +3037,9 @@ func (afric africaDeprecatedTimeZones) Timbuktu() string { return "Africa/Abidja
 
 // americaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3074,7 +3377,9 @@ func (ameri americaDeprecatedTimeZones) Virgin() string { return "America/Port_o
 
 // antarcticaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3106,7 +3411,9 @@ func (antar antarcticaDeprecatedTimeZones) South_Pole() string { return "Pacific
 
 // arcticDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3129,7 +3436,9 @@ func (arcti arcticDeprecatedTimeZones) Longyearbyen() string { return "Europe/Os
 
 // asiaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3341,7 +3650,9 @@ func (asiaD asiaDeprecatedTimeZones) Vientiane() string { return "Asia/Bangkok" 
 
 // atlanticDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3382,7 +3693,9 @@ func (atlan atlanticDeprecatedTimeZones) St_Helena() string { return "Africa/Abi
 
 // australiaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3495,7 +3808,9 @@ func (austr australiaDeprecatedTimeZones) Yancowinna() string { return "Australi
 
 // brazilDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3545,7 +3860,9 @@ func (brazi brazilDeprecatedTimeZones) West() string { return "America/Manaus" }
 
 // canadaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3631,7 +3948,9 @@ func (canad canadaDeprecatedTimeZones) Yukon() string { return "America/Whitehor
 
 // chileDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3663,7 +3982,9 @@ func (chile chileDeprecatedTimeZones) EasterIsland() string { return "Pacific/Ea
 
 // etcDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3740,7 +4061,9 @@ func (etcDe etcDeprecatedTimeZones) Zulu() string { return "Etc/UTC" }
 
 // europeDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3907,7 +4230,9 @@ func (europ europeDeprecatedTimeZones) Zagreb() string { return "Europe/Belgrade
 
 // indianDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3948,7 +4273,9 @@ func (india indianDeprecatedTimeZones) Mayotte() string { return "Africa/Nairobi
 
 // mexicoDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3989,7 +4316,9 @@ func (mexic mexicoDeprecatedTimeZones) General() string { return "America/Mexico
 
 // pacificDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -4066,7 +4395,9 @@ func (pacif pacificDeprecatedTimeZones) Yap() string { return "Pacific/Chuuk" }
 
 // uSDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -4197,7 +4528,9 @@ func (uSDep uSDeprecatedTimeZones) Samoa() string { return "Pacific/Pago_Pago" }
 
 // argentinaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
-// primary and accepted time zone designations.
+// primary and accepted time zone designations. These
+// time zones are classified as 'Link' Time Zones and
+// are mapped to current, valid IANA Time Zones.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
