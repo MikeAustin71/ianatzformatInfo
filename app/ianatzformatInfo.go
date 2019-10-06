@@ -76,15 +76,3 @@ parser := inprocess.ParseIanaTzData{}
 
 }
 
-/*
-File: backward
-All Of these links failed.
-
-Link	Europe/Warsaw		Poland
-Link	Europe/Lisbon		Portugal
-Link	Asia/Taipei		ROC
-Link	Asia/Seoul		ROK
-Link	Asia/Singapore		Singapore
-Link	Europe/Istanbul		Turkey
-
- */

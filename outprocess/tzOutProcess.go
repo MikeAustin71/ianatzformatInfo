@@ -283,7 +283,7 @@ func (tzOut TzOutProcess) writeHeadersToOutputFile(
 
 	var errorArray []error
 
-	_, err2 := outputFileMgr.WriteBytesToFile ([]byte("package main\n\n\n\n\n"))
+	_, err2 := outputFileMgr.WriteBytesToFile ([]byte("package main\n\n\n"))
 
 	if err2 != nil {
 
@@ -312,9 +312,9 @@ func (tzOut TzOutProcess) writeTimeZones(
 
 	ePrefix += "TzOutProcess.writeLevelOneTimeZones() "
 
-	var grp tzdatastructs.TimeZoneGroupDto
+	var grp *tzdatastructs.TimeZoneGroupDto
 	var tzCol tzdatastructs.TimeZoneDataCollection
-	var tZone tzdatastructs.TimeZoneDataDto
+	var tZone *tzdatastructs.TimeZoneDataDto
 	var err error
 
 	for i:=0; i <= tzdatastructs.Level_03_Idx; i++ {
@@ -327,7 +327,7 @@ func (tzOut TzOutProcess) writeTimeZones(
 
 		for j:= 0; j < lenGrpAry; j++ {
 
-			grp, err = tzGroupsAry[i].Peek(j)
+			grp, err = tzGroupsAry[i].PeekPtr(j)
 
 			if err != nil {
 				return fmt.Errorf(ePrefix +
@@ -376,7 +376,7 @@ func (tzOut TzOutProcess) writeTimeZones(
 
 			for k:=0; k < numOfTimeZones; k++ {
 
-				tZone, err = tzCol.Peek(k)
+				tZone, err = tzCol.PeekPtr(k)
 
 				if err != nil {
 					return fmt.Errorf(ePrefix +
@@ -441,7 +441,7 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 
 	ePrefix += "TzOutProcess.writeTimeZoneMasterType() "
 
-	lenMasterGrps := tzGroupsAry[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
+	lenMasterGroups := tzGroupsAry[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
 
 	var err error
 	var outBytes []byte
@@ -480,11 +480,11 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 	}
 
 
-	var grp tzdatastructs.TimeZoneGroupDto
+	var group *tzdatastructs.TimeZoneGroupDto
 
-	for i:=0; i < lenMasterGrps; i++ {
+	for i:=0; i < lenMasterGroups; i++ {
 
-		grp, err = tzGroupsAry[tzdatastructs.Level_01_Idx].Peek(i)
+		group, err = tzGroupsAry[tzdatastructs.Level_01_Idx].PeekPtr(i)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -493,7 +493,7 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 				"Error='%v'\n", i, err.Error())
 		}
 
-		centerLen := centerMarginLen - len(grp.GroupName)
+		centerLen := centerMarginLen - len(group.GroupName)
 
 		if centerLen < 1 {
 			centerLen = 5
@@ -507,7 +507,7 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 				"Error='%v'\n", err.Error())
 		}
 
-		outBytes = []byte(leftMarginStr + grp.GroupName + centerMarginStr + grp.TypeName + "\n")
+		outBytes = []byte(leftMarginStr + group.GroupName + centerMarginStr + group.TypeName + "\n")
 
 		_, err = outputFileMgr.WriteBytesToFile(outBytes)
 

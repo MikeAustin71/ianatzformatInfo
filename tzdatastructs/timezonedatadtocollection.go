@@ -140,7 +140,7 @@ func (tzDataCol *TimeZoneDataCollection) GetNumberOfTimeZones() int {
 // match the Time Zone Group input parameter.
 //
 func (tzDataCol *TimeZoneDataCollection) GetZoneGroupCol(
-	tzGroup TimeZoneGroupDto ) (TimeZoneDataCollection, error) {
+	tzGroup *TimeZoneGroupDto ) (TimeZoneDataCollection, error) {
 
 	ePrefix := "TimeZoneDataCollection) GetZoneGroupCol() "
 
@@ -243,14 +243,12 @@ func (tzDataCol TimeZoneDataCollection) New() TimeZoneDataCollection {
 	return newTzCol
 }
 
-// Peek - Returns a deep copy of the TimeZoneDataDto located in the internal
+// PeekPtr - Returns a pointer to the TimeZoneDataDto located in the internal
 // TimeZoneDataDto array at input parameter 'index'.
 //
-// The internal array is not altered by this method.
-//
-func (tzDataCol *TimeZoneDataCollection) Peek(index int) (TimeZoneDataDto, error) {
+func (tzDataCol *TimeZoneDataCollection) PeekPtr(index int) (*TimeZoneDataDto, error) {
 
-	ePrefix := "TimeZoneDataCollection.Peek() "
+	ePrefix := "TimeZoneDataCollection.PeekPtr() "
 
 	if tzDataCol.tzDataDtos == nil {
 
@@ -259,7 +257,7 @@ func (tzDataCol *TimeZoneDataCollection) Peek(index int) (TimeZoneDataDto, error
 	}
 
 	if index < 0 {
-		return TimeZoneDataDto{},
+		return &TimeZoneDataDto{},
 			fmt.Errorf(ePrefix +
 				"ERROR: Input parameter 'index' is less than zero and INVALID!\n" +
 				"index='%v'", index)
@@ -268,19 +266,19 @@ func (tzDataCol *TimeZoneDataCollection) Peek(index int) (TimeZoneDataDto, error
 	lenTzDataDtos := len(tzDataCol.tzDataDtos)
 
 	if lenTzDataDtos == 0 {
-		return TimeZoneDataDto{}, errors.New(ePrefix +
+		return &TimeZoneDataDto{}, errors.New(ePrefix +
 			"ERROR: The Time Zone Data Collection is EMPTY!")
 	}
 
 	if index > (lenTzDataDtos - 1) {
-		return TimeZoneDataDto{},
+		return &TimeZoneDataDto{},
 			fmt.Errorf(ePrefix +
 				"ERROR: Input paramter 'index' exceeds array upper boundary.\n" +
 				"TimeZoneDataDto Array last index='%v'\n" +
 				"Input parameter 'index'='%v'\n ", lenTzDataDtos - 1, index )
 	}
 
-	return tzDataCol.tzDataDtos[index].CopyOut(), nil
+	return &tzDataCol.tzDataDtos[index], nil
 }
 
 

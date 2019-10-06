@@ -2,8 +2,6 @@ package main
 
 
 
-
-
 // TimeZones - This type and its associated methods encapsulate 663 IANA Time
 // Zones plus 25-Military Time Zones. This type is therefore used as a 
 // comprehensive enumeration of Global Time Zones.

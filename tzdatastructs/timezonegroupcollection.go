@@ -145,14 +145,14 @@ func (tzGrpCol TimeZoneGroupCollection) New() TimeZoneGroupCollection {
 	return newTzGrp
 }
 
-// Peek - Returns a deep copy of the TimeZoneGroupDto
+// PeekPtr - Returns a pointer to the TimeZoneGroupDto
 // element located at input parameter 'index' within
 // the collection.
 //
-func (tzGrpCol *TimeZoneGroupCollection) Peek(
-	index int) (TimeZoneGroupDto, error) {
+func (tzGrpCol *TimeZoneGroupCollection) PeekPtr(
+	index int) (*TimeZoneGroupDto, error) {
 
-	ePrefix := "TimeZoneGroupCollection.Peek() "
+	ePrefix := "TimeZoneGroupCollection.PeekPtr() "
 
 	if tzGrpCol.tzGroups == nil {
 		tzGrpCol.tzGroups = make([]TimeZoneGroupDto, 0, 300)
@@ -161,12 +161,12 @@ func (tzGrpCol *TimeZoneGroupCollection) Peek(
 	lenGroupAry := len(tzGrpCol.tzGroups)
 
 	if lenGroupAry == 0 {
-		return TimeZoneGroupDto{},
+		return &TimeZoneGroupDto{},
 			errors.New (ePrefix + "Collection is EMPTY!\n")
 	}
 
 	if index >= lenGroupAry {
-		return TimeZoneGroupDto{},
+		return &TimeZoneGroupDto{},
 			fmt.Errorf(ePrefix + "Error: Input parameter 'index'\n" +
 				"exceeds collection upper limit.\n" +
 				"TimeZoneGroupDto Array last index='%v'\n" +
@@ -174,7 +174,7 @@ func (tzGrpCol *TimeZoneGroupCollection) Peek(
 				lenGroupAry-1, index)
 	}
 
-	return tzGrpCol.tzGroups[index].CopyOut(), nil
+	return &tzGrpCol.tzGroups[index], nil
 }
 
 // Sort - Sorts the collection (TimeZoneGroupCollection.tzGroups)
