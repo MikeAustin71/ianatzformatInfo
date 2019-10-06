@@ -112,11 +112,11 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	ePrefix string) (
 	[] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
 	[] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
-	string, // Time Zone Version
+	tzdatastructs.TimeZoneStatsDto, // Time Zone Stats
 	error)  {
 
 	ePrefix += "ParseIanaTzData.ParseTzAndLinks() "
-	version := ""
+	tzStats := tzdatastructs.TimeZoneStatsDto{}
 	var err error
 
 	tzGroups =  make([]tzdatastructs.TimeZoneGroupCollection, 3, 10)
@@ -131,7 +131,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	if numOfFiles < 5 {
 		return tzGroups,
 			tzData,
-			version,
+			tzStats,
 			fmt.Errorf(ePrefix+"Number of files is less than 5!\n" +
 				"Number of Files='%v'", numOfFiles)
 	}
@@ -147,18 +147,18 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		if err != nil {
 			return tzGroups,
 				tzData,
-				version,
+				tzStats,
 				fmt.Errorf(ePrefix+
 					"Error returned by dirFileInfo.PeekFileMgrAtIndex(i)\n" +
 					"Error='%v'\n", err.Error())
 		}
 
 		if strings.ToLower(fMgr.GetFileNameExt()) == "version" {
-			version, err = parseTz.extractVersion(fMgr, ePrefix)
+			tzStats.IanaVersion, err = parseTz.extractVersion(fMgr, ePrefix)
 			if err != nil {
 				return tzGroups,
 					tzData,
-					version,
+					tzStats,
 					err
 			}
 
@@ -168,7 +168,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		isSkipFile, err = parseTz.isSkipFile(fMgr, ePrefix)
 
 		if err != nil {
-			return tzGroups, tzData, version, err
+			return tzGroups, tzData, tzStats, err
 		}
 
 		if isSkipFile {
@@ -177,26 +177,40 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 		fmt.Println("Valid File: ", fMgr.GetFileNameExt())
 		validFileCnt++
-		err =  parseTz.processFileBytes(fMgr, ePrefix)
+		err =  parseTz.processFileBytes(fMgr, &tzStats, ePrefix)
 
 		if err != nil {
-			return tzGroups, tzData, version, err
+			return tzGroups, tzData, tzStats, err
 		}
 	}
 
 	fmt.Printf("Number Of Valid Time Zone Files: %v\n", validFileCnt)
 
-	err = parseTz.configMilitaryTimeZones(ePrefix)
+	err = parseTz.configMilitaryTimeZones(&tzStats, ePrefix)
+
+	tzStats.TotalIanaTZones =
+		tzStats.NumStdIanaTZones + tzStats.NumLinkIanaTZones
+
+	tzStats.TotalTZones =
+		tzStats.TotalIanaTZones +
+			tzStats.NumMilitaryTZones +
+			tzStats.NumOtherTZones
+
+	tzStats.TotalSubTZoneGroups =
+		tzStats.NumSubStdTZoneGroups +
+			tzStats.NumSubLinkTZoneGroups
 
 	return tzGroups,
 		tzData,
-		version,
+		tzStats,
 		err
 }
 
 // configMilitaryTimeZones - Creates and stores Military Time Zones
 //
-func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
+func (parseTz *ParseIanaTzData) configMilitaryTimeZones(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
 	ePrefix += "ParseIanaTzData.configMilitaryTimeZones() "
 
 	// Configure Time Zone Level-1 Major Group
@@ -227,13 +241,15 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 		return err
 	}
 
-	_, err = tzGroups[tzdatastructs.Level_01_Idx].AddIfNew(tzGroup)
+	err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
 			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
 			"Error: %v\n", err.Error() )
 	}
+
+	tzStats.NumPrimaryTZoneGroups++
 
 	for i:=0; i < len(tzdatastructs.MilitaryTzArray); i++ {
 
@@ -289,7 +305,7 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 			return err
 		}
 
-		_, err = tzData[tzdatastructs.Level_01_Idx].AddIfNew(tzDataDto)
+		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -298,6 +314,7 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 				"Error: %v\n", tzdatastructs.MilitaryTzArray[i], err.Error())
 		}
 
+		tzStats.NumMilitaryTZones++
 	}
 
 	return nil
@@ -310,7 +327,10 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 // Canonical =  America/Panama
 // Link = America/Cayman
 func (parseTz *ParseIanaTzData) extractLink(
-	fMgr pathfileops.FileMgr ,rawString, ePrefix string) error {
+	fMgr pathfileops.FileMgr ,
+	rawString string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.extractLink() "
 
@@ -386,7 +406,7 @@ func (parseTz *ParseIanaTzData) extractLink(
 		//          'Egypt' -> 'Africa/Cairo'
 		// Canonical = 'Africa/Cairo'
 		// Link      = 'Egypt'
-		return parseTz.linkCfgOneElement(fMgr, tzLink, tzCanonical, ePrefix)
+		return parseTz.linkCfgOneElement(fMgr, tzLink, tzCanonical, tzStats, ePrefix)
 	}
 
 	if lenZoneArray == 2 {
@@ -395,7 +415,7 @@ func (parseTz *ParseIanaTzData) extractLink(
 		// Link  America/Panama America/Cayman
 		// Canonical =  America/Panama
 		// Link = America/Cayman
-		return parseTz.linkCfgTwoElements(fMgr, linkZoneArray, tzCanonical, ePrefix)
+		return parseTz.linkCfgTwoElements(fMgr, linkZoneArray, tzCanonical, tzStats, ePrefix)
 	}
 
 	// Zone Array Length MUST be 3
@@ -407,12 +427,14 @@ func (parseTz *ParseIanaTzData) extractLink(
 	// Canonical =  America/Argentina/Catamarca
 	// Link      = America/Argentina/ComodRivadavia
 
-	return parseTz.linkCfgThreeElements(fMgr, linkZoneArray, tzCanonical, ePrefix)
+	return parseTz.linkCfgThreeElements(fMgr, linkZoneArray, tzCanonical, tzStats, ePrefix)
 }
 
 // extractVersion - extracts the IANA Time Zone version from the "version" file.
 //
-func (parseTz *ParseIanaTzData) extractVersion(fMgr pathfileops.FileMgr, ePrefix string) (string, error) {
+func (parseTz *ParseIanaTzData) extractVersion(
+	fMgr pathfileops.FileMgr,
+	ePrefix string) (string, error) {
 
 	ePrefix += "ParseIanaTzData.extractVersion() "
 
@@ -469,7 +491,10 @@ func (parseTz *ParseIanaTzData) extractVersion(fMgr pathfileops.FileMgr, ePrefix
 // Data is stored in tzMajorGroupMap, tzDataCol and
 // or subTzDataCol.
 func (parseTz *ParseIanaTzData) extractZone(
-	fMgr pathfileops.FileMgr, rawString, ePrefix string) error {
+	fMgr pathfileops.FileMgr,
+	rawString string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.extractZone() "
 
@@ -514,14 +539,14 @@ func (parseTz *ParseIanaTzData) extractZone(
 	// Example: 'America/Chicago'
 	if lenZoneArray == 2 {
 
-		return parseTz.zoneCfgTwoElements(fMgr, zoneArray, ePrefix)
+		return parseTz.zoneCfgTwoElements(fMgr, zoneArray, tzStats, ePrefix)
 	}
 
 	// lenZoneArray must == 3
 	// This is a sub zone
 	// America/Argentina/Buenos_Aires
 
-	return parseTz.zoneCfgThreeElements(fMgr, zoneArray, ePrefix)
+	return parseTz.zoneCfgThreeElements(fMgr, zoneArray, tzStats, ePrefix)
 }
 
 // linkCfgOneElement - Configures and stores data associated
@@ -533,8 +558,9 @@ func (parseTz *ParseIanaTzData) extractZone(
 //
 func (parseTz *ParseIanaTzData) linkCfgOneElement(
 	fMgr pathfileops.FileMgr,
-	linkZone,
-	canonicalZone,
+	linkZone string,
+	canonicalZone string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.linkCfgOneElement() "
@@ -583,6 +609,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
 
+		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ :=
@@ -648,6 +675,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
 
+		tzStats.NumLinkIanaTZones++
 	}
 
 	return nil
@@ -663,7 +691,8 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 	fMgr pathfileops.FileMgr,
 	linkZoneArray []string,
-	canonicalZone,
+	canonicalZone string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.linkCfgTwoElements() "
@@ -720,6 +749,8 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 				"FileName: %v\n" +
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
+
+		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ :=
@@ -850,6 +881,9 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 				"FileName: %v\n" +
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
+
+		tzStats.NumSubLinkTZoneGroups++
+
 	}
 
 	containsZone, _ =
@@ -931,6 +965,8 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 					"Error: %v\n" +
 					"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 			}
+
+			tzStats.NumLinkIanaTZones++
 	}
 
 	return nil
@@ -950,7 +986,8 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	fMgr pathfileops.FileMgr,
 	linkZoneArray []string,
-	canonicalZone,
+	canonicalZone string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.linkCfgThreeElements() "
@@ -1013,6 +1050,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				"FileName: %v\n" +
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
+
+		tzStats.NumPrimaryTZoneGroups ++
 	}
 
 	containsZone, _ :=
@@ -1252,6 +1291,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				"Error: %v\n" +
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
+
+		tzStats.NumSubLinkTZoneGroups++
 	}
 
 	// Configure Level-3 Data
@@ -1406,6 +1447,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				"Error: %v\n" +
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
+
+		tzStats.NumLinkIanaTZones ++
 	}
 
 	return nil
@@ -1414,7 +1457,9 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 // processFileBytes - Process all the bytes in a time zone file
 //
 func (parseTz *ParseIanaTzData) processFileBytes(
-	fMgr pathfileops.FileMgr, ePrefix string) error {
+	fMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.processFileBytes() "
 
@@ -1475,7 +1520,7 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 				continue
 			}
 
-			err = parseTz.extractZone(fMgr, extractedString, ePrefix)
+			err = parseTz.extractZone(fMgr, extractedString, tzStats, ePrefix)
 
 			if err != nil {
 				return err
@@ -1492,7 +1537,7 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 				continue
 			}
 
-			err = parseTz.extractLink(fMgr, extractedString, ePrefix)
+			err = parseTz.extractLink(fMgr, extractedString, tzStats, ePrefix)
 			if err != nil {
 				fmt.Printf("Link Extraction Error: %v\n" +
 					"%v\n", fMgr.GetAbsolutePathFileName(), err.Error())
@@ -1511,7 +1556,10 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 // The TimeZoneDataDto is added to the TimeZoneData Collection, 'tzDataCol'
 //
 func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
-	fMgr pathfileops.FileMgr, zoneArray []string, ePrefix string) error {
+	fMgr pathfileops.FileMgr,
+	zoneArray []string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
 
 	ePrefix += "ParseIanaTzData.zoneCfgTwoElements() "
 
@@ -1566,6 +1614,7 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
 
+		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ := tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
@@ -1631,6 +1680,8 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 			"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 	}
 
+	tzStats.NumStdIanaTZones ++
+
 	return nil
 }
 
@@ -1651,7 +1702,10 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 // 'subTzDataCol'
 //
 func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
-	fMgr pathfileops.FileMgr, zoneArray []string, ePrefix string) error {
+	fMgr pathfileops.FileMgr,
+	zoneArray []string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
 
 	ePrefix = ePrefix + "ParseIanaTzData.zoneCfgThreeElements() "
 
@@ -1711,6 +1765,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
 		}
 
+		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ :=
@@ -1788,6 +1843,8 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 				"Error: %v\n" +
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
+
+		tzStats.NumSubStdTZoneGroups++
 	}
 
 
@@ -1905,6 +1962,8 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 				"FileName: %v\n" +
 				"Error: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
+
+		tzStats.NumStdIanaTZones++
 	}
 
 	return nil

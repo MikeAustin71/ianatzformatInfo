@@ -17,7 +17,7 @@ func (tzOut TzOutProcess) WriteOutput(
 	fileNameExt string,
 	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
 	tzZonesAry [] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
-	tzVersion string, // Time Zone Version
+	tzStats *tzdatastructs.TimeZoneStatsDto, // Time Zone Version
 	ePrefix string) error {
 
 	ePrefix += "TzOutProcess.WriteOutput() "
@@ -38,7 +38,7 @@ func (tzOut TzOutProcess) WriteOutput(
 	err = tzOut.writeTimeZoneMasterType(
 		f,
 		tzGroupsAry,
-		tzVersion,
+		tzStats,
 		ePrefix)
 
 	if err != nil {
@@ -167,11 +167,13 @@ func (tzOut TzOutProcess) createOpenOutputFile(
 
 // createTimeZoneTypeComments - Creates comments for the master Time Zone Type.
 //
-func (tzOut TzOutProcess) createTimeZoneTypeComments(ianaVersion string) []byte {
+func (tzOut TzOutProcess) createTimeZoneTypeComments(
+	tzStats *tzdatastructs.TimeZoneStatsDto) []byte {
+
 	outputStr := fmt.Sprintf("\n" +
-		"// TimeZones - This type and its associated methods encapsulate all 670+\n" +
-		"// IANA Time Zones plus 25-Military Time Zones. This type is therefore used\n" +
-		"// as a comprehensive enumeration of Global Time Zones.\n" +
+		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n" +
+		"// Zones plus %v-Military Time Zones. This type is therefore used as a \n" +
+		"// comprehensive enumeration of Global Time Zones.\n" +
 		"//\n" +
 		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n" +
 		"//  Reference:\n" +
@@ -179,7 +181,13 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(ianaVersion string) []byte 
 		"//\n" +
 		"// IANA Time Zones are widely recognized as the the world's leading authority\n" +
 		"// on time zones.\n" +
-		"//\n"+
+		"//\n" +
+		"// The 'TimeZones' type includes one artificial structure element labeled\n" +
+		"// 'Deprecated'. This element encapsulates all of the IANA 'Link' Time Zones.\n" +
+		"// 'Link' Time Zones detail those times zones which IANA has classified as\n" +
+		"// obsolete and no longer in general use. Each one of these deprecated time\n" +
+		"// zones maps to a current, valid IANA time zone.\n"+
+		"//\n" +
 		"// Reference:\n" +
 		"//    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n" +
 		"//    https://en.wikipedia.org/wiki/Tz_database\n" +
@@ -187,10 +195,10 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(ianaVersion string) []byte 
 		"// The IANA Time Zone data base and reference information is located at:\n" +
 		"//    https://www.iana.org/time-zones.\n" +
 		"//\n" +
-		"// For easy access to the IANA Time Zones it is recommended that you use\n" +
-		"// the global variable 'TZones' declared below. This variable instantiates the\n" +
-		"// 'TimeZones' type. It is therefore much easier to access any of the 590+ IANA\n" +
-		"// time zones using dot operators and intellisense (a.k.a. intelligent code completion).\n" +
+		"// For easy access to the all Time Zones it is recommended that you use the\n" +
+		"// global variable 'TZones' declared below. This variable instantiates the\n" +
+		"// 'TimeZones' type. It is therefore much easier to access any of the %v time\n" +
+		"// zones using dot operators and intellisense (a.k.a. intelligent code completion).\n" +
 		"//\n" +
 		"// Examples:\n" +
 		"// TZones.America.Argentina().Buenos_Aires() - America/Argentina/Buenos_Aires Time Zone\n" +
@@ -213,9 +221,39 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(ianaVersion string) []byte 
 		"// \n" +
 		"// This TimeZones Type is based on IANA Time Zone Database Version: %v\n" +
 		"// \n" +
+		"//           IANA Standard Time Zones : %3d\n" +
+		"//           IANA Link Time Zones     : %3d\n" +
+		"//                                         -------\n" +
+		"//                 Sub-Total IANA Time Zones: %3d\n" +
+		"// \n" +
+		"//                Military Time Zones : %3d\n" +
+		"//                   Other Time Zones : %3d\n" +
+		"//                                         -------\n" +
+		"//                          Total Time Zones: %3d\n" +
+		"// \n" +
+		"//       Standard Time Zone Sub-Groups: %3d\n" +
+		"//           Link Time Zone Sub-Groups: %3d\n" +
+		"//                                         -------\n" +
+		"//                Total Time Zone Sub-Groups: %3d\n" +
+		"// \n" +
+		"//                  Primary Time Zone Groups: %3d\n" +
+		"// \n" +
 		"// ----------------------------------------------------------------------------\n" +
 		"// \n",
-		ianaVersion)
+		tzStats.TotalIanaTZones,
+		tzStats.NumMilitaryTZones,
+		tzStats.TotalTZones,
+		tzStats.IanaVersion,
+		tzStats.NumStdIanaTZones,
+		tzStats.NumLinkIanaTZones,
+		tzStats.TotalIanaTZones,
+		tzStats.NumMilitaryTZones,
+		tzStats.NumOtherTZones,
+		tzStats.TotalTZones,
+		tzStats.NumSubStdTZoneGroups,
+		tzStats.NumSubLinkTZoneGroups,
+		tzStats.TotalSubTZoneGroups,
+		tzStats.NumPrimaryTZoneGroups)
 
 	return []byte(outputStr)
 }
@@ -398,7 +436,7 @@ func (tzOut TzOutProcess) writeTimeZoneGlobalType(
 func (tzOut TzOutProcess) writeTimeZoneMasterType(
 	outputFileMgr pathfileops.FileMgr,
 	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection,
-	tzVersion string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "TzOutProcess.writeTimeZoneMasterType() "
@@ -408,7 +446,7 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 	var err error
 	var outBytes []byte
 
-	outBytes = tzOut.createTimeZoneTypeComments(tzVersion)
+	outBytes = tzOut.createTimeZoneTypeComments(tzStats)
 
 	_, err = outputFileMgr.WriteBytesToFile(outBytes)
 

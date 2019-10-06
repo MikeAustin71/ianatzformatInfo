@@ -4,9 +4,9 @@ package main
 
 
 
-// TimeZones - This type and its associated methods encapsulate all 670+
-// IANA Time Zones plus 25-Military Time Zones. This type is therefore used
-// as a comprehensive enumeration of Global Time Zones.
+// TimeZones - This type and its associated methods encapsulate 663 IANA Time
+// Zones plus 25-Military Time Zones. This type is therefore used as a 
+// comprehensive enumeration of Global Time Zones.
 //
 // The Go Programming Language uses IANA Time Zones in date-time calculations.
 //  Reference:
@@ -15,6 +15,12 @@ package main
 // IANA Time Zones are widely recognized as the the world's leading authority
 // on time zones.
 //
+// The 'TimeZones' type includes one artificial structure element labeled
+// 'Deprecated'. This element encapsulates all of the IANA 'Link' Time Zones.
+// 'Link' Time Zones detail those times zones which IANA has classified as
+// obsolete and no longer in general use. Each one of these deprecated time
+// zones maps to a current, valid IANA time zone.
+//
 // Reference:
 //    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 //    https://en.wikipedia.org/wiki/Tz_database
@@ -22,10 +28,10 @@ package main
 // The IANA Time Zone data base and reference information is located at:
 //    https://www.iana.org/time-zones.
 //
-// For easy access to the IANA Time Zones it is recommended that you use
-// the global variable 'TZones' declared below. This variable instantiates the
-// 'TimeZones' type. It is therefore much easier to access any of the 590+ IANA
-// time zones using dot operators and intellisense (a.k.a. intelligent code completion).
+// For easy access to the all Time Zones it is recommended that you use the
+// global variable 'TZones' declared below. This variable instantiates the
+// 'TimeZones' type. It is therefore much easier to access any of the 688 time
+// zones using dot operators and intellisense (a.k.a. intelligent code completion).
 //
 // Examples:
 // TZones.America.Argentina().Buenos_Aires() - America/Argentina/Buenos_Aires Time Zone
@@ -47,6 +53,23 @@ package main
 // ----------------------------------------------------------------------------
 // 
 // This TimeZones Type is based on IANA Time Zone Database Version: 2019c
+// 
+//           IANA Standard Time Zones : 457
+//           IANA Link Time Zones     : 206
+//                                         -------
+//                 Sub-Total IANA Time Zones: 663
+// 
+//                Military Time Zones :  25
+//                   Other Time Zones :   0
+//                                         -------
+//                          Total Time Zones: 688
+// 
+//       Standard Time Zone Sub-Groups:   4
+//           Link Time Zone Sub-Groups:  16
+//                                         -------
+//                Total Time Zone Sub-Groups:  20
+// 
+//                  Primary Time Zone Groups:  12
 // 
 // ----------------------------------------------------------------------------
 // 

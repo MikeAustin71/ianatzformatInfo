@@ -47,12 +47,12 @@ func main() {
 
 	var timeZoneGroups []tzdatastructs.TimeZoneGroupCollection
 	var timeZones []tzdatastructs.TimeZoneDataCollection
-	var timeZoneVersion string
+	var timeZoneStats tzdatastructs.TimeZoneStatsDto
 parser := inprocess.ParseIanaTzData{}
 
 	timeZoneGroups,
 	timeZones,
-	timeZoneVersion,
+	timeZoneStats,
 		err =
 		 parser.ParseTzAndLinks(dirFileInfo, ePrefix)
 
@@ -66,7 +66,7 @@ parser := inprocess.ParseIanaTzData{}
 		tzdatastructs.OutputFileName,
 		timeZoneGroups,
 		timeZones,
-		timeZoneVersion,
+		&timeZoneStats,
 		ePrefix)
 
 	if err != nil {
