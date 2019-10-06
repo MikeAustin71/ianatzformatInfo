@@ -53,6 +53,9 @@ func (tZoneDecs TzZoneDeclarations) LinkTimeZoneOneElementDeclaration(
 		fmt.Sprintf("Maps To Valid Time Zone: '%v'\n",
 			tzData.TzCanonicalValue)
 
+	outputStr += tzdatastructs.CommentLead +
+		fmt.Sprintf("           IANA Source File: %v\n", tzData.SourceFileNameExt)
+
 	outputStr += tzdatastructs.CommentBlankLine +
 	fmt.Sprintf("func (%v %v) %v %v { return %v }\n",
 		tzData.FuncSelfReferenceVariable,
@@ -87,6 +90,7 @@ func (tZoneDecs TzZoneDeclarations) LinkTimeZoneOneElementDeclaration(
 //
 // Linked Deprecated Time Zone: 'US/Alaska'
 //     Maps To Valid Time Zone: 'America/Anchorage'
+//            IANA Source File: backward
 //
 // func (uSDep uSDeprecatedTimeZones) Alaska() string { return "America/Anchorage" }
 //
@@ -115,6 +119,9 @@ func (tZoneDecs TzZoneDeclarations) LinkTimeZoneTwoElementDeclaration(
 	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("    Maps To Valid Time Zone: '%v'\n",
 			tzData.TzCanonicalValue)
+
+	outputStr += tzdatastructs.CommentLead +
+		fmt.Sprintf("           IANA Source File: %v\n", tzData.SourceFileNameExt)
 
 	outputStr += tzdatastructs.CommentBlankLine +
 	fmt.Sprintf("func (%v %v) %v %v { return %v }\n",
@@ -226,6 +233,7 @@ func (tZoneDecs TzZoneDeclarations) PlaceHolderLinkFuncDeclaration(
 // --------------------------------------------------------------------
 //
 // Chicago - IANA Time Zone "America/Chicago"
+// IANA Source File: northamerica
 //
 // func (amer americaTimeZones) Chicago() string { return "America/Chicago" }
 //
@@ -238,6 +246,10 @@ func (tZoneDecs TzZoneDeclarations) StandardZoneFuncDeclaration(
 		fmt.Sprintf("%v - IANA Time Zone '%v'.\n",
 			tzData.TzName,
 			tzData.TzCanonicalValue)
+
+	outputStr += tzdatastructs.CommentLead +
+		fmt.Sprintf("IANA Source File: %v\n",
+			tzData.SourceFileNameExt)
 
 	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += fmt.Sprintf("func (%v %v) %v %v {return %v }\n",

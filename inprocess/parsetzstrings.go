@@ -112,9 +112,11 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	ePrefix string) (
 	[] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
 	[] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
+	string, // Time Zone Version
 	error)  {
 
 	ePrefix += "ParseIanaTzData.ParseTzAndLinks() "
+	version := ""
 	var err error
 
 	tzGroups =  make([]tzdatastructs.TimeZoneGroupCollection, 3, 10)
@@ -129,6 +131,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	if numOfFiles < 5 {
 		return tzGroups,
 			tzData,
+			version,
 			fmt.Errorf(ePrefix+"Number of files is less than 5!\n" +
 				"Number of Files='%v'", numOfFiles)
 	}
@@ -144,15 +147,28 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		if err != nil {
 			return tzGroups,
 				tzData,
+				version,
 				fmt.Errorf(ePrefix+
 					"Error returned by dirFileInfo.PeekFileMgrAtIndex(i)\n" +
 					"Error='%v'\n", err.Error())
 		}
 
+		if strings.ToLower(fMgr.GetFileNameExt()) == "version" {
+			version, err = parseTz.extractVersion(fMgr, ePrefix)
+			if err != nil {
+				return tzGroups,
+					tzData,
+					version,
+					err
+			}
+
+			continue
+		}
+
 		isSkipFile, err = parseTz.isSkipFile(fMgr, ePrefix)
 
 		if err != nil {
-			return tzGroups, tzData, err
+			return tzGroups, tzData, version, err
 		}
 
 		if isSkipFile {
@@ -164,16 +180,17 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		err =  parseTz.processFileBytes(fMgr, ePrefix)
 
 		if err != nil {
-			return tzGroups, tzData, err
+			return tzGroups, tzData, version, err
 		}
 	}
 
-	fmt.Printf("Number Of Valid Files: %v\n", validFileCnt)
+	fmt.Printf("Number Of Valid Time Zone Files: %v\n", validFileCnt)
 
 	err = parseTz.configMilitaryTimeZones(ePrefix)
 
 	return tzGroups,
 		tzData,
+		version,
 		err
 }
 
@@ -223,7 +240,7 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(ePrefix string) error {
 		// Configure Standard Level-1 Iana Time Zone Data Dto
 		// For Military Time Zone
 		tzDataDto := tzdatastructs.TimeZoneDataDto{}
-
+		tzDataDto.ParentGroupName = ""
 		tzDataDto.GroupName = "Military" // Military - majorGroup
 		tzDataDto.TzName = tzdatastructs.MilitaryTzArray[i] // Alpha - tzName
 		tzDataDto.TzAliasValue = ""
@@ -393,6 +410,60 @@ func (parseTz *ParseIanaTzData) extractLink(
 	return parseTz.linkCfgThreeElements(fMgr, linkZoneArray, tzCanonical, ePrefix)
 }
 
+// extractVersion - extracts the IANA Time Zone version from the "version" file.
+//
+func (parseTz *ParseIanaTzData) extractVersion(fMgr pathfileops.FileMgr, ePrefix string) (string, error) {
+
+	ePrefix += "ParseIanaTzData.extractVersion() "
+
+	if strings.ToLower(fMgr.GetFileNameExt()) != "version" {
+		return "", fmt.Errorf(ePrefix +
+			"Error: Expected File Name/Extension == 'version'.\n" +
+			"Actual File Name/Extension == '%v'", fMgr.GetFileNameExt())
+	}
+	var err error
+
+	err = fMgr.OpenThisFileReadOnly()
+
+	if err != nil {
+		return "", fmt.Errorf(ePrefix+
+			"Error returned by fMgr.OpenThisFileReadOnly()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	errArray := make([]error, 0)
+	var bytes []byte
+
+	bytes, err = fMgr.ReadAllFile()
+
+	if err!= nil {
+
+		errArray = append(errArray, fmt.Errorf(ePrefix+
+			"\nError returned by fMgr.ReadAllFile()\n" +
+			"Error='%v'\n", err.Error()))
+	}
+
+	err = fMgr.CloseThisFile()
+
+	if err != nil {
+		errArray = append(errArray,
+			fmt.Errorf(ePrefix+"Error closing file. File='%v' Error='%v'\n",
+				fMgr.GetAbsolutePathFileName(), err.Error()))
+	}
+
+	if len(errArray) > 0 {
+		return "",
+		pathfileops.FileHelper{}.ConsolidateErrors(errArray)
+	}
+
+	extractedString, _ := strops.StrOps{}.ReadStringFromBytes(bytes, 0)
+
+	extractedString = strings.TrimRight(extractedString, " ")
+
+	extractedString = strings.TrimLeft(extractedString, " ")
+
+	return extractedString, nil
+}
 
 // extractZone - Extracts standard time zones and sub time zones.
 // Data is stored in tzMajorGroupMap, tzDataCol and
@@ -1340,6 +1411,98 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	return nil
 }
 
+// processFileBytes - Process all the bytes in a time zone file
+//
+func (parseTz *ParseIanaTzData) processFileBytes(
+	fMgr pathfileops.FileMgr, ePrefix string) error {
+
+	ePrefix += "ParseIanaTzData.processFileBytes() "
+
+	var err error
+
+	err = fMgr.OpenThisFileReadOnly()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix+
+			"Error returned by fMgr.OpenThisFileReadOnly()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	errArray := make([]error, 0)
+	var bytes []byte
+
+	bytes, err = fMgr.ReadAllFile()
+
+	if err!= nil {
+
+		errArray = append(errArray, fmt.Errorf(ePrefix+
+			"\nError returned by fMgr.ReadAllFile()\n" +
+			"Error='%v'\n", err.Error()))
+	}
+
+	err = fMgr.CloseThisFile()
+
+	if err != nil {
+		errArray = append(errArray,
+			fmt.Errorf(ePrefix+"Error closing file. File='%v' Error='%v'\n",
+				fMgr.GetAbsolutePathFileName(), err.Error()))
+	}
+
+	if len(errArray) > 0 {
+		return pathfileops.FileHelper{}.ConsolidateErrors(errArray)
+	}
+
+	nextStartIdx := 0
+	extractedString := ""
+	// cntr := 1
+	for nextStartIdx > -1 {
+
+		extractedString, nextStartIdx = strops.StrOps{}.ReadStringFromBytes(bytes, nextStartIdx)
+		// fmt.Printf("str No %v: %v\n", cntr, extractedString)
+		//cntr++
+
+		cmtIdx := strings.Index(extractedString, tzdatastructs.CommentCharStr)
+
+		zoneIdx := strings.Index(extractedString, tzdatastructs.ZoneLabel)
+
+		linkIdx := strings.Index(extractedString, tzdatastructs.LinkLabel)
+
+		if zoneIdx > -1 {
+
+			if cmtIdx > -1 &&
+				cmtIdx < zoneIdx {
+
+				continue
+			}
+
+			err = parseTz.extractZone(fMgr, extractedString, ePrefix)
+
+			if err != nil {
+				return err
+			}
+
+			continue
+		}
+
+		if linkIdx > -1 {
+
+			if cmtIdx > -1 &&
+				cmtIdx < linkIdx {
+
+				continue
+			}
+
+			err = parseTz.extractLink(fMgr, extractedString, ePrefix)
+			if err != nil {
+				fmt.Printf("Link Extraction Error: %v\n" +
+					"%v\n", fMgr.GetAbsolutePathFileName(), err.Error())
+			}
+		}
+	}
+
+	return nil
+}
+
 // zoneCfgTwoElements - Configures and stores data for a two element time zone
 // such as 'America/Chicago'. This method configures both the TimeZoneGroupDto and
 // the TimeZoneDataDto.
@@ -1836,96 +1999,4 @@ func (parseTz *ParseIanaTzData) isSkipFile(
 	}
 
 	return isSkipFile, nil
-}
-
-// ProcessFileBytes - Process all the bytes in a time zone file
-//
-func (parseTz *ParseIanaTzData) processFileBytes(
-	fMgr pathfileops.FileMgr, ePrefix string) error {
-
-	ePrefix += "ParseIanaTzData.processFileBytes() "
-
-	var err error
-
-	err = fMgr.OpenThisFileReadOnly()
-
-	if err != nil {
-		return fmt.Errorf(ePrefix+
-			"Error returned by fMgr.OpenThisFileReadOnly()\n" +
-			"Error='%v'\n", err.Error())
-	}
-
-	errArray := make([]error, 0)
-	var bytes []byte
-
-	bytes, err = fMgr.ReadAllFile()
-
-	if err!= nil {
-
-		errArray = append(errArray, fmt.Errorf(ePrefix+
-			"\nError returned by fMgr.ReadAllFile()\n" +
-			"Error='%v'\n", err.Error()))
-	}
-
-	err = fMgr.CloseThisFile()
-
-	if err != nil {
-		errArray = append(errArray,
-			fmt.Errorf(ePrefix+"Error closing file. File='%v' Error='%v'\n",
-				fMgr.GetAbsolutePathFileName(), err.Error()))
-	}
-
-	if len(errArray) > 0 {
-		return pathfileops.FileHelper{}.ConsolidateErrors(errArray)
-	}
-
-	nextStartIdx := 0
-	extractedString := ""
-	// cntr := 1
-	for nextStartIdx > -1 {
-
-		extractedString, nextStartIdx = strops.StrOps{}.ReadStringFromBytes(bytes, nextStartIdx)
-		// fmt.Printf("str No %v: %v\n", cntr, extractedString)
-		//cntr++
-
-		cmtIdx := strings.Index(extractedString, tzdatastructs.CommentCharStr)
-
-		zoneIdx := strings.Index(extractedString, tzdatastructs.ZoneLabel)
-
-		linkIdx := strings.Index(extractedString, tzdatastructs.LinkLabel)
-
-		if zoneIdx > -1 {
-
-			if cmtIdx > -1 &&
-				cmtIdx < zoneIdx {
-
-				continue
-			}
-
-			err = parseTz.extractZone(fMgr, extractedString, ePrefix)
-
-			if err != nil {
-				return err
-			}
-
-			continue
-		}
-
-		if linkIdx > -1 {
-
-			if cmtIdx > -1 &&
-				cmtIdx < linkIdx {
-
-				continue
-			}
-
-			err = parseTz.extractLink(fMgr, extractedString, ePrefix)
-			if err != nil {
-				fmt.Printf("Link Extraction Error: %v\n" +
-					"%v\n", fMgr.GetAbsolutePathFileName(), err.Error())
-			}
-		}
-	}
-
-	return nil
 }

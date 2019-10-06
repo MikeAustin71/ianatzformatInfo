@@ -110,11 +110,6 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	}
 
 	if nStrDto.NumStrLen == 0 {
-		/*
-		return fmt.Errorf(ePrefix + "Military Time Zone does NOT contain a number string!\n" +
-			"Time Zone Name: %v\nTime Zone Value: %v\n",
-			tzData.TzName, tzData.TzValue)
-		*/
 		nStrDto.NumStr = "0"
 	}
 
@@ -130,6 +125,8 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	if nStrDto.NumStr == "+1" || nStrDto.NumStr == "-1" {
 		utcOffset = nStrDto.NumStr + " hour."
 	}
+
+	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += tzdatastructs.CommentLead +
 			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v\n",
 			utcOffset)
