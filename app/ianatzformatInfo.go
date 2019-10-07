@@ -9,7 +9,35 @@ import (
 	"os"
 )
 
-
+// main - This application will process IANA source data files and create a series
+// of types housed in a source file used by the 'Go' programming language. These
+// types will facilitate the use of global time zones in date time operations
+// incorporated into 'Go' programs.
+//
+// In order to function properly, this application expects to find the file
+// 'targettzdata.txt' in a sub-directory labeled 'input' which is located directly
+// beneath the directory which houses this application executable.
+// Example:
+// Application executable is located in 'D:\myAppDir' .
+// File 'targettzdata.txt' MUST BE located in directory: 'D:\myAppDir\input\targettzdata.txt'.
+//
+// 'targettzdata.txt' is a text file containing two lines of information on the first two
+// lines of the text file. Each line must be terminated with a new line character '\n'.
+//
+// Line 1: The first line designates the 'path' to the IANA time zone
+//         data files.
+//
+// Line 2: The second line designates the 'path' to the output file.
+//
+// Configure these two lines in accordance with the following example.
+//
+// Example:
+// "InputDirectory: D:\T11\data\tzdata2019c\n"
+// "OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output\n"
+//
+// The leading field names, 'InputDirectory:' and 'OutputDirectory:'
+// are mandatory.
+//
 func main() {
 
 	ePrefix := "ianaTzFormatInfo.main() "

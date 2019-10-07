@@ -10,8 +10,8 @@ package main
 //  Reference:
 //    https://golang.org/pkg/time/#LoadLocation
 //
-// IANA Time Zones are widely recognized as the the world's leading authority
-// on time zones.
+// The IANA Time Zone database is widely recognized as the the world's leading
+// authority on time zones.
 //
 // The 'TimeZones' type includes one artificial structure element labeled
 // 'Deprecated'. This element encapsulates all of the IANA 'Link' Time Zones.

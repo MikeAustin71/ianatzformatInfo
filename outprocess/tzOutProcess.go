@@ -177,10 +177,11 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"//\n" +
 		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n" +
 		"//  Reference:\n" +
+		"//    https://golang.org/pkg/time/\n" +
 		"//    https://golang.org/pkg/time/#LoadLocation\n" +
 		"//\n" +
-		"// IANA Time Zones are widely recognized as the the world's leading authority\n" +
-		"// on time zones.\n" +
+		"// The IANA Time Zone database is widely recognized as the the world's leading\n" +
+		"// authority on global time zones.\n" +
 		"//\n" +
 		"// The 'TimeZones' type includes one artificial structure element labeled\n" +
 		"// 'Deprecated'. This element encapsulates all of the IANA 'Link' Time Zones.\n" +
