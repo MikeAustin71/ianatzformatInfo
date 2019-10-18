@@ -1,2 +1,2 @@
-InputDirectory: D:\T11\data\tzdata2019c
+InputDirectory: D:\tz\data\2019c
 OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output

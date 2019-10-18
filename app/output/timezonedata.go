@@ -8,10 +8,11 @@ package main
 //
 // The Go Programming Language uses IANA Time Zones in date-time calculations.
 //  Reference:
+//    https://golang.org/pkg/time/
 //    https://golang.org/pkg/time/#LoadLocation
 //
 // The IANA Time Zone database is widely recognized as the the world's leading
-// authority on time zones.
+// authority on global time zones.
 //
 // The 'TimeZones' type includes one artificial structure element labeled
 // 'Deprecated'. This element encapsulates all of the IANA 'Link' Time Zones.
