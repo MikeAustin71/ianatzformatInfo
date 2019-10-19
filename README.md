@@ -1,3 +1,5 @@
+
+
 # ianatzformatInfo
 
 This program is written in the [Go Programming Language](https://golang.org/), a.k.a. ***golang***.  The application executable is, ***ianatzformatInfo.exe***.
@@ -23,33 +25,7 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
 
 ## Table of Contents
 
-+ [IANA Time Zones](#iana-time-zones)
-+ [Go Relies on the IANA Time Zone Database](#go-relies-on-the-iana-time-zone-database)
-	- [LoadLocation](#loadlocation)
-	- [Updating Time Zone Data For Your Go Installation](#updating-time-zone-data-for-your-go-installation)
-	- [Time Package References](#time-package-references)
-+ [Application Processing](#application-processing)
-+ [Base Input Data](#base-input-data)
-	- [Input File Example](#input-file-example)
-		+ [Line 1](#line-1)
-		+ [Line 2](#line-2)
-		+ [Configuration](#configuration)
-+ [Create Source IANA Time Zone Information](#create-source-iana-time-zone-information)
-	- [Step-1 Identify the Desired IANA Time Zone Data Version](#step-1-identify-the-desired-iana-time-zone-data-version)
-		+ [a. Access the IANA Time Zone Website](#a-access-the-iana-time-zone-website)
-		+ [b. Record the Target Time Zone Version Number](#b-record-the-target-time-zone-version-number)
-	- [Step-2 Create the Time Zone Data Directory](#step-2-create-the-time-zone-data-directory)
-	- [Step-3 Navigate to Time Zone Data Directory](#step-3-navigate-to-time-zone-data-directory)
-	- [Step-4 Create the Time Zone Version Directory](#step-4-create-the-time-zone-version-directory)
-	- [Step-5 Execute Bash Commands](#step-5-execute-bash-commands)
-		+ [Execute Bash Command \#1 - Set Environment to Exit on Error](#execute-bash-command-\1---set-environment-to-exit-on-error)
-		+ [Execute Bash Command \#2 - Download Time Zone Data Tar Archive](#execute-bash-command-\2---download-time-zone-data-tar-archive)
-		+ [Execute Bash Command \#3 - Unzip Time Zone Data Tar Archive](#execute-bash-command-\3---unzip-time-zone-data-tar-archive)
-		+ [Execute Bash Command # 4 - Verify Time Zone Data Extraction](#execute-bash-command--4---verify-time-zone-data-extraction)
-	- [Step-6 Include Time Zone Version Directory in targettzdata.txt](#step-6-include-time-zone-version-directory-in-targettzdatatxt)
-+ [Application Output](#application-output)
-+ [Output Go Source File: timezonedata.go](#output-go-source-file-timezonedatago)
-+ [Questions And Comments](#questions-and-comments)
+
 
 
 ### IANA Time Zones
@@ -104,7 +80,7 @@ The time zone database needed by ***LoadLocation*** may not be present on all sy
 
 #### Updating Time Zone Data For Your Go Installation
 
-Although not part of the ***ianatzformatInfo.exe*** application, you should be aware that the ***Go Programming Language*** allows end users to update the Time Zone Database used in ***Go*** date/time calculations. For more information on the time zone update procedure, see [***TimeZoneDatabaseUpdates.md***](xtechnotes/TimeZoneDatabaseUpdates.md) .
+Although not part of the ***ianatzformatInfo.exe*** application, you should be aware that the ***Go Programming Language*** allows end users to update the IANA Time Zone Database used in ***Go*** date/time calculations. For more information on the time zone update procedure, see [***TimeZoneDatabaseUpdates.md***](xtechnotes/TimeZoneDatabaseUpdates.md) .
 
 
 
@@ -187,7 +163,7 @@ On the other hand, if you are targeting an earlier version of time zone data, po
 
 #### b. Record the Target Time Zone Version Number
 
- Make a note of the desired time zone version. Time zone version numbers are expressed as a 4-digit year followed by a character.  Example: **2019c**.  This version number **2019c** will be used in all the following examples.  Be sure to substitute your version number for **2019c** in the examples below.
+Make a note of the desired time zone version. Time zone version numbers are expressed as a 4-digit year followed by a single, lower case, alphabetic character.  Example: **2019c**.  This version number **2019c** will be used in all the following examples.  Be sure to substitute your version number for **2019c** in the examples below.
 
 
 
@@ -195,21 +171,31 @@ On the other hand, if you are targeting an earlier version of time zone data, po
 
 1. Open a Terminal Window. On Windows, this involves opening a [Cygwin](https://www.cygwin.com/) terminal window or a terminal emulator configured for Cygwin, such as [ConEmu](https://conemu.github.io/).
 
-2. Create a new, empty scratch directory which can be used to stroe time zone data.  Example: ***D:\\tz\\data***.  This is the time zone data directory where time zone information will be downloaded for use by the application,  ***ianatzformatInfo.exe*** .
+2. Create a new, empty scratch directory which can be used to store time zone data.  Example: ***d:\\tz\\data***.  This is the time zone data directory where time zone information will be downloaded for parsing by the application,  ***ianatzformatInfo.exe*** .
 
    The following is a Windows Cygwin example. Make the necessary modifications for your platform.
+
+   a. Change to a target drive where the time zone data directory will be located. In this example, ***d:*** drive.
 
    ​			`cd /cygdrive/d   `
 
    ​				**OR**
-
+   
    ​			`  cd d:`
-
-
+   
+   
+   
+   b.	Delete any preexisting versions of this time zone data directory
+   
+   ​			`rm -rf ./tz`
+   
+   
+   
+   c.	Create a new, clean, empty time zone data directory.
 
    ​			`mkdir -p tz/data`
 
-​		These commands will result in the creation of a new time zone data directory, ***D:\tz\data***.
+​		These commands will result in the creation of a new time zone data directory, ***d:\tz\data***.
 
 
 
@@ -291,7 +277,11 @@ Change directory to the time zone version directory, ***D:\tz\data\2019c***.  Of
 
 The ***ls -lh*** command will list the contents of the time zone version directory, ***D:\tz\data\2019c***. This listing should show 30+ files including the file named, ***northamerica*** (no file extension).
 
-To verify that these data files represent the time zone version you selected in ***Step-1, b***, above, use a text editor to open the file ***D:\tz\data\2019c\version*** (File version has no file extension). The only text included in this file is the time zone version number. For this example that would be, **2019c**.
+<img src="./ximages/TimeZoneVersionDirectory.png" width="1024">
+
+
+
+To verify that these data files represent the time zone version you selected in ***Step-1, b*** above, use a text editor to open the file ***D:\tz\data\2019c\version***.  (File name ***version*** has no file extension.) The only text included in this file is the time zone version number. For this example that would be, **2019c**.
 
 
 
@@ -318,13 +308,15 @@ The output ***Go*** source file, [**timezonedata.go**](./app/output/timezonedata
 
 Note that line #2 as illustrated above, must be terminated with a new line character, **\n**.
 
-Using the line #2 example, the output source file, [**timezonedata.go**](./app/output/timezonedata.go), would be created as  ***D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go*** .
+Using the line #2 example, the output source file, [**timezonedata.go**](./app/output/timezonedata.go), would be created as:  
+
+​			***D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go*** .
 
 
 
 ## Questions And Comments
 
-Direct questions concerning this application to:
+Direct questions and comments concerning this application to:
 
     mike.go@paladinacs.net
 
