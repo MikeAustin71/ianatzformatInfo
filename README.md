@@ -25,6 +25,9 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
 ## Table of Contents
 
 + [ianatzformatInfo](#ianatzformatinfo)
++ [Supported Platforms](#supported-platforms)
++ [Software Version](#software-version)
++ [License](#license)
 + [IANA Time Zones](#iana-time-zones)
 + [Go Relies on the IANA Time Zone Database](#go-relies-on-the-iana-time-zone-database)
     - [LoadLocation](#loadlocation)
@@ -44,10 +47,10 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
     - [Step-3 Navigate to Time Zone Data Directory](#step-3-navigate-to-time-zone-data-directory)
     - [Step-4 Create the Time Zone Version Directory](#step-4-create-the-time-zone-version-directory)
     - [Step-5 Execute Bash Commands](#step-5-execute-bash-commands)
-        + [Execute Bash Command \#1 - Set Environment to Exit on Error](#execute-bash-command-\1---set-environment-to-exit-on-error)
-        + [Execute Bash Command \#2 - Download Time Zone Data Tar Archive](#execute-bash-command-\2---download-time-zone-data-tar-archive)
-        + [Execute Bash Command \#3 - Unzip Time Zone Data Tar Archive](#execute-bash-command-\3---unzip-time-zone-data-tar-archive)
-        + [Execute Bash Command # 4 - Verify Time Zone Data Extraction](#execute-bash-command--4---verify-time-zone-data-extraction)
+        + [Execute Bash Command \#1 - Set Environment to Exit on Error](#execute-bash-command-1---set-environment-to-exit-on-error)
+        + [Execute Bash Command \#2 - Download Time Zone Data Tar Archive](#execute-bash-command-2---download-time-zone-data-tar-archive)
+        + [Execute Bash Command \#3 - Unzip Time Zone Data Tar Archive](#execute-bash-command-3---unzip-time-zone-data-tar-archive)
+        + [Execute Bash Command \# 4 - Verify Time Zone Data Extraction](#execute-bash-command--4---verify-time-zone-data-extraction)
         + [Step-6 Include Time Zone Version Directory in targettzdata.txt](#step-6-include-time-zone-version-directory-in-targettzdatatxt)
 + [Application Output](#application-output)
     - [Output Go Source File: timezonedata.go](#output-go-source-file-timezonedatago)
@@ -57,7 +60,31 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
         - [Piping Execution Results To A Text File](#piping-execution-results-to-a-text-file)
 + [Questions And Comments](#questions-and-comments)
 
-### IANA Time Zones
+## Supported Platforms
+This application was designed to operate on multiple operating systems including 
+Mac-OS, Linux and Windows.
+
+**However, to date, the source code has only been tested on Windows.**
+
+## Software Version
+This is ***ianatzformatInfo.exe*** Version 1.0.0.
+
+This version DOES support ***Go*** modules.
+
+This version requires ***Go*** Version 1.13 or later.
+
+This version was developed and tested using ***Go*** version 1.13.1. 
+
+## License
+
+Copyright 2019 Mike Rapp. All rights reserved.
+
+Use of this source code is governed by the (open-source) MIT-style
+license which can be found in the LICENSE file located in this directory.
+
+[MIT Open Source License](./LICENSE)
+
+## IANA Time Zones
 
 The IANA Time Zone database is widely recognized as the the world's leading authority on time zones.
 
@@ -84,12 +111,11 @@ For a listing of all time zone database releases, reference:
 ​     <https://data.iana.org/time-zones/releases/>
 
 
-
-### Go Relies on the IANA Time Zone Database
+## Go Relies on the IANA Time Zone Database
 
 The ***Go Programming Language*** uses IANA Time Zones in date-time calculations. The following was taken form the [Go Time Package](https://golang.org/pkg/time/) documentation for ***LoadLocation***.
 
-#### LoadLocation
+### LoadLocation
 
 Reference:  <https://golang.org/pkg/time/#LoadLocation>
 
@@ -107,13 +133,13 @@ The time zone database needed by ***LoadLocation*** may not be present on all sy
 
 
 
-#### Updating Time Zone Data For Your Go Installation
+### Updating Time Zone Data For Your Go Installation
 
 Although not part of the ***ianatzformatInfo.exe*** application, you should be aware that the ***Go Programming Language*** allows end users to update the IANA Time Zone Database used in ***Go*** date/time calculations. For more information on the time zone update procedure, see [***TimeZoneDatabaseUpdates.md***](./xtechnotes/TimeZoneDatabaseUpdates.md) .
 
 
 
-#### Time Package References
+### Time Package References
 
 The following reference articles provide information on time zones and the ***Go*** Time Package:
 
@@ -306,7 +332,7 @@ Change directory to the time zone version directory, ***D:\tz\data\2019c***.  Of
 
 The ***ls -lh*** command will list the contents of the time zone version directory, ***D:\tz\data\2019c***. This listing should show 30+ files including the file named, ***northamerica*** (no file extension).
 
-![Time Zone Version Directory]("./ximages/TimeZoneVersionDirectory.png")
+![Time Zone Version Directory]("ximages/TimeZoneVersionDirectory.png")
 
 
 
@@ -448,8 +474,6 @@ Assuming all went well, the executable file is now styled as:
 ```
     ianatzformatInfo/app/ianatzformatInfo.exe
 ```
-
-
 
 ## Questions And Comments
 
