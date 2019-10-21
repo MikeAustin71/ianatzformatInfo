@@ -1,7 +1,6 @@
 # Updating Go Installations with the Latest IANA Time Zone Data
 
-This document explores the options presented by the [***Go Programming Language***](https://golang.org/) for staying current
-with ever changing worldwide time zone data.  
+This document explores the options presented by the [***Go Programming Language***](https://golang.org/) for staying current with ever changing worldwide time zone data.  
 
 
 ## Table Of Contents
@@ -83,6 +82,8 @@ with ever changing worldwide time zone data.
 
 ------
 
+
+
 ## Introduction
 
 ### IANA Time Zone Information
@@ -103,6 +104,7 @@ The IANA Time Zone data base information is located at:
 
 <https://data.iana.org/time-zones/releases/>
 
+
 ### ***Go*** Relies on the IANA Time Zone Database
 
 The ***Go Programming Language*** uses IANA Time Zones in date-time
@@ -112,15 +114,15 @@ Reference:
 
 <https://golang.org/pkg/time/#LoadLocation>
 
-
 <https://golang.org/pkg/time/>
+
 
 
 ### How Time Zones Are Utilized in ***Go*** Source Code
 
 #### Load Location
 
-The ***Go*** [**Time Package**](https://golang.org/pkg/time/) contains a function named [**LoadLocation**](https://golang.org/pkg/time/#LoadLocation). This function is used to load time zones for date/time calculations. The following was taken from the **Go** Time Package documentation.
+The ***Go*** [**Time Package**](https://golang.org/pkg/time/) contains a function named [**LoadLocation**](https://golang.org/pkg/time/#LoadLocation). This function is used to load time zones for date/time calculations. The following was taken from the ***Go*** Time Package documentation.
 
 **func LoadLocation(name string) (\*Location, error)**
 
@@ -138,7 +140,7 @@ The ***Go*** [**Time Package**](https://golang.org/pkg/time/) contains a functio
 
 #### Time Package References
 
- The following reference articles provide information on time zones and the **Go** Time Package:
+ The following reference articles provide information on time zones and the ***Go*** Time Package:
 
 [***Go Time Package***](https://golang.org/pkg/time/)
 
@@ -154,11 +156,11 @@ The ***Go*** [**Time Package**](https://golang.org/pkg/time/) contains a functio
 
 The Time Zone database is updated as warranted by IANA. Usually, these time zone modifications are initiated by nation states and may, or may not, occur intermittently, throughout the year.
 
-Often, new versions of the **Go** Programming Language software will include updated versions of the time zone database. However, there is no guarantee that **Go** will automatically update the time zone data base with each new release.
+Often, new versions of the ***Go*** Programming Language software will include updated versions of the time zone database. However, there is no guarantee that ***Go*** will automatically update the time zone data base with each new release.
 
-In order to stay current with time zone modifications, the end-user has the option of updating the local **Go** Programming Language software installation with the latest version of the IANA Time Zone Database.
+In order to stay current with time zone modifications, the end-user has the option of updating the local ***Go*** Programming Language software installation with the latest version of the IANA Time Zone Database.
 
-This update operation must be performed by applying the manual procedures described below. These procedures have been tested using **Go** Version 1.13.1.
+This update operation must be performed by applying the manual procedures described below. These procedures have been tested using ***Go*** Version 1.13.1.
 
 
 
@@ -168,16 +170,19 @@ This update operation must be performed by applying the manual procedures descri
 
 #### Directory/Folder Structure
 
-The ***Go*** Programming Language code, compiler and tooling software is typically installed on a drive in the **Go** directory or folder. A common Windows installation would by default, install **Go** on C-Drive as follows:
+The ***Go*** Programming Language code, compiler and tooling software is typically installed on a drive in the ***Go*** directory or folder. A common Windows installation would by default, install ***Go*** on C-Drive as follows:
 
-***C:\\Go***
+```
+		C:\Go
+```
 
-On Linux, the **Go** directory is usually found in something like:
+On Linux, the ***Go*** directory is usually found in something like:
 
-***/usr/local/go***
+```
+		/usr/local/go
+```
 
-
-For a discussion of the **Go** directory and related paths, reference:
+For a discussion of the ***Go*** directory and related paths, reference:
 
 [**Understanding the GOPATH by Gopher Guides**](https://www.digitalocean.com/community/tutorials/understanding-the-gopath)
 
@@ -185,33 +190,36 @@ For a discussion of the **Go** directory and related paths, reference:
 
 [**What is GOROOT and GOPATH and how to fix it?**](https://www.learnsteps.com/goroot-gopath/)
 
-For the purposes of this document, all the following examples assume that **Go** software binaries are installed under **C:\\Go**. If your system is configured for a different **Go** directory, please make the appropriate substitution in the examples shown below.
+For the purposes of this document, all the following examples assume that ***Go*** software binaries are installed under ***C:\Go***. If your system is configured for a different ***Go*** directory, please make the appropriate substitution in the examples shown below.
 
 
 
 #### The ***Go*** Time Directory
 
-Time zone information is stored in the ***Go*** directory structure under the **Go\\lib\\time** sub-directory. Following the Windows example shown above, this would be styled as:
+Time zone information is stored in the ***Go*** directory structure under the **Go\lib\time** sub-directory. Following the Windows example shown above, this would be
+styled as:
 
-***C:\\Go\\lib\\time***
-
+```
+		C:\Go\lib\time
+```
 
 
 #### ***zoneinfo.zip***
 
-All time zone information is contained within a single uncompressed zip file residing in the **Go\\lib\\time** directory named, ***zoneinfo.zip***. Using the example above this would equate to a path, file name, file extension of:
+All time zone information is contained within a single uncompressed zip file residing in the ***Go\lib\time*** directory named, ***zoneinfo.zip***. Using the example above this would equate to a path, file name, file extension of:
 
-***C:\\Go\\lib\\time\\zoneifno.zip***
-
+```
+		C:\Go\lib\time\zoneifno.zip
+```
 
 
 #### ***update.bash***
 
 The ***Go*** installer also creates a bash file in the ***Go*** time directory named ***update.bash***. This file contains a bash script which is used to generate a new ***zoneinfo.zip*** file. Following the example cited above, the path, file name and file extension for this file would be styled as follows:
 
-***C:\\Go\\lib\\time\\update.bash***
-
-
+```
+		C:\Go\lib\time\update.bash
+```
 
 ### Upgrading ***Go*** Time Zone Configuration
 
@@ -226,8 +234,9 @@ zone database.
 
 After building a new version of the ***zoneinfo.zip*** file, make sure it is copied to the ***Go*** time directory:
 
-***C:\\Go\\lib\\time\\zoneinfo.zip***
-
+```
+		C:\Go\lib\time\zoneinfo.zip
+```
 
 
 ## Two Methods for Updating Go Time Zone Data
@@ -238,7 +247,9 @@ After building a new version of the ***zoneinfo.zip*** file, make sure it is cop
 
 Make a backup copy of the current time zone information file:
 
-***C:\Go\lib\time\zoneinfo.zip***
+```
+		C:\Go\lib\time\zoneinfo.zip
+```
 
 Store this file some place safe and accessible.
 
@@ -251,14 +262,14 @@ You have two choices. If you seek the latest version of time zone data, point yo
 
 [***https://www.iana.org/time-zones***](https://www.iana.org/time-zones)
 
-On the other hand, if you are targeting an earlier version of time zone data, point your browser at the 		release history web site:
+On the other hand, if you are targeting an earlier version of time zone data, point your browser at the release history web site:
 
 [***https://data.iana.org/time-zones/releases/***](https://data.iana.org/time-zones/releases/)
 
 
 ##### b. Method-1 Record the Target Time Zone Version Number
 
-Make a note of the desired time zone version number. The zone number will consist of a 4-digit year 		followed by a single, lower case, alphabetic character.  Example: **2019c**.
+Make a note of the desired time zone version number. The zone number will consist of a 4-digit year followed by a single, lower case, alphabetic character.  Example: **2019c**.
 
 
 #### Method-1 Step-3 Create a New Time Zone Scratch Directory
@@ -267,24 +278,31 @@ Make a note of the desired time zone version number. The zone number will consis
 
 2. Create a new, empty scratch directory which can be used to store time zone data.  Example: ***d:\\tz***.  This is the time zone data directory where time zone information will be downloaded and converted to a new version of the ***zoneinfo.zip*** file.
 
-   The following is a Windows Cygwin example. Make the necessary modifications for your platform.
+The following is a Windows Cygwin example. Make the necessary modifications for your platform.
 
-   a. Change to a target drive where the time zone scratch directory will be located. In this example,		 		***d:*** drive.
+   a. Change to a target drive where the time zone scratch directory will be located. In this example, ***d:*** drive.
 
-    `cd /cygdrive/d   `
+
+```
+        cd /cygdrive/d
     
-    **OR**
+            OR
     
-    `  cd d:`
+           cd d:
+        
+```
 
    b. Delete any preexisting versions of this scratch directory tree, ***d:\tz***.
 
-    `rm -rf ./tz`
+```
+    	rm -rf ./tz
+```
 
    c. Create a new, clean, empty scratch directory, ***d:\tz***.
 
-    `mkdir -p ./tz`
-
+```
+        mkdir -p ./tz
+```
 
 These commands will result in the creation of a new, empty time zone scratch directory, ***d:\tz***.
 
@@ -294,16 +312,17 @@ These commands will result in the creation of a new, empty time zone scratch dir
 
 The bash script file ***update.bash*** resides in the ***Go*** time directory:
 
-***C:\\Go\\lib\\time\\update.bash***
-
+```
+	C:\Go\lib\time\update.bash
+```
 Copy ***update.bash*** to the new empty, time zone scratch directory created in ***Step-3***, above.
 
 ```
     Copy ->
 
-        From:   C:\\Go\\lib\\time\\update.bash
+        From:   C:\Go\lib\time\update.bash
 
-        To:     D:\\tz\\update.bash
+        To:     D:\tz\update.bash
 ```
 
 #### Method-1 Step-5 Modify the Bash File
@@ -315,13 +334,14 @@ After copying the file ***update.bash*** to the time zone scratch directory, it 
 
 3. Modify the “**CODE**” and “**DATA**” variables to reflect the desired time zone version.  Instead of **2019c**, you will of course use the desired IANA time zone version number captured in ***Step-2 b***, above.
 
+```
     Copy ->
-    
+
     From: CODE=2019b, DATA=2019b
-    
-    To: CODE=2019c DATA=2019c
-    
-    Again, be sure to replace 2019c with correct Time Zone Version Number.
+
+    To:   CODE=2019c DATA=2019c
+```
+​		Again, be sure to replace 2019c with correct Time Zone Version Number.
 
 4. Save the modified ***update.bash*** file and exit your text editor.
 
@@ -334,18 +354,20 @@ After copying the file ***update.bash*** to the time zone scratch directory, it 
    On Windows this means using **Cygwin**. Change Directory to scratch directory, ***d:\\tz***.
 
     a. Change Directory to the target drive. In this example, d-drive, ***d:***.
+   
+    ```
+        cd /cygdrive/d
 
-    ​`cd /cygdrive/d`
+            OR
 
-     OR
-
-    `cd d:`
-
+           cd d:
+    ```
+   
     b. Change Directory to the time zone scratch directory ***d:\tz***.
-
-    `cd ./tz`
-
-    To verify the current working directory, at the command line, execute the command ***pwd***. This will list 		and verify the current working directory.
+    ```
+        cd ./tz
+    ```
+   To verify the current working directory, at the command line, execute the command ***pwd***. This will list and verify the current working directory.
 
 #### Method-1 Step-7 Execute the Bash Script
 
@@ -353,14 +375,16 @@ After copying the file ***update.bash*** to the time zone scratch directory, it 
 
 2.  Now, execute the bash script.
 
-    `./update.bash`
-
+    ```
+        ./update.bash
+    ```
     Be advised, this command will generate a lot of messages in the terminal window.
 
 3.  If all went well and no errors were returned by the last bash command, the following final message should be displayed in the terminal window:
 
-​					**“New time zone files in zoneinfo.zip.”**
-
+```
+	New time zone files in zoneinfo.zip
+```
 
 
 #### Method-1 Step-8 Close the Terminal Window
@@ -380,23 +404,26 @@ This ***zoneinfo.zip*** file is the new replacement zip file configured with the
 
 #### Method-1 Step-10 Copy ***zoneinfo.zip*** to the ***Go*** Time Directory
 
-Copy the newly created ***zoneinfo.zip*** file from the time zone scratch directory to the **Go** time directory.
+Copy the newly created ***zoneinfo.zip*** file from the time zone scratch directory to the ***Go*** time directory.
 
-1.  After ensuring you have backup copy (See **Step-1**, above), delete the old ***zoneinfo.zip*** file from the ***Go*** time directory.
+1.  After ensuring you have backup copy (See ***Step-1***, above), delete the old ***zoneinfo.zip*** file from the ***Go*** time directory.
 
-    **Delete File:** **c:\\Go\\lib\\time\\zoneinfo.zip**
+```
+	Delete File: C:\Go\lib\time\zoneinfo.zip
+```
 
-2. Copy the new **zoneinfo.zip** file from the scratch directory to the **Go** time directory.
+2. Copy the new ***zoneinfo.zip*** file from the scratch directory to the ***Go*** time directory.
+```
+   Copy ->
 
-   ​		**Copy ->**
+       From:	D:\tz\zoneinfo.zip
 
-   ​				**From:**	**D:\\tz\\zoneinfo.zip**
-
-   ​				**To:**		  **C:\\Go\\lib\\time\\zoneinfo.zip**
+       To:		 C:\Go\lib\time\zoneinfo.zip
+```
 
 #### Method-1 Step-11 All Done - Mission Accomplished
 
-That’s it. The objective has been achieved. By copying the file ***zoneinfo.zip*** to the ***Go*** time directory (***C:\\Go\\lib\\time***), updated time zone information is now configured. Henceforth, the ***Go*** compiler will incorporate this updated time zone information into all date/time calculations executed in code on your computer.  (See ***LoadLocation***, Paragraph-3, above, regarding the ***Go***  hierarchy of time zone locations on your computer.)
+That’s it. The objective has been achieved. By copying the file ***zoneinfo.zip*** to the ***Go*** time directory (***C:\Go\lib\time***), updated time zone information is now configured. Henceforth, the ***Go*** compiler will incorporate this updated time zone information into all date/time calculations executed in code on your computer.  (See ***LoadLocation***, Paragraph-3, above, regarding the ***Go***  hierarchy of time zone locations on your computer.)
 
 Be sure to read the section entitled ***Clean-Up***, below.
 
@@ -422,8 +449,9 @@ This method involves downloading the IANA Time Zone files and manually building 
 #### Method-2 Step-1 Safety First: Make a Backup Copy of ***zoneinfo.zip***
 
 Make a backup copy of the current time zone information file:
-
-​					***C:\\Go\\lib\\time\\zoneinfo.zip.***
+```
+C:\Go\lib\time\zoneinfo.zip.
+```
 
 Store this file some place safe and accessible.
 
@@ -447,6 +475,7 @@ On the other hand, if you are targeting an earlier version of time zone data, po
 Make a note of the desired time zone version number. The time zone version number consists of a 4-digit year followed by a single, lower case, alphabetic character. Example: **2019c**.
 
 
+
 #### Method-2 Step-3 Create a New Time Zone Scratch Directory
 
 1. Open a Terminal Window. On Windows, this involves opening a [***Cygwin***](https://www.cygwin.com/) terminal window or a terminal emulator configured for Cygwin, such as [***ConEmu***](https://conemu.github.io/).
@@ -456,15 +485,17 @@ Make a note of the desired time zone version number. The time zone version numbe
    The following is a Windows Cygwin example. Make the necessary modifications for your platform.
 
     a. Change to a target drive where the time zone scratch directory will be located. In this example,		 		***d:*** drive.
-    ```
-        cd /cygdrive/d   
-    
-          OR
-    
-        cd d:
-    ```
-    Either command will accomplish the task.
 
+    ```        
+        cd /cygdrive/d   
+
+              OR
+
+             cd d:
+    ```
+
+    Either command will accomplish the task.
+       
     b. Delete any preexisting versions of this scratch directory, ***d:\tz***.
     ```
         rm -rf ./tz
@@ -488,9 +519,9 @@ These commands will result in the creation of a new, empty time zone scratch dir
     ```
         cd /cygdrive/d   
     
-            **OR**
+               OR
     
-        cd d:
+              cd d:
     ```
     
     Either command will accomplish the task.
@@ -687,6 +718,7 @@ This concludes the bash commands required to create the new ***zoneinfo.zip*** f
 The following steps involve copying this ***zipinfo.zip*** file to the **Go** time directory ***C:\\Go\\lib\\time)***.  After completing this operation, consider taking action to clean up the scratch directory, ***D:\\tz***.
 
 
+
 #### Method-2 Step-6 Copy ***zoneinfo.zip*** to the ***Go*** Time Directory
 
 Copy the newly created ***zoneinfo.zip*** file from the scratch directory to the ***Go*** time directory.
@@ -694,7 +726,7 @@ Copy the newly created ***zoneinfo.zip*** file from the scratch directory to the
 1.  After ensuring you have backup copy (See ***Step-1***, above), delete the old ***zoneinfo.zip*** file from the ***Go*** time directory.
 
     ```
-    ​Delete File: C:\\Go\\lib\\time\\zoneinfo.zip
+    Delete File: C:\Go\lib\time\zoneinfo.zip
     ```
 
 2. Copy the new ***zoneinfo.zip*** file from the scratch directory to the ***Go*** time directory.
@@ -702,10 +734,12 @@ Copy the newly created ***zoneinfo.zip*** file from the scratch directory to the
     ```
     Copy->
     
-        From:   D:\\tz\\zoneinfo.zip
+        From:   D:\tz\zoneinfo.zip
     
-        To:     C:\\Go\\lib\\time\\zoneinfo.zip
+        To:     C:\Go\lib\time\zoneinfo.zip
     ```
+
+
 
 #### Method-2 Step-7 All Done - Mission Accomplished
 

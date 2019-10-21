@@ -58,9 +58,13 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
         - [Successful Execution](#successful-execution)
         - [Failed Execution](#failed-execution)
         - [Piping Execution Results To A Text File](#piping-execution-results-to-a-text-file)
++ [***ianatzformatInfo*** Is A Research and Demonstration Project For ***Go Modules***](#ianatzformatinfo-is-a-research-and-demonstration-project-for-go-modules)
+    - [***Go Modules***](#go-modules)
+    - [Design Objective: Component Directory Structure](#design-objective-component-directory-structure)
+    - [Directory Layout for ***ianatzformatInfo***](#directory-layout-for-ianatzformatinfo)
 + [Questions And Comments](#questions-and-comments)
 
-
+---
 
 ## Supported Platforms
 
@@ -348,7 +352,7 @@ Change directory to the time zone version directory, ***D:\tz\data\2019c***.  Of
 
 The ***ls -lh*** command will list the contents of the time zone version directory, ***D:\tz\data\2019c***. This listing should show 30+ files including the file named, ***northamerica*** (no file extension).
 
-![Time Zone Version Directory]("ximages/TimeZoneVersionDirectory.png")
+![Time Zone Version Directory](ximages/TimeZoneVersionDirectory.png)
 
 
 
@@ -362,7 +366,9 @@ After successfully executing the bash commands listed in Step-5, above, the conf
 
 The section entitled ***Base Input Data*** shown above specifies that the time zone version directory should be configured on line # 1 of the [***targettzdata.txt***](./app/input/targettzdata.txt).
 
-​					`InputDirectory: D:\tz\data\2019c`
+```
+​InputDirectory: D:\tz\data\2019c
+```
 
 As a requirement, the data field name, **InputDirectory**, must be followed by a colon (**:**) and a space.  In addition, this line of text must be terminated by a new line character, ***\n***.
 
@@ -375,7 +381,9 @@ The IANA time zone database contains text files which represents raw data on wor
 #### Output Go Source File: timezonedata.go
 The output ***Go*** source file, [**timezonedata.go**](./app/output/timezonedata.go), is created in the output directory specified on line #2 of input file, [**targettzdata.txt**](./app/input/targettzdata.txt) .
 
-​			`OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output`
+```
+OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output`
+```
 
 Note that line #2 as illustrated above, must be terminated with a new line character, **\n**.
 
@@ -487,6 +495,30 @@ Assuming all went well, the executable file is now styled as:
 ```
     ianatzformatInfo/app/ianatzformatInfo.exe
 ```
+
+## ***ianatzformatInfo*** Is A Research and Demonstration Project For ***Go Modules***
+
+In addition to objectives described above, the ***ianatzformatInfo*** application was designed to explore the features and capabilities of [***Go Modules***](https://github.com/golang/go/wiki/Modules).
+
+### ***Go Modules***
+For more information on ***Go Modules***, see the following references:
+
+[***https://github.com/golang/go/wiki/Modules***](https://github.com/golang/go/wiki/Modules)
+[***https://blog.golang.org/using-go-modules***](https://blog.golang.org/using-go-modules)
+[***https://blog.golang.org/modules2019***](https://blog.golang.org/modules2019)
+[***https://roberto.selbach.ca/intro-to-go-modules/***](https://roberto.selbach.ca/intro-to-go-modules/)
+
+### Design Objective: Component Directory Structure
+The design object was to simulate a complex software project that integrated ***Go Modules*** and required multiple sub-directories for modular component or sub-package source files.
+
+The directory structure shown below and configured with ***Go Modules*** achieves these design objectives.  The directory layout also allows for consolidation of tests in one directory with access to all other packages in the project.
+
+### Directory Layout for ***ianatzformatInfo***
+The following image shows the directory structure for ***ianatzformatInfo***.
+
+![***ianatzformatInfo*** Directory Layout](ximages/projectdirstruc.png)
+
+
 
 ## Questions And Comments
 
