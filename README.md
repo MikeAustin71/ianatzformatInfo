@@ -60,13 +60,19 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
         - [Piping Execution Results To A Text File](#piping-execution-results-to-a-text-file)
 + [Questions And Comments](#questions-and-comments)
 
+
+
 ## Supported Platforms
+
 This application was designed to operate on multiple operating systems including 
 Mac-OS, Linux and Windows.
 
-**However, to date, the source code has only been tested on Windows.**
+**However, to date, this application has only been tested on Windows.**
+
+
 
 ## Software Version
+
 This is ***ianatzformatInfo.exe*** Version 1.0.0.
 
 This version DOES support ***Go*** modules.
@@ -74,6 +80,8 @@ This version DOES support ***Go*** modules.
 This version requires ***Go*** Version 1.13 or later.
 
 This version was developed and tested using ***Go*** version 1.13.1. 
+
+
 
 ## License
 
@@ -83,6 +91,8 @@ Use of this source code is governed by the (open-source) MIT-style
 license which can be found in the LICENSE file located in this directory.
 
 [MIT Open Source License](./LICENSE)
+
+
 
 ## IANA Time Zones
 
@@ -143,15 +153,13 @@ Although not part of the ***ianatzformatInfo.exe*** application, you should be a
 
 The following reference articles provide information on time zones and the ***Go*** Time Package:
 
+ [**Go Time Package**](https://golang.org/pkg/time/)
 
+ [**Detect if ZONEINFO fails in Go - Stack Overflow**](https://stackoverflow.com/questions/51053321/detect-if-zoneinfo-fails-in-go)
 
-> [**Go Time Package**](https://golang.org/pkg/time/)
+  [**Package time - Mastering Go**](https://code-examples.net/en/docs/go/time/index)
 
-> [**Detect if ZONEINFO fails in Go - Stack Overflow**](https://stackoverflow.com/questions/51053321/detect-if-zoneinfo-fails-in-go)
-
->  [**Package time - Mastering Go**](https://code-examples.net/en/docs/go/time/index)
-
-> [**knozone**](https://github.com/slotheroo/knozone)
+ [**knozone**](https://github.com/slotheroo/knozone)
 
 
 
@@ -231,26 +239,25 @@ Make a note of the desired time zone version. Time zone version numbers are expr
    The following is a Windows Cygwin example. Make the necessary modifications for your platform.
 
    a. Change to a target drive where the time zone data directory will be located. In this example, ***d:*** drive.
-
-   ​			`cd /cygdrive/d   `
-
-   ​				**OR**
-
-   ​			`  cd d:`
-
-
+   
+    ```
+    cd /cygdrive/d
+      OR
+    cd d:
+    ```
 
    b.	Delete any preexisting versions of this time zone data directory
-
-   ​			`rm -rf ./tz`
-
-
+   
+    ```   
+    		rm -rf ./tz
+    ```
 
    c.	Create a new, clean, empty time zone data directory.
 
-   ​			`mkdir -p tz/data`
-
-​		These commands will result in the creation of a new time zone data directory, ***d:\tz\data***.
+    ```
+    		mkdir -p tz/data
+    ```
+    These commands will result in the creation of a new time zone data directory, ***d:\tz\data***.
 
 
 
@@ -260,27 +267,29 @@ Make a note of the desired time zone version. Time zone version numbers are expr
 
 2. Change directories to the time zone data directory created in ***Step-2***, above. Using the example in ***Step-2***, this means that you will make ***D:\tz\data*** the current directory.
 
-   ​		`cd /cygdrive/d   `
+	a. Change drive to target drive.
+    ```
+    	cd /cygdrive/d
 
-   ​				**OR**
+    		OR
 
-   ​		`  cd d:`
-
-
-
-   ​		`cd ./tz/data`
-
-
-
-   To verify the current working directory, execute the command **pwd** in the terminal window. This will list the current working directory which should be ***D:\\tz\\data***.
-
+    	cd d:
+    ```
+	b. Change directory to target directory
+	
+    ```
+    	cd ./tz/data
+    ```
+    To verify the current working directory, execute the command ***pwd*** in the terminal window. This will list the current working directory which should be ***D:\\tz\\data***.
 
 
 ### Step-4 Create the Time Zone Version Directory
 
 In the terminal window, the current working directory should be **D:\tz\data**. You must be in that directory in order to execute the following command which will create the version directory.  The command example uses **2019c** as the version directory name.  Be sure to substitute the Time Zone version you selected in **Step-1, a** above for **2019c**.
 
-​			`mkdir ./2019c`
+```
+		mkdir ./2019c
+```
 
 To verify creation of the time zone version directory, issue the command, **ls**.  This will list the contents of the  ***D:\tz\data*** directory and verify the existence of the new version directory, **2019c**.
 
@@ -298,7 +307,9 @@ You must be in the time zone data directory (**D:\\tz\\data**) when issuing thes
 
 #### Execute Bash Command \#1 - Set Environment to Exit on Error
 
-​						`set -e`
+```
+			set -e
+```
 
 This sets the environment such that scripts will exit on error.
 
@@ -308,17 +319,20 @@ This sets the environment such that scripts will exit on error.
 
 In the following ***curl*** command, replace the text phrase **2019c** in the command syntax below with the target time zone version identified in **Step-1, b** above.  This command will download the specified time zone data as a tar archive (a.k.a. tarball).
 
-​	`curl -L -O https://www.iana.org/time-zones/repository/releases/tzdata2019c.tar.gz`
+```
+curl -L -O https://www.iana.org/time-zones/repository/releases/tzdata2019c.tar.gz
+```
 
-This **curl** command must be executed on one line from the **data** directory (**D:\\tz\\data**). To verify download of the correct file after the download operation, execute the “**ls -lh**” bash command to list the contents of the **data** directory **(D:\\tz\\data)** and verify the existence of the correct tar archive of file, ***tzdata2019c.tar.gz***. Again, be sure to substitute the time zone version number identified in  **Step-1, b** above for **2019c** in the tar archive name.
-
+This ***curl*** command must be executed on one line from the ***data*** directory (***D:\\tz\\data***). To verify download of the correct file after the download operation, execute the “**ls -lh**” bash command to list the contents of the **data** directory **(D:\\tz\\data)** and verify the existence of the correct tar archive of file, ***tzdata2019c.tar.gz***. Again, be sure to substitute the time zone version number identified in  ***Step-1, b*** above for **2019c** in the tar archive name.
 
 
 #### Execute Bash Command \#3 - Unzip Time Zone Data Tar Archive
 
-Replace the text phrase **2019c** in the command syntax below with the time zone version number selected in **Step-1, b** above. This command will unzip the file downloaded with **Bash Command \# 2**, above. Be sure to execute this command from the time zone data  directory, ***D:\tz\data***.
+Replace the text phrase **2019c** in the command syntax below with the time zone version number selected in ***Step-1, b*** above. This command will unzip the file downloaded with ***Bash Command \# 2***, above. Be sure to execute this command from the time zone data  directory, ***D:\tz\data***.
 
-​    						`tar xzf tzdata2019c.tar.gz -C ./2019c`
+```
+	tar xzf tzdata2019c.tar.gz -C ./2019c
+```
 
 
 
@@ -326,9 +340,11 @@ Replace the text phrase **2019c** in the command syntax below with the time zone
 
 Change directory to the time zone version directory, ***D:\tz\data\2019c***.  Of course, you will need to replace the text **2019c** with the time zone version number selected in ***Step-1, b***, above.  When executing the bash command shown below, the current working directory should be the time zone data directory ***D:\tz\data***.
 
-​							`cd ./2019c`
+```
+     cd ./2019c
 
-​							`ls -lh`
+     ls -lh
+```
 
 The ***ls -lh*** command will list the contents of the time zone version directory, ***D:\tz\data\2019c***. This listing should show 30+ files including the file named, ***northamerica*** (no file extension).
 
@@ -365,7 +381,11 @@ Note that line #2 as illustrated above, must be terminated with a new line chara
 
 Using the line #2 example, the output source file, [**timezonedata.go**](./app/output/timezonedata.go), would be created as:
 
-​			***D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go*** .
+```
+D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go
+```
+
+
 
 #### Execution Output Text
 
@@ -410,18 +430,13 @@ to the following:
 
 ##### Failed Execution
 
-If execution of ***ianatzformatInfo.exe*** fails, error messages will be
-printed to the command line.
+If execution of ***ianatzformatInfo.exe*** fails, error messages will be printed to the command line.
 
 ##### Piping Execution Results To A Text File
 
-Typically ***ianatzformatInfo.exe*** is executed from the command line and
-status messages indicating success or failure are printed to the same command
-line.
+Typically ***ianatzformatInfo.exe*** is executed from the command line and status messages indicating success or failure are printed to the same command line.
 
-However the end user has the option of transferring or 'piping' command execution
-output to a text file for later examination.  An example of this command syntax
-is shown below:
+However the end user has the option of transferring or 'piping' command execution output to a text file for later examination.  An example of this command syntax is shown below:
 
 ```
     
@@ -429,10 +444,8 @@ is shown below:
     
 ```
 
-In the example above, ***ianatzformatInfo.exe*** is executed from the command line
-and the output from this command execution is written to the text file, ***output.txt***
-in the same directory in which the application was executed.
- 
+In the example above, ***ianatzformatInfo.exe*** is executed from the command line and the output from this command execution is written to the text file, ***output.txt*** in the same directory in which the application was executed.
+
 ## Building The *ianatzformatInfo* Executable 
 
 To build the executable file for ***ianatzformatInfo.exe*** follow these steps.
@@ -444,7 +457,7 @@ Select a drive and path on your local computer. Then clone the source code for t
 application to your computer from the github repository as follows:
 
 ```
-    https://github.com/MikeAustin71/ianatzformatInfo.git
+   git clone https://github.com/MikeAustin71/ianatzformatInfo.git
 ```
 
 ### Build Executable Step #2 
