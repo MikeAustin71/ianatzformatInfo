@@ -6,9 +6,6 @@ import 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 var CurWorkingDirectory pathfileops.DirMgr
 
 
-var DEBUG = 0
-
-
 var NumberOfTimeZones = 0
 
 // For IANA Time Zone Files the white space characters which delimit fields

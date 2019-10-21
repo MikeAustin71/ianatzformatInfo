@@ -4,8 +4,6 @@ const AppInputParametersFileName = "targettzdata.txt"
 
 const OutputFileName = "timezonedata.go"
 
-const HomeDir = "D:\\GoProjects\\ianatzformatInfo\\app"
-
 const PrimaryTimeZoneType = "TimeZones"
 
 const MasterGroupTypeSuffix = "TimeZones"
@@ -23,3 +21,8 @@ const Level_03_Idx = 2
 const RefWikipediaTzList = "  https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n"
 const RefWikipediaTzDatabase = "  https://en.wikipedia.org/wiki/Tz_database\n"
 const RefIanaOrgTimeZones = "  https://www.iana.org/time-zones\n"
+
+// FmtDateTimeTzNanoYMDDow - Output date time to nano seconds with Year-Month-Date
+// prefixed by day of the week
+const FmtDateTime = "2006-01-02 Monday 15:04:05 -0700 MST"
+

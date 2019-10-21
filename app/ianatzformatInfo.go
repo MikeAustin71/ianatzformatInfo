@@ -42,17 +42,17 @@ func main() {
 
 	ePrefix := "ianaTzFormatInfo.main() "
 
-	// /////////////////////////////////////////
-	//  IMPORTANT!!! SET CORRECT VALUE!!!    //
-	// ////////////////////////////////////////
-	tzdatastructs.DEBUG = 1
-
 	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
+
+	fmt.Println()
+	fmt.Println("ianatzformatInfo.exe" )
+	fmt.Println("--------------------")
+	fmt.Printf("Current Working Directory:\n     %v\n\n", currWorkingDirMgr.GetAbsolutePath())
 
 	targetInputDir :=
 		currWorkingDirMgr.GetAbsolutePath() + string(os.PathSeparator) + "input"
@@ -64,6 +64,8 @@ func main() {
 
 	var dirFileInfo pathfileops.FileMgrCollection
 	var outputFileDirMgr pathfileops.DirMgr
+
+	fmt.Printf("Base Data Input File:\n     %v\n\n", targetParameterPathFileName)
 
 	dirFileInfo, outputFileDirMgr, err =
 		inprocess.AcquireTzData{}.AcquireDirectoryInfo(targetParameterPathFileName, ePrefix)
@@ -101,6 +103,11 @@ parser := inprocess.ParseIanaTzData{}
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
+
+	fmt.Println("---------------------")
+	fmt.Println("Successful Completion")
+	fmt.Println("---------------------")
+	fmt.Println()
 
 }
 

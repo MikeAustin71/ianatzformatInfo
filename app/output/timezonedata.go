@@ -70,6 +70,7 @@ package main
 // 
 //                  Primary Time Zone Groups:  12
 // 
+// Type Creation Date: 2019-10-20 Sunday 23:07:21 -0500 CDT
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"strconv"
-	"strings"
 )
 
 type TimeZoneDataDto struct {
@@ -133,43 +132,6 @@ func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 	return false
 }
 
-// EqualClass - Compares the TzClass values for input parameter
-// 'TzDDto' and the current TimeZoneDataDto instance. If they
-// are equivalent, this method returns true.
-func (tzDataDto *TimeZoneDataDto) EqualClass(tzDDto TimeZoneDataDto) bool {
-
-	if tzDataDto.TzClass == tzDDto.TzClass {
-		return true
-	}
-
-	return false
-}
-
-// EqualType - Compares the Time Zone Type values for input parameter
-// 'TzDDto' and the current TimeZoneDataDto instance. If they
-// are equivalent, this method returns true.
-func (tzDataDto *TimeZoneDataDto) EqualType(tzDDto TimeZoneDataDto) bool {
-
-	if tzDataDto.TzType == tzDDto.TzType {
-		return true
-	}
-
-	return false
-}
-
-// EqualDeprecationStatus - Compares the DeprecationStatus values for input
-// parameter 'TzDDto' and the current TimeZoneDataDto instance. If they are
-// equivalent, this method returns true.
-func (tzDataDto *TimeZoneDataDto) EqualDeprecationStatus(tzDDto TimeZoneDataDto) bool {
-
-	if tzDataDto.DeprecationStatus == tzDDto.DeprecationStatus {
-		return true
-	}
-
-	return false
-}
-
-
 // IsInitialized - Returns the value of internal data field
 // TimeZoneDataDto.isInitialized .
 func (tzDataDto *TimeZoneDataDto) IsInitialized() bool {
@@ -293,98 +255,3 @@ func (tzDataDto TimeZoneDataDto) NewSortValue(tzValue string) string {
 func (tzDataDto *TimeZoneDataDto) SetIsInitialized(isInitialized bool) {
 	tzDataDto.isInitialized = isInitialized
 }
-
-//SelectTzDto - Select from an array TimeZoneDataDto objects.
-type SelectTzDto []TimeZoneDataDto
-
-// GroupExists - Performs a search for on TimeZoneDataDto array
-// for a match on TimeZoneDataDto.GroupName. If the search is successful,
-// this method returns a boolean value of 'true' and the integer index
-// value of the found TimeZoneDataDto instance.
-//
-// If the search fails, a boolean value of false is returned and the
-// integer index value is set to -1.
-//
-func (selTzDto SelectTzDto) MajorGroupExists(majorGroupName string, useLwrCase bool) (bool, int){
-
-	if useLwrCase {
-		majorGroupName = strings.ToLower(majorGroupName)
-	}
-
-	for i:=0; i < len(selTzDto); i++ {
-
-		if useLwrCase {
-
-			if strings.ToLower(selTzDto[i].GroupName) == majorGroupName {
-				return true, i
-			}
-		} else if selTzDto[i].GroupName == majorGroupName {
-
-			return true, i
-		}
-
-	}
-
-	return false, -1
-}
-
-// TzNameExists - Performs a search for on TimeZoneDataDto array
-// for a match on TimeZoneDataDto.TzName. If the search is successful,
-// this method returns a boolean value of 'true' and the integer index
-// value of the found TimeZoneDataDto instance.
-//
-// If the search fails, a boolean value of false is returned and the
-// integer index value is set to -1.
-//
-func (selTzDto SelectTzDto) TzNameExists(
-	tzName string, useLwrCase bool) (bool,int) {
-
-	if useLwrCase {
-		tzName = strings.ToLower(tzName)
-	}
-
-	for i:=0; i < len(selTzDto); i++ {
-
-		if useLwrCase {
-			if strings.ToLower(selTzDto[i].TzName) == tzName{
-				return true, i
-			}
-		} else if selTzDto[i].TzName == tzName {
-
-			return true, i
-		}
-
-	}
-	return false, -1
-}
-
-
-// TzValueExists - Performs a search for on TimeZoneDataDto array
-// for a match on TimeZoneDataDto.TzCanonicalValue. If the search is successful,
-// this method returns a boolean value of 'true' and the integer index
-// value of the found TimeZoneDataDto instance.
-//
-// If the search fails, a boolean value of false is returned and the
-// integer index value is set to -1.
-//
-func (selTzDto SelectTzDto) TzValueExists(
-	tzValue string, useLwrCase bool) (bool, int) {
-
-	if useLwrCase {
-		tzValue = strings.ToLower(tzValue)
-	}
-
-	for i:=0; i < len(selTzDto); i++ {
-
-		if useLwrCase {
-			if tzValue == strings.ToLower(selTzDto[i].TzCanonicalValue) {
-				return true, i
-			}
-		} else if selTzDto[i].TzCanonicalValue == tzValue {
-			return true, i
-		}
-
-	}
-	return false, -1
-}
-

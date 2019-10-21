@@ -5,6 +5,7 @@ import (
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"time"
 )
 
 type TzOutProcess struct {
@@ -170,6 +171,9 @@ func (tzOut TzOutProcess) createOpenOutputFile(
 func (tzOut TzOutProcess) createTimeZoneTypeComments(
 	tzStats *tzdatastructs.TimeZoneStatsDto) []byte {
 
+	currDateTime := time.Now()
+	currDateTimeStr := currDateTime.Format(tzdatastructs.FmtDateTime)
+
 	outputStr := fmt.Sprintf("\n" +
 		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n" +
 		"// Zones plus %v-Military Time Zones. This type is therefore used as a \n" +
@@ -239,6 +243,7 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"// \n" +
 		"//                  Primary Time Zone Groups: %3d\n" +
 		"// \n" +
+		"// Type Creation Date: %v\n" +
 		"// ----------------------------------------------------------------------------\n" +
 		"// \n",
 		tzStats.TotalIanaTZones,
@@ -254,7 +259,8 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		tzStats.NumSubStdTZoneGroups,
 		tzStats.NumSubLinkTZoneGroups,
 		tzStats.TotalSubTZoneGroups,
-		tzStats.NumPrimaryTZoneGroups)
+		tzStats.NumPrimaryTZoneGroups,
+		currDateTimeStr)
 
 	return []byte(outputStr)
 }

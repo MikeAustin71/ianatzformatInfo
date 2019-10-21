@@ -4,13 +4,77 @@
 
 ## Table Of Contents
 
-
-
-
++ [Updating Go Installations with the Latest IANA Time Zone Data](#updating-go-installations-with-the-latest-iana-time-zone-data)+ [Introduction](#introduction)
+      - [IANA Time Zone Information](#iana-time-zone-information)
+      - [**Go** Relies on the IANA Time Zone Database](#go-relies-on-the-iana-time-zone-database)
+      - [How Time Zones Are Utilized in **Go** Source Code](#how-time-zones-are-utilized-in-go-source-code)
+            + [Load Location](#load-location)
+            + [Time Package References](#time-package-references)
+      - [_**Go**_ Provides for IANA Database Updates](#_go_-provides-for-iana-database-updates)
++ [Existing Go Time Zone Configuration](#existing-go-time-zone-configuration)
+      - [Configuration Overview](#configuration-overview)
+            + [Directory/Folder Structure](#directoryfolder-structure)
+            + [The Go Time Directory](#the-go-time-directory)auto
+            + [zoneinfo.zip](#zoneinfozip)
+            + [update.bash](#updatebash)
+      - [Upgrading Go Time Zone Configuration](#upgrading-go-time-zone-configuration)
++ [Objective - Create New File: **zoineinfo.zip**](#objective---create-new-file-zoineinfozip)
++ [Two Methods for Updating Go Time Zone Data](#two-methods-for-updating-go-time-zone-data)
+      - [Method-1 The Easy Way: **update.bash**](#method-1-the-easy-way-updatebash)
+            + [Method-1 Step-1 Safety First: Make a Backup Copy of **zoneinfo.zip**](#method-1-step-1-safety-first-make-a-backup-copy-of-zoneinfozip)
+            + [Method-1 Step-2 Identify the Desired IANA Time Zone Data Version](#method-1-step-2-identify-the-desired-iana-time-zone-data-version)
+                  - [a. Method-1 Access the IANA Time Zone Website](#a-method-1-access-the-iana-time-zone-website)
+                  - [b. Method-1 Record the Target Time Zone Version Number](#b-method-1-record-the-target-time-zone-version-number)
+            + [Method-1 Step-3 Create a New Time Zone Scratch Directory](#method-1-step-3-create-a-new-time-zone-scratch-directory)
+            + [Method-1 Step-4 Copy *update.bash* to Time Zone Scratch Directory](#method-1-step-4-copy-updatebash-to-time-zone-scratch-directory)
+            + [Method-1 Step-5 Modify the Bash File](#method-1-step-5-modify-the-bash-file)
+            + [Method-1 Step-6 Navigate to Time Zone Scratch Directory](#method-1-step-6-navigate-to-time-zone-scratch-directory)+ [Method-1 Step-7 Execute the Bash Script](#method-1-step-7-execute-the-bash-script)
+            + [Method-1 Step-8 Close the Terminal Window](#method-1-step-8-close-the-terminal-window)
+            + [Method-1 Step-9 Examine Time Zone Scratch Directory Contents](#method-1-step-9-examine-time-zone-scratch-directory-contents)
+            + [Method-1 Step-10 Copy **zoneinfo.zip** to the **Go** Time Directory](#method-1-step-10-copy-zoneinfozip-to-the-go-time-directory)
+            + [Method-1 Step-11 All Done - Mission Accomplished](#method-1-step-11-all-done---mission-accomplished)
+            + [Method-1: Pro’s and Con’s](#method-1-pros-and-cons)
+                  - [Method-1 Advantages](#method-1-advantages)
+                  - [Method-1 Drawbacks](#method-1-drawbacks)
+      - [Method-2: The Not So Easy Way](#method-2-the-not-so-easy-way)
+            + [Method-2 Step-1 Safety First: Make a Backup Copy of **zoneinfo.zip**](#method-2-step-1-safety-first-make-a-backup-copy-of-zoneinfozip)
+            + [Method-2 Step-2 Identify the Desired IANA Time Zone Data Version](#method-2-step-2-identify-the-desired-iana-time-zone-data-version)
+                  - [a. Method-2 Access the IANA Time Zone Website](#a-method-2-access-the-iana-time-zone-website)
+                  - [b. Method-2 Record the Target Time Zone Version Number](#b-method-2-record-the-target-time-zone-version-number)
+            + [Method-2 Step-3 Create a New Time Zone Scratch Directory](#method-2-step-3-create-a-new-time-zone-scratch-directory)
+            + [Method-2 Step-4 Navigate to Time Zone Scratch Directory](#method-2-step-4-navigate-to-time-zone-scratch-directory)+ [Method-2 Step-5 Execute Bash Commands](#method-2-step-5-execute-bash-commands)
+                  - [Execute Bash Command \#1 - Set Environment to Exit on Error](#execute-bash-command-\1---set-environment-to-exit-on-error)
+                  - [Execute Bash Command \#2 - Delete Old ***work*** directory tree](#execute-bash-command-\2---delete-old-work-directory-tree)
+                  - [Execute Bash Command \#3 - Create New ***work*** Directory](#execute-bash-command-\3---create-new-work-directory)
+                  - [Execute Bash Command \#4 - Change to ***work*** Directory](#execute-bash-command-\4---change-to-work-directory)
+                  - [Execute Bash Command \#5 - Create ***zoneinfo*** Directory](#execute-bash-command-\5---create-zoneinfo-directory)
+                  - [Execute Bash Command \#6 - Download Target Code Tar Archive](#execute-bash-command-\6---download-target-code-tar-archive)
+                  - [Execute Bash Command \#7 - Download Target Data Tar Archive](#execute-bash-command-\7---download-target-data-tar-archive)
+                  - [Execute Bash Command \#8 - Unzip Code Tar Archive](#execute-bash-command-\8---unzip-code-tar-archive)
+                  - [Execute Bash Command \#9 - Unzip Data Tar Archive](#execute-bash-command-\9---unzip-data-tar-archive)
+                  - [Execute Bash Command \#10 - Build Time Zone Files](#execute-bash-command-\10---build-time-zone-files)
+                  - [Execute Bash Command \#11 - Change Directory to zoneinfo](#execute-bash-command-\11---change-directory-to-zoneinfo)
+                  - [Execute Bash Command \#12 - Delete Old *zoneinfo.zip* files](#execute-bash-command-\12---delete-old-zoneinfozip-files)
+                  - [Execute Bash Command \#13 - Zip the *zoneinfo* Directory](#execute-bash-command-\13---zip-the-zoneinfo-directory)
+                  - [Execute Bash Command \#14 - Change Directory to **D:\\tz**](#execute-bash-command-\14---change-directory-to-d\\tz)
+                  - [Method-2 Verify the Time Zone Version Contained in zoneinfo.zip](#method-2-verify-the-time-zone-version-contained-in-zoneinfozip)
+                  - [Method-2 Bash Command Wrap-Up](#method-2-bash-command-wrap-up)
+            + [Method-2 Step-6 Copy **zoneinfo.zip** to the **Go** Time Directory](#method-2-step-6-copy-zoneinfozip-to-the-go-time-directory)
+            + [Method-2 Step-7 All Done - Mission Accomplished](#method-2-step-7-all-done---mission-accomplished)
+            + [Method-2: Pro’s & Con’s](#method-2-pros--cons)
+                  - [Method-2 Advantages](#method-2-advantages)
+                  - [Method-2 Drawbacks](#method-2-drawbacks)
+                  - [Method-2 Other Considerations](#method-2-other-considerations)
++ [Clean-Up](#clean-up)
+      - [Documenting the Current Time Zone Version](#documenting-the-current-time-zone-version)
+      - [Clean Up Scratch Directory D:\\tz](#clean-up-scratch-directory-d\\tz)
++ [Final Thoughts](#final-thoughts)
+      - [ianatzformatInfo](#ianatzformatinfo
+      - [datetimeops Package](#datetimeops-package)
+      - [Be Careful Out There](#be-careful-out-there)
++ [Questions And Comments](#questions-and-comments)autoauto<!-- /TOC -->
 
 ------
-
-
 
 ## Introduction
 
@@ -213,21 +277,21 @@ Store this file some place safe and accessible.
 
    ​				**OR**
 
-   ​			`  cd d:`  
+   ​			`  cd d:`
 
-   
+
 
    b.	Delete any preexisting versions of this scratch directory tree, ***d:\tz***.
 
    ​			`rm -rf ./tz`
 
-   
+
 
    c.	Create a new, clean, empty scratch directory, ***d:\tz***.
 
       ​		`mkdir -p ./tz`
 
-   
+
 
 These commands will result in the creation of a new, empty time zone scratch directory, ***d:\tz***.
 
@@ -254,11 +318,11 @@ After copying the file **update.bash** to the time zone scratch directory, it wi
 
 1. Open the scratch directory version of **update.bash** in a text editor (Reference **Step-4** above).
 
-   
+
 
 2. Within the **update.bash** file, locate the bash script section labeled **“\# Versions to use.”** in your text editor.
 
-   
+
 
 3. Modify the “**CODE**” and “**DATA**” variables to reflect the desired time zone version captured in **Step-2 b**, above.
 
@@ -288,8 +352,8 @@ After copying the file **update.bash** to the time zone scratch directory, it wi
 1.  Open a Terminal Window. On Windows, this involves opening a [**Cygwin**](https://www.cygwin.com/) terminal window or a terminal
     emulator configured for Cygwin, such as [**ConEmu**](https://conemu.github.io/).
 
-    
-    
+
+
 2. Change directories to the scratch directory - i.e., make the scratch directory the current directory.
 
    On Windows this means using **Cygwin**. Change Directory to scratch directory, ***d:\\tz***.
@@ -440,7 +504,7 @@ Make a note of the desired time zone version number. The time zone version numbe
 
    ​				**OR**
 
-   ​		`  cd d:`  
+   ​		`  cd d:`
 
 
 
@@ -454,7 +518,7 @@ Make a note of the desired time zone version number. The time zone version numbe
 
 ​	   		`mkdir -p ./tz`
 
-​	
+​
 
 These commands will result in the creation of a new, empty time zone scratch directory, ***d:\tz***.
 
@@ -465,8 +529,8 @@ These commands will result in the creation of a new, empty time zone scratch dir
 1.  Open a Terminal Window. On Windows, this involves opening a [Cygwin](https://www.cygwin.com/) terminal window or a terminal
     emulator configured for Cygwin, such as [ConEmu](https://conemu.github.io/).
 
-    
-    
+
+
 2. Change directories to the scratch directory - i.e., make the time zone scratch directory the current directory.
 
    a. Change Directory to the target drive. In this example, d-drive, ***d:***.
@@ -477,7 +541,7 @@ These commands will result in the creation of a new, empty time zone scratch dir
 
    ​							`  cd d:`
 
-   
+
 
    ​		b. Change Directory to the time zone scratch directory ***d:\tz***.
 
@@ -587,7 +651,7 @@ This command must be executed on one line from the **work** directory **(D:\\tz\
 
 ##### Execute Bash Command \#10 - Build Time Zone Files
 
-This will execute the **make** command and create the actual time zone data files.  Make sure that the ***work*** directory (***D:\tz\work***) is the current working directory before issuing the next bash command. If in doubt, issue the ***pwd*** command and list the current working directory. 
+This will execute the **make** command and create the actual time zone data files.  Make sure that the ***work*** directory (***D:\tz\work***) is the current working directory before issuing the next bash command. If in doubt, issue the ***pwd*** command and list the current working directory.
 
 ​		`make CFLAGS=-DSTD\_INSPIRED AWK=awk TZDIR=zoneinfo posix\_only`
 
@@ -597,9 +661,9 @@ This command must be executed on one line from the **work** directory **(D:\\tz\
 
 ##### Execute Bash Command \#11 - Change Directory to zoneinfo
 
-Make sure that the ***work*** directory (***D:\tz\work***) is the current working directory before issuing the next bash command. If in doubt, issue the ***pwd*** command and list the current working directory. 
+Make sure that the ***work*** directory (***D:\tz\work***) is the current working directory before issuing the next bash command. If in doubt, issue the ***pwd*** command and list the current working directory.
 
-Change directory to **D:\\tz\\work\\zoneinfo**. Effectively this will make **D:\\tz\\work\\zoneinfo** the current working directory. 
+Change directory to **D:\\tz\\work\\zoneinfo**. Effectively this will make **D:\\tz\\work\\zoneinfo** the current working directory.
 
 ​					`cd ./zoneinfo`
 
@@ -758,9 +822,9 @@ Among its many features, the **datetimeops** packages gives the developer full a
 
 ### Be Careful Out There
 
-Managing time zone information and updates involves complexity and the ever-present risk of error.  Weigh the update option carefully in light of your application’s specific requirements.  
+Managing time zone information and updates involves complexity and the ever-present risk of error.  Weigh the update option carefully in light of your application’s specific requirements.
 
-Not all time zones updates are significant.  The IANA Time Zone database provides an optional email subscription which will detail the nature of time zone changes.  Your final decision on time zone upgrades should take into account the risk/return trade-offs associated time zone changes which have little or no effect on your operations. 
+Not all time zones updates are significant.  The IANA Time Zone database provides an optional email subscription which will detail the nature of time zone changes.  Your final decision on time zone upgrades should take into account the risk/return trade-offs associated time zone changes which have little or no effect on your operations.
 
 
 

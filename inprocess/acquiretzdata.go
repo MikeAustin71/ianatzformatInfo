@@ -43,6 +43,11 @@ func (acTzDat AcquireTzData) AcquireDirectoryInfo(
 		err = fmt.Errorf("%v", err2.Error())
 		return dirFileInfo, outputDirMgr, err
 	}
+	fmt.Printf("Time Zone Data Input Directory:\n     %v\n\n",
+		inputPathName)
+
+	fmt.Printf("'timezonedata.go' Output Directory:\n     %v\n\n",
+		outputPathName)
 
 	dirFileInfo, err2 = AcquireTzData{}.getDirectoryInfo(inputPathName, ePrefix)
 
@@ -315,25 +320,15 @@ func (acTzDat AcquireTzData) SetCurrentWorkingDirectory(
 	currWorkingDirMgr = pathfileops.DirMgr{}
 	err = nil
 	var err2 error
+	var crDir string
 
-	crDir := ""
-
-	if tzdatastructs.DEBUG == 0 {
-		// DEBUG is OFF!
-
-		crDir, err2 = pathfileops.FileHelper{}.GetCurrentDir()
+	crDir, err2 = pathfileops.FileHelper{}.GetCurrentDir()
 
 		if err2 != nil {
 			err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
 			return currWorkingDirMgr, err
 		}
 
-	} else {
-
-		// DEBUG MUST BE ON
-		crDir = tzdatastructs.HomeDir
-
-	}
 
 	tzdatastructs.CurWorkingDirectory, err2 = pathfileops.DirMgr{}.New(crDir)
 

@@ -80,45 +80,6 @@ func (tzGrpDto *TimeZoneGroupDto) IsInitialized() bool {
 	return tzGrpDto.isInitialized
 }
 
-// EqualGroupTypes - Compares the GroupType data values for input
-// parameter 'tzGrp2' and the current TimeZoneGroupDto. If
-// they are equivalent, this method returns 'true'.
-func (tzGrpDto *TimeZoneGroupDto) EqualGroupTypes(
-	tzGrp2 TimeZoneGroupDto) bool {
-
-	if tzGrpDto.GroupType == tzGrp2.GroupType {
-		return true
-	}
-
-	return false
-}
-
-// EqualGroupClass - Compares the GroupClass data values for input
-// parameter 'tzGrp2' and the current TimeZoneGroupDto. If
-// they are equivalent, this method returns 'true'.
-func (tzGrpDto *TimeZoneGroupDto) EqualGroupClass(
-	tzGrp2 TimeZoneGroupDto) bool {
-
-	if tzGrpDto.GroupClass == tzGrp2.GroupClass {
-		return true
-	}
-
-	return false
-}
-
-// EqualDeprecationStatus - Compares the DeprecationStatus data values
-// for input parameter 'tzMajorGrp2' and the current TimeZoneGroupDto.
-// If they are equivalent, this method returns 'true'.
-func (tzGrpDto *TimeZoneGroupDto) EqualDeprecationStatus(
-	tzMajorGrp2 TimeZoneGroupDto) bool {
-
-	if tzGrpDto.DeprecationStatus == tzMajorGrp2.DeprecationStatus {
-		return true
-	}
-
-	return false
-}
-
 // EqualNames - Compares the GroupName And ParentGroupName
 // values for input parameter 'tzGrpDto2' and the current
 // TimeZoneGroupDto. If they are equivalent, this method
@@ -179,6 +140,7 @@ func (tzGrpDto TimeZoneGroupDto) New(
 	newTzGroupDto.TypeName = typeName
 	newTzGroupDto.TypeValue = typeValue
 	newTzGroupDto.IanaVariableName = ianaVariableName
+	newTzGroupDto.SourceFileNameExt = sourceFileNameExt
 	newTzGroupDto.GroupType = groupType
 	newTzGroupDto.GroupClass = groupClass
 	newTzGroupDto.DeprecationStatus = deprecationStatus
@@ -227,28 +189,5 @@ func (tzGrpDto TimeZoneGroupDto) NewSortValue(groupValue string) string {
 // TimeZoneGroupDto.isInitialized .
 func (tzGrpDto *TimeZoneGroupDto) SetIsInitialized(isInitialized bool) {
 	tzGrpDto.isInitialized = isInitialized
-}
-
-// SortByTzGroupName - This type provides support methods for
-// sorting Time Zone Major Group Dto Arrays by Major Group Name.
-//
-// Example Usage:
-//    sort.Sort(SortByTzGroupName(tzMajorGroupDtoArray))
-//
-type SortByTzGroupName []TimeZoneGroupDto
-
-// Len - Required by the sort.Interface
-func (sortMjrGrpName SortByTzGroupName) len() int {
-	return len(sortMjrGrpName)
-}
-
-// Swap - Required by the sort.Interface
-func (sortMjrGrpName SortByTzGroupName) Swap(i, j int) {
-	sortMjrGrpName[i], sortMjrGrpName[j] = sortMjrGrpName[j], sortMjrGrpName[i]
-}
-
-// Less - Required by the sort.Interface
-func (sortMjrGrpName SortByTzGroupName) Less(i, j int) bool {
-	return sortMjrGrpName[i].GroupName < sortMjrGrpName[j].GroupName
 }
 
