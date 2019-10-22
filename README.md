@@ -71,7 +71,7 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
 This application was designed to operate on multiple operating systems including 
 Mac-OS, Linux and Windows.
 
-**However, to date, this application has only been tested on Windows.**
+**However, to date, this application has only been tested successfully on Windows and Linux Mint 19-2.**
 
 
 
