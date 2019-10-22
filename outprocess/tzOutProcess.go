@@ -486,6 +486,7 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 			"Error='%v'\n", err.Error())
 	}
 
+	tzGroupsAry[tzdatastructs.Level_01_Idx].Sort(true)
 
 	var group *tzdatastructs.TimeZoneGroupDto
 

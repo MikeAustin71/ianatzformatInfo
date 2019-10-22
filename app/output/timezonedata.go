@@ -70,22 +70,22 @@ package main
 // 
 //                  Primary Time Zone Groups:  12
 // 
-// Type Creation Date: 2019-10-20 Sunday 23:07:21 -0500 CDT
+// Type Creation Date: 2019-10-22 Tuesday 04:19:17 -0500 CDT
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
      Africa                             africaTimeZones
-     Atlantic                           atlanticTimeZones
-     Deprecated                         deprecatedTimeZones
-     Indian                             indianTimeZones
+     America                            americaTimeZones
      Antarctica                         antarcticaTimeZones
      Asia                               asiaTimeZones
+     Atlantic                           atlanticTimeZones
      Australia                          australiaTimeZones
-     Pacific                            pacificTimeZones
-     America                            americaTimeZones
-     Europe                             europeTimeZones
+     Deprecated                         deprecatedTimeZones
      Etc                                etcTimeZones
+     Europe                             europeTimeZones
+     Indian                             indianTimeZones
      Military                           militaryTimeZones
+     Pacific                            pacificTimeZones
 }
 
 

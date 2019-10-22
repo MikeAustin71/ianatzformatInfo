@@ -381,13 +381,13 @@ As a requirement, the data field name, **InputDirectory**, must be followed by a
 The IANA time zone database contains text files which represents raw data on world wide time zones. This application, ***ianatzformatInfo.exe***, is designed to parse and format time zone information and generate a ***Go*** source file containing a series of types defining world time zones.
 
 ### Output Go Source File: timezonedata.go
-The output ***Go*** source file, [**timezonedata.go**](./app/output/timezonedata.go), is created in the output directory specified on line #2 of input file, [**targettzdata.txt**](./app/input/targettzdata.txt) .
+The output ***Go*** source file, [**timezonedata.go**](./app/output/timezonedata.go), is created in the output directory specified on line #2 of input file, [**targettzdata.txt**](./app/input/targettzdata.txt).
 
 ```
 OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output`
 ```
 
-Note that line #2 as illustrated above, must be terminated with a new line character, **\n**.
+Note that line #2 (OutputDirectory:) as illustrated above, must be terminated with a new line character, **\n**.  In addition, **OutputDirectory** must be followed by a colon character and a single space.
 
 Using the line #2 example, the output source file, [**timezonedata.go**](./app/output/timezonedata.go), would be created as:
 
@@ -395,7 +395,7 @@ Using the line #2 example, the output source file, [**timezonedata.go**](./app/o
 D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go
 ```
 
-
+Finally, be aware that the output ***Go*** source file ***timezonedata.go*** is created as '***package main***'.  This will need to be modified according the specific needs of your application. 
 
 ### Execution Output Text
 
