@@ -113,16 +113,18 @@ Reference:
 The **Go** Programming Language uses IANA Time Zones in date-time calculations.
 
 Reference:
-	https://golang.org/pkg/time/#LoadLocation
+
+[https://golang.org/pkg/time/#LoadLocation](https://golang.org/pkg/time/#LoadLocation)
 
 This application assumes that Time Zone data has been downloaded
 
 Current IANA Time Zone data base information is located at:
-     <https://www.iana.org/time-zones>
+
+[https://www.iana.org/time-zones](https://www.iana.org/time-zones)
 
 For a listing of all time zone database releases, reference:
 
-​     <https://data.iana.org/time-zones/releases/>
+[https://data.iana.org/time-zones/releases/](https://data.iana.org/time-zones/releases/)
 
 
 ## Go Relies on the IANA Time Zone Database
@@ -177,7 +179,7 @@ The raw IANA Time Zone source files must be downloaded by the end user and store
 
 ## Base Input Data
 
-In order to function properly, this application expects to find the text file [***targettzdata.txt***](./app/input/targettzdata.txt) in a sub-directory labeled *input* which is located directly beneath the directory which houses this application executable (***ianatzformatInfo.exe***).  This text file contains the path to the IANA Time Zone data and the path in which the output source code file (***timezonedata.go***) will be created.
+In order to function properly, this application expects to find the text file [***targettzdata.txt***](./app/input/targettzdata.txt) in a sub-directory labeled *input* which is located directly beneath the directory which houses this application executable (***ianatzformatInfo.exe***).  This text file contains the path to the IANA Time Zone data and the path in which the output source code file ([***timezonedata.go***](./app/output/timezonedata.go)) will be created.
 
 #### Input File Example
 Assume application executable, *ianatzformatInfo.exe*, is located in **D:\myAppDir** .
@@ -198,7 +200,7 @@ The first line designates the 'path' to the IANA time zone source data files. Th
 
 The second line designates the path to the output file.
 
-The application will create the output file [***timezonedata.go***](./app/output/timezonedata.go)  in this output directory.  This ***Go*** source file will contain data structures used to access world wide time zones.
+The application will create the output file [***timezonedata.go***](./app/output/timezonedata.go) in this output directory.  This ***Go*** source file will contain data structures used to access world wide time zones.
 
 ##### Configuration
 Configure these two lines in accordance with the following example:
@@ -273,11 +275,11 @@ Make a note of the desired time zone version. Time zone version numbers are expr
 
 	a. Change drive to target drive.
     ```
-    	cd /cygdrive/d
+            cd /cygdrive/d
 
-    		OR
+                    OR
 
-    	cd d:
+                  cd d:
     ```
 	b. Change directory to target directory
 	
@@ -378,7 +380,7 @@ As a requirement, the data field name, **InputDirectory**, must be followed by a
 
 The IANA time zone database contains text files which represents raw data on world wide time zones. This application, ***ianatzformatInfo.exe***, is designed to parse and format time zone information and generate a ***Go*** source file containing a series of types defining world time zones.
 
-#### Output Go Source File: timezonedata.go
+### Output Go Source File: timezonedata.go
 The output ***Go*** source file, [**timezonedata.go**](./app/output/timezonedata.go), is created in the output directory specified on line #2 of input file, [**targettzdata.txt**](./app/input/targettzdata.txt) .
 
 ```
@@ -395,12 +397,12 @@ D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go
 
 
 
-#### Execution Output Text
+### Execution Output Text
 
 When ***ianatzformatInfo.exe*** is executed from the command line, text is printed out
 describing the status of the applications time zone parsing and formatting operations.
 
-##### Successful Execution
+#### Successful Execution
 
 If the execution completes successfully, one can expect to see command line text similar
 to the following:
@@ -436,11 +438,11 @@ to the following:
     ---------------------
 ```
 
-##### Failed Execution
+#### Failed Execution
 
 If execution of ***ianatzformatInfo.exe*** fails, error messages will be printed to the command line.
 
-##### Piping Execution Results To A Text File
+#### Piping Execution Results To A Text File
 
 Typically ***ianatzformatInfo.exe*** is executed from the command line and status messages indicating success or failure are printed to the same command line.
 
@@ -504,8 +506,11 @@ In addition to objectives described above, the ***ianatzformatInfo*** applicatio
 For more information on ***Go Modules***, see the following references:
 
 [***https://github.com/golang/go/wiki/Modules***](https://github.com/golang/go/wiki/Modules)
+
 [***https://blog.golang.org/using-go-modules***](https://blog.golang.org/using-go-modules)
+
 [***https://blog.golang.org/modules2019***](https://blog.golang.org/modules2019)
+
 [***https://roberto.selbach.ca/intro-to-go-modules/***](https://roberto.selbach.ca/intro-to-go-modules/)
 
 ### Design Objective: Component Directory Structure
