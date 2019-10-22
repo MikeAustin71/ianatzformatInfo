@@ -502,7 +502,7 @@ Assuming all went well, the executable file is now styled as:
 
 In addition to objectives described above, the ***ianatzformatInfo*** application was designed to explore the features and capabilities of [***Go Modules***](https://github.com/golang/go/wiki/Modules).
 
-Bear in mind that the ***ianatzformatInfo*** application takes advantages of the latest ***Go Modules*** features as of ***Go*** version 1.13.1.
+Bear in mind that the ***ianatzformatInfo*** application takes advantage of the latest ***Go Modules*** features as of ***Go*** version 1.13.1.
 
 ### ***Go Modules***
 For more information on ***Go Modules***, see the following references:
