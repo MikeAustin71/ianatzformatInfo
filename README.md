@@ -247,9 +247,9 @@ Make a note of the desired time zone version. Time zone version numbers are expr
    a. Change to a target drive where the time zone data directory will be located. In this example, ***d:*** drive.
    
     ```
-    cd /cygdrive/d
-      OR
-    cd d:
+        cd /cygdrive/d
+            OR
+           cd d:
     ```
 
    b.	Delete any preexisting versions of this time zone data directory
@@ -501,6 +501,8 @@ Assuming all went well, the executable file is now styled as:
 ## ***ianatzformatInfo*** Is A Research and Demonstration Project For ***Go Modules***
 
 In addition to objectives described above, the ***ianatzformatInfo*** application was designed to explore the features and capabilities of [***Go Modules***](https://github.com/golang/go/wiki/Modules).
+
+Bear in mind that the ***ianatzformatInfo*** exhibits all the latest ***Go Modules*** as of ***Go*** version 1.13.1.
 
 ### ***Go Modules***
 For more information on ***Go Modules***, see the following references:

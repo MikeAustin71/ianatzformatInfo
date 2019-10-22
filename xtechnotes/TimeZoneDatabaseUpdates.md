@@ -334,14 +334,15 @@ After copying the file ***update.bash*** to the time zone scratch directory, it 
 
 3. Modify the “**CODE**” and “**DATA**” variables to reflect the desired time zone version.  Instead of **2019c**, you will of course use the desired IANA time zone version number captured in ***Step-2 b***, above.
 
-```
-    Copy ->
-
-    From: CODE=2019b, DATA=2019b
-
-    To:   CODE=2019c DATA=2019c
-```
-​		Again, be sure to replace 2019c with correct Time Zone Version Number.
+    ```
+        Copy ->
+    
+            From: CODE=2019b, DATA=2019b
+    
+            To:   CODE=2019c DATA=2019c
+    ```
+    
+    Again, be sure to replace 2019c with correct Time Zone Version Number.
 
 4. Save the modified ***update.bash*** file and exit your text editor.
 
