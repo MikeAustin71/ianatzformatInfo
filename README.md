@@ -68,7 +68,11 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
     - [Build Executable Step \#3](#build-executable-step-3)
     - [Executables Stored In Project](#executables-stored-in-project)
         - [Linux Executable](#linux-executable)
+            + [Linux Executable Create Date](#linux-executable-create-date)
+            + [Linux Executable Checksum](#linux-executable-checksum)
         - [Windows Executable](#windows-executable)
+            + [Windows Executable Create Date](#windows-executable-create-date)
+            + [Windows Executable Checksum](#windows-executable-checksum)
 + [Questions And Comments](#questions-and-comments)
 
 ---
@@ -514,7 +518,12 @@ The linux version of the ***ianatzformatInfo.exe*** executable was compiled usin
 
 This executable file is stored in this repository at ***ianatzformatInfo\xExecutables\Linux***. 
 
+#### Linux Executable Create Date
+
 Create Date: ‎Tuesday, ‎October ‎22, ‎2019, ‏‎5:16:10 PM
+
+#### Linux Executable Checksum
+
 SHA-256: 601493D76C2F47EC556875B16085E59BACF1A3FBE31F66451512407CE8CC5E10 
 
 ### Windows Executable
@@ -522,7 +531,11 @@ The windows version of the ***ianatzformatInfo.exe*** executable was compiled us
 
 This executable file is stored in this repository at ***ianatzformatInfo\xExecutables\Windows***.
 
+#### Windows Executable Create Date
 Create Date: Tuesday, ‎October ‎22, ‎2019, ‏‎7:26:54 PM
+
+#### Windows Executable Checksum
+
 SHA-256: 6741383CBC7C3C4C1770FC5826C9A88DE9126F9886DB10E7549C95CC3CCF8C47
 
 ## ***ianatzformatInfo*** Is A Research and Demonstration Project For ***Go Modules***
