@@ -1,0 +1,13 @@
+Compiled For Linux
+==================
+
+The linux version of the ianatzformatInfo.exe executable was compiled using Go Version 1.13.3,
+GOARCH=amd64 on Linux Mint 19-2.
+
+
+ianatzformatInfo.exe
+--------------------
+Create Date: ‎Tuesday, ‎October ‎22, ‎2019, ‏‎5:16:10 PM
+SHA-256: 601493D76C2F47EC556875B16085E59BACF1A3FBE31F66451512407CE8CC5E10
+SHA-512: 062B9B0D3FD8734025F9A7F73A717CA6C2D7825DD3810D682223E328806D90AA1F7CD22E33CA2360C1DE65A9B3DAACDE06164933BC9DC533B1381DE1925B6FAD
+

@@ -1,0 +1,12 @@
+Compiled For Windows
+====================
+
+The windows version of the ianatzformatInfo.exe executable was compiled using
+Go Version 1.13.3, GOARCH=amd64 on Windows 10 Pro.
+
+ianatzformatInfo.exe
+--------------------
+Create Date: Tuesday, ‎October ‎22, ‎2019, ‏‎7:26:54 PM
+SHA-256: 6741383CBC7C3C4C1770FC5826C9A88DE9126F9886DB10E7549C95CC3CCF8C47
+SHA-512: 176A852597B92F2C92BF2647CF86F809B350D7744AF4F500E0E0D44D26712C88F55143CC7BD704E68485BB7F173330BC67056D9FAB7FC3EEB1C6EB78A30356F2
+

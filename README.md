@@ -62,6 +62,13 @@ TZones.America.Argentina().Buenos_Aires() // America/Argentina/Buenos_Aires Time
     - [***Go Modules***](#go-modules)
     - [Design Objective: Component Directory Structure](#design-objective-component-directory-structure)
     - [Directory Layout for ***ianatzformatInfo***](#directory-layout-for-ianatzformatinfo)
++ [Building The ***ianatzformatInfo*** Executable](#building-the-ianatzformatinfo-executable)
+    - [Build Executable Step \#1](#build-executable-step-1)
+    - [Build Executable Step \#2](#build-executable-step-2)
+    - [Build Executable Step \#3](#build-executable-step-3)
+    - [Executables Stored In Project](#executables-stored-in-project)
+        - [Linux Executable](#linux-executable)
+        - [Windows Executable](#windows-executable)
 + [Questions And Comments](#questions-and-comments)
 
 ---
@@ -83,7 +90,7 @@ This version DOES support ***Go*** modules.
 
 This version requires ***Go*** Version 1.13 or later.
 
-This version was developed and tested using ***Go*** version 1.13.1. 
+This version was developed and tested using ***Go*** version 1.13.3. 
 
 
 
@@ -456,7 +463,7 @@ However the end user has the option of transferring or 'piping' command executio
 
 In the example above, ***ianatzformatInfo.exe*** is executed from the command line and the output from this command execution is written to the text file, ***output.txt*** in the same directory in which the application was executed.
 
-## Building The *ianatzformatInfo* Executable 
+## Building The ***ianatzformatInfo*** Executable 
 
 To build the executable file for ***ianatzformatInfo.exe*** follow these steps.
 
@@ -498,11 +505,31 @@ Assuming all went well, the executable file is now styled as:
     ianatzformatInfo/app/ianatzformatInfo.exe
 ```
 
+### Executables Stored In Project
+
+Compiled executables (***exe files***) for Windows and Linux are stored in this software repository.
+
+### Linux Executable
+The linux version of the ***ianatzformatInfo.exe*** executable was compiled using ***Go*** Version 1.13.3, GOARCH=amd64 on Linux Mint 19-2.
+
+This executable file is stored in this repository at ***ianatzformatInfo\xExecutables\Linux***. 
+
+Create Date: ‎Tuesday, ‎October ‎22, ‎2019, ‏‎5:16:10 PM
+SHA-256: 601493D76C2F47EC556875B16085E59BACF1A3FBE31F66451512407CE8CC5E10 
+
+### Windows Executable
+The windows version of the ***ianatzformatInfo.exe*** executable was compiled using ***Go*** Version 1.13.3, GOARCH=amd64 on Windows 10 Pro.
+
+This executable file is stored in this repository at ***ianatzformatInfo\xExecutables\Windows***.
+
+Create Date: Tuesday, ‎October ‎22, ‎2019, ‏‎7:26:54 PM
+SHA-256: 6741383CBC7C3C4C1770FC5826C9A88DE9126F9886DB10E7549C95CC3CCF8C47
+
 ## ***ianatzformatInfo*** Is A Research and Demonstration Project For ***Go Modules***
 
 In addition to objectives described above, the ***ianatzformatInfo*** application was designed to explore the features and capabilities of [***Go Modules***](https://github.com/golang/go/wiki/Modules).
 
-Bear in mind that the ***ianatzformatInfo*** application takes advantage of the latest ***Go Modules*** features as of ***Go*** version 1.13.1.
+Bear in mind that the ***ianatzformatInfo*** application takes advantage of the latest ***Go Modules*** features as of ***Go*** version 1.13.3.
 
 ### ***Go Modules***
 For more information on ***Go Modules***, see the following references:
