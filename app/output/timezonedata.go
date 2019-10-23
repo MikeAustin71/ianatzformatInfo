@@ -3,8 +3,8 @@ package main
 
 
 // TimeZones - This type and its associated methods encapsulate 663 IANA Time
-// Zones plus 25-Military Time Zones. This type is therefore used as a 
-// comprehensive enumeration of Global Time Zones.
+// Zones, 25-Military Time Zones and 11-Other Time Zones. This type is
+// therefore used as a comprehensive enumeration of Global Time Zones.
 //
 // The Go Programming Language uses IANA Time Zones in date-time calculations.
 //  Reference:
@@ -29,7 +29,7 @@ package main
 //
 // For easy access to the all Time Zones it is recommended that you use the
 // global variable 'TZones' declared below. This variable instantiates the
-// 'TimeZones' type. It is therefore much easier to access any of the 688 time
+// 'TimeZones' type. It is therefore much easier to access any of the 699 time
 // zones using dot operators and intellisense (a.k.a. intelligent code completion).
 //
 // Examples:
@@ -59,37 +59,39 @@ package main
 //                 Sub-Total IANA Time Zones: 663
 // 
 //                Military Time Zones :  25
-//                   Other Time Zones :   0
+//                   Other Time Zones :  11
 //                                         -------
-//                          Total Time Zones: 688
+//                          Total Time Zones: 699
 // 
 //       Standard Time Zone Sub-Groups:   4
 //           Link Time Zone Sub-Groups:  16
 //                                         -------
 //                Total Time Zone Sub-Groups:  20
 // 
-//                  Primary Time Zone Groups:  12
+//                  Primary Time Zone Groups:  13
 // 
-// Type Creation Date: 2019-10-22 Tuesday 04:19:17 -0500 CDT
+// Type Creation Date: 2019-10-23 Wednesday 03:59:02 -0500 CDT
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
-     Africa                             africaTimeZones
-     America                            americaTimeZones
-     Antarctica                         antarcticaTimeZones
-     Asia                               asiaTimeZones
-     Atlantic                           atlanticTimeZones
-     Australia                          australiaTimeZones
-     Deprecated                         deprecatedTimeZones
-     Etc                                etcTimeZones
-     Europe                             europeTimeZones
-     Indian                             indianTimeZones
-     Military                           militaryTimeZones
-     Pacific                            pacificTimeZones
+    Africa                             africaTimeZones
+    America                            americaTimeZones
+    Antarctica                         antarcticaTimeZones
+    Asia                               asiaTimeZones
+    Atlantic                           atlanticTimeZones
+    Australia                          australiaTimeZones
+    Deprecated                         deprecatedTimeZones
+    Etc                                etcTimeZones
+    Europe                             europeTimeZones
+    Indian                             indianTimeZones
+    Military                           militaryTimeZones
+    Pacific                            pacificTimeZones
+    USA                                uSATimeZones
 }
 
 
 var TZones = TimeZones{}
+
 
 
 // africaTimeZones - IANA Time Zones for 'Africa'.
@@ -368,6 +370,7 @@ func (afric africaTimeZones) Tunis() string {return "Africa/Tunis" }
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Windhoek() string {return "Africa/Windhoek" }
+
 
 // americaTimeZones - IANA Time Zones for 'America'.
 //  
@@ -1011,6 +1014,7 @@ func (ameri americaTimeZones) Kentucky() kentuckyTimeZones {return "" }
 //  
 func (ameri americaTimeZones) North_Dakota() north_DakotaTimeZones {return "" }
 
+
 // antarcticaTimeZones - IANA Time Zones for 'Antarctica'.
 //  
 // For documentation on IANA Time Zones, see type
@@ -1077,6 +1081,7 @@ func (antar antarcticaTimeZones) Troll() string {return "Antarctica/Troll" }
 // IANA Source File: antarctica
 //  
 func (antar antarcticaTimeZones) Vostok() string {return "Antarctica/Vostok" }
+
 
 // asiaTimeZones - IANA Time Zones for 'Asia'.
 //  
@@ -1530,6 +1535,7 @@ func (asiaT asiaTimeZones) Yekaterinburg() string {return "Asia/Yekaterinburg" }
 //  
 func (asiaT asiaTimeZones) Yerevan() string {return "Asia/Yerevan" }
 
+
 // atlanticTimeZones - IANA Time Zones for 'Atlantic'.
 //  
 // For documentation on IANA Time Zones, see type
@@ -1596,6 +1602,7 @@ func (atlan atlanticTimeZones) St_Helena() string {return "Atlantic/St_Helena" }
 // IANA Source File: southamerica
 //  
 func (atlan atlanticTimeZones) Stanley() string {return "Atlantic/Stanley" }
+
 
 // australiaTimeZones - IANA Time Zones for 'Australia'.
 //  
@@ -1668,6 +1675,7 @@ func (austr australiaTimeZones) Perth() string {return "Australia/Perth" }
 // IANA Source File: australasia
 //  
 func (austr australiaTimeZones) Sydney() string {return "Australia/Sydney" }
+
 
 // Deprecated - Defines a collection of IANA
 // Time Zones which are obsolete and no longer used as
@@ -2095,6 +2103,7 @@ func (depre deprecatedTimeZones) WMinusSU() string { return "Europe/Moscow" }
 //  
 func (depre deprecatedTimeZones) Zulu() string { return "Etc/UTC" }
 
+
 // etcTimeZones - IANA Time Zones for 'Etc'.
 //  
 // For documentation on IANA Time Zones, see type
@@ -2246,6 +2255,7 @@ func (etcTi etcTimeZones) GMTMinus14() string {return "Etc/GMT-14" }
 // IANA Source File: etcetera
 //  
 func (etcTi etcTimeZones) UTC() string {return "Etc/UTC" }
+
 
 // europeTimeZones - IANA Time Zones for 'Europe'.
 //  
@@ -2539,6 +2549,7 @@ func (europ europeTimeZones) Zaporozhye() string {return "Europe/Zaporozhye" }
 //  
 func (europ europeTimeZones) Zurich() string {return "Europe/Zurich" }
 
+
 // indianTimeZones - IANA Time Zones for 'Indian'.
 //  
 // For documentation on IANA Time Zones, see type
@@ -2605,6 +2616,7 @@ func (india indianTimeZones) Mayotte() string {return "Indian/Mayotte" }
 // IANA Source File: africa
 //  
 func (india indianTimeZones) Reunion() string {return "Indian/Reunion" }
+
 
 // Military - Military Time Zone Names.
 //  
@@ -2836,6 +2848,7 @@ func (milTz militaryTimeZones) Yankee() string {return "Etc/GMT-12" }
 //  
 func (milTz militaryTimeZones) Zulu() string {return "Etc/UTC" }
 
+
 // pacificTimeZones - IANA Time Zones for 'Pacific'.
 //  
 // For documentation on IANA Time Zones, see type
@@ -3043,9 +3056,99 @@ func (pacif pacificTimeZones) Wake() string {return "Pacific/Wake" }
 //  
 func (pacif pacificTimeZones) Wallis() string {return "Pacific/Wallis" }
 
-// IANA Time Zones in located in 'Argentina'.
+
+// uSATimeZones - Defines a collection of time zones in the continental
+// United States of America, its territories and associated
+// commonwealth entities.
 //  
-// The Parent Group is 'America'
+// These time zones are considered deprecated by the IANA Time
+// Zone Database.  Nevertheless, they remain in continuous, every
+// day use within the United States of America.
+//  
+// Each member of this collection can be accessed by its common
+// name.  These common names include 'Eastern', 'Central', 'Mountain'
+// and 'Pacific' Time.  However, the returned values associated with
+// these common names will be mapped to a current, valid IANA time
+// zone such as 'America/New_York', 'America/Chicago', 'America/Denver'
+// or 'America/Los_Angeles'.
+//  
+// The 'USA'Time Zone Group is therefore an artificial creation
+// outside of the accepted IANA Time Zones and is provided for
+// convenience and in recognition of everyday usage and practice.
+//  
+// These same USA time zones can also be accessed through the
+// 'TimeZones' variable 'Deprecated' which maps to the group,
+// 'deprecatedTimeZones'.
+//  
+// For documentation on IANA Time Zones, see type 'TimeZones'.
+//  
+// Reference:
+//   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+//   https://en.wikipedia.org/wiki/Tz_database
+//   https://www.iana.org/time-zones
+//  
+type uSATimeZones  string
+
+// Alaska - USA Alaska Time Zone.
+// Maps to IANA Time Zone 'America/Anchorage'
+//  
+func (usaTz uSATimeZones) Alaska() string {return "America/Anchorage" }
+
+// Aleutian - USA Aleutian Time Zone.
+// Maps to IANA Time Zone 'America/Adak'
+//  
+func (usaTz uSATimeZones) Aleutian() string {return "America/Adak" }
+
+// Central - USA Central Time Zone.
+// Maps to IANA Time Zone 'America/Chicago'
+//  
+func (usaTz uSATimeZones) Central() string {return "America/Chicago" }
+
+// Eastern - USA Eastern Time Zone.
+// Maps to IANA Time Zone 'America/New_York'
+//  
+func (usaTz uSATimeZones) Eastern() string {return "America/New_York" }
+
+// Guam - USA Guam Time Zone.
+// Maps to IANA Time Zone 'Pacific/Guam'
+//  
+func (usaTz uSATimeZones) Guam() string {return "Pacific/Guam" }
+
+// Hawaii - USA Hawaii Time Zone.
+// Maps to IANA Time Zone 'Pacific/Honolulu'
+//  
+func (usaTz uSATimeZones) Hawaii() string {return "Pacific/Honolulu" }
+
+// Mountain - USA Mountain Time Zone.
+// Maps to IANA Time Zone 'America/Denver'
+//  
+func (usaTz uSATimeZones) Mountain() string {return "America/Denver" }
+
+// Pacific - USA Pacific Time Zone.
+// Maps to IANA Time Zone 'America/Los_Angeles'
+//  
+func (usaTz uSATimeZones) Pacific() string {return "America/Los_Angeles" }
+
+// PuertoRico - USA PuertoRico Time Zone.
+// Maps to IANA Time Zone 'America/Puerto_Rico'
+//  
+func (usaTz uSATimeZones) PuertoRico() string {return "America/Puerto_Rico" }
+
+// Samoa - USA Samoa Time Zone.
+// Maps to IANA Time Zone 'Pacific/Pago_Pago'
+//  
+func (usaTz uSATimeZones) Samoa() string {return "Pacific/Pago_Pago" }
+
+// VirginIslands - USA VirginIslands Time Zone.
+// Maps to IANA Time Zone 'America/Port_of_Spain'
+//  
+func (usaTz uSATimeZones) VirginIslands() string {return "America/Port_of_Spain" }
+
+
+// argentinaTimeZones - A Sub-Group of Time Zones. These are
+// IANA Time Zones located in 'Argentina'.
+//  
+// The Parent Group is 'America'.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3057,74 +3160,76 @@ func (pacif pacificTimeZones) Wallis() string {return "Pacific/Wallis" }
 //  
 type argentinaTimeZones string
 
-// Buenos_Aires - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Buenos_Aires - IANA Time Zone 'America/Argentina/Buenos_Aires'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Buenos_Aires() string {return "America/Argentina/Buenos_Aires" }
 
-// Catamarca - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Catamarca - IANA Time Zone 'America/Argentina/Catamarca'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Catamarca() string {return "America/Argentina/Catamarca" }
 
-// ComodRivadavia - A place holder which defines a sub-group
-// of IANA Time Zones.
+// ComodRivadavia - IANA Time Zone 'America/Argentina/ComodRivadavia'.
+// IANA Source File: backzone
 //  
 func (argen argentinaTimeZones) ComodRivadavia() string {return "America/Argentina/ComodRivadavia" }
 
-// Cordoba - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Cordoba - IANA Time Zone 'America/Argentina/Cordoba'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Cordoba() string {return "America/Argentina/Cordoba" }
 
-// Jujuy - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Jujuy - IANA Time Zone 'America/Argentina/Jujuy'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Jujuy() string {return "America/Argentina/Jujuy" }
 
-// La_Rioja - A place holder which defines a sub-group
-// of IANA Time Zones.
+// La_Rioja - IANA Time Zone 'America/Argentina/La_Rioja'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) La_Rioja() string {return "America/Argentina/La_Rioja" }
 
-// Mendoza - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Mendoza - IANA Time Zone 'America/Argentina/Mendoza'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Mendoza() string {return "America/Argentina/Mendoza" }
 
-// Rio_Gallegos - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Rio_Gallegos - IANA Time Zone 'America/Argentina/Rio_Gallegos'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Rio_Gallegos() string {return "America/Argentina/Rio_Gallegos" }
 
-// Salta - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Salta - IANA Time Zone 'America/Argentina/Salta'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Salta() string {return "America/Argentina/Salta" }
 
-// San_Juan - A place holder which defines a sub-group
-// of IANA Time Zones.
+// San_Juan - IANA Time Zone 'America/Argentina/San_Juan'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) San_Juan() string {return "America/Argentina/San_Juan" }
 
-// San_Luis - A place holder which defines a sub-group
-// of IANA Time Zones.
+// San_Luis - IANA Time Zone 'America/Argentina/San_Luis'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) San_Luis() string {return "America/Argentina/San_Luis" }
 
-// Tucuman - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Tucuman - IANA Time Zone 'America/Argentina/Tucuman'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Tucuman() string {return "America/Argentina/Tucuman" }
 
-// Ushuaia - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Ushuaia - IANA Time Zone 'America/Argentina/Ushuaia'.
+// IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Ushuaia() string {return "America/Argentina/Ushuaia" }
 
-// IANA Time Zones in located in 'Indiana'.
+
+// indianaTimeZones - A Sub-Group of Time Zones. These are
+// IANA Time Zones located in 'Indiana'.
 //  
-// The Parent Group is 'America'
+// The Parent Group is 'America'.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3136,49 +3241,51 @@ func (argen argentinaTimeZones) Ushuaia() string {return "America/Argentina/Ushu
 //  
 type indianaTimeZones string
 
-// Indianapolis - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Indianapolis - IANA Time Zone 'America/Indiana/Indianapolis'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Indianapolis() string {return "America/Indiana/Indianapolis" }
 
-// Knox - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Knox - IANA Time Zone 'America/Indiana/Knox'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Knox() string {return "America/Indiana/Knox" }
 
-// Marengo - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Marengo - IANA Time Zone 'America/Indiana/Marengo'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Marengo() string {return "America/Indiana/Marengo" }
 
-// Petersburg - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Petersburg - IANA Time Zone 'America/Indiana/Petersburg'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Petersburg() string {return "America/Indiana/Petersburg" }
 
-// Tell_City - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Tell_City - IANA Time Zone 'America/Indiana/Tell_City'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Tell_City() string {return "America/Indiana/Tell_City" }
 
-// Vevay - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Vevay - IANA Time Zone 'America/Indiana/Vevay'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Vevay() string {return "America/Indiana/Vevay" }
 
-// Vincennes - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Vincennes - IANA Time Zone 'America/Indiana/Vincennes'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Vincennes() string {return "America/Indiana/Vincennes" }
 
-// Winamac - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Winamac - IANA Time Zone 'America/Indiana/Winamac'.
+// IANA Source File: northamerica
 //  
 func (india indianaTimeZones) Winamac() string {return "America/Indiana/Winamac" }
 
-// IANA Time Zones in located in 'Kentucky'.
+
+// kentuckyTimeZones - A Sub-Group of Time Zones. These are
+// IANA Time Zones located in 'Kentucky'.
 //  
-// The Parent Group is 'America'
+// The Parent Group is 'America'.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3190,19 +3297,21 @@ func (india indianaTimeZones) Winamac() string {return "America/Indiana/Winamac"
 //  
 type kentuckyTimeZones string
 
-// Louisville - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Louisville - IANA Time Zone 'America/Kentucky/Louisville'.
+// IANA Source File: northamerica
 //  
 func (kentu kentuckyTimeZones) Louisville() string {return "America/Kentucky/Louisville" }
 
-// Monticello - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Monticello - IANA Time Zone 'America/Kentucky/Monticello'.
+// IANA Source File: northamerica
 //  
 func (kentu kentuckyTimeZones) Monticello() string {return "America/Kentucky/Monticello" }
 
-// IANA Time Zones in located in 'North_Dakota'.
+
+// north_DakotaTimeZones - A Sub-Group of Time Zones. These are
+// IANA Time Zones located in 'North_Dakota'.
 //  
-// The Parent Group is 'America'
+// The Parent Group is 'America'.
 //  
 // For documentation on IANA Time Zones, see type
 // 'TimeZones'.
@@ -3214,20 +3323,21 @@ func (kentu kentuckyTimeZones) Monticello() string {return "America/Kentucky/Mon
 //  
 type north_DakotaTimeZones string
 
-// Beulah - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Beulah - IANA Time Zone 'America/North_Dakota/Beulah'.
+// IANA Source File: northamerica
 //  
 func (north north_DakotaTimeZones) Beulah() string {return "America/North_Dakota/Beulah" }
 
-// Center - A place holder which defines a sub-group
-// of IANA Time Zones.
+// Center - IANA Time Zone 'America/North_Dakota/Center'.
+// IANA Source File: northamerica
 //  
 func (north north_DakotaTimeZones) Center() string {return "America/North_Dakota/Center" }
 
-// New_Salem - A place holder which defines a sub-group
-// of IANA Time Zones.
+// New_Salem - IANA Time Zone 'America/North_Dakota/New_Salem'.
+// IANA Source File: northamerica
 //  
 func (north north_DakotaTimeZones) New_Salem() string {return "America/North_Dakota/New_Salem" }
+
 
 // africaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -3584,6 +3694,7 @@ func (afric africaDeprecatedTimeZones) PortoMinusNovo() string { return "Africa/
 //            IANA Source File: backward
 //  
 func (afric africaDeprecatedTimeZones) Timbuktu() string { return "Africa/Abidjan" }
+
 
 // americaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -3961,6 +4072,7 @@ func (ameri americaDeprecatedTimeZones) Tortola() string { return "America/Port_
 //  
 func (ameri americaDeprecatedTimeZones) Virgin() string { return "America/Port_of_Spain" }
 
+
 // antarcticaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -3997,6 +4109,7 @@ func (antar antarcticaDeprecatedTimeZones) McMurdo() string { return "Pacific/Au
 //  
 func (antar antarcticaDeprecatedTimeZones) South_Pole() string { return "Pacific/Auckland" }
 
+
 // arcticDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -4022,6 +4135,7 @@ type arcticDeprecatedTimeZones string
 //            IANA Source File: europe
 //  
 func (arcti arcticDeprecatedTimeZones) Longyearbyen() string { return "Europe/Oslo" }
+
 
 // asiaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -4259,6 +4373,7 @@ func (asiaD asiaDeprecatedTimeZones) Ulan_Bator() string { return "Asia/Ulaanbaa
 //  
 func (asiaD asiaDeprecatedTimeZones) Vientiane() string { return "Asia/Bangkok" }
 
+
 // atlanticDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -4304,6 +4419,7 @@ func (atlan atlanticDeprecatedTimeZones) Jan_Mayen() string { return "Europe/Osl
 //            IANA Source File: africa
 //  
 func (atlan atlanticDeprecatedTimeZones) St_Helena() string { return "Africa/Abidjan" }
+
 
 // australiaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -4431,6 +4547,7 @@ func (austr australiaDeprecatedTimeZones) West() string { return "Australia/Pert
 //  
 func (austr australiaDeprecatedTimeZones) Yancowinna() string { return "Australia/Broken_Hill" }
 
+
 // brazilDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -4486,6 +4603,7 @@ func (brazi brazilDeprecatedTimeZones) East() string { return "America/Sao_Paulo
 //            IANA Source File: backward
 //  
 func (brazi brazilDeprecatedTimeZones) West() string { return "America/Manaus" }
+
 
 // canadaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -4583,6 +4701,7 @@ func (canad canadaDeprecatedTimeZones) Saskatchewan() string { return "America/R
 //  
 func (canad canadaDeprecatedTimeZones) Yukon() string { return "America/Whitehorse" }
 
+
 // chileDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -4618,6 +4737,7 @@ func (chile chileDeprecatedTimeZones) Continental() string { return "America/San
 //            IANA Source File: backward
 //  
 func (chile chileDeprecatedTimeZones) EasterIsland() string { return "Pacific/Easter" }
+
 
 // etcDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -4704,6 +4824,7 @@ func (etcDe etcDeprecatedTimeZones) Universal() string { return "Etc/UTC" }
 //            IANA Source File: etcetera
 //  
 func (etcDe etcDeprecatedTimeZones) Zulu() string { return "Etc/UTC" }
+
 
 // europeDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -4891,6 +5012,7 @@ func (europ europeDeprecatedTimeZones) Vatican() string { return "Europe/Rome" }
 //  
 func (europ europeDeprecatedTimeZones) Zagreb() string { return "Europe/Belgrade" }
 
+
 // indianDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -4937,6 +5059,7 @@ func (india indianDeprecatedTimeZones) Comoro() string { return "Africa/Nairobi"
 //  
 func (india indianDeprecatedTimeZones) Mayotte() string { return "Africa/Nairobi" }
 
+
 // mexicoDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
 // primary and accepted time zone designations. These
@@ -4982,6 +5105,7 @@ func (mexic mexicoDeprecatedTimeZones) BajaSur() string { return "America/Mazatl
 //            IANA Source File: backward
 //  
 func (mexic mexicoDeprecatedTimeZones) General() string { return "America/Mexico_City" }
+
 
 // pacificDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -5068,6 +5192,7 @@ func (pacif pacificDeprecatedTimeZones) Truk() string { return "Pacific/Chuuk" }
 //            IANA Source File: backward
 //  
 func (pacif pacificDeprecatedTimeZones) Yap() string { return "Pacific/Chuuk" }
+
 
 // uSDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as
@@ -5214,6 +5339,7 @@ func (uSDep uSDeprecatedTimeZones) PacificMinusNew() string { return "America/Lo
 //            IANA Source File: backward
 //  
 func (uSDep uSDeprecatedTimeZones) Samoa() string { return "Pacific/Pago_Pago" }
+
 
 // argentinaDeprecatedTimeZones - Defines a subsidiary collection
 // of Time Zones which are obsolete and no longer used as

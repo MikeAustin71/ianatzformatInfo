@@ -235,7 +235,7 @@ func (tZoneDecs TzZoneDeclarations) PlaceHolderLinkFuncDeclaration(
 // Chicago - IANA Time Zone "America/Chicago"
 // IANA Source File: northamerica
 //
-// func (amer americaTimeZones) Chicago() string { return "America/Chicago" }
+// func (ameri americaTimeZones) Chicago() string { return "America/Chicago" }
 //
 func (tZoneDecs TzZoneDeclarations) StandardZoneFuncDeclaration(
 	tzData *tzdatastructs.TimeZoneDataDto, ePrefix string) error {
@@ -261,7 +261,6 @@ func (tZoneDecs TzZoneDeclarations) StandardZoneFuncDeclaration(
 
 	outputStr += "\n"
 
-	// tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
 	tzData.FuncDeclaration = []byte(outputStr)
 
 	return nil

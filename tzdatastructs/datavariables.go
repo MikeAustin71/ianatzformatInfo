@@ -177,4 +177,28 @@ var MilitaryTzArray = []string{
 	"Zulu",
 }
 
+var USATzArray = []string{
+	"Alaska",
+	"Aleutian",
+	"Central",
+	"Eastern",
+	"Guam",
+	"Hawaii",
+	"Mountain",
+	"Pacific",
+	"PuertoRico",
+	"Samoa",
+	"VirginIslands" }
 
+var USATzMap = map[string]string{
+	"Alaska"         : "America/Anchorage",
+	"Aleutian"       : "America/Adak",
+	"Central"        : "America/Chicago",
+	"Eastern"        : "America/New_York",
+	"Guam"           : "Pacific/Guam",
+	"Hawaii"         : "Pacific/Honolulu",
+	"Mountain"       : "America/Denver",
+	"Pacific"        : "America/Los_Angeles",
+	"PuertoRico"     : "America/Puerto_Rico",
+	"Samoa"          : "Pacific/Pago_Pago",
+	"VirginIslands"  : "America/Port_of_Spain"}

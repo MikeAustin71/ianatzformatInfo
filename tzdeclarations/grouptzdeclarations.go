@@ -35,7 +35,8 @@ func (tzGrpDecs TzGroupDeclarations) DeprecatedGrpDeclaration(
 
 	ePrefix += "TzGroupDeclarations.DeprecatedGrpDeclaration() "
 
-	outputStr := tzdatastructs.CommentLead +
+	outputStr := "\n"
+	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("%v - Defines a collection of IANA\n",
 			tzGroup.GroupName)
 
@@ -103,7 +104,8 @@ func (tzGrpDecs TzGroupDeclarations) DeprecatedSubGrpDeclaration(
 
 	ePrefix += "TzGroupDeclarations.DeprecatedGrpDeclaration() "
 
-	outputStr := tzdatastructs.CommentLead +
+	outputStr := "\n"
+	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("%v - Defines a subsidiary collection\n",
 			tzGroup.TypeName)
 
@@ -170,7 +172,8 @@ func (tzGrpDecs TzGroupDeclarations) StandardGrpDeclaration(
 
 	ePrefix += "TzGroupDeclarations.StandardGrpDeclaration() "
 
-	outputStr := tzdatastructs.CommentLead +
+	outputStr := "\n"
+	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("%v - IANA Time Zones for '%v'.\n",
 			tzGroup.TypeName, tzGroup.GroupName)
 	outputStr += tzdatastructs.CommentBlankLine
@@ -222,15 +225,16 @@ func (tzGrpDecs TzGroupDeclarations) SubGroupDeclaration(
 
 	ePrefix += "TzGroupDeclarations) SubGroupDeclaration() "
 
-	outputStr := tzdatastructs.CommentLead +
+	outputStr := "\n"
+	outputStr += tzdatastructs.CommentLead +
 		fmt.Sprintf("%v - A Sub-Group of Time Zones. These are\n",
 			tzGroup.TypeName)
-	outputStr = tzdatastructs.CommentLead +
-		fmt.Sprintf("IANA Time Zones in located in '%v'.\n",
+	outputStr += tzdatastructs.CommentLead +
+		fmt.Sprintf("IANA Time Zones located in '%v'.\n",
 			tzGroup.GroupName)
 	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += tzdatastructs.CommentLead +
-		fmt.Sprintf("The Parent Group is '%v'\n",
+		fmt.Sprintf("The Parent Group is '%v'.\n",
 			tzGroup.ParentGroupName)
 	outputStr += tzdatastructs.CommentBlankLine
 	outputStr += tzdatastructs.CommentLead +

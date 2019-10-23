@@ -17,7 +17,8 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 
 	ePrefix += "TzMilitaryDeclarations.MilitaryTypeDeclaration() "
 
-	outputStr := fmt.Sprintf(tzdatastructs.CommentLead + "%v - Military Time Zone Names.\n", militaryTzType.GroupName)
+	outputStr := "\n"
+	outputStr += fmt.Sprintf(tzdatastructs.CommentLead + "%v - Military Time Zone Names.\n", militaryTzType.GroupName)
 	outputStr += tzdatastructs.CommentBlankLine
 
 	outputStr += tzdatastructs.CommentLead + "Reference:\n"

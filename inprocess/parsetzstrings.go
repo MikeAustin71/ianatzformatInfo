@@ -188,6 +188,17 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 	err = parseTz.configMilitaryTimeZones(&tzStats, ePrefix)
 
+	if err != nil {
+		return tzGroups, tzData, tzStats, err
+	}
+
+	err = parseTz.configUsaTimeZones(&tzStats, ePrefix)
+
+	if err != nil {
+		return tzGroups, tzData, tzStats, err
+	}
+
+
 	tzStats.TotalIanaTZones =
 		tzStats.NumStdIanaTZones + tzStats.NumLinkIanaTZones
 
@@ -315,6 +326,120 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(
 		}
 
 		tzStats.NumMilitaryTZones++
+	}
+
+	return nil
+}
+
+// configUsaTimeZones - Creates and stores USA Time Zones
+//
+func (parseTz *ParseIanaTzData) configUsaTimeZones(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+	ePrefix += "ParseIanaTzData.configUsaTimeZones() "
+
+	// Configure Time Zone Level-1 Major Group
+	// for USA Time Zones
+	tzGroup := tzdatastructs.TimeZoneGroupDto{}
+	tzGroup.ParentGroupName = ""
+	tzGroup.GroupName = "USA"
+	tzGroup.GroupSortValue = "USA"
+
+	// Example: 'uSATimeZones'
+	tzGroup.TypeName = "uSA" +
+			tzdatastructs.MasterGroupTypeSuffix
+
+	tzGroup.TypeValue = "string"
+
+	// Example: 'America'
+	tzGroup.IanaVariableName = "USA"
+
+	tzGroup.SourceFileNameExt = "None"
+	tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+	tzGroup.GroupClass = tzdatastructs.TzGrpClass.Artificial()
+	tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+	tzGroup.SetIsInitialized(true)
+
+	err := tzdeclarations.TzUSADeclarations{}.USATzTypeDeclaration(&tzGroup, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
+			"Error: %v\n", err.Error() )
+	}
+
+	tzStats.NumPrimaryTZoneGroups++
+
+	for i:=0; i < len(tzdatastructs.USATzArray); i++ {
+
+		// Configure Standard Level-1 Iana Time Zone Data Dto
+		// For Military Time Zone
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
+		tzDataDto.ParentGroupName = ""
+		tzDataDto.GroupName = "USA" // USA - majorGroup
+		tzDataDto.TzName = tzdatastructs.USATzArray[i] // Alaska - tzName
+		tzDataDto.TzAliasValue = ""
+		canonicalValue, ok := tzdatastructs.USATzMap[tzdatastructs.USATzArray[i]]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"tzdatastructs.MilitaryTzMap[] look-up error. Military Time Zone missing!\n" +
+				"Military Time Zone: %v\n", tzdatastructs.MilitaryTzArray[i])
+		}
+
+		tzDataDto.TzCanonicalValue = canonicalValue
+		tzDataDto.TzValue = tzDataDto.TzCanonicalValue // 'America/Anchorage'
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzdatastructs.USATzArray[i])
+
+		// Example func signature
+		// func (usaTz uSATimeZones) Alaska() string { return "America/Anchorage" }
+
+		// Example: militaryTimeZones
+		tzDataDto.FuncType =
+			"uSA" +
+				tzdatastructs.MasterGroupTypeSuffix
+
+		// Example: 'milTz'
+		tzDataDto.FuncSelfReferenceVariable = "usaTz"
+
+		// FuncName: Alaska()
+		tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(tzdatastructs.USATzArray[i])
+
+		tzDataDto.FuncReturnType = "string"
+
+		// Example Function Return Value = 'America/Anchorage'
+		tzDataDto.FuncReturnValue =
+			fmt.Sprintf("\"%v\"", tzDataDto.TzCanonicalValue)
+
+		tzDataDto.SourceFileNameExt = "None"
+		tzDataDto.TzClass = tzdatastructs.TZClass.Artificial()
+		tzDataDto.TzType = tzdatastructs.TZType.Standard()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+		tzDataDto.SetIsInitialized(true)
+
+		err = tzdeclarations.TzUSADeclarations{}.USAZoneFuncDeclaration(&tzDataDto, ePrefix)
+
+		if err != nil {
+			return err
+		}
+
+		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzData[tzdatastructs.Level_01_Idx] Error\n" +
+				"Military Time Zone: %v\n" +
+				"Error: %v\n", tzdatastructs.MilitaryTzArray[i], err.Error())
+		}
+
+		tzStats.NumOtherTZones++
 	}
 
 	return nil
@@ -1948,7 +2073,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		tzDataDto.TzType = tzdatastructs.TZType.SubZone()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 		tzDataDto.SetIsInitialized(true)
-		err := tzdeclarations.TzZoneDeclarations{}.PlaceHolderZoneFuncDeclaration(&tzDataDto, ePrefix)
+		err := tzdeclarations.TzZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)
 
 		if err != nil {
 			return err

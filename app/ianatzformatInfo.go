@@ -9,6 +9,15 @@ import (
 	"os"
 )
 
+/*
+Investigate
+
+// ComodRivadavia - IANA Time Zone 'America/Argentina/ComodRivadavia'.
+// IANA Source File: backzone
+//
+func (argen argentinaTimeZones) ComodRivadavia() string {return "America/Argentina/ComodRivadavia" }
+ */
+
 // main - This application will process IANA source data files and create a series
 // of types housed in a source file used by the 'Go' programming language. These
 // types will facilitate the use of global time zones in date time operations
@@ -32,7 +41,7 @@ import (
 // Configure these two lines in accordance with the following example.
 //
 // Example:
-// "InputDirectory: D:\T11\data\tzdata2019c\n"
+// "InputDirectory: D:\T11\data\2019c\n"
 // "OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output\n"
 //
 // The leading field names, 'InputDirectory:' and 'OutputDirectory:'

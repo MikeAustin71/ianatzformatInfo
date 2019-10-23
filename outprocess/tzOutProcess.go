@@ -176,8 +176,8 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 
 	outputStr := fmt.Sprintf("\n" +
 		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n" +
-		"// Zones plus %v-Military Time Zones. This type is therefore used as a \n" +
-		"// comprehensive enumeration of Global Time Zones.\n" +
+		"// Zones, %v-Military Time Zones and %v-Other Time Zones. This type is\n" +
+		"// therefore used as a comprehensive enumeration of Global Time Zones.\n" +
 		"//\n" +
 		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n" +
 		"//  Reference:\n" +
@@ -248,6 +248,7 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"// \n",
 		tzStats.TotalIanaTZones,
 		tzStats.NumMilitaryTZones,
+		tzStats.NumOtherTZones,
 		tzStats.TotalTZones,
 		tzStats.IanaVersion,
 		tzStats.NumStdIanaTZones,
@@ -405,11 +406,17 @@ func (tzOut TzOutProcess) writeTimeZones(
 
 				_, err = outputFileMgr.WriteBytesToFile(tZone.FuncDeclaration)
 
+				if err != nil {
+					return fmt.Errorf(ePrefix +
+						"\nError returned by outputFileMgr.WriteBytesToFile(tZone.FuncDeclaration)\n" +
+						"tZone.FuncDeclaration: %v\n" +
+						"Error:'%v'\n", string(tZone.FuncDeclaration), err.Error())
+				}
+
 				if tZone.TzType == tzdatastructs.TZType.Standard() ||
 						tZone.TzType == tzdatastructs.TZType.SubZone() {
 					tzdatastructs.NumberOfTimeZones++
 				}
-
 			}
 		}
 	}
@@ -478,11 +485,11 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 			"Error='%v'\n", err.Error())
 	}
 
-	leftMarginStr, err = strops.StrOps{}.MakeSingleCharString(' ', 5)
+	leftMarginStr, err = strops.StrOps{}.MakeSingleCharString(' ', 4)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
-			"\nError returned by StrOps{}.MakeSingleCharString(' ', 5)\n" +
+			"\nError returned by StrOps{}.MakeSingleCharString(' ', 4)\n" +
 			"Error='%v'\n", err.Error())
 	}
 
