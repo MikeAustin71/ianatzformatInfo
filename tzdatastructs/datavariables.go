@@ -38,6 +38,7 @@ var EndOfLineDelimiters = []string{
 var CommentDelimiters = []string {CommentCharStr}
 
 var SkipTzFiles = []string{
+	"backzone",
 	"checklinks.awk",
 	"checktab.awk",
 	"calendars",

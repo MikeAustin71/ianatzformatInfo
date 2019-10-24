@@ -2,7 +2,7 @@ package main
 
 
 
-// TimeZones - This type and its associated methods encapsulate 663 IANA Time
+// TimeZones - This type and its associated methods encapsulate 582 IANA Time
 // Zones, 25-Military Time Zones and 11-Other Time Zones. This type is
 // therefore used as a comprehensive enumeration of Global Time Zones.
 //
@@ -29,7 +29,7 @@ package main
 //
 // For easy access to the all Time Zones it is recommended that you use the
 // global variable 'TZones' declared below. This variable instantiates the
-// 'TimeZones' type. It is therefore much easier to access any of the 699 time
+// 'TimeZones' type. It is therefore much easier to access any of the 618 time
 // zones using dot operators and intellisense (a.k.a. intelligent code completion).
 //
 // Examples:
@@ -53,15 +53,15 @@ package main
 // 
 // This TimeZones Type is based on IANA Time Zone Database Version: 2019c
 // 
-//           IANA Standard Time Zones : 457
+//           IANA Standard Time Zones : 376
 //           IANA Link Time Zones     : 206
 //                                         -------
-//                 Sub-Total IANA Time Zones: 663
+//                 Sub-Total IANA Time Zones: 582
 // 
 //                Military Time Zones :  25
 //                   Other Time Zones :  11
 //                                         -------
-//                          Total Time Zones: 699
+//                          Total Time Zones: 618
 // 
 //       Standard Time Zone Sub-Groups:   4
 //           Link Time Zone Sub-Groups:  16
@@ -70,7 +70,7 @@ package main
 // 
 //                  Primary Time Zone Groups:  13
 // 
-// Type Creation Date: 2019-10-23 Wednesday 03:59:02 -0500 CDT
+// Type Creation Date: 2019-10-24 Thursday 01:42:32 -0500 CDT
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -116,55 +116,15 @@ func (afric africaTimeZones) Abidjan() string {return "Africa/Abidjan" }
 //  
 func (afric africaTimeZones) Accra() string {return "Africa/Accra" }
 
-// Addis_Ababa - IANA Time Zone 'Africa/Addis_Ababa'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Addis_Ababa() string {return "Africa/Addis_Ababa" }
-
 // Algiers - IANA Time Zone 'Africa/Algiers'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Algiers() string {return "Africa/Algiers" }
 
-// Asmara - IANA Time Zone 'Africa/Asmara'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Asmara() string {return "Africa/Asmara" }
-
-// Bamako - IANA Time Zone 'Africa/Bamako'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Bamako() string {return "Africa/Bamako" }
-
-// Bangui - IANA Time Zone 'Africa/Bangui'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Bangui() string {return "Africa/Bangui" }
-
-// Banjul - IANA Time Zone 'Africa/Banjul'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Banjul() string {return "Africa/Banjul" }
-
 // Bissau - IANA Time Zone 'Africa/Bissau'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Bissau() string {return "Africa/Bissau" }
-
-// Blantyre - IANA Time Zone 'Africa/Blantyre'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Blantyre() string {return "Africa/Blantyre" }
-
-// Brazzaville - IANA Time Zone 'Africa/Brazzaville'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Brazzaville() string {return "Africa/Brazzaville" }
-
-// Bujumbura - IANA Time Zone 'Africa/Bujumbura'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Bujumbura() string {return "Africa/Bujumbura" }
 
 // Cairo - IANA Time Zone 'Africa/Cairo'.
 // IANA Source File: africa
@@ -181,50 +141,10 @@ func (afric africaTimeZones) Casablanca() string {return "Africa/Casablanca" }
 //  
 func (afric africaTimeZones) Ceuta() string {return "Africa/Ceuta" }
 
-// Conakry - IANA Time Zone 'Africa/Conakry'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Conakry() string {return "Africa/Conakry" }
-
-// Dakar - IANA Time Zone 'Africa/Dakar'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Dakar() string {return "Africa/Dakar" }
-
-// Dar_es_Salaam - IANA Time Zone 'Africa/Dar_es_Salaam'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Dar_es_Salaam() string {return "Africa/Dar_es_Salaam" }
-
-// Djibouti - IANA Time Zone 'Africa/Djibouti'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Djibouti() string {return "Africa/Djibouti" }
-
-// Douala - IANA Time Zone 'Africa/Douala'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Douala() string {return "Africa/Douala" }
-
 // El_Aaiun - IANA Time Zone 'Africa/El_Aaiun'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) El_Aaiun() string {return "Africa/El_Aaiun" }
-
-// Freetown - IANA Time Zone 'Africa/Freetown'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Freetown() string {return "Africa/Freetown" }
-
-// Gaborone - IANA Time Zone 'Africa/Gaborone'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Gaborone() string {return "Africa/Gaborone" }
-
-// Harare - IANA Time Zone 'Africa/Harare'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Harare() string {return "Africa/Harare" }
 
 // Johannesburg - IANA Time Zone 'Africa/Johannesburg'.
 // IANA Source File: africa
@@ -236,80 +156,20 @@ func (afric africaTimeZones) Johannesburg() string {return "Africa/Johannesburg"
 //  
 func (afric africaTimeZones) Juba() string {return "Africa/Juba" }
 
-// Kampala - IANA Time Zone 'Africa/Kampala'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Kampala() string {return "Africa/Kampala" }
-
 // Khartoum - IANA Time Zone 'Africa/Khartoum'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Khartoum() string {return "Africa/Khartoum" }
-
-// Kigali - IANA Time Zone 'Africa/Kigali'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Kigali() string {return "Africa/Kigali" }
-
-// Kinshasa - IANA Time Zone 'Africa/Kinshasa'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Kinshasa() string {return "Africa/Kinshasa" }
 
 // Lagos - IANA Time Zone 'Africa/Lagos'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Lagos() string {return "Africa/Lagos" }
 
-// Libreville - IANA Time Zone 'Africa/Libreville'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Libreville() string {return "Africa/Libreville" }
-
-// Lome - IANA Time Zone 'Africa/Lome'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Lome() string {return "Africa/Lome" }
-
-// Luanda - IANA Time Zone 'Africa/Luanda'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Luanda() string {return "Africa/Luanda" }
-
-// Lubumbashi - IANA Time Zone 'Africa/Lubumbashi'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Lubumbashi() string {return "Africa/Lubumbashi" }
-
-// Lusaka - IANA Time Zone 'Africa/Lusaka'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Lusaka() string {return "Africa/Lusaka" }
-
-// Malabo - IANA Time Zone 'Africa/Malabo'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Malabo() string {return "Africa/Malabo" }
-
 // Maputo - IANA Time Zone 'Africa/Maputo'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Maputo() string {return "Africa/Maputo" }
-
-// Maseru - IANA Time Zone 'Africa/Maseru'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Maseru() string {return "Africa/Maseru" }
-
-// Mbabane - IANA Time Zone 'Africa/Mbabane'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Mbabane() string {return "Africa/Mbabane" }
-
-// Mogadishu - IANA Time Zone 'Africa/Mogadishu'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Mogadishu() string {return "Africa/Mogadishu" }
 
 // Monrovia - IANA Time Zone 'Africa/Monrovia'.
 // IANA Source File: africa
@@ -326,35 +186,10 @@ func (afric africaTimeZones) Nairobi() string {return "Africa/Nairobi" }
 //  
 func (afric africaTimeZones) Ndjamena() string {return "Africa/Ndjamena" }
 
-// Niamey - IANA Time Zone 'Africa/Niamey'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Niamey() string {return "Africa/Niamey" }
-
-// Nouakchott - IANA Time Zone 'Africa/Nouakchott'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Nouakchott() string {return "Africa/Nouakchott" }
-
-// Ouagadougou - IANA Time Zone 'Africa/Ouagadougou'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Ouagadougou() string {return "Africa/Ouagadougou" }
-
-// Porto-Novo - IANA Time Zone 'Africa/Porto-Novo'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) PortoMinusNovo() string {return "Africa/Porto-Novo" }
-
 // Sao_Tome - IANA Time Zone 'Africa/Sao_Tome'.
 // IANA Source File: africa
 //  
 func (afric africaTimeZones) Sao_Tome() string {return "Africa/Sao_Tome" }
-
-// Timbuktu - IANA Time Zone 'Africa/Timbuktu'.
-// IANA Source File: backzone
-//  
-func (afric africaTimeZones) Timbuktu() string {return "Africa/Timbuktu" }
 
 // Tripoli - IANA Time Zone 'Africa/Tripoli'.
 // IANA Source File: africa
@@ -394,25 +229,10 @@ func (ameri americaTimeZones) Adak() string {return "America/Adak" }
 //  
 func (ameri americaTimeZones) Anchorage() string {return "America/Anchorage" }
 
-// Anguilla - IANA Time Zone 'America/Anguilla'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Anguilla() string {return "America/Anguilla" }
-
-// Antigua - IANA Time Zone 'America/Antigua'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Antigua() string {return "America/Antigua" }
-
 // Araguaina - IANA Time Zone 'America/Araguaina'.
 // IANA Source File: southamerica
 //  
 func (ameri americaTimeZones) Araguaina() string {return "America/Araguaina" }
-
-// Aruba - IANA Time Zone 'America/Aruba'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Aruba() string {return "America/Aruba" }
 
 // Asuncion - IANA Time Zone 'America/Asuncion'.
 // IANA Source File: southamerica
@@ -494,11 +314,6 @@ func (ameri americaTimeZones) Caracas() string {return "America/Caracas" }
 //  
 func (ameri americaTimeZones) Cayenne() string {return "America/Cayenne" }
 
-// Cayman - IANA Time Zone 'America/Cayman'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Cayman() string {return "America/Cayman" }
-
 // Chicago - IANA Time Zone 'America/Chicago'.
 // IANA Source File: northamerica
 //  
@@ -508,11 +323,6 @@ func (ameri americaTimeZones) Chicago() string {return "America/Chicago" }
 // IANA Source File: northamerica
 //  
 func (ameri americaTimeZones) Chihuahua() string {return "America/Chihuahua" }
-
-// Coral_Harbour - IANA Time Zone 'America/Coral_Harbour'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Coral_Harbour() string {return "America/Coral_Harbour" }
 
 // Costa_Rica - IANA Time Zone 'America/Costa_Rica'.
 // IANA Source File: northamerica
@@ -559,11 +369,6 @@ func (ameri americaTimeZones) Denver() string {return "America/Denver" }
 //  
 func (ameri americaTimeZones) Detroit() string {return "America/Detroit" }
 
-// Dominica - IANA Time Zone 'America/Dominica'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Dominica() string {return "America/Dominica" }
-
 // Edmonton - IANA Time Zone 'America/Edmonton'.
 // IANA Source File: northamerica
 //  
@@ -578,11 +383,6 @@ func (ameri americaTimeZones) Eirunepe() string {return "America/Eirunepe" }
 // IANA Source File: northamerica
 //  
 func (ameri americaTimeZones) El_Salvador() string {return "America/El_Salvador" }
-
-// Ensenada - IANA Time Zone 'America/Ensenada'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Ensenada() string {return "America/Ensenada" }
 
 // Fort_Nelson - IANA Time Zone 'America/Fort_Nelson'.
 // IANA Source File: northamerica
@@ -613,16 +413,6 @@ func (ameri americaTimeZones) Goose_Bay() string {return "America/Goose_Bay" }
 // IANA Source File: northamerica
 //  
 func (ameri americaTimeZones) Grand_Turk() string {return "America/Grand_Turk" }
-
-// Grenada - IANA Time Zone 'America/Grenada'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Grenada() string {return "America/Grenada" }
-
-// Guadeloupe - IANA Time Zone 'America/Guadeloupe'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Guadeloupe() string {return "America/Guadeloupe" }
 
 // Guatemala - IANA Time Zone 'America/Guatemala'.
 // IANA Source File: northamerica
@@ -759,16 +549,6 @@ func (ameri americaTimeZones) Monterrey() string {return "America/Monterrey" }
 //  
 func (ameri americaTimeZones) Montevideo() string {return "America/Montevideo" }
 
-// Montreal - IANA Time Zone 'America/Montreal'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Montreal() string {return "America/Montreal" }
-
-// Montserrat - IANA Time Zone 'America/Montserrat'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Montserrat() string {return "America/Montserrat" }
-
 // Nassau - IANA Time Zone 'America/Nassau'.
 // IANA Source File: northamerica
 //  
@@ -874,11 +654,6 @@ func (ameri americaTimeZones) Resolute() string {return "America/Resolute" }
 //  
 func (ameri americaTimeZones) Rio_Branco() string {return "America/Rio_Branco" }
 
-// Rosario - IANA Time Zone 'America/Rosario'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Rosario() string {return "America/Rosario" }
-
 // Santarem - IANA Time Zone 'America/Santarem'.
 // IANA Source File: southamerica
 //  
@@ -914,26 +689,6 @@ func (ameri americaTimeZones) Sitka() string {return "America/Sitka" }
 //  
 func (ameri americaTimeZones) St_Johns() string {return "America/St_Johns" }
 
-// St_Kitts - IANA Time Zone 'America/St_Kitts'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) St_Kitts() string {return "America/St_Kitts" }
-
-// St_Lucia - IANA Time Zone 'America/St_Lucia'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) St_Lucia() string {return "America/St_Lucia" }
-
-// St_Thomas - IANA Time Zone 'America/St_Thomas'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) St_Thomas() string {return "America/St_Thomas" }
-
-// St_Vincent - IANA Time Zone 'America/St_Vincent'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) St_Vincent() string {return "America/St_Vincent" }
-
 // Swift_Current - IANA Time Zone 'America/Swift_Current'.
 // IANA Source File: northamerica
 //  
@@ -963,11 +718,6 @@ func (ameri americaTimeZones) Tijuana() string {return "America/Tijuana" }
 // IANA Source File: northamerica
 //  
 func (ameri americaTimeZones) Toronto() string {return "America/Toronto" }
-
-// Tortola - IANA Time Zone 'America/Tortola'.
-// IANA Source File: backzone
-//  
-func (ameri americaTimeZones) Tortola() string {return "America/Tortola" }
 
 // Vancouver - IANA Time Zone 'America/Vancouver'.
 // IANA Source File: northamerica
@@ -1052,11 +802,6 @@ func (antar antarcticaTimeZones) Macquarie() string {return "Antarctica/Macquari
 //  
 func (antar antarcticaTimeZones) Mawson() string {return "Antarctica/Mawson" }
 
-// McMurdo - IANA Time Zone 'Antarctica/McMurdo'.
-// IANA Source File: backzone
-//  
-func (antar antarcticaTimeZones) McMurdo() string {return "Antarctica/McMurdo" }
-
 // Palmer - IANA Time Zone 'Antarctica/Palmer'.
 // IANA Source File: southamerica
 //  
@@ -1094,11 +839,6 @@ func (antar antarcticaTimeZones) Vostok() string {return "Antarctica/Vostok" }
 //   https://www.iana.org/time-zones
 //  
 type asiaTimeZones string
-
-// Aden - IANA Time Zone 'Asia/Aden'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Aden() string {return "Asia/Aden" }
 
 // Almaty - IANA Time Zone 'Asia/Almaty'.
 // IANA Source File: asia
@@ -1140,11 +880,6 @@ func (asiaT asiaTimeZones) Atyrau() string {return "Asia/Atyrau" }
 //  
 func (asiaT asiaTimeZones) Baghdad() string {return "Asia/Baghdad" }
 
-// Bahrain - IANA Time Zone 'Asia/Bahrain'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Bahrain() string {return "Asia/Bahrain" }
-
 // Baku - IANA Time Zone 'Asia/Baku'.
 // IANA Source File: asia
 //  
@@ -1185,11 +920,6 @@ func (asiaT asiaTimeZones) Chita() string {return "Asia/Chita" }
 //  
 func (asiaT asiaTimeZones) Choibalsan() string {return "Asia/Choibalsan" }
 
-// Chongqing - IANA Time Zone 'Asia/Chongqing'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Chongqing() string {return "Asia/Chongqing" }
-
 // Colombo - IANA Time Zone 'Asia/Colombo'.
 // IANA Source File: asia
 //  
@@ -1229,16 +959,6 @@ func (asiaT asiaTimeZones) Famagusta() string {return "Asia/Famagusta" }
 // IANA Source File: asia
 //  
 func (asiaT asiaTimeZones) Gaza() string {return "Asia/Gaza" }
-
-// Hanoi - IANA Time Zone 'Asia/Hanoi'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Hanoi() string {return "Asia/Hanoi" }
-
-// Harbin - IANA Time Zone 'Asia/Harbin'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Harbin() string {return "Asia/Harbin" }
 
 // Hebron - IANA Time Zone 'Asia/Hebron'.
 // IANA Source File: asia
@@ -1295,11 +1015,6 @@ func (asiaT asiaTimeZones) Kamchatka() string {return "Asia/Kamchatka" }
 //  
 func (asiaT asiaTimeZones) Karachi() string {return "Asia/Karachi" }
 
-// Kashgar - IANA Time Zone 'Asia/Kashgar'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Kashgar() string {return "Asia/Kashgar" }
-
 // Kathmandu - IANA Time Zone 'Asia/Kathmandu'.
 // IANA Source File: asia
 //  
@@ -1330,11 +1045,6 @@ func (asiaT asiaTimeZones) Kuala_Lumpur() string {return "Asia/Kuala_Lumpur" }
 //  
 func (asiaT asiaTimeZones) Kuching() string {return "Asia/Kuching" }
 
-// Kuwait - IANA Time Zone 'Asia/Kuwait'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Kuwait() string {return "Asia/Kuwait" }
-
 // Macau - IANA Time Zone 'Asia/Macau'.
 // IANA Source File: asia
 //  
@@ -1354,11 +1064,6 @@ func (asiaT asiaTimeZones) Makassar() string {return "Asia/Makassar" }
 // IANA Source File: asia
 //  
 func (asiaT asiaTimeZones) Manila() string {return "Asia/Manila" }
-
-// Muscat - IANA Time Zone 'Asia/Muscat'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Muscat() string {return "Asia/Muscat" }
 
 // Nicosia - IANA Time Zone 'Asia/Nicosia'.
 // IANA Source File: asia
@@ -1384,11 +1089,6 @@ func (asiaT asiaTimeZones) Omsk() string {return "Asia/Omsk" }
 // IANA Source File: asia
 //  
 func (asiaT asiaTimeZones) Oral() string {return "Asia/Oral" }
-
-// Phnom_Penh - IANA Time Zone 'Asia/Phnom_Penh'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Phnom_Penh() string {return "Asia/Phnom_Penh" }
 
 // Pontianak - IANA Time Zone 'Asia/Pontianak'.
 // IANA Source File: asia
@@ -1470,11 +1170,6 @@ func (asiaT asiaTimeZones) Tbilisi() string {return "Asia/Tbilisi" }
 //  
 func (asiaT asiaTimeZones) Tehran() string {return "Asia/Tehran" }
 
-// Tel_Aviv - IANA Time Zone 'Asia/Tel_Aviv'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Tel_Aviv() string {return "Asia/Tel_Aviv" }
-
 // Thimphu - IANA Time Zone 'Asia/Thimphu'.
 // IANA Source File: asia
 //  
@@ -1504,11 +1199,6 @@ func (asiaT asiaTimeZones) Urumqi() string {return "Asia/Urumqi" }
 // IANA Source File: europe
 //  
 func (asiaT asiaTimeZones) UstMinusNera() string {return "Asia/Ust-Nera" }
-
-// Vientiane - IANA Time Zone 'Asia/Vientiane'.
-// IANA Source File: backzone
-//  
-func (asiaT asiaTimeZones) Vientiane() string {return "Asia/Vientiane" }
 
 // Vladivostok - IANA Time Zone 'Asia/Vladivostok'.
 // IANA Source File: europe
@@ -1573,11 +1263,6 @@ func (atlan atlanticTimeZones) Cape_Verde() string {return "Atlantic/Cape_Verde"
 //  
 func (atlan atlanticTimeZones) Faroe() string {return "Atlantic/Faroe" }
 
-// Jan_Mayen - IANA Time Zone 'Atlantic/Jan_Mayen'.
-// IANA Source File: backzone
-//  
-func (atlan atlanticTimeZones) Jan_Mayen() string {return "Atlantic/Jan_Mayen" }
-
 // Madeira - IANA Time Zone 'Atlantic/Madeira'.
 // IANA Source File: europe
 //  
@@ -1592,11 +1277,6 @@ func (atlan atlanticTimeZones) Reykjavik() string {return "Atlantic/Reykjavik" }
 // IANA Source File: southamerica
 //  
 func (atlan atlanticTimeZones) South_Georgia() string {return "Atlantic/South_Georgia" }
-
-// St_Helena - IANA Time Zone 'Atlantic/St_Helena'.
-// IANA Source File: backzone
-//  
-func (atlan atlanticTimeZones) St_Helena() string {return "Atlantic/St_Helena" }
 
 // Stanley - IANA Time Zone 'Atlantic/Stanley'.
 // IANA Source File: southamerica
@@ -2289,11 +1969,6 @@ func (europ europeTimeZones) Astrakhan() string {return "Europe/Astrakhan" }
 //  
 func (europ europeTimeZones) Athens() string {return "Europe/Athens" }
 
-// Belfast - IANA Time Zone 'Europe/Belfast'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Belfast() string {return "Europe/Belfast" }
-
 // Belgrade - IANA Time Zone 'Europe/Belgrade'.
 // IANA Source File: europe
 //  
@@ -2339,30 +2014,15 @@ func (europ europeTimeZones) Dublin() string {return "Europe/Dublin" }
 //  
 func (europ europeTimeZones) Gibraltar() string {return "Europe/Gibraltar" }
 
-// Guernsey - IANA Time Zone 'Europe/Guernsey'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Guernsey() string {return "Europe/Guernsey" }
-
 // Helsinki - IANA Time Zone 'Europe/Helsinki'.
 // IANA Source File: europe
 //  
 func (europ europeTimeZones) Helsinki() string {return "Europe/Helsinki" }
 
-// Isle_of_Man - IANA Time Zone 'Europe/Isle_of_Man'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Isle_of_Man() string {return "Europe/Isle_of_Man" }
-
 // Istanbul - IANA Time Zone 'Europe/Istanbul'.
 // IANA Source File: europe
 //  
 func (europ europeTimeZones) Istanbul() string {return "Europe/Istanbul" }
-
-// Jersey - IANA Time Zone 'Europe/Jersey'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Jersey() string {return "Europe/Jersey" }
 
 // Kaliningrad - IANA Time Zone 'Europe/Kaliningrad'.
 // IANA Source File: europe
@@ -2383,11 +2043,6 @@ func (europ europeTimeZones) Kirov() string {return "Europe/Kirov" }
 // IANA Source File: europe
 //  
 func (europ europeTimeZones) Lisbon() string {return "Europe/Lisbon" }
-
-// Ljubljana - IANA Time Zone 'Europe/Ljubljana'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Ljubljana() string {return "Europe/Ljubljana" }
 
 // London - IANA Time Zone 'Europe/London'.
 // IANA Source File: europe
@@ -2454,11 +2109,6 @@ func (europ europeTimeZones) Rome() string {return "Europe/Rome" }
 //  
 func (europ europeTimeZones) Samara() string {return "Europe/Samara" }
 
-// Sarajevo - IANA Time Zone 'Europe/Sarajevo'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Sarajevo() string {return "Europe/Sarajevo" }
-
 // Saratov - IANA Time Zone 'Europe/Saratov'.
 // IANA Source File: europe
 //  
@@ -2468,11 +2118,6 @@ func (europ europeTimeZones) Saratov() string {return "Europe/Saratov" }
 // IANA Source File: europe
 //  
 func (europ europeTimeZones) Simferopol() string {return "Europe/Simferopol" }
-
-// Skopje - IANA Time Zone 'Europe/Skopje'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Skopje() string {return "Europe/Skopje" }
 
 // Sofia - IANA Time Zone 'Europe/Sofia'.
 // IANA Source File: europe
@@ -2494,11 +2139,6 @@ func (europ europeTimeZones) Tallinn() string {return "Europe/Tallinn" }
 //  
 func (europ europeTimeZones) Tirane() string {return "Europe/Tirane" }
 
-// Tiraspol - IANA Time Zone 'Europe/Tiraspol'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Tiraspol() string {return "Europe/Tiraspol" }
-
 // Ulyanovsk - IANA Time Zone 'Europe/Ulyanovsk'.
 // IANA Source File: europe
 //  
@@ -2508,11 +2148,6 @@ func (europ europeTimeZones) Ulyanovsk() string {return "Europe/Ulyanovsk" }
 // IANA Source File: europe
 //  
 func (europ europeTimeZones) Uzhgorod() string {return "Europe/Uzhgorod" }
-
-// Vaduz - IANA Time Zone 'Europe/Vaduz'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Vaduz() string {return "Europe/Vaduz" }
 
 // Vienna - IANA Time Zone 'Europe/Vienna'.
 // IANA Source File: europe
@@ -2533,11 +2168,6 @@ func (europ europeTimeZones) Volgograd() string {return "Europe/Volgograd" }
 // IANA Source File: europe
 //  
 func (europ europeTimeZones) Warsaw() string {return "Europe/Warsaw" }
-
-// Zagreb - IANA Time Zone 'Europe/Zagreb'.
-// IANA Source File: backzone
-//  
-func (europ europeTimeZones) Zagreb() string {return "Europe/Zagreb" }
 
 // Zaporozhye - IANA Time Zone 'Europe/Zaporozhye'.
 // IANA Source File: europe
@@ -2562,11 +2192,6 @@ func (europ europeTimeZones) Zurich() string {return "Europe/Zurich" }
 //  
 type indianTimeZones string
 
-// Antananarivo - IANA Time Zone 'Indian/Antananarivo'.
-// IANA Source File: backzone
-//  
-func (india indianTimeZones) Antananarivo() string {return "Indian/Antananarivo" }
-
 // Chagos - IANA Time Zone 'Indian/Chagos'.
 // IANA Source File: asia
 //  
@@ -2581,11 +2206,6 @@ func (india indianTimeZones) Christmas() string {return "Indian/Christmas" }
 // IANA Source File: australasia
 //  
 func (india indianTimeZones) Cocos() string {return "Indian/Cocos" }
-
-// Comoro - IANA Time Zone 'Indian/Comoro'.
-// IANA Source File: backzone
-//  
-func (india indianTimeZones) Comoro() string {return "Indian/Comoro" }
 
 // Kerguelen - IANA Time Zone 'Indian/Kerguelen'.
 // IANA Source File: antarctica
@@ -2606,11 +2226,6 @@ func (india indianTimeZones) Maldives() string {return "Indian/Maldives" }
 // IANA Source File: africa
 //  
 func (india indianTimeZones) Mauritius() string {return "Indian/Mauritius" }
-
-// Mayotte - IANA Time Zone 'Indian/Mayotte'.
-// IANA Source File: backzone
-//  
-func (india indianTimeZones) Mayotte() string {return "Indian/Mayotte" }
 
 // Reunion - IANA Time Zone 'Indian/Reunion'.
 // IANA Source File: africa
@@ -2941,11 +2556,6 @@ func (pacif pacificTimeZones) Guam() string {return "Pacific/Guam" }
 //  
 func (pacif pacificTimeZones) Honolulu() string {return "Pacific/Honolulu" }
 
-// Johnston - IANA Time Zone 'Pacific/Johnston'.
-// IANA Source File: backzone
-//  
-func (pacif pacificTimeZones) Johnston() string {return "Pacific/Johnston" }
-
 // Kiritimati - IANA Time Zone 'Pacific/Kiritimati'.
 // IANA Source File: australasia
 //  
@@ -2970,11 +2580,6 @@ func (pacif pacificTimeZones) Majuro() string {return "Pacific/Majuro" }
 // IANA Source File: australasia
 //  
 func (pacif pacificTimeZones) Marquesas() string {return "Pacific/Marquesas" }
-
-// Midway - IANA Time Zone 'Pacific/Midway'.
-// IANA Source File: backzone
-//  
-func (pacif pacificTimeZones) Midway() string {return "Pacific/Midway" }
 
 // Nauru - IANA Time Zone 'Pacific/Nauru'.
 // IANA Source File: australasia
@@ -3025,11 +2630,6 @@ func (pacif pacificTimeZones) Port_Moresby() string {return "Pacific/Port_Moresb
 // IANA Source File: australasia
 //  
 func (pacif pacificTimeZones) Rarotonga() string {return "Pacific/Rarotonga" }
-
-// Saipan - IANA Time Zone 'Pacific/Saipan'.
-// IANA Source File: backzone
-//  
-func (pacif pacificTimeZones) Saipan() string {return "Pacific/Saipan" }
 
 // Tahiti - IANA Time Zone 'Pacific/Tahiti'.
 // IANA Source File: australasia
@@ -3169,11 +2769,6 @@ func (argen argentinaTimeZones) Buenos_Aires() string {return "America/Argentina
 // IANA Source File: southamerica
 //  
 func (argen argentinaTimeZones) Catamarca() string {return "America/Argentina/Catamarca" }
-
-// ComodRivadavia - IANA Time Zone 'America/Argentina/ComodRivadavia'.
-// IANA Source File: backzone
-//  
-func (argen argentinaTimeZones) ComodRivadavia() string {return "America/Argentina/ComodRivadavia" }
 
 // Cordoba - IANA Time Zone 'America/Argentina/Cordoba'.
 // IANA Source File: southamerica

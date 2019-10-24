@@ -56,7 +56,7 @@ func (tzDataCol *TimeZoneDataCollection) Add(tzDataDto TimeZoneDataDto) error {
 		return errors.New(ePrefix + "Input Parameter 'tzDataDto' is uninitialized and INVALID!\n")
 	}
 
-	tzDataCol.tzDataDtos = append(tzDataCol.tzDataDtos, tzDataDto)
+	tzDataCol.tzDataDtos = append(tzDataCol.tzDataDtos, tzDataDto.CopyOut())
 
 	return nil
 }

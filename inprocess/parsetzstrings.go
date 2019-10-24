@@ -53,6 +53,8 @@ var tzGroups [] tzdatastructs.TimeZoneGroupCollection
 
 var tzData [] tzdatastructs.TimeZoneDataCollection
 
+var tzLinks tzdatastructs.TimeZoneDataCollection
+
 /*
   tzMajorGroupArray Format
     Africa,
@@ -186,6 +188,12 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 	fmt.Printf("Number Of Valid Time Zone Files: %v\n", validFileCnt)
 
+	err = parseTz.resolveLinkConflicts(&tzStats, ePrefix)
+
+	if err != nil {
+		return tzGroups, tzData, tzStats, err
+	}
+
 	err = parseTz.configMilitaryTimeZones(&tzStats, ePrefix)
 
 	if err != nil {
@@ -198,6 +206,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		return tzGroups, tzData, tzStats, err
 	}
 
+	tzStats.NumStdIanaTZones -= tzStats.NumOfLinkConflictResolved
 
 	tzStats.TotalIanaTZones =
 		tzStats.NumStdIanaTZones + tzStats.NumLinkIanaTZones
@@ -674,6 +683,38 @@ func (parseTz *ParseIanaTzData) extractZone(
 	return parseTz.zoneCfgThreeElements(fMgr, zoneArray, tzStats, ePrefix)
 }
 
+// isSkipFile - Examines the file name of a time zone data
+// file and determines whether the file should be skipped
+// for processing.
+//
+func (parseTz *ParseIanaTzData) isSkipFile(
+	fMgr pathfileops.FileMgr, ePrefix string) (bool, error) {
+
+	ePrefix += "ParseIanaTzData.isSkipFile() "
+
+	err := fMgr.IsFileMgrValid(ePrefix)
+
+	if err != nil {
+		return false, err
+	}
+
+	if fMgr.GetFileExt() != "" {
+		return true, nil
+	}
+
+	fileName := strings.ToLower(fMgr.GetFileName())
+	isSkipFile := false
+
+	for k:=0; k < len(tzdatastructs.SkipTzFiles); k++ {
+		if fileName == strings.ToLower(tzdatastructs.SkipTzFiles[k]) {
+			isSkipFile = true
+			break
+		}
+	}
+
+	return isSkipFile, nil
+}
+
 // linkCfgOneElement - Configures and stores data associated
 // with a time zone 'Link' which consists of a single link
 // string.
@@ -796,6 +837,15 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 		if err != nil {
 			return fmt.Errorf(ePrefix +
 				"tzData[tzdatastructs.Level_01_Idx] Error\n"+
+				"Error: %v\n" +
+				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+		}
+
+		err = tzLinks.Add(tzDataDto)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzLinks.Add(tzDataDto) Error\n"+
 				"Error: %v\n" +
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
@@ -1087,6 +1137,15 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			if err != nil {
 				return fmt.Errorf(ePrefix +
 					"tzData[tzdatastructs.Level_02_Idx] Error\n"+
+					"Error: %v\n" +
+					"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			}
+
+			err = tzLinks.Add(tzDataDto)
+
+			if err != nil {
+				return fmt.Errorf(ePrefix +
+					"tzLinks.Add(tzDataDto) Error\n"+
 					"Error: %v\n" +
 					"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 			}
@@ -1573,6 +1632,15 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
 		}
 
+		err = tzLinks.Add(tzDataDto)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"tzLinks.Add(tzDataDto) Error\n"+
+				"Error: %v\n" +
+				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+		}
+
 		tzStats.NumLinkIanaTZones ++
 	}
 
@@ -1666,6 +1734,88 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 			if err != nil {
 				fmt.Printf("Link Extraction Error: %v\n" +
 					"%v\n", fMgr.GetAbsolutePathFileName(), err.Error())
+			}
+		}
+	}
+
+	return nil
+}
+
+// resolveLinkConflicts - Deletes Standard Time Zones which also exist as
+// Link Time Zones.
+func (parseTz *ParseIanaTzData) resolveLinkConflicts(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "ParseIanaTzData.resolveLinkConflicts() "
+
+	lenTzLinks := tzLinks.GetNumberOfTimeZones()
+	var testLink  *tzdatastructs.TimeZoneDataDto
+	var err error
+
+	for i:=0; i < lenTzLinks; i++ {
+
+		testLink, err = tzLinks.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"Error returned by tzLinks.PeekPtr(i)\n" +
+				"i='%v'\n" +
+				"Error='%v'\n", i, err.Error())
+		}
+
+		var numOfTzDtos int
+
+		for j:=0; j <= tzdatastructs.Level_03_Idx; j++ {
+
+			k := 0
+
+startTzSearch:
+
+			if k < 0 {
+				k = 0
+			}
+
+			numOfTzDtos = tzData[j].GetNumberOfTimeZones()
+
+			for ; k < numOfTzDtos; k++ {
+
+				testZone, err := tzData[j].PeekPtr(k)
+
+				if err != nil {
+					return fmt.Errorf(ePrefix +
+						"Error returned by tzData[j].PeekPtr(k)\n" +
+						"j='%v'\n" +
+						"k='%v'\n" +
+						"Error='%v'\n", j, k, err.Error())
+				}
+
+				if testLink.TzAliasValue == testZone.TzCanonicalValue {
+
+					srcFileName := testZone.SourceFileNameExt
+
+					testZone = nil
+
+					_, err = tzData[j].PopAtIndex(k)
+
+					if err != nil {
+						return fmt.Errorf(ePrefix +
+							"Error returned by tzData[j].PopAtIndex(k).\n" +
+							"j='%v'\n" +
+							"k='%v'\n" +
+							"Error='%v'\n", j, k, err.Error())
+					}
+
+					k--
+
+					tzStats.NumOfLinkConflictResolved++
+
+					if srcFileName == "backzone" {
+						tzStats.NumOfBackZoneConflicts++
+					}
+
+					goto startTzSearch
+				}
 			}
 		}
 	}
@@ -2151,36 +2301,4 @@ if !strings.HasSuffix(actualFuncName,"()") {
 	actualFuncName = fmt.Sprintf(str1 + "%02d" + str2, number)
 
 	return actualFuncName
-}
-
-// isSkipFile - Examines the file name of a time zone data
-// file and determines whether the file should be skipped 
-// for processing.
-//
-func (parseTz *ParseIanaTzData) isSkipFile(
-	fMgr pathfileops.FileMgr, ePrefix string) (bool, error) {
-
-	ePrefix += "ParseIanaTzData.isSkipFile() "
-
-	err := fMgr.IsFileMgrValid(ePrefix)
-
-	if err != nil {
-		return false, err
-	}
-
-	if fMgr.GetFileExt() != "" {
-		return true, nil
-	}
-
-	fileName := strings.ToLower(fMgr.GetFileName())
-	isSkipFile := false
-
-	for k:=0; k < len(tzdatastructs.SkipTzFiles); k++ {
-		if fileName == strings.ToLower(tzdatastructs.SkipTzFiles[k]) {
-			isSkipFile = true
-			break
-		}
-	}
-
-	return isSkipFile, nil
 }

@@ -9,14 +9,6 @@ import (
 	"os"
 )
 
-/*
-Investigate
-
-// ComodRivadavia - IANA Time Zone 'America/Argentina/ComodRivadavia'.
-// IANA Source File: backzone
-//
-func (argen argentinaTimeZones) ComodRivadavia() string {return "America/Argentina/ComodRivadavia" }
- */
 
 // main - This application will process IANA source data files and create a series
 // of types housed in a source file used by the 'Go' programming language. These
@@ -113,6 +105,8 @@ parser := inprocess.ParseIanaTzData{}
 		return
 	}
 
+	fmt.Println("Number Of Conflicts Resolved: ", timeZoneStats.NumOfLinkConflictResolved)
+	fmt.Println("Number Of Backzone Conflicts: ", timeZoneStats.NumOfBackZoneConflicts)
 	fmt.Println("---------------------")
 	fmt.Println("Successful Completion")
 	fmt.Println("---------------------")

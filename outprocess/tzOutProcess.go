@@ -422,7 +422,8 @@ func (tzOut TzOutProcess) writeTimeZones(
 	}
 
 	fmt.Println("Number Of Time Zones Captured: ", tzdatastructs.NumberOfTimeZones)
-	return nil
+
+		return nil
 }
 
 func (tzOut TzOutProcess) writeTimeZoneGlobalType(
