@@ -203,3 +203,30 @@ var USATzMap = map[string]string{
 	"PuertoRico"     : "America/Puerto_Rico",
 	"Samoa"          : "Pacific/Pago_Pago",
 	"VirginIslands"  : "America/Port_of_Spain"}
+
+
+var WorldRegions = []string {
+	"Africa",
+	"America",
+	"Antarctica",
+	"Asia",
+	"Atlantic",
+	"Australia",
+	"Europe",
+	"Indian",
+	"Pacific",
+	"Etc",
+	"Other" }
+
+var WorldRegionsTzCounters = make([]int, 11)
+
+var WorldRegionsLinkCounters = make([]int, 11)
+
+var WorldRegionsTotalZonesLinksCounters = make([]int, 11)
+
+var WorldRegionsTotalTimeZones int
+
+var WorldRegionsTotalLinks int
+
+var WorldRegionsTotalZonesLinks int
+

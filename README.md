@@ -436,14 +436,13 @@ to the following:
     Valid File:  asia
     Valid File:  australasia
     Valid File:  backward
-    Valid File:  backzone
     Valid File:  etcetera
     Valid File:  europe
     Valid File:  northamerica
     Valid File:  pacificnew
     Valid File:  southamerica
     Number Of Valid Time Zone Files: 11
-    Number Of Time Zones Captured:  688
+    Number Of Time Zones Captured:  618
     ---------------------
     Successful Completion
     ---------------------

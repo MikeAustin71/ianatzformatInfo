@@ -15,3 +15,4 @@ type TimeZoneStatsDto struct {
 	NumSubLinkTZoneGroups     int
 	TotalSubTZoneGroups       int
 }
+
