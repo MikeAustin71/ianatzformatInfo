@@ -246,21 +246,21 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"// Type Creation Date: %v\n" +
 		"// ----------------------------------------------------------------------------\n" +
 		"// \n",
-		tzStats.TotalIanaTZones,
+		tzStats.TotalIanaStdTzLinkZones,
 		tzStats.NumMilitaryTZones,
 		tzStats.NumOtherTZones,
-		tzStats.TotalTZones,
+		tzStats.TotalZones,
 		tzStats.IanaVersion,
-		tzStats.NumStdIanaTZones,
-		tzStats.NumLinkIanaTZones,
-		tzStats.TotalIanaTZones,
+		tzStats.NumIanaStdTZones,
+		tzStats.NumIanaLinkTZones,
+		tzStats.TotalIanaStdTzLinkZones,
 		tzStats.NumMilitaryTZones,
 		tzStats.NumOtherTZones,
-		tzStats.TotalTZones,
-		tzStats.NumSubStdTZoneGroups,
-		tzStats.NumSubLinkTZoneGroups,
+		tzStats.TotalZones,
+		tzStats.NumLevel2StdSubTZoneGroups,
+		tzStats.NumLevel2LinkSubGroups,
 		tzStats.TotalSubTZoneGroups,
-		tzStats.NumPrimaryTZoneGroups,
+		tzStats.NumMajorTZoneGroups,
 		currDateTimeStr)
 
 	return []byte(outputStr)

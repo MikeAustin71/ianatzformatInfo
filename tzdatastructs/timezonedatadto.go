@@ -15,6 +15,7 @@ type TimeZoneDataDto struct {
 	TzCanonicalValue          string
 	TzValue                   string
 	TzSortValue               string
+	ArrayStorageLevel         int    // 0-2
 	FuncSelfReferenceVariable string
 	FuncType                  string
 	FuncName                  string
@@ -63,6 +64,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
 	newTzDto.TzValue = tzDataDto.TzValue
 	newTzDto.TzSortValue = tzDataDto.TzSortValue
+	newTzDto.ArrayStorageLevel = tzDataDto.ArrayStorageLevel
 	newTzDto.FuncSelfReferenceVariable = tzDataDto.FuncSelfReferenceVariable
 	newTzDto.FuncType = tzDataDto.FuncType
 	newTzDto.FuncName = tzDataDto.FuncName
@@ -93,6 +95,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
 	tzDataDto.TzValue = inTzDataDto.TzValue
 	tzDataDto.TzSortValue = inTzDataDto.TzSortValue
+	tzDataDto.ArrayStorageLevel = inTzDataDto.ArrayStorageLevel
 	tzDataDto.FuncSelfReferenceVariable = inTzDataDto.FuncSelfReferenceVariable
 	tzDataDto.FuncType = inTzDataDto.FuncType
 	tzDataDto.FuncName = inTzDataDto.FuncName
@@ -147,7 +150,8 @@ func (tzDataDto TimeZoneDataDto) New(
 	tzAliasValue,
 	tzCanonicalValue,
 	tzValue,
-	tzSortValue,
+	tzSortValue string,
+	arrayStorageLevel int,
 	funcSelfReferenceVariable,
 	funcType,
 	funcName,
@@ -201,6 +205,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzValue = tzValue
 	newTzDto.TzSortValue = tzSortValue
+	newTzDto.ArrayStorageLevel = arrayStorageLevel
 	newTzDto.FuncSelfReferenceVariable = funcSelfReferenceVariable
 	newTzDto.FuncType = funcType
 	newTzDto.FuncName = funcName

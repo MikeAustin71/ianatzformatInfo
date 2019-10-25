@@ -49,11 +49,6 @@ import (
 
 */
 
-var tzGroups [] tzdatastructs.TimeZoneGroupCollection
-
-var tzData [] tzdatastructs.TimeZoneDataCollection
-
-var tzLinks tzdatastructs.TimeZoneDataCollection
 
 /*
   tzMajorGroupArray Format
@@ -112,17 +107,13 @@ type ParseIanaTzData struct {
 func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	dirFileInfo pathfileops.FileMgrCollection,
 	ePrefix string) (
-	[] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
-	[] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
 	tzdatastructs.TimeZoneStatsDto, // Time Zone Stats
 	error)  {
 
 	ePrefix += "ParseIanaTzData.ParseTzAndLinks() "
 	tzStats := tzdatastructs.TimeZoneStatsDto{}
+	tzStats.Initialize()
 	var err error
-
-	tzGroups =  make([]tzdatastructs.TimeZoneGroupCollection, 3, 10)
-	tzData = make([]tzdatastructs.TimeZoneDataCollection, 3, 10)
 
 	dirFileInfo.SortByAbsPathFileName(true)
 
@@ -131,9 +122,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	fmt.Println("Number of Target Files: ", numOfFiles)
 
 	if numOfFiles < 5 {
-		return tzGroups,
-			tzData,
-			tzStats,
+		return tzStats,
 			fmt.Errorf(ePrefix+"Number of files is less than 5!\n" +
 				"Number of Files='%v'", numOfFiles)
 	}
@@ -147,9 +136,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		fMgr, err = dirFileInfo.PeekFileMgrAtIndex(i)
 
 		if err != nil {
-			return tzGroups,
-				tzData,
-				tzStats,
+			return tzStats,
 				fmt.Errorf(ePrefix+
 					"Error returned by dirFileInfo.PeekFileMgrAtIndex(i)\n" +
 					"Error='%v'\n", err.Error())
@@ -158,9 +145,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		if strings.ToLower(fMgr.GetFileNameExt()) == "version" {
 			tzStats.IanaVersion, err = parseTz.extractVersion(fMgr, ePrefix)
 			if err != nil {
-				return tzGroups,
-					tzData,
-					tzStats,
+				return tzStats,
 					err
 			}
 
@@ -170,7 +155,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		isSkipFile, err = parseTz.isSkipFile(fMgr, ePrefix)
 
 		if err != nil {
-			return tzGroups, tzData, tzStats, err
+			return tzStats, err
 		}
 
 		if isSkipFile {
@@ -182,7 +167,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		err =  parseTz.processFileBytes(fMgr, &tzStats, ePrefix)
 
 		if err != nil {
-			return tzGroups, tzData, tzStats, err
+			return tzStats, err
 		}
 	}
 
@@ -191,39 +176,36 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 	err = parseTz.resolveLinkConflicts(&tzStats, ePrefix)
 
 	if err != nil {
-		return tzGroups, tzData, tzStats, err
+		return tzStats, err
 	}
 
 	err = parseTz.configMilitaryTimeZones(&tzStats, ePrefix)
 
 	if err != nil {
-		return tzGroups, tzData, tzStats, err
+		return tzStats, err
 	}
 
 	err = parseTz.configUsaTimeZones(&tzStats, ePrefix)
 
 	if err != nil {
-		return tzGroups, tzData, tzStats, err
+		return tzStats, err
 	}
 
-	tzStats.NumStdIanaTZones -= tzStats.NumOfLinkConflictResolved
+	tzStats.NumIanaStdTZones -= tzStats.NumOfLinkConflictResolved
 
-	tzStats.TotalIanaTZones =
-		tzStats.NumStdIanaTZones + tzStats.NumLinkIanaTZones
+	tzStats.TotalIanaStdTzLinkZones =
+		tzStats.NumIanaStdTZones + tzStats.NumIanaLinkTZones
 
-	tzStats.TotalTZones =
-		tzStats.TotalIanaTZones +
+	tzStats.TotalZones =
+		tzStats.TotalIanaStdTzLinkZones +
 			tzStats.NumMilitaryTZones +
 			tzStats.NumOtherTZones
 
 	tzStats.TotalSubTZoneGroups =
-		tzStats.NumSubStdTZoneGroups +
-			tzStats.NumSubLinkTZoneGroups
+		tzStats.NumLevel2StdSubTZoneGroups +
+			tzStats.NumLevel2LinkSubGroups
 
-	return tzGroups,
-		tzData,
-		tzStats,
-		err
+	return tzStats, err
 }
 
 // configMilitaryTimeZones - Creates and stores Military Time Zones
@@ -269,7 +251,7 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(
 			"Error: %v\n", err.Error() )
 	}
 
-	tzStats.NumPrimaryTZoneGroups++
+	tzStats.NumMajorTZoneGroups++
 
 	for i:=0; i < len(tzdatastructs.MilitaryTzArray); i++ {
 
@@ -383,7 +365,7 @@ func (parseTz *ParseIanaTzData) configUsaTimeZones(
 			"Error: %v\n", err.Error() )
 	}
 
-	tzStats.NumPrimaryTZoneGroups++
+	tzStats.NumMajorTZoneGroups++
 
 	for i:=0; i < len(tzdatastructs.USATzArray); i++ {
 
@@ -736,7 +718,7 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 	tzGroup := tzdatastructs.TimeZoneGroupDto{}
 	tzGroup.ParentGroupName = ""
 
-	groupAlreadyExists, _ := tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
+	groupAlreadyExists, _ := tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
 		"", // parentGroup Name
 		tzdatastructs.DeprecatedTzGroup) // Group Name - 'Deprecated'
 
@@ -766,20 +748,15 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+		err = tzStats.CountMajorLinkZoneGroup(tzGroup,ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_02_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
-
-		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ :=
-		tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
 			"", // parentGroup
 			tzdatastructs.DeprecatedTzGroup, // groupName - 'Deprecated'
 			linkZone) // Link TzName
@@ -832,25 +809,12 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+		err = tzStats.CountIanaLinkZone(tzDataDto, tzdatastructs.Level_01_Idx, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_01_Idx] Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
 
-		err = tzLinks.Add(tzDataDto)
-
-		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzLinks.Add(tzDataDto) Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
-		}
-
-		tzStats.NumLinkIanaTZones++
 	}
 
 	return nil
@@ -879,7 +843,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			"linkZoneArray length='%v'\n", len(linkZoneArray))
 	}
 
-	groupAlreadyExists, _ := tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
+	groupAlreadyExists, _ := tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
 		"", // Parent Group Name - ""
 		tzdatastructs.DeprecatedTzGroup) // Group Name - 'Deprecated'
 
@@ -916,20 +880,15 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+		err = tzStats.CountMajorLinkZoneGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
-
-		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ :=
-		tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
 			"", // Parent Group Name
 			tzdatastructs.DeprecatedTzGroup, // Group Name - 'Deprecated'
 			linkZoneArray[0]) // Tz - US
@@ -995,13 +954,10 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+		err = tzStats.CountLevel1LinkZoneCollection(tzDataDto, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_01_Idx] Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
 	}
 
@@ -1014,7 +970,7 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 
 	// linkZoneArray[0] == US
 	groupAlreadyExists, _ =
-		tzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(
+		tzStats.TzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(
 			tzdatastructs.DeprecatedTzGroup, // Parent Group Name - 'Deprecated'
 			linkZoneArray[0]) // Group Name - 'US'
 
@@ -1048,109 +1004,90 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_02_Idx].Add(tzGroup)
+		err = tzStats.CountLevel2LinkSubGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_02_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
-
-		tzStats.NumSubLinkTZoneGroups++
-
 	}
 
 	containsZone, _ =
-		tzData[tzdatastructs.Level_02_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_02_Idx].ContainsTzName(
 			tzdatastructs.DeprecatedTzGroup, // Parent Group Name - 'Deprecated'
 			linkZoneArray[0], // Group Name - 'US'
 			linkZoneArray[1]) // Tz - 'Alaska'
 
-		if !containsZone {
-			// Level - 2 Time Zone Data
-			//   Deprecated Time Zone Canonical Value
-			//
-			// Configure Deprecated Link - Time Zone Data Dto
-			// Example: link -> canonical time zone
-			//          'US/Alaska' -> 'America/Anchorage'
+	if !containsZone {
+		// Level - 2 Link Zone Data
+		//   Deprecated Time Zone Canonical Value
+		//
+		// Configure Deprecated Link - Time Zone Data Dto
+		// Example: link        -> canonical time zone
+		//          'US/Alaska' -> 'America/Anchorage'
 
-			tzDataDto := tzdatastructs.TimeZoneDataDto{}
-			tzDataDto.ParentGroupName = tzdatastructs.DeprecatedTzGroup // 'Deprecated'
-			tzDataDto.GroupName = linkZoneArray[0] // US
-			tzDataDto.TzName = linkZoneArray[1] // Alaska
-			tzDataDto.TzAliasValue =
-				linkZoneArray[0] +
-					tzdatastructs.ZoneSeparator + linkZoneArray[1] // US/Alaska
-			tzDataDto.TzCanonicalValue = canonicalZone // America/Anchorage
-			tzDataDto.TzValue = linkZoneArray[1] // Alaska
-			tzDataDto.TzSortValue =
-				tzdatastructs.TimeZoneDataDto{}.NewSortValue(linkZoneArray[1])
+		tzDataDto := tzdatastructs.TimeZoneDataDto{}
+		tzDataDto.ParentGroupName = tzdatastructs.DeprecatedTzGroup // 'Deprecated'
+		tzDataDto.GroupName = linkZoneArray[0] // US
+		tzDataDto.TzName = linkZoneArray[1] // Alaska
+		tzDataDto.TzAliasValue =
+			linkZoneArray[0] +
+				tzdatastructs.ZoneSeparator + linkZoneArray[1] // US/Alaska
+		tzDataDto.TzCanonicalValue = canonicalZone // America/Anchorage
+		tzDataDto.TzValue = linkZoneArray[1] // Alaska
+		tzDataDto.TzSortValue =
+			tzdatastructs.TimeZoneDataDto{}.NewSortValue(linkZoneArray[1])
 
-			// Example: link -> canonical time zone
-			//          'US/Alaska' -> 'America/Anchorage'
-			// Link            = 'US/Alaska'
-			// Canonical Value = 'America/Anchorage'
-			//
-			// func (uSDep uSDeprecatedTimeZones)
-			//     Alaska() string { return "America/Anchorage" }
+		// Example: link -> canonical time zone
+		//          'US/Alaska' -> 'America/Anchorage'
+		// Link            = 'US/Alaska'
+		// Canonical Value = 'America/Anchorage'
+		//
+		// func (uSDep uSDeprecatedTimeZones)
+		//     Alaska() string { return "America/Anchorage" }
 
-			// Example: uSDeprecatedTimeZones
-			tzDataDto.FuncType =
-				strops.StrOps{}.LowerCaseFirstLetter(
-					linkZoneArray[0]) +
-					tzdatastructs.DeprecatedTzGroup +
-					tzdatastructs.MasterGroupTypeSuffix
+		// Example: uSDeprecatedTimeZones
+		tzDataDto.FuncType =
+			strops.StrOps{}.LowerCaseFirstLetter(
+				linkZoneArray[0]) +
+				tzdatastructs.DeprecatedTzGroup +
+				tzdatastructs.MasterGroupTypeSuffix
 
-			// Example: 'uSDep'
-			tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
+		// Example: 'uSDep'
+		tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
-			// Example: link -> canonical time zone
-			//          'US/Alaska' -> 'America/Anchorage'
-			// Link            = 'US/Alaska'
-			// Canonical Value = 'America/Anchorage'
-			//
-			// Func Name: Alaska()
-			tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(linkZoneArray[1])
+		// Example: link -> canonical time zone
+		//          'US/Alaska' -> 'America/Anchorage'
+		// Link            = 'US/Alaska'
+		// Canonical Value = 'America/Anchorage'
+		//
+		// Func Name: Alaska()
+		tzDataDto.FuncName = parseTz.zoneCfgValidFuncName(linkZoneArray[1])
 
-			// Example: string
-			tzDataDto.FuncReturnType = "string"
+		// Example: string
+		tzDataDto.FuncReturnType = "string"
 
-			// Example Function Return Value = "America/Anchorage"
-			tzDataDto.FuncReturnValue =
-				fmt.Sprintf("\"%v\"", canonicalZone)
+		// Example Function Return Value = "America/Anchorage"
+		tzDataDto.FuncReturnValue =
+			fmt.Sprintf("\"%v\"", canonicalZone)
 
-			tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
-			tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
-			tzDataDto.TzType = tzdatastructs.TZType.SubZone()
-			tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
-			tzDataDto.SetIsInitialized(true)
+		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
+		tzDataDto.TzType = tzdatastructs.TZType.SubZone()
+		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
+		tzDataDto.SetIsInitialized(true)
 
-			err := tzdeclarations.TzZoneDeclarations{}.LinkTimeZoneTwoElementDeclaration(&tzDataDto, ePrefix)
+		err := tzdeclarations.TzZoneDeclarations{}.LinkTimeZoneTwoElementDeclaration(&tzDataDto, ePrefix)
 
-			if err != nil {
-				return err
-			}
+		if err != nil {
+			return err
+		}
 
-			err = tzData[tzdatastructs.Level_02_Idx].Add(tzDataDto)
+		err =
+			tzStats.CountIanaLinkZone(tzDataDto, tzdatastructs.Level_02_Idx, ePrefix)
 
-			if err != nil {
-				return fmt.Errorf(ePrefix +
-					"tzData[tzdatastructs.Level_02_Idx] Error\n"+
-					"Error: %v\n" +
-					"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
-			}
-
-			err = tzLinks.Add(tzDataDto)
-
-			if err != nil {
-				return fmt.Errorf(ePrefix +
-					"tzLinks.Add(tzDataDto) Error\n"+
-					"Error: %v\n" +
-					"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
-			}
-
-			tzStats.NumLinkIanaTZones++
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -1184,7 +1121,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	}
 
 	groupAlreadyExists, _ :=
-		tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
+		tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
 			"", // Parent Group Name - ""
 			tzdatastructs.DeprecatedTzGroup) // Group Name - 'Deprecated'
 
@@ -1208,7 +1145,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 
 		// deprecatedTimeZones
 		tzGroup.TypeName =
-			strops.StrOps{}.LowerCaseFirstLetter(tzdatastructs.DeprecatedTzGroup)  +
+			strops.StrOps{}.LowerCaseFirstLetter(tzdatastructs.DeprecatedTzGroup) +
 				tzdatastructs.MasterGroupTypeSuffix
 
 		tzGroup.TypeValue = "string"
@@ -1226,20 +1163,15 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+		err = tzStats.CountMajorLinkZoneGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+		return err
 		}
-
-		tzStats.NumPrimaryTZoneGroups ++
 	}
 
 	containsZone, _ :=
-		tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+		 tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
 			"", // Parent Group Name - ""
 			tzdatastructs.DeprecatedTzGroup, // Group Name - 'Deprecated'
 			linkZoneArray[0]) // Tz - 'Argentina'
@@ -1318,13 +1250,10 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+		err = tzStats.CountLevel1LinkZoneCollection(tzDataDto, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_01_Idx] Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
 	}
 
@@ -1339,7 +1268,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 	// Configure Level-2 Group Dto
 	//
 	groupAlreadyExists, _ =
-		tzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(
+		tzStats.TzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(
 			tzdatastructs.DeprecatedTzGroup, // Parent Group Name - 'Deprecated'
 			linkZoneArray[0]) // Group Name - 'America'
 
@@ -1373,18 +1302,15 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_02_Idx].Add(tzGroup)
+		err = tzStats.CountLevel2LinkSubGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_02_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
 	}
 
 	containsZone, _ =
-		tzData[tzdatastructs.Level_02_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_02_Idx].ContainsTzName(
 			tzdatastructs.DeprecatedTzGroup, // Parent Group Name - 'Deprecated'
 			linkZoneArray[0], // Group Name - 'America'
 			linkZoneArray[1]) // Tz - 'Argentina'
@@ -1467,16 +1393,11 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_02_Idx].Add(tzDataDto)
+		err = tzStats.CountLevel2LinkZoneCollection(tzDataDto, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_02_Idx] Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
-
-		tzStats.NumSubLinkTZoneGroups++
 	}
 
 	// Configure Level-3 Data
@@ -1495,7 +1416,7 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 		tzdatastructs.ZoneSeparator + linkZoneArray[0]
 
 	groupAlreadyExists, _ =
-		tzGroups[tzdatastructs.Level_03_Idx].ContainsGroupName(
+		tzStats.TzGroups[tzdatastructs.Level_03_Idx].ContainsGroupName(
 			level3ParentGroup, // Parent Group Name - 'Deprecated/America'
 			linkZoneArray[1]) // Group Name - 'Argentina'
 
@@ -1530,18 +1451,15 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_03_Idx].Add(tzGroup)
+		err = tzStats.CountLevel3LinkSubGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_03_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
 	}
 
 	containsZone, _ =
-		tzData[tzdatastructs.Level_03_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_03_Idx].ContainsTzName(
 			level3ParentGroup, // Parent Group Name - 'Deprecated/America'
 			linkZoneArray[1], // Group Name - 'Argentina'
 			linkZoneArray[2]) // Tz - 'ComodRivadavia'
@@ -1623,25 +1541,12 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_03_Idx].Add(tzDataDto)
+		err = tzStats.CountIanaLinkZone(tzDataDto, tzdatastructs.Level_03_Idx, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_03_Idx] Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
 
-		err = tzLinks.Add(tzDataDto)
-
-		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzLinks.Add(tzDataDto) Error\n"+
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
-		}
-
-		tzStats.NumLinkIanaTZones ++
 	}
 
 	return nil
@@ -1844,7 +1749,8 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 			"zoneArray length='%v'\n", len(zoneArray))
 	}
 
-	groupAlreadyExists, _ := tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
+	groupAlreadyExists, _ :=
+		tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
 		"", // Parent Group Name - ""
 		zoneArray[0]) // Group Name - 'America'
 
@@ -1880,19 +1786,14 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+		err = tzStats.CountMajorTimeZoneGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
-
-		tzStats.NumPrimaryTZoneGroups++
 	}
 
-	containsZone, _ := tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+	containsZone, _ := tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
 		"", // Parent Group Name - ""
 		zoneArray[0], // Group Name - 'America'
 		zoneArray[1]) // Tz = 'Chicago'
@@ -1946,16 +1847,11 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 		return err
 	}
 
-	err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+	err = tzStats.CountIanaStdZone(tzDataDto, tzdatastructs.Level_01_Idx, ePrefix)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzData[tzdatastructs.Level_01_Idx] Error\n" +
-			"Error: %v\n" +
-			"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+		 return err
 	}
-
-	tzStats.NumStdIanaTZones ++
 
 	return nil
 }
@@ -1996,14 +1892,14 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 
 	// zoneArray[0] == America
 	groupAlreadyExists, _ :=
-		tzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
+		tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
 			"", // Parent Group Name - ""
 			zoneArray[0]) // Group Name - 'America'
 
 	if !groupAlreadyExists {
 
 		// Configure Level-1 Data
-		// Configure Time Zone Level-1 Master Group
+		// Configure Time Zone Level-1 Major Group
 		tzGroup := tzdatastructs.TimeZoneGroupDto{}
 		tzGroup.ParentGroupName = ""
 		tzGroup.GroupName = zoneArray[0]  // America
@@ -2031,20 +1927,16 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 			return err
 		}
 
-		err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+		err = tzStats.CountMajorTimeZoneGroup(tzGroup, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"\ntzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", fMgr.GetFileNameExt(), err.Error() )
+			return err
 		}
 
-		tzStats.NumPrimaryTZoneGroups++
 	}
 
 	containsZone, _ :=
-		tzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
 			"", // Parent Group Name - ""
 			zoneArray[0], // Group Name - 'America'
 			zoneArray[1]) // Tz - 'Argentina'
@@ -2110,16 +2002,11 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+		err = tzStats.CountLevel1TimeZoneCollection(tzDataDto, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_01_Idx] Error\n" +
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
-
-		tzStats.NumSubStdTZoneGroups++
 	}
 
 
@@ -2127,7 +2014,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 	// Configure Level-2 Secondary Group
 	// Example: America/Argentina/Buenos_Aires
 	groupAlreadyExists, _ =
-		tzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(
+		tzStats.TzGroups[tzdatastructs.Level_02_Idx].ContainsGroupName(
 			zoneArray[0], // Parent Name - 'America'
 			zoneArray[1]) // Group Name - 'Argentina'
 
@@ -2158,13 +2045,11 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		if err != nil {
 			return err
 		}
-		
-		err = tzGroups[tzdatastructs.Level_02_Idx].Add(tzGroup)
+
+		err = tzStats.CountLevel2StdSubGroup(tzGroup,ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix + "tzGroups[tzdatastructs.SecondaryGroupIdx] Error.\n" +
-				"Error: %v\n" +
-				"FileName: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
 	}
 
@@ -2229,16 +2114,11 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_02_Idx].Add(tzDataDto)
+		err = tzStats.CountIanaStdZone(tzDataDto, tzdatastructs.Level_02_Idx, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_02_Idx] Error.\n" +
-				"FileName: %v\n" +
-				"Error: %v\n", err.Error(), fMgr.GetFileNameExt())
+			return err
 		}
-
-		tzStats.NumStdIanaTZones++
 	}
 
 	return nil

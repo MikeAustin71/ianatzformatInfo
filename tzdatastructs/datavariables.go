@@ -218,15 +218,4 @@ var WorldRegions = []string {
 	"Etc",
 	"Other" }
 
-var WorldRegionsTzCounters = make([]int, 11)
-
-var WorldRegionsLinkCounters = make([]int, 11)
-
-var WorldRegionsTotalZonesLinksCounters = make([]int, 11)
-
-var WorldRegionsTotalTimeZones int
-
-var WorldRegionsTotalLinks int
-
-var WorldRegionsTotalZonesLinks int
 

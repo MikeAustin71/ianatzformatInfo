@@ -238,7 +238,7 @@ func (tzDataCol *TimeZoneDataCollection) GroupExists(
 func (tzDataCol TimeZoneDataCollection) New() TimeZoneDataCollection {
 
 	newTzCol := TimeZoneDataCollection{}
-	newTzCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+	newTzCol.tzDataDtos = make([]TimeZoneDataDto, 0, 700)
 
 	return newTzCol
 }
