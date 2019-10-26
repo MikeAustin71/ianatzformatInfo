@@ -7,22 +7,22 @@ import (
 )
 
 type TimeZoneStatsDto struct {
-	IanaVersion                string
-	NumOfLinkConflictResolved  int
-	NumOfBackZoneConflicts     int
-	NumIanaStdTZones           int
-	NumIanaLinkTZones          int
-	TotalIanaStdTzLinkZones    int
-	NumMilitaryTZones          int
-	NumOtherTZones             int
-	TotalZones                 int
-	NumMajorTZoneGroups        int
-	NumMajorLinkGroups         int
-	NumMajorMilitaryGroups     int
-	NumMajorOtherGroups        int
-	TotalMajorGroups           int
-	NumLevel2StdSubTZoneGroups int
-	NumLevel3StdSubTZoneGroups int
+	IanaVersion                  string
+	NumOfLinkConflictResolved    int
+	NumOfBackZoneConflicts       int
+	NumIanaStdTZones             int
+	NumIanaLinkTZones            int
+	TotalIanaStdTzLinkZones      int
+	NumMilitaryTZones            int
+	NumOtherTZones               int
+	TotalZones                   int
+	NumMajorTZoneGroups          int
+	NumMajorLinkGroups           int
+	NumMajorMilitaryGroups       int
+	NumMajorOtherGroups          int
+	TotalMajorGroups             int
+	NumLevel2StdSubTZoneGroups   int
+	NumLevel3StdSubTZoneGroups   int
 	TotalSubTZoneGroups          int
 	NumLevel2LinkSubGroups       int
 	NumLevel3LinkSubGroups       int
@@ -474,4 +474,303 @@ func (tzStats *TimeZoneStatsDto) CountLevel2LinkZoneCollection(
 	tzStats.NumLevel2LinkZoneCollections++
 
 	return nil
+}
+
+// CountMajorOtherTimeZoneGroup - Counts, processes
+// and stores information for a Major Other Time Zone
+// Group.
+//
+// This is a level-1 Major Group (Level_01_Idx)
+func (tzStats *TimeZoneStatsDto) CountMajorOtherTimeZoneGroup(
+	tzGroup TimeZoneGroupDto, ePrefix string) error {
+
+	ePrefix += "TimeZoneStatsDto.CountMajorOtherTimeZoneGroup() "
+
+	err := tzStats.TzGroups[Level_01_Idx].Add(tzGroup)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"tzStats.TzGroups[zoneLevel].Add(tzGroup) Error\n" +
+			"FileName: %v\n" +
+			"Error: %v\n",
+			tzGroup.SourceFileNameExt, err.Error() )
+	}
+
+	tzStats.NumMajorOtherGroups++
+
+	return nil
+}
+
+// CountMilitaryZone - Counts processes and stores
+// information for a standard Other Time Zone Type.
+func (tzStats *TimeZoneStatsDto) CountOtherZone(
+	tzDataDto TimeZoneDataDto, zoneLevel int, ePrefix string) error {
+
+	ePrefix += "TimeZoneStatsDto.CountOtherZone() "
+
+	if zoneLevel < 0 || zoneLevel >= len(tzStats.TzData) {
+		return fmt.Errorf(ePrefix +
+			"Error: Input parameter 'zoneLevel' is out-of-range.\n" +
+			"Valid range for zoneLevel is 0-%v.\n" +
+			"zoneLevel='%v'\n", len(tzStats.TzData) - 1, zoneLevel)
+	}
+
+	tzDataDto.ArrayStorageLevel = zoneLevel
+
+	err := tzStats.TzData[zoneLevel].Add(tzDataDto)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by tzStats.TzData[zoneLevel].Add(tzDataDto)\n" +
+			"zoneLevel='%v'\n" +
+			"Error='%v'\n", zoneLevel, err.Error())
+	}
+
+	tzStats.NumMilitaryTZones++
+
+	return nil
+}
+
+// CountMajorMilitaryTimeZoneGroup - - Counts, processes and stores
+//// information for a Major Military Time Zone Group.
+//// This is a level-1 Major Group (Level_01_Idx)
+func (tzStats *TimeZoneStatsDto) CountMajorMilitaryTimeZoneGroup(
+	tzGroup TimeZoneGroupDto, ePrefix string) error {
+
+	ePrefix += "TimeZoneStatsDto.CountMilitaryZone() "
+
+	err := tzStats.TzGroups[Level_01_Idx].Add(tzGroup)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"tzStats.TzGroups[zoneLevel].Add(tzGroup) Error\n" +
+			"FileName: %v\n" +
+			"Error: %v\n",
+			tzGroup.SourceFileNameExt, err.Error() )
+	}
+
+	tzStats.NumMajorMilitaryGroups++
+
+	return nil
+}
+
+// CountMilitaryZone - Counts processes and stores
+// information for a standard Military Time Zone.
+func (tzStats *TimeZoneStatsDto) CountMilitaryZone(
+	tzDataDto TimeZoneDataDto, zoneLevel int, ePrefix string) error {
+
+	ePrefix += "TimeZoneStatsDto.CountMilitaryZone() "
+
+	if zoneLevel < 0 || zoneLevel >= len(tzStats.TzData) {
+		return fmt.Errorf(ePrefix +
+			"Error: Input parameter 'zoneLevel' is out-of-range.\n" +
+			"Valid range for zoneLevel is 0-%v.\n" +
+			"zoneLevel='%v'\n", len(tzStats.TzData) - 1, zoneLevel)
+	}
+
+	tzDataDto.ArrayStorageLevel = zoneLevel
+
+	err := tzStats.TzData[zoneLevel].Add(tzDataDto)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by tzStats.TzData[zoneLevel].Add(tzDataDto)\n" +
+			"zoneLevel='%v'\n" +
+			"Error='%v'\n", zoneLevel, err.Error())
+	}
+
+	tzStats.NumMilitaryTZones++
+
+	return nil
+}
+
+func (tzStats *TimeZoneStatsDto) ResolveLinkConflicts(ePrefix string) error {
+
+	ePrefix += "TimeZoneStatsDto.ResolveLinkConflicts() "
+
+	var testLink, testZone *TimeZoneDataDto
+
+	numOfDeletedTimeZones := 0
+
+	var err error
+
+	numTzLinks := tzStats.IanaCapturedLinkZones.GetNumberOfTimeZones()
+
+	for i:=0 ; i < numTzLinks; i++ {
+
+		testLink, err = tzStats.IanaCapturedLinkZones.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix+
+				"Error returned by tzStats.IanaCapturedLinkZones.PeekPtr(i)\n"+
+				"i='%v'\n"+
+				"Error='%v'\n", i, err.Error())
+		}
+
+		numOfTzDtos := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
+
+		for j:= 0; j < numOfTzDtos; j++ {
+
+			testZone, err = tzStats.IanaCapturedTimeZones.PeekPtr(j)
+
+			if err != nil {
+				return fmt.Errorf(ePrefix +
+					"\nError returned by tzStats.IanaCapturedTimeZones.PeekPtr(j)\n" +
+					"j='%v'\n" +
+					"Error='%v'\n", j, err.Error())
+			}
+
+			if testLink.TzAliasValue == testZone.TzCanonicalValue {
+
+				// Invalid Standard Time Zone - Delete it.
+				// First delete it from tzStats.TzData
+				targetTzDto := testZone.CopyOut()
+
+
+				numOfDeletedTimeZones, err = tzStats.deleteTzDataTimeZone(targetTzDto, ePrefix)
+
+				if err != nil {
+					return err
+				}
+
+				tzStats.NumIanaStdTZones -= numOfDeletedTimeZones
+				tzStats.NumOfLinkConflictResolved += numOfDeletedTimeZones
+
+				if targetTzDto.SourceFileNameExt == "backzone" {
+					tzStats.NumOfBackZoneConflicts += numOfDeletedTimeZones
+				}
+
+				// Now delete the time zone from tzStats.IanaCapturedTimeZones
+				_, err = tzStats.deleteCapturedTimeZone(targetTzDto, ePrefix)
+
+				if err != nil {
+					return err
+				}
+
+				break
+			}
+		}
+	}
+
+	return nil
+}
+
+// RunTotals - Computes all statistical totals and sub totals.
+func (tzStats *TimeZoneStatsDto) RunTotals(ePrefix string) error {
+	ePrefix += "TimeZoneStatsDto.RunTotals() "
+
+	return nil
+}
+
+func (tzStats *TimeZoneStatsDto) deleteCapturedTimeZone(
+	testTzDto TimeZoneDataDto, ePrefix string) (int, error) {
+
+	ePrefix += "TimeZoneStatsDto.deleteCapturedTimeZone() "
+
+	var i, numOfTzDtos, numOfDeletedTzs int
+
+	i = 0
+
+	startDeleteCapturedTzLoop:
+
+		numOfTzDtos = tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
+
+		if i >= numOfTzDtos {
+			return numOfDeletedTzs, nil
+		}
+
+		for ; i < numOfTzDtos; i++ {
+
+			capturedTzDto, err := tzStats.IanaCapturedTimeZones.PeekPtr(i)
+
+			if err != nil {
+				return numOfDeletedTzs, fmt.Errorf(ePrefix +
+					"Error returned by tzStats.IanaCapturedTimeZones.PeekPtr(i)\n" +
+					"i='%v'\n" +
+					"Error='%v'\n", i, err.Error())
+			}
+
+			if testTzDto.TzCanonicalValue == capturedTzDto.TzCanonicalValue {
+
+				_, err = tzStats.IanaCapturedTimeZones.PopAtIndex(i)
+
+				if err != nil {
+					return numOfDeletedTzs, fmt.Errorf(ePrefix +
+						"Error returned by tzStats.IanaCapturedTimeZones.PopAtIndex(i)\n" +
+						"i='%v'\n" +
+						"Error='%v'\n", i, err.Error())
+				}
+
+				numOfDeletedTzs++
+
+				goto startDeleteCapturedTzLoop
+			}
+		}
+
+	return numOfDeletedTzs, nil
+}
+
+// deleteTzDataTimeZone - Deletes all instance of a Time Zone from the TzData
+// collection.
+//
+// The number of timezones deleted is returned as an integer.
+func (tzStats *TimeZoneStatsDto) deleteTzDataTimeZone(tzDto TimeZoneDataDto, ePrefix string) (int, error) {
+
+	ePrefix += "TimeZoneStatsDto.deleteTzDataTimeZone() "
+
+	numOfTzDeleted := 0
+
+	testDataDto := tzDto.CopyOut()
+
+	var j, numOfTzDtos int
+
+		for i:=0 ; i < len(tzStats.TzData); i++ {
+
+		j = 0
+
+		startDeleteTzDataLoop:
+
+			numOfTzDtos = tzStats.TzData[i].GetNumberOfTimeZones()
+
+			if j < 0 {
+				j = 0
+			}
+
+			if j >= numOfTzDtos {
+				continue
+			}
+
+			for ; j < numOfTzDtos; j++ {
+
+				timeZoneDto, err := tzStats.TzData[i].PeekPtr(j)
+
+				if err != nil {
+					return numOfTzDeleted, fmt.Errorf(ePrefix +
+						"Error returned by tzStats.TzData[i].PeekPtr(j)\n" +
+						"i='%v'   j='%v'\n" +
+						"Error='%v'\n", i, j, err.Error())
+				}
+
+				if timeZoneDto.TzCanonicalValue == testDataDto.TzCanonicalValue {
+					// timeZoneDto and testDataDto are a match.
+					// delete it.
+
+					_, err = tzStats.TzData[i].PopAtIndex(j)
+
+					if err != nil {
+						return numOfTzDeleted, fmt.Errorf(ePrefix +
+							"Error returned by tzStats.TzData[i].PopAtIndex(j)\n" +
+							"i='%v'    j='%v'\n" +
+							"Error='%v'\n", i, j, err.Error())
+					}
+
+					// Count the number of deleted time zones
+					numOfTzDeleted++
+
+					goto startDeleteTzDataLoop
+				}
+			}
+		}
+
+	return numOfTzDeleted, nil
 }

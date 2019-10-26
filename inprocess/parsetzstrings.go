@@ -173,7 +173,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 
 	fmt.Printf("Number Of Valid Time Zone Files: %v\n", validFileCnt)
 
-	err = parseTz.resolveLinkConflicts(&tzStats, ePrefix)
+	err = tzStats.ResolveLinkConflicts(ePrefix)
 
 	if err != nil {
 		return tzStats, err
@@ -243,15 +243,11 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(
 		return err
 	}
 
-	err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+	err = tzStats.CountMajorMilitaryTimeZoneGroup(tzGroup, ePrefix)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-			"Error: %v\n", err.Error() )
+		return err
 	}
-
-	tzStats.NumMajorTZoneGroups++
 
 	for i:=0; i < len(tzdatastructs.MilitaryTzArray); i++ {
 
@@ -307,16 +303,11 @@ func (parseTz *ParseIanaTzData) configMilitaryTimeZones(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+		err = tzStats.CountMilitaryZone(tzDataDto, tzdatastructs.Level_01_Idx, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_01_Idx] Error\n" +
-				"Military Time Zone: %v\n" +
-				"Error: %v\n", tzdatastructs.MilitaryTzArray[i], err.Error())
+			return err
 		}
-
-		tzStats.NumMilitaryTZones++
 	}
 
 	return nil
@@ -357,15 +348,12 @@ func (parseTz *ParseIanaTzData) configUsaTimeZones(
 		return err
 	}
 
-	err = tzGroups[tzdatastructs.Level_01_Idx].Add(tzGroup)
+	err = tzStats.CountMajorOtherTimeZoneGroup(tzGroup, ePrefix)
 
 	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"tzGroups[tzdatastructs.Level_01_Idx] Error\n" +
-			"Error: %v\n", err.Error() )
+		return err
 	}
 
-	tzStats.NumMajorTZoneGroups++
 
 	for i:=0; i < len(tzdatastructs.USATzArray); i++ {
 
@@ -421,16 +409,11 @@ func (parseTz *ParseIanaTzData) configUsaTimeZones(
 			return err
 		}
 
-		err = tzData[tzdatastructs.Level_01_Idx].Add(tzDataDto)
+		err = tzStats.CountOtherZone(tzDataDto, tzdatastructs.Level_01_Idx, ePrefix)
 
 		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"tzData[tzdatastructs.Level_01_Idx] Error\n" +
-				"Military Time Zone: %v\n" +
-				"Error: %v\n", tzdatastructs.MilitaryTzArray[i], err.Error())
+			return err
 		}
-
-		tzStats.NumOtherTZones++
 	}
 
 	return nil
@@ -1646,88 +1629,6 @@ func (parseTz *ParseIanaTzData) processFileBytes(
 	return nil
 }
 
-// resolveLinkConflicts - Deletes Standard Time Zones which also exist as
-// Link Time Zones.
-func (parseTz *ParseIanaTzData) resolveLinkConflicts(
-	tzStats *tzdatastructs.TimeZoneStatsDto,
-	ePrefix string) error {
-
-	ePrefix += "ParseIanaTzData.resolveLinkConflicts() "
-
-	lenTzLinks := tzLinks.GetNumberOfTimeZones()
-	var testLink  *tzdatastructs.TimeZoneDataDto
-	var err error
-
-	for i:=0; i < lenTzLinks; i++ {
-
-		testLink, err = tzLinks.PeekPtr(i)
-
-		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"Error returned by tzLinks.PeekPtr(i)\n" +
-				"i='%v'\n" +
-				"Error='%v'\n", i, err.Error())
-		}
-
-		var numOfTzDtos int
-
-		for j:=0; j <= tzdatastructs.Level_03_Idx; j++ {
-
-			k := 0
-
-startTzSearch:
-
-			if k < 0 {
-				k = 0
-			}
-
-			numOfTzDtos = tzData[j].GetNumberOfTimeZones()
-
-			for ; k < numOfTzDtos; k++ {
-
-				testZone, err := tzData[j].PeekPtr(k)
-
-				if err != nil {
-					return fmt.Errorf(ePrefix +
-						"Error returned by tzData[j].PeekPtr(k)\n" +
-						"j='%v'\n" +
-						"k='%v'\n" +
-						"Error='%v'\n", j, k, err.Error())
-				}
-
-				if testLink.TzAliasValue == testZone.TzCanonicalValue {
-
-					srcFileName := testZone.SourceFileNameExt
-
-					testZone = nil
-
-					_, err = tzData[j].PopAtIndex(k)
-
-					if err != nil {
-						return fmt.Errorf(ePrefix +
-							"Error returned by tzData[j].PopAtIndex(k).\n" +
-							"j='%v'\n" +
-							"k='%v'\n" +
-							"Error='%v'\n", j, k, err.Error())
-					}
-
-					k--
-
-					tzStats.NumOfLinkConflictResolved++
-
-					if srcFileName == "backzone" {
-						tzStats.NumOfBackZoneConflicts++
-					}
-
-					goto startTzSearch
-				}
-			}
-		}
-	}
-
-	return nil
-}
-
 // zoneCfgTwoElements - Configures and stores data for a two element time zone
 // such as 'America/Chicago'. This method configures both the TimeZoneGroupDto and
 // the TimeZoneDataDto.
@@ -2054,7 +1955,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 	}
 
 	containsZone, _ =
-		tzData[tzdatastructs.Level_02_Idx].ContainsTzName(
+		tzStats.TzData[tzdatastructs.Level_02_Idx].ContainsTzName(
 			zoneArray[0], // Parent Name - 'America'
 			zoneArray[1], // Group Name - 'Argentina'
 			zoneArray[2]) // Tz - Buenos_Aires
