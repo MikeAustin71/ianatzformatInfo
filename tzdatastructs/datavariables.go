@@ -1,12 +1,15 @@
 package tzdatastructs
 
-import 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+import (
+	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"time"
+)
 
 
 var CurWorkingDirectory pathfileops.DirMgr
 
+var CurrentDateTime time.Time
 
-var NumberOfTimeZones = 0
 
 // For IANA Time Zone Files the white space characters which delimit fields
 // are space, form feed, carriage return, newline, tab, and  vertical tab.

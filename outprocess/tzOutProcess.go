@@ -16,8 +16,6 @@ type TzOutProcess struct {
 func (tzOut TzOutProcess) WriteOutput(
 	outputPathDirMgr pathfileops.DirMgr,
 	fileNameExt string,
-	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
-	tzZonesAry [] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections
 	tzStats *tzdatastructs.TimeZoneStatsDto, // Time Zone Version
 	ePrefix string) error {
 
@@ -38,7 +36,6 @@ func (tzOut TzOutProcess) WriteOutput(
 
 	err = tzOut.writeTimeZoneMasterType(
 		f,
-		tzGroupsAry,
 		tzStats,
 		ePrefix)
 
@@ -56,8 +53,7 @@ func (tzOut TzOutProcess) WriteOutput(
 
 	err = tzOut.writeTimeZones(
 		f,
-		tzGroupsAry,
-		tzZonesAry,
+		tzStats,
 		ePrefix)
 
 	if err != nil {
@@ -87,11 +83,37 @@ func (tzOut TzOutProcess) WriteOutput(
 
 	if len(errArray) > 0 {
 		err = pathfileops.FileHelper{}.ConsolidateErrors(errArray)
+		return err
 	}
 
-	return err
+	f, err = tzOut.createOpenLogOutputFile(outputPathDirMgr, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+
+
+
+	return nil
 }
 
+func (tzOut TzOutProcess) createOpenLogOutputFile(
+	outputPathDirMgr pathfileops.DirMgr,
+	ePrefix string) (f pathfileops.FileMgr, err error) {
+
+	ePrefix += "TzOutProcess.createOpenLogOutputFile() "
+
+	fmtDateTimeSecondStr := "20060102150405"
+	currDateTimeStr := tzdatastructs.CurrentDateTime.Format(fmtDateTimeSecondStr)
+
+	fileNameExt :=   currDateTimeStr +"_ianaformatInfoLog" +".txt"
+
+	return tzOut.createOpenOutputFile(outputPathDirMgr, fileNameExt, ePrefix)
+}
+
+// Creates and Opens the Go Source Code output file,
+// 'timezonedata.go'.
 func (tzOut TzOutProcess) createOpenOutputFile(
 	outputPathDirMgr pathfileops.DirMgr,
 	fileNameExt, ePrefix string) (f pathfileops.FileMgr, err error) {
@@ -169,10 +191,18 @@ func (tzOut TzOutProcess) createOpenOutputFile(
 // createTimeZoneTypeComments - Creates comments for the master Time Zone Type.
 //
 func (tzOut TzOutProcess) createTimeZoneTypeComments(
-	tzStats *tzdatastructs.TimeZoneStatsDto) []byte {
+	tzStats *tzdatastructs.TimeZoneStatsDto, ePrefix string) ([]byte, error) {
 
-	currDateTime := time.Now()
-	currDateTimeStr := currDateTime.Format(tzdatastructs.FmtDateTime)
+	ePrefix += "TzOutProcess.createTimeZoneTypeComments() "
+
+
+	currDateTimeStr := tzdatastructs.CurrentDateTime.Format(tzdatastructs.FmtDateTime)
+
+	regionalStats, err := tzOut.createIanaRegionalTimeZoneStats(tzStats, ePrefix)
+
+	if err != nil {
+		return make([]byte, 0), err
+	}
 
 	outputStr := fmt.Sprintf("\n" +
 		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n" +
@@ -223,6 +253,11 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"//             https://www.youtube.com/watch?v=DyXJy_0v0_U \n" +
 		"//\n" +
 		"// ----------------------------------------------------------------------------\n" +
+		"//                           IANA Time Zones by Region                         \n" +
+		"//\n" +
+		regionalStats +
+		"//\n" +
+		"// ----------------------------------------------------------------------------\n" +
 		"// \n" +
 		"// This TimeZones Type is based on IANA Time Zone Database Version: %v\n" +
 		"// \n" +
@@ -263,7 +298,108 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		tzStats.NumMajorTZoneGroups,
 		currDateTimeStr)
 
-	return []byte(outputStr)
+	return []byte(outputStr), nil
+}
+
+// createIanaRegionalTimeZoneStats - Configures Iana Time Zone Regional
+// Statistics as string returned by the method.
+func (tzOut TzOutProcess) createIanaRegionalTimeZoneStats(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) (string, error) {
+
+	ePrefix += "TzOutProcess.createIanaRegionalTimeZoneStats() "
+	strOps := strops.StrOps{}
+
+	outputStats := ""
+
+	temp, err := strOps.MakeSingleCharString(' ', 35)
+
+	if err != nil {
+		return outputStats,
+		fmt.Errorf(ePrefix +
+			"Error returned by err := strOps.MakeSingleCharString(' ', 35)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+
+
+	outputStats += "// " + temp + "     " + "Time" + "     " + "Link" + "    " + "Total" + "\n"
+	outputStats += "// " + temp + "    " + "Zones" + "    " + "Zones" + "    " + "Zones" + "\n"
+
+	temp, err = strOps.MakeSingleCharString('-', 62)
+
+	if err != nil {
+		return outputStats,
+			fmt.Errorf(ePrefix +
+				"Error returned by err := strOps.MakeSingleCharString('-', 62)\n" +
+				"Error='%v'\n", err.Error())
+	}
+
+	outputStats += "// " + temp + "\n"
+	outputStats += "// \n"
+
+	for i:=0; i < len(tzStats.IanaTzRegions); i++ {
+
+		region, err := strOps.StrLeftJustify(tzStats.IanaTzRegions[i], 35)
+
+		if err != nil {
+			return outputStats,
+				fmt.Errorf(ePrefix +
+					"\nError returned by strOps.StrLeftJustify(tzStats.IanaTzRegions[i], 35)\n" +
+					"Error='%v'\n", err.Error())
+		}
+
+		tzCount := "     " +
+			fmt.Sprintf("%4d", tzStats.IanaTzCounters[i])
+
+		linkCount := "     " +
+			fmt.Sprintf("%4d", tzStats.IanaLinkCounters[i])
+
+		linkTzCount := "     " +
+			fmt.Sprintf("%4d", tzStats.IanaTotalTimeZoneLinkCounters[i])
+
+		outputStats += "// " +
+			region +
+			tzCount +
+			linkCount +
+			linkTzCount + "\n"
+
+	}
+
+	totalLine, err := strOps.MakeSingleCharString('=', 62)
+
+	if err != nil {
+		return "",
+		fmt.Errorf(ePrefix +
+			"\nError returned by strOps.MakeSingleCharString('=', 62)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	outputStats += "// " + totalLine + "\n"
+
+	totalValues := ""
+
+	totalValues, err = strOps.StrRightJustify("Total ", 35)
+
+	if err != nil {
+		return "",
+			fmt.Errorf(ePrefix +
+				"\nError returned by strOps.StrRightJustify(\"Total \", 35)\n" +
+				"Error='%v'\n", err.Error())
+	}
+
+	totalValues += "     " +
+		fmt.Sprintf("%4d", tzStats.IanaTotalTimeZones)
+
+	totalValues += "     " +
+		fmt.Sprintf("%4d", tzStats.IanaTotalLinks)
+
+	totalValues += "     " +
+		fmt.Sprintf("%4d", tzStats.IanaTotalTimeZonesLinks)
+
+	outputStats += "// " + totalValues + "\n"
+
+	return outputStats, nil
 }
 
 // writeHeadersToOutputFile - Writes header information to the
@@ -312,10 +448,256 @@ func (tzOut TzOutProcess) writeHeadersToOutputFile(
 	return err
 }
 
+// Write log data to the log output file.
+func (tzOut TzOutProcess) writeLogData(
+	outputFileMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "TzOutProcess.writeLogData() "
+
+	maxLineLen := 65
+	totalLineLen := 30
+	leftMarginLen := 5
+
+	strOps := strops.StrOps{}
+
+	outputStr, err :=
+		strOps.StrCenterInStr("ianatzformatInfo.go", maxLineLen)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error retuned by strOps.StrCenterInStr(\"ianatzformatInfo.go\", 65)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	var temp string
+
+	outputStr += "\n"
+	temp, err = strOps.MakeSingleCharString('-', maxLineLen)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error returned by strOps.MakeSingleCharString('-', maxLineLen)\n" +
+			"maxLineLen='%v'\n" +
+			"Error='%v'\n", maxLineLen, err.Error())
+	}
+
+	lineBreak := temp
+	outputStr += lineBreak + "\n"
+	currDateTimeStr := tzdatastructs.CurrentDateTime.Format(tzdatastructs.FmtDateTime)
+	endDateTimeStr := time.Now().Format(tzdatastructs.FmtDateTime)
+
+	temp, err = strOps.MakeSingleCharString(' ', leftMarginLen)
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error returned by strOps.MakeSingleCharString(' ', leftMarginLen)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	leftMargStr := temp
+
+	temp, err = strOps.MakeSingleCharString('=', totalLineLen)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error returned by strOps.MakeSingleCharString('=', totalLineLen)\n" +
+			"maxLineLen='%v'\n" +
+			"Error='%v'\n", maxLineLen, err.Error())
+	}
+
+	totalLineBreak := temp
+
+	temp, err = strOps.MakeSingleCharString('*', totalLineLen)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error returned by strOps.MakeSingleCharString('=', totalLineLen)\n" +
+			"maxLineLen='%v'\n" +
+			"Error='%v'\n", maxLineLen, err.Error())
+	}
+
+	grandTotalLineBreak := temp
+
+	outputStr += leftMargStr + "Starting Date-Time: " +
+		currDateTimeStr + "\n"
+	outputStr += leftMargStr + "  Ending Date-Time:" +
+		endDateTimeStr + "\n"
+	outputStr += lineBreak + "\n\n"
+
+	outputStr += leftMargStr +
+		"IanaVersion: " + tzStats.IanaVersion + "\n"
+
+	outputStr += leftMargStr +
+		"NumOfLinkConflictResolved: " +
+		fmt.Sprintf("%4d\n", tzStats.NumOfLinkConflictResolved)
+
+	outputStr += leftMargStr +
+		"NumOfBackZoneConflicts: " +
+		fmt.Sprintf("%4d\n\n", tzStats.NumOfBackZoneConflicts)
+
+	outputStr += leftMargStr +
+		"NumIanaStdTZones: " +
+		fmt.Sprintf("%4d\n", tzStats.NumIanaStdTZones)
+
+	outputStr += leftMargStr +
+		"NumIanaLinkTZones: " +
+		fmt.Sprintf("%4d\n", tzStats.NumIanaLinkTZones)
+
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalIanaStdTzLinkZones: " +
+		fmt.Sprintf("%4d\n\n", tzStats.TotalIanaStdTzLinkZones)
+
+	outputStr += leftMargStr +
+		"NumMilitaryTZones: " +
+		fmt.Sprintf("%4d\n", tzStats.NumMilitaryTZones)
+
+
+	outputStr += leftMargStr +
+		"NumOtherTZones: " +
+		fmt.Sprintf("%4d\n", tzStats.NumOtherTZones)
+
+	outputStr += grandTotalLineBreak + "\n"
+	outputStr += grandTotalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalZones: " +
+		fmt.Sprintf("%4d\n", tzStats.TotalZones)
+
+	outputStr += grandTotalLineBreak + "\n"
+	outputStr += grandTotalLineBreak + "\n\n"
+
+	outputStr += leftMargStr +
+		"NumMajorTZoneGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumMajorTZoneGroups)
+
+	outputStr += leftMargStr +
+		"NumMajorLinkGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumMajorLinkGroups)
+
+	outputStr += leftMargStr +
+		"NumMajorMilitaryGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumMajorMilitaryGroups)
+
+	outputStr += leftMargStr +
+		"NumMajorOtherGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumMajorOtherGroups)
+
+
+	outputStr += totalLineBreak + "\n"
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalMajorGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.TotalMajorGroups)
+
+	outputStr += totalLineBreak + "\n"
+	outputStr += totalLineBreak + "\n\n"
+
+	outputStr += leftMargStr +
+		"NumLevel2StdSubTZoneGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel2StdSubTZoneGroups)
+
+	outputStr += leftMargStr +
+		"NumLevel3StdSubTZoneGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel3StdSubTZoneGroups)
+
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalSubTZoneGroups: " +
+		fmt.Sprintf("%4d\n\n", tzStats.TotalSubTZoneGroups)
+
+	outputStr += leftMargStr +
+		"NumLevel2LinkSubGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel2LinkSubGroups)
+
+	outputStr += leftMargStr +
+		"NumLevel3LinkSubGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel3LinkSubGroups)
+
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalLinkSubGroups: " +
+		fmt.Sprintf("%4d\n\n", tzStats.TotalLinkSubGroups)
+
+	outputStr += totalLineBreak + "\n"
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalSubGroups: " +
+		fmt.Sprintf("%4d\n", tzStats.TotalSubGroups)
+
+	outputStr += totalLineBreak + "\n"
+	outputStr += totalLineBreak + "\n\n"
+
+	outputStr += leftMargStr +
+		"NumLevel1TZoneCollections: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel1TZoneCollections)
+
+	outputStr += leftMargStr +
+		"NumLevel2TZoneCollections: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel2TZoneCollections)
+
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalTimeZoneCollections: " +
+		fmt.Sprintf("%4d\n\n", tzStats.TotalTimeZoneCollections)
+
+	outputStr += leftMargStr +
+		"NumLevel1LinkZoneCollections: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel1LinkZoneCollections)
+
+	outputStr += leftMargStr +
+		"NumLevel2LinkZoneCollections: " +
+		fmt.Sprintf("%4d\n", tzStats.NumLevel2LinkZoneCollections)
+
+	outputStr += totalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalLinkZoneCollections: " +
+		fmt.Sprintf("%4d\n\n", tzStats.TotalLinkZoneCollections)
+
+
+	outputStr += grandTotalLineBreak + "\n"
+	outputStr += grandTotalLineBreak + "\n"
+
+	outputStr += leftMargStr +
+		"TotalZoneCollections: " +
+		fmt.Sprintf("%4d\n", tzStats.TotalZoneCollections)
+
+	outputStr += grandTotalLineBreak + "\n"
+	outputStr += grandTotalLineBreak + "\n\n"
+
+	temp, err = tzOut.createIanaRegionalTimeZoneStats(tzStats, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	outputStr += temp + "\n"
+
+	_, err = outputFileMgr.WriteBytesToFile([]byte(outputStr))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error returned by outputFileMgr.WriteBytesToFile([]byte(outputStr))\n" +
+			"File Name: '%v'\n" +
+			"Error: '%v'", outputFileMgr.GetAbsolutePath(), err.Error())
+	}
+
+	return nil
+	}
+
+// writeTimeZones - Writes all time zones and link zones to
+// the output file timezonedata.go.
 func (tzOut TzOutProcess) writeTimeZones(
 	outputFileMgr pathfileops.FileMgr,
-	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection, // Array of Time Zone Group Collections
-	tzZonesAry [] tzdatastructs.TimeZoneDataCollection,  // Array of Time Zone Data Collections)
+	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "TzOutProcess.writeLevelOneTimeZones() "
@@ -327,15 +709,15 @@ func (tzOut TzOutProcess) writeTimeZones(
 
 	for i:=0; i <= tzdatastructs.Level_03_Idx; i++ {
 
-		tzGroupsAry[i].Sort(false)
+		tzStats.TzGroups[i].Sort(false)
 
-		tzZonesAry[i].SortByGroupTzName(false)
+		tzStats.TzData[i].SortByGroupTzName(false)
 
-		lenGrpAry := tzGroupsAry[i].GetNumberOfGroups()
+		lenGrpAry := tzStats.TzGroups[i].GetNumberOfGroups()
 
 		for j:= 0; j < lenGrpAry; j++ {
 
-			grp, err = tzGroupsAry[i].PeekPtr(j)
+			grp, err = tzStats.TzGroups[i].PeekPtr(j)
 
 			if err != nil {
 				return fmt.Errorf(ePrefix +
@@ -364,7 +746,7 @@ func (tzOut TzOutProcess) writeTimeZones(
 					i, j, grp.ParentGroupName, grp.GroupName, err.Error())
 			}
 
-			tzCol, err = tzZonesAry[i].GetZoneGroupCol(grp)
+			tzCol, err = tzStats.TzData[i].GetZoneGroupCol(grp)
 
 			if err != nil {
 				return fmt.Errorf(ePrefix)
@@ -413,15 +795,9 @@ func (tzOut TzOutProcess) writeTimeZones(
 						"Error:'%v'\n", string(tZone.FuncDeclaration), err.Error())
 				}
 
-				if tZone.TzType == tzdatastructs.TZType.Standard() ||
-						tZone.TzType == tzdatastructs.TZType.SubZone() {
-					tzdatastructs.NumberOfTimeZones++
-				}
 			}
 		}
 	}
-
-	fmt.Println("Number Of Time Zones Captured: ", tzdatastructs.NumberOfTimeZones)
 
 		return nil
 }
@@ -450,18 +826,21 @@ func (tzOut TzOutProcess) writeTimeZoneGlobalType(
 // Writes Master Type: type TimeZones struct
 func (tzOut TzOutProcess) writeTimeZoneMasterType(
 	outputFileMgr pathfileops.FileMgr,
-	tzGroupsAry [] tzdatastructs.TimeZoneGroupCollection,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "TzOutProcess.writeTimeZoneMasterType() "
 
-	lenMasterGroups := tzGroupsAry[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
+	lenMasterGroups := tzStats.TzGroups[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
 
 	var err error
 	var outBytes []byte
 
-	outBytes = tzOut.createTimeZoneTypeComments(tzStats)
+	outBytes, err  = tzOut.createTimeZoneTypeComments(tzStats, ePrefix)
+
+	if err != nil {
+		return err
+	}
 
 	_, err = outputFileMgr.WriteBytesToFile(outBytes)
 
@@ -494,13 +873,13 @@ func (tzOut TzOutProcess) writeTimeZoneMasterType(
 			"Error='%v'\n", err.Error())
 	}
 
-	tzGroupsAry[tzdatastructs.Level_01_Idx].Sort(true)
+	tzStats.TzGroups[tzdatastructs.Level_01_Idx].Sort(true)
 
 	var group *tzdatastructs.TimeZoneGroupDto
 
 	for i:=0; i < lenMasterGroups; i++ {
 
-		group, err = tzGroupsAry[tzdatastructs.Level_01_Idx].PeekPtr(i)
+		group, err = tzStats.TzGroups[tzdatastructs.Level_01_Idx].PeekPtr(i)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +

@@ -7,6 +7,7 @@ import (
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"os"
+	"time"
 )
 
 
@@ -43,6 +44,8 @@ func main() {
 
 	ePrefix := "ianaTzFormatInfo.main() "
 
+	tzdatastructs.CurrentDateTime = time.Now()
+
 	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
 
 	if err != nil {
@@ -76,13 +79,10 @@ func main() {
 		return
 	}
 
-	var timeZoneGroups []tzdatastructs.TimeZoneGroupCollection
-	var timeZones []tzdatastructs.TimeZoneDataCollection
+
 	var timeZoneStats tzdatastructs.TimeZoneStatsDto
 parser := inprocess.ParseIanaTzData{}
 
-	timeZoneGroups,
-	timeZones,
 	timeZoneStats,
 		err =
 		 parser.ParseTzAndLinks(dirFileInfo, ePrefix)
@@ -95,8 +95,6 @@ parser := inprocess.ParseIanaTzData{}
 	err = outprocess.TzOutProcess{}.WriteOutput(
 		outputFileDirMgr,
 		tzdatastructs.OutputFileName,
-		timeZoneGroups,
-		timeZones,
 		&timeZoneStats,
 		ePrefix)
 

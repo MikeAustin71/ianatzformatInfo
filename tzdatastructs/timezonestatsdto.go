@@ -34,6 +34,7 @@ type TimeZoneStatsDto struct {
 	NumLevel1LinkZoneCollections  int
 	NumLevel2LinkZoneCollections  int
 	TotalLinkZoneCollections      int
+	TotalZoneCollections          int
 	IanaTzRegions                 []string
 	IanaTzCounters                []int
 	IanaLinkCounters              []int
@@ -85,6 +86,7 @@ func (tzStats *TimeZoneStatsDto) Initialize() {
 	tzStats.NumLevel1LinkZoneCollections = 0
 	tzStats.NumLevel2LinkZoneCollections = 0
 	tzStats.TotalLinkZoneCollections = 0
+	tzStats.TotalZoneCollections = 0
 
 	tzStats.IanaTzCounters = make([]int, lenWorldRegions)
 	tzStats.IanaLinkCounters = make([]int, lenWorldRegions)
@@ -694,6 +696,10 @@ func (tzStats *TimeZoneStatsDto) RunTotals(ePrefix string) error {
 	tzStats.TotalLinkZoneCollections =
 		tzStats.NumLevel1LinkZoneCollections +
 		tzStats.NumLevel2LinkZoneCollections
+
+	tzStats.TotalZoneCollections =
+		tzStats.TotalTimeZoneCollections +
+			tzStats.TotalLinkZoneCollections
 
 	lenWorldRegions := len(WorldRegions)
 
