@@ -27,25 +27,25 @@ type TimeZoneStatsDto struct {
 	NumLevel2LinkSubGroups       int
 	NumLevel3LinkSubGroups       int
 	TotalLinkSubGroups           int
-	TotalSubGroups               int
-	NumLevel1TZoneCollections    int
-	NumLevel2TZoneCollections    int
-	TotalTimeZoneCollections     int
-	NumLevel1LinkZoneCollections int
-	NumLevel2LinkZoneCollections int
-	NumOfLinkZoneCollections     int
-	IanaTzRegions                []string
-	IanaTzCounters               []int
-	IanaLinkCounters             []int
-	IanaTotalTzLinkCounters      []int
-	IanaTotalTimeZones           int
-	IanaTotalLinks               int
-	IanaTotalTimeZonesLinks      int
-	IanaCapturedTimeZones        TimeZoneDataCollection
-	IanaCapturedLinkZones        TimeZoneDataCollection
-	TzGroups []TimeZoneGroupCollection
-	TzData []TimeZoneDataCollection
-	TzLinks []TimeZoneDataCollection
+	TotalSubGroups                int
+	NumLevel1TZoneCollections     int
+	NumLevel2TZoneCollections     int
+	TotalTimeZoneCollections      int
+	NumLevel1LinkZoneCollections  int
+	NumLevel2LinkZoneCollections  int
+	TotalLinkZoneCollections      int
+	IanaTzRegions                 []string
+	IanaTzCounters                []int
+	IanaLinkCounters              []int
+	IanaTotalTimeZoneLinkCounters []int
+	IanaTotalTimeZones            int
+	IanaTotalLinks                int
+	IanaTotalTimeZonesLinks       int
+	IanaCapturedTimeZones         TimeZoneDataCollection
+	IanaCapturedLinkZones         TimeZoneDataCollection
+	TzGroups                      []TimeZoneGroupCollection
+	TzData                        []TimeZoneDataCollection
+	TzLinks                       []TimeZoneDataCollection
 }
 
 func (tzStats *TimeZoneStatsDto) Initialize() {
@@ -84,11 +84,11 @@ func (tzStats *TimeZoneStatsDto) Initialize() {
 	tzStats.TotalTimeZoneCollections = 0
 	tzStats.NumLevel1LinkZoneCollections = 0
 	tzStats.NumLevel2LinkZoneCollections = 0
-	tzStats.NumOfLinkZoneCollections = 0
+	tzStats.TotalLinkZoneCollections = 0
 
 	tzStats.IanaTzCounters = make([]int, lenWorldRegions)
 	tzStats.IanaLinkCounters = make([]int, lenWorldRegions)
-	tzStats.IanaTotalTzLinkCounters = make([]int, lenWorldRegions)
+	tzStats.IanaTotalTimeZoneLinkCounters = make([]int, lenWorldRegions)
 	tzStats.IanaTotalTimeZones = 0
 	tzStats.IanaTotalLinks = 0
 	tzStats.IanaTotalTimeZonesLinks = 0
@@ -657,7 +657,109 @@ func (tzStats *TimeZoneStatsDto) ResolveLinkConflicts(ePrefix string) error {
 
 // RunTotals - Computes all statistical totals and sub totals.
 func (tzStats *TimeZoneStatsDto) RunTotals(ePrefix string) error {
+
 	ePrefix += "TimeZoneStatsDto.RunTotals() "
+
+	tzStats.TotalIanaStdTzLinkZones =
+		tzStats.NumIanaStdTZones +
+		tzStats.NumIanaLinkTZones
+
+	tzStats.TotalZones =
+		tzStats.TotalIanaStdTzLinkZones +
+		tzStats.NumMilitaryTZones +
+		tzStats.NumOtherTZones
+
+	tzStats.TotalMajorGroups =
+		tzStats.NumMajorTZoneGroups +
+		tzStats.NumMajorLinkGroups +
+		tzStats.NumMajorMilitaryGroups +
+		tzStats.NumMajorOtherGroups
+
+	tzStats.TotalSubTZoneGroups =
+		tzStats.NumLevel2StdSubTZoneGroups +
+		tzStats.NumLevel3StdSubTZoneGroups
+
+	tzStats.TotalLinkSubGroups =
+		tzStats.NumLevel2LinkSubGroups +
+		tzStats.NumLevel3LinkSubGroups
+
+	tzStats.TotalSubGroups =
+		tzStats.TotalSubTZoneGroups +
+		tzStats.TotalLinkSubGroups
+
+	tzStats.TotalTimeZoneCollections =
+		tzStats.NumLevel1TZoneCollections +
+		tzStats.NumLevel2TZoneCollections
+
+	tzStats.TotalLinkZoneCollections =
+		tzStats.NumLevel1LinkZoneCollections +
+		tzStats.NumLevel2LinkZoneCollections
+
+	lenWorldRegions := len(WorldRegions)
+
+	if len(tzStats.IanaTzRegions) != lenWorldRegions {
+
+		return fmt.Errorf(ePrefix +
+			"Error: Lenght of tzStats.IanaTzRegions is invalid.\n" +
+			"tzStats.IanaTzRegions should equal '%v'.\n" +
+			"Instead, tzStats.IanaTzRegions equals '%v'\n",
+			lenWorldRegions, len(tzStats.IanaTzRegions))
+	}
+
+	if len(tzStats.IanaTzCounters) != lenWorldRegions {
+		return fmt.Errorf(ePrefix +
+			"Error: Lenght of tzStats.IanaTzCounters is invalid.\n" +
+			"tzStats.IanaTzCounters should equal '%v'.\n" +
+			"Instead, tzStats.IanaTzCounters equals '%v'\n",
+			lenWorldRegions, len(tzStats.IanaTzCounters))
+	}
+
+	if len(tzStats.IanaLinkCounters) != lenWorldRegions {
+		return fmt.Errorf(ePrefix +
+			"Error: Lenght of tzStats.IanaLinkCounters is invalid.\n" +
+			"tzStats.IanaLinkCounters should equal '%v'.\n" +
+			"Instead, tzStats.IanaLinkCounters equals '%v'\n",
+			lenWorldRegions, len(tzStats.IanaLinkCounters))
+	}
+
+	if len(tzStats.IanaLinkCounters) != lenWorldRegions {
+		return fmt.Errorf(ePrefix +
+			"Error: Lenght of tzStats.IanaLinkCounters is invalid.\n" +
+			"tzStats.IanaLinkCounters should equal '%v'.\n" +
+			"Instead, tzStats.IanaLinkCounters equals '%v'\n",
+			lenWorldRegions, len(tzStats.IanaLinkCounters))
+	}
+
+	if len(tzStats.IanaTotalTimeZoneLinkCounters) != lenWorldRegions {
+		return fmt.Errorf(ePrefix +
+			"Error: Lenght of tzStats.IanaTotalTimeZoneLinkCounters is invalid.\n" +
+			"tzStats.IanaTotalTimeZoneLinkCounters should equal '%v'.\n" +
+			"Instead, tzStats.IanaTotalTimeZoneLinkCounters equals '%v'\n",
+			lenWorldRegions, len(tzStats.IanaTotalTimeZoneLinkCounters))
+	}
+
+	tzStats.IanaTotalTimeZones = 0
+	tzStats.IanaTotalLinks = 0
+	tzStats.IanaTotalTimeZonesLinks = 0
+
+	for i:=0; i < lenWorldRegions; i++ {
+		tzStats.IanaTotalTimeZoneLinkCounters[i] =
+		tzStats.IanaTzCounters[i] +
+		tzStats.IanaLinkCounters[i]
+
+		tzStats.IanaTotalTimeZones +=
+			tzStats.IanaTzCounters[i]
+
+		tzStats.IanaTotalLinks +=
+			tzStats.IanaLinkCounters[i]
+
+		tzStats.IanaTotalTimeZonesLinks +=
+			tzStats.IanaTzCounters[i]
+
+		tzStats.IanaTotalTimeZonesLinks +=
+			tzStats.IanaLinkCounters[i]
+
+	}
 
 	return nil
 }

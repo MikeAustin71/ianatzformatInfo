@@ -191,19 +191,7 @@ func (parseTz *ParseIanaTzData) ParseTzAndLinks(
 		return tzStats, err
 	}
 
-	tzStats.NumIanaStdTZones -= tzStats.NumOfLinkConflictResolved
-
-	tzStats.TotalIanaStdTzLinkZones =
-		tzStats.NumIanaStdTZones + tzStats.NumIanaLinkTZones
-
-	tzStats.TotalZones =
-		tzStats.TotalIanaStdTzLinkZones +
-			tzStats.NumMilitaryTZones +
-			tzStats.NumOtherTZones
-
-	tzStats.TotalSubTZoneGroups =
-		tzStats.NumLevel2StdSubTZoneGroups +
-			tzStats.NumLevel2LinkSubGroups
+	err = tzStats.RunTotals(ePrefix)
 
 	return tzStats, err
 }
