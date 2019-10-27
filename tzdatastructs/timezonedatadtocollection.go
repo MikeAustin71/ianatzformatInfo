@@ -61,7 +61,34 @@ func (tzDataCol *TimeZoneDataCollection) Add(tzDataDto TimeZoneDataDto) error {
 	return nil
 }
 
-// Adds a TimeZoneDataDto object to the collection if an object
+func (tzDataCol *TimeZoneDataCollection) AddCollection(tzDataCol2 *TimeZoneDataCollection) error {
+
+	ePrefix := "TimeZoneDataCollection.Add() "
+
+	if tzDataCol.tzDataDtos == nil {
+		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+	}
+
+	numOfDtos := tzDataCol2.GetNumberOfTimeZones()
+	var err error
+
+	for i:=0; i < numOfDtos; i++ {
+
+		err = tzDataCol.Add(tzDataCol2.tzDataDtos[i].CopyOut())
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"Error returned by tzDataCol.Add(tzDataCol2.tzDataDtos[i].CopyOut())\n" +
+				"i='%v'  tzValue ='%v' \n" +
+				"Error='%v'", i, tzDataCol2.tzDataDtos[i].TzValue, err.Error())
+		}
+
+	}
+
+	return nil
+}
+
+// AddIfNew - Adds a TimeZoneDataDto object to the collection if an object
 // of equal value does NOT already exist in the collection. In
 // other words, it will not allow duplicate TimeZoneDataDto
 // instances to be added to the collection.
@@ -136,7 +163,59 @@ func (tzDataCol *TimeZoneDataCollection) GetNumberOfTimeZones() int {
 	return len(tzDataCol.tzDataDtos)
 }
 
-// GetZoneGroupCol - Returns a collection of time zones which
+// GetCatSrcCol - Returns a sub-collection of time zones which
+// match the Time Zone Category (tzCategory) and Time Zone Source
+// (tzSource) input parameters.
+//
+func (tzDataCol *TimeZoneDataCollection) GetCatSrcCol(
+	tzCategory TimeZoneCategory, tzSource TimeZoneSource) (TimeZoneDataCollection, error) {
+
+		ePrefix := "TimeZoneDataCollection.GetCatSrcCol()"
+
+	if tzDataCol.tzDataDtos == nil {
+
+		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+
+	}
+
+	tzCol := TimeZoneDataCollection{}.New()
+
+	lenTzDataDtos := len(tzDataCol.tzDataDtos)
+
+	if lenTzDataDtos == 0 {
+		return tzCol,
+			errors.New(ePrefix +
+				"Time Zone Data Collection is EMPTY!\n")
+	}
+
+	for i:=0; i < lenTzDataDtos; i++ {
+		if tzDataCol.tzDataDtos[i].TzCategory ==
+			tzCategory &&
+			tzDataCol.tzDataDtos[i].TzSource ==
+				tzSource {
+
+			err := tzCol.Add(tzDataCol.tzDataDtos[i].CopyOut())
+
+			if err != nil {
+				return TimeZoneDataCollection{}.New(),
+					fmt.Errorf(ePrefix +
+						"Error returned by tzCol.Add(tzDataCol.tzDataDtos[i].CopyOut())\n" +
+						"tzCategory='%v' " +
+						"tzSource='%v'\n" +
+						"tzDataCol.tzDataDtos[i].TzValue='%v'\n" +
+						"Error='%v'\n",
+						tzCategory.String(),
+						tzSource.String(),
+						tzDataCol.tzDataDtos[i].TzValue,
+						err.Error())
+			}
+		}
+	}
+
+	return tzCol, nil
+}
+
+// GetZoneGroupCol - Returns a sub-collection of time zones which
 // match the Time Zone Group input parameter.
 //
 func (tzDataCol *TimeZoneDataCollection) GetZoneGroupCol(
