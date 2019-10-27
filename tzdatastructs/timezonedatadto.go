@@ -35,6 +35,16 @@ type TimeZoneDataDto struct {
 	// 3 = SubZone
 	TzType                    TimeZoneType
 
+	// 0 = None
+	// 1 = TimeZone
+	// 2 = LinkZone
+	TzCategory                TimeZoneCategory
+
+	// 0 = None
+	// 1 = Iana
+	// 2 = Military
+	// 3 = Other
+	TzSource                  TimeZoneSource
 
 	DeprecationStatus          TimeZoneDeprecationStatus // 0 = Unknown
 	// 1 = Deprecated
@@ -73,6 +83,8 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.SourceFileNameExt = tzDataDto.SourceFileNameExt
 	newTzDto.TzClass = tzDataDto.TzClass
 	newTzDto.TzType = tzDataDto.TzType
+	newTzDto.TzCategory = tzDataDto.TzCategory
+	newTzDto.TzSource = tzDataDto.TzSource
 	newTzDto.DeprecationStatus = tzDataDto.DeprecationStatus
 	newTzDto.FuncDeclaration = make([]byte, len(tzDataDto.FuncDeclaration))
 	copy(newTzDto.FuncDeclaration, tzDataDto.FuncDeclaration)
@@ -104,6 +116,8 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.SourceFileNameExt = inTzDataDto.SourceFileNameExt
 	tzDataDto.TzClass = inTzDataDto.TzClass
 	tzDataDto.TzType = inTzDataDto.TzType
+	tzDataDto.TzCategory = inTzDataDto.TzCategory
+	tzDataDto.TzSource = inTzDataDto.TzSource
 	tzDataDto.DeprecationStatus = inTzDataDto.DeprecationStatus
 	tzDataDto.FuncDeclaration = make([]byte, len(inTzDataDto.FuncDeclaration))
 	copy(tzDataDto.FuncDeclaration, inTzDataDto.FuncDeclaration)
@@ -160,6 +174,8 @@ func (tzDataDto TimeZoneDataDto) New(
 	srcFileNameExt string,
 	tzClass TimeZoneClass,
 	tzType TimeZoneType,
+	tzCategory TimeZoneCategory,
+	tzSource TimeZoneSource,
 	deprecationStatus TimeZoneDeprecationStatus) (TimeZoneDataDto, error) {
 
 	ePrefix := "TimeZoneDataDto.NewTimeZone() - ERROR:\n"
@@ -214,6 +230,8 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.SourceFileNameExt = srcFileNameExt
 	newTzDto.TzClass = tzClass
 	newTzDto.TzType = tzType
+	newTzDto.TzCategory = tzCategory
+	newTzDto.TzSource = tzSource
 	newTzDto.DeprecationStatus = deprecationStatus
 	newTzDto.isInitialized = true
 

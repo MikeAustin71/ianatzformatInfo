@@ -771,6 +771,8 @@ func (parseTz *ParseIanaTzData) linkCfgOneElement(
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
 		tzDataDto.TzType = tzdatastructs.TZType.Standard()
+		tzDataDto.TzCategory = tzdatastructs.TZCat.LinkZone()
+		tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 		tzDataDto.SetIsInitialized(true)
 
@@ -1044,6 +1046,8 @@ func (parseTz *ParseIanaTzData) linkCfgTwoElements(
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
 		tzDataDto.TzType = tzdatastructs.TZType.SubZone()
+		tzDataDto.TzCategory = tzdatastructs.TZCat.LinkZone()
+		tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 		tzDataDto.SetIsInitialized(true)
 
@@ -1503,6 +1507,8 @@ func (parseTz *ParseIanaTzData) linkCfgThreeElements(
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 		tzDataDto.TzClass = tzdatastructs.TZClass.Alias()
 		tzDataDto.TzType = tzdatastructs.TZType.SubZone()
+		tzDataDto.TzCategory = tzdatastructs.TZCat.LinkZone()
+		tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Deprecated()
 		tzDataDto.SetIsInitialized(true)
 
@@ -1727,6 +1733,8 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 	tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
 	tzDataDto.TzType = tzdatastructs.TZType.Standard()
+	tzDataDto.TzCategory = tzdatastructs.TZCat.TimeZone()
+	tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzDataDto.SetIsInitialized(true)
 
@@ -1995,6 +2003,8 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
 		tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
 		tzDataDto.TzType = tzdatastructs.TZType.SubZone()
+		tzDataDto.TzCategory = tzdatastructs.TZCat.TimeZone()
+		tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 		tzDataDto.SetIsInitialized(true)
 		err := tzdeclarations.TzZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)

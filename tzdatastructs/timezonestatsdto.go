@@ -528,7 +528,7 @@ func (tzStats *TimeZoneStatsDto) CountOtherZone(
 			"Error='%v'\n", zoneLevel, err.Error())
 	}
 
-	tzStats.NumMilitaryTZones++
+	tzStats.NumOtherTZones++
 
 	return nil
 }

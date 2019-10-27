@@ -3,7 +3,7 @@ package main
 
 
 // TimeZones - This type and its associated methods encapsulate 582 IANA Time
-// Zones, 25-Military Time Zones and 11-Other Time Zones. This type is
+// Zones, 36-Military Time Zones and 0-Other Time Zones. This type is
 // therefore used as a comprehensive enumeration of Global Time Zones.
 //
 // The Go Programming Language uses IANA Time Zones in date-time calculations.
@@ -50,6 +50,27 @@ package main
 //             https://www.youtube.com/watch?v=DyXJy_0v0_U 
 //
 // ----------------------------------------------------------------------------
+//                           IANA Time Zones by Region                         
+//
+//                                         Time     Link    Total
+//                                        Zones    Zones    Zones
+// --------------------------------------------------------------
+// 
+// Africa                                    20       40       60
+// America                                  130       66      196
+// Antarctica                                10        0       10
+// Asia                                      77       30      107
+// Atlantic                                   9        2       11
+// Australia                                 12       11       23
+// Europe                                    46       26       72
+// Indian                                     8        0        8
+// Pacific                                   36       15       51
+// Etc                                       28       16       44
+// Other                                      0        0        0
+// ==============================================================
+//                              Total       376      206      582
+//
+// ----------------------------------------------------------------------------
 // 
 // This TimeZones Type is based on IANA Time Zone Database Version: 2019c
 // 
@@ -58,19 +79,19 @@ package main
 //                                         -------
 //                 Sub-Total IANA Time Zones: 582
 // 
-//                Military Time Zones :  25
-//                   Other Time Zones :  11
+//                Military Time Zones :  36
+//                   Other Time Zones :   0
 //                                         -------
 //                          Total Time Zones: 618
 // 
 //       Standard Time Zone Sub-Groups:   4
 //           Link Time Zone Sub-Groups:  16
 //                                         -------
-//                Total Time Zone Sub-Groups:  20
+//                Total Time Zone Sub-Groups:   4
 // 
-//                  Primary Time Zone Groups:  13
+//                  Primary Time Zone Groups:  10
 // 
-// Type Creation Date: 2019-10-24 Thursday 01:42:32 -0500 CDT
+// Type Creation Date: 2019-10-26 Saturday 21:14:27 -0500 CDT
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {

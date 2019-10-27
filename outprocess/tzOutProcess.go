@@ -5,6 +5,7 @@ import (
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"strings"
 	"time"
 )
 
@@ -78,7 +79,8 @@ func (tzOut TzOutProcess) WriteOutput(
 
 	if err2 != nil {
 		errArray = append(errArray, fmt.Errorf(ePrefix +
-			"\nError returned by f.CloseThisFile()"))
+			"\nError returned by f.CloseThisFile()\n" +
+			"Error='%v'\n", err2.Error()))
 	}
 
 	if len(errArray) > 0 {
@@ -92,8 +94,36 @@ func (tzOut TzOutProcess) WriteOutput(
 		return err
 	}
 
+err = tzOut.writeLogData(f, tzStats, ePrefix)
 
+if err != nil {
+	_ = f.CloseThisFile()
+	return err
+}
 
+	errArray = make([]error, 0)
+
+	err2 = f.FlushBytesToDisk()
+
+	if err2 != nil {
+
+		errArray = append(errArray, fmt.Errorf(ePrefix +
+			"\nError returned by f.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err2.Error()))
+	}
+
+	err2 = f.CloseThisFile()
+
+	if err2 != nil {
+		errArray = append(errArray, fmt.Errorf(ePrefix +
+			"\nError returned by f.CloseThisFile()\n" +
+			"Error='%v'\n", err2.Error()))
+	}
+
+	if len(errArray) > 0 {
+		err = pathfileops.FileHelper{}.ConsolidateErrors(errArray)
+		return err
+	}
 
 	return nil
 }
@@ -678,6 +708,8 @@ func (tzOut TzOutProcess) writeLogData(
 	if err != nil {
 		return err
 	}
+
+	temp = strings.Replace(temp,"\\", "  ", -1)
 
 	outputStr += temp + "\n"
 

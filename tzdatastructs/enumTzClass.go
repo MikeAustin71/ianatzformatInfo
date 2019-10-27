@@ -30,7 +30,7 @@ var mTimeZoneClassToString = map[TimeZoneClass]string{
 
 type TimeZoneClass int
 
-// Unknown - 0 = Unknown or uninitialized Time Zone
+// Unknown - 0 = Unknown or uninitialized Time Zone Class
 //
 // This method is part of the standard TimeZoneClass enumeration.
 //
