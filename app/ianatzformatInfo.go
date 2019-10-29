@@ -61,18 +61,18 @@ func main() {
 	targetInputDir :=
 		currWorkingDirMgr.GetAbsolutePath() + string(os.PathSeparator) + "input"
 
-	targetParameterPathFileName :=
+	baseDataInputPathFileName :=
 		pathfileops.FileHelper{}.JoinPathsAdjustSeparators(
 			targetInputDir,
 			tzdatastructs.AppInputParametersFileName)
 
-	var dirFileInfo pathfileops.FileMgrCollection
-	var outputFileDirMgr pathfileops.DirMgr
+	var zoneInfoDataDto inprocess.ZoneInfoDataDto
 
-	fmt.Printf("Base Data Input File:\n     %v\n\n", targetParameterPathFileName)
 
-	dirFileInfo, outputFileDirMgr, err =
-		inprocess.AcquireTzData{}.AcquireDirectoryInfo(targetParameterPathFileName, ePrefix)
+	fmt.Printf("Base Data Input File:\n     %v\n\n", baseDataInputPathFileName)
+
+	zoneInfoDataDto, err =
+		inprocess.ZoneInfoDataDto{}.AcquireZoneInfo(baseDataInputPathFileName, ePrefix)
 
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())

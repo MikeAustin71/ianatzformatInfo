@@ -1,0 +1,8 @@
+SEE ALSO
+       time(2), localtime(3), tzset(3), tzselect(8), zdump(8), zic(8).
+
+       Olson A, Eggert P, Murchison K. The Time Zone Information Format
+       (TZif).  2019 Feb.  Internet RFC 8536 <https://www.rfc-editor.org/info/
+       rfc8536> doi:10.17487/RFC8536 <https://doi.org/10.17487/RFC8536>.
+
+                                                                     TZFILE(5)

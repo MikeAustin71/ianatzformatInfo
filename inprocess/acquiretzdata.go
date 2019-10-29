@@ -22,7 +22,7 @@ func (acTzDat AcquireTzData) AcquireDirectoryInfo(
 	targetParameterPathFileName,
 	ePrefix string) (dirFileInfo pathfileops.FileMgrCollection, outputDirMgr pathfileops.DirMgr, err error) {
 
-	ePrefix += "AcquireTzData.AcquireInputOutputDirectories() "
+	ePrefix += "AcquireTzData.AcquireDirectoryInfo() "
 	dirFileInfo = pathfileops.FileMgrCollection{}.New()
 	outputDirMgr = pathfileops.DirMgr{}
 	inputPathName := ""

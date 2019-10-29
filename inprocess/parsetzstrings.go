@@ -614,11 +614,18 @@ func (parseTz *ParseIanaTzData) extractZone(
 
 	lenZoneArray := len(zoneArray)
 
-	if lenZoneArray < 2 ||
-		lenZoneArray > 3 {
-		fmt.Printf(ePrefix+"Invalid Time Zone!\n"+
+	if lenZoneArray < 2 {
+		fmt.Printf(ePrefix+"Invalid Standard Time Zone!\n" +
+			"Number of Time Zone elemens is less than 2.\n"+
 			"FileName: %v\n"+
-			"Raw Zone String: %v\n", fMgr.GetFileNameExt(), rawString)
+			"Raw Zone String: %v\n\n", fMgr.GetFileNameExt(), rawString)
+	}
+
+	if lenZoneArray > 3 {
+		fmt.Printf(ePrefix+"Invalid Standard Time Zone!\n" +
+			"Number of Time Zone elements is greater than 3.\n"+
+			"FileName: %v\n"+
+			"Raw Zone String: %v\n\n", fMgr.GetFileNameExt(), rawString)
 		return nil
 	}
 
