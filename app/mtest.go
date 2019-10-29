@@ -7,7 +7,7 @@ import (
 
 func main() {
 	nowTime := time.Now()
-	tzLocation := "HST"
+	tzLocation := "Factory"
 	location1, err := time.LoadLocation(tzLocation)
 
 	if err != nil {

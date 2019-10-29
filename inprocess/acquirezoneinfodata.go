@@ -12,6 +12,7 @@ type ZoneInfoDataDto struct {
 	ZoneInfoInputDir    string
 	AppOutputDir        string
 	ZoneInfoDirFileInfo pathfileops.FileMgrCollection
+	ZoneInfoDirMgr      pathfileops.DirMgr
 	AppOutputDirMgr     pathfileops.DirMgr
 }
 
@@ -51,7 +52,13 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 	if err2 != nil {
 		return ZoneInfoDataDto{}, err2
 	}
-	
+
+	zoneInfoDto.ZoneInfoDirMgr, err2 = pathfileops.DirMgr{}.New(zoneInfoDto.ZoneInfoInputDir)
+
+	if err2 != nil {
+		return ZoneInfoDataDto{}, err2
+	}
+
 	return zoneInfoDto, nil
 }
 
