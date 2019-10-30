@@ -8,8 +8,8 @@ import (
 
 var CurWorkingDirectory pathfileops.DirMgr
 
-var CurrentDateTime time.Time
-
+var ApplicationStartDateTime time.Time
+var ApplicationEndDateTime time.Time
 
 // For IANA Time Zone Files the white space characters which delimit fields
 // are space, form feed, carriage return, newline, tab, and  vertical tab.

@@ -172,7 +172,7 @@ func (acTzDat AcquireTzData) getDirectoryInfo(
 	return dirFileInfo, err
 }
 
-// getTargetDirectories - Reads the input text file and extracts the input directory
+// readBaseDataInput - Reads the input text file and extracts the input directory
 // where IANA Time Zone data is located plus the output directory where formatted
 // time zones will be created.
 //

@@ -44,7 +44,7 @@ func main() {
 
 	ePrefix := "ianaTzFormatInfo.main() "
 
-	tzdatastructs.CurrentDateTime = time.Now()
+	tzdatastructs.ApplicationStartDateTime = time.Now()
 
 	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
 
@@ -59,7 +59,7 @@ func main() {
 	fmt.Printf("Current Working Directory:\n     %v\n\n", currWorkingDirMgr.GetAbsolutePath())
 
 	targetInputDir :=
-		currWorkingDirMgr.GetAbsolutePath() + string(os.PathSeparator) + "input"
+		currWorkingDirMgr.GetAbsolutePathWithSeparator() + "input"
 
 	baseDataInputPathFileName :=
 		pathfileops.FileHelper{}.JoinPathsAdjustSeparators(
@@ -81,11 +81,11 @@ func main() {
 
 
 	var timeZoneStats tzdatastructs.TimeZoneStatsDto
-parser := inprocess.ParseIanaTzData{}
+parser := inprocess.ParseZoneInfoData{}
 
 	timeZoneStats,
 		err =
-		 parser.ParseTzAndLinks(dirFileInfo, ePrefix)
+		 parser.ParseZoneInfo(zoneInfoDataDto, ePrefix)
 
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())

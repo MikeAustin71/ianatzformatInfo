@@ -1,2 +1,3 @@
 InputDirectory: D:\tz2\zoneinfo
 OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output
+Iana Time Zone Version: 2019c

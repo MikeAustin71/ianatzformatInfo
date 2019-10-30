@@ -11,11 +11,17 @@ import (
 type ZoneInfoDataDto struct {
 	ZoneInfoInputDir    string
 	AppOutputDir        string
+	IanaTimeZoneVersion string
 	ZoneInfoDirFileInfo pathfileops.FileMgrCollection
 	ZoneInfoDirMgr      pathfileops.DirMgr
 	AppOutputDirMgr     pathfileops.DirMgr
 }
 
+// AcquireZoneInfo - Reads, parses and returns all information
+// contained in the base data input file, 'targettzdata.txt'.
+// This base data input file must reside in a directory named
+//'input' which is located immediately underneath the directory
+// containing this application executable.
 func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 	baseDataInputPathFileName,
 	ePrefix string) (ZoneInfoDataDto, error) {
@@ -32,9 +38,10 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 	}
 
 	zoneInfoDto.ZoneInfoInputDir,
-	zoneInfoDto.AppOutputDir, 
+	zoneInfoDto.AppOutputDir,
+	zoneInfoDto.IanaTimeZoneVersion,
 	err2 =
-			zInDto.getTargetDirectories(baseDataInputFileMgr, ePrefix)
+			zInDto.readBaseDataInput(baseDataInputFileMgr, ePrefix)
 	
 	if err2 != nil {
 		return ZoneInfoDataDto{}, err2
@@ -62,6 +69,11 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 	return zoneInfoDto, nil
 }
 
+// createInputFileMgr - Creates a File Manager to base data input file,
+// 'targettzdata.txt' which must reside in a directory named 'input'
+// which is located immediately underneath the directory containing
+// this application executable.
+//
 func (zInDto ZoneInfoDataDto) createInputFileMgr(
 	baseDataInputPathFileName, ePrefix string) (baseDataInputFileMgr pathfileops.FileMgr, err error) {
 	
@@ -106,6 +118,9 @@ func (zInDto ZoneInfoDataDto) createInputFileMgr(
 	return baseDataInputFileMgr, err
 }
 
+// getZoneInfoDirFileInfo - Receives the Zone Info directory path as input and returns
+// a collection of file managers for every file in the Zone Info directory tree.
+//
 func (zInDto ZoneInfoDataDto) getZoneInfoDirFileInfo(
 	zoneInfoInputDir, ePrefix string) (zoneInfoDirFileInfo pathfileops.FileMgrCollection, err error) {
 
@@ -161,22 +176,33 @@ func (zInDto ZoneInfoDataDto) getZoneInfoDirFileInfo(
 	return zoneInfoDirFileInfo, err
 }
 
-func (zInDto ZoneInfoDataDto) getTargetDirectories(
+
+// readBaseDataInput - Reads base data input file 'targettzdata.txt' to
+// identify and return time zone input directory, output directory for
+// application products and the Iana Time Zone Version.
+//
+// Example Input File: 'targettzdata.txt'
+//
+//   InputDirectory: D:\tz2\zoneinfo
+//   OutputDirectory: D:\GoProjects\ianatzformatInfo\app\output
+//   Iana Time Zone Version: 2019c
+//
+func (zInDto ZoneInfoDataDto) readBaseDataInput(
 	baseDataInputFileMgr pathfileops.FileMgr,
-	ePrefix string) (inputZoneInfoDir, appOutputDir string, err error) {
-	
+	ePrefix string) (inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion string, err error) {
+
 	inputZoneInfoDir = ""
 	appOutputDir = ""
+	ianaTimeZoneVersion = ""
 	err = nil
 
-	ePrefix += "ZoneInfoDataDto.getTargetDirectories() "
-
+	ePrefix += "ZoneInfoDataDto.readBaseDataInput() "
 
 	err2 := baseDataInputFileMgr.OpenThisFileReadWrite()
 
 	if err2 != nil {
 		err = fmt.Errorf(ePrefix+"\n%v\n", err2.Error())
-		return inputZoneInfoDir, appOutputDir, err
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
 	var bArray []byte
@@ -188,9 +214,9 @@ func (zInDto ZoneInfoDataDto) getTargetDirectories(
 
 		err3 := fmt.Errorf(ePrefix+
 			"\n" +
-			"baseDataInputFileMgr: %v\n" +
+			"targettzdata.txt Path: %v\n" +
 			"Error: %v\n",
-			baseDataInputFileMgr.GetAbsolutePath(),
+			baseDataInputFileMgr.GetAbsolutePathFileName(),
 			err2.Error())
 
 		errArray = append(errArray, err3)
@@ -207,29 +233,30 @@ func (zInDto ZoneInfoDataDto) getTargetDirectories(
 			err = pathfileops.FileHelper{}.ConsolidateErrors(errArray)
 		}
 
-		return inputZoneInfoDir, appOutputDir, err
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
 	err2 = baseDataInputFileMgr.CloseThisFile()
 
 	if err2 != nil {
 		err = fmt.Errorf(ePrefix + "\n" +
-			"Error closing 'baseDataInputFileMgr'.\n" +
+			"Error closing 'baseDataInputFileMgr' (targettzdata.txt Path).\n" +
 			"baseDataInputFileMgr='%v'\n" +
-			"Error='%v'\n", baseDataInputFileMgr.GetAbsolutePath(), err2.Error())
-		return inputZoneInfoDir, appOutputDir, err
+			"Error='%v'\n", baseDataInputFileMgr.GetAbsolutePathFileName(), err2.Error())
+
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
 	lBArray := len(bArray)
 
 	if lBArray < 3 {
 		err = fmt.Errorf(ePrefix +
-			"Error: Read only %v bytes from file 'baseDataInputFileMgr'\n" +
+			"Error: Read only %v bytes from file 'baseDataInputFileMgr' (targettzdata.txt Path)\n" +
 			"baseDataInputFileMgr='%v'\n",
 			lBArray,
-			baseDataInputFileMgr)
-		
-		return inputZoneInfoDir, appOutputDir, err
+			baseDataInputFileMgr.GetAbsolutePathFileName())
+
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
 	startIndex := 0
@@ -245,9 +272,10 @@ func (zInDto ZoneInfoDataDto) getTargetDirectories(
 	if idx == -1 {
 		err = fmt.Errorf(ePrefix + "\n" +
 			"Error: Input Directory Field Name '%v' was not found in first\n" +
-			"string read from 'baseDataInputFileMgr'.\n" +
-			"baseDataInputFileMgr='%v'\n", inputFieldName, baseDataInputFileMgr.GetAbsolutePath())
-		return inputZoneInfoDir, appOutputDir, err
+			"string read from 'baseDataInputFileMgr' (targettzdata.txt).\n" +
+			"baseDataInputFileMgr='%v'\n", inputFieldName, baseDataInputFileMgr.GetAbsolutePathFileName())
+
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
 	idx += len(inputFieldName)
@@ -262,12 +290,14 @@ func (zInDto ZoneInfoDataDto) getTargetDirectories(
 		err = fmt.Errorf(ePrefix +
 			"\nTarget Zone Input Directory DOES NOT EXIST!\n" +
 			"inputZoneInfoDir='%v'\n" +
-			"baseDataInputFileMgr='%v'\n", inputZoneInfoDir, baseDataInputFileMgr.GetAbsolutePath())
+			"baseDataInputFileMgr (targettzdata.txt)='%v'\n",
+			inputZoneInfoDir, baseDataInputFileMgr.GetAbsolutePathFileName())
 
-		return inputZoneInfoDir, appOutputDir, err
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
-	readDir, _ = strops.StrOps{}.ReadStringFromBytes(bArray, startIndex)
+	// Read OutputDirectory Field
+	readDir, startIndex = strops.StrOps{}.ReadStringFromBytes(bArray, startIndex)
 
 	outputFieldName := "OutputDirectory:"
 
@@ -275,10 +305,13 @@ func (zInDto ZoneInfoDataDto) getTargetDirectories(
 
 	if idx == -1 {
 		err = fmt.Errorf(ePrefix + "\n" +
-			"Error: Output Directory Field Name '%v' was not found in second\n" +
-			"string read from 'baseDataInputFileMgr'.\n" +
-			"baseDataInputFileMgr='%v'\n", inputFieldName, baseDataInputFileMgr.GetAbsolutePath())
-		return inputZoneInfoDir, appOutputDir, err
+			"Error: Application Output Directory Field Name '%v' " +
+			"was not found in second\n" +
+			"string read from 'baseDataInputFileMgr' (targettzdata.txt).\n" +
+			"baseDataInputFileMgr='%v'\n",
+			inputFieldName, baseDataInputFileMgr.GetAbsolutePathFileName())
+
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
 	idx += len(outputFieldName)
@@ -290,14 +323,37 @@ func (zInDto ZoneInfoDataDto) getTargetDirectories(
 
 	if !doesExist {
 		err = fmt.Errorf(ePrefix +
-			"\nTarget Zone Output Directory DOES NOT EXIST!\n" +
+			"\nApplication Output Directory DOES NOT EXIST!\n" +
 			"appOutputDir='%v'\n" +
-			"baseDataInputFileMgr='%v'",
-			appOutputDir, baseDataInputFileMgr.GetAbsolutePath())
+			"baseDataInputFileMgr (targettzdata.txt)='%v'",
+			appOutputDir, baseDataInputFileMgr.GetAbsolutePathFileName())
 
-		return inputZoneInfoDir, appOutputDir, err
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
-	return inputZoneInfoDir, appOutputDir, err
+	// Read Iana Time Zone Version Field
+	readDir, _ = strops.StrOps{}.ReadStringFromBytes(bArray, startIndex)
 
-} 
+	ianaVersionFieldName := "Iana Time Zone Version:"
+
+	idx = strings.Index(readDir, ianaVersionFieldName)
+
+	if idx == -1 {
+		err = fmt.Errorf(ePrefix + "\n" +
+			"Error: Iana Time Zone Version Field Name '%v' was not found in the third\n" +
+			"string read from 'baseDataInputFileMgr'.\n" +
+			"baseDataInputFileMgr () ='%v'\n",
+			ianaVersionFieldName, baseDataInputFileMgr.GetAbsolutePathFileName())
+
+		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
+	}
+
+	idx += len(outputFieldName)
+	appOutputDir = readDir[idx:]
+	appOutputDir = strings.TrimLeft(appOutputDir, " ")
+	appOutputDir = strings.TrimRight(appOutputDir, " ")
+
+
+	return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
+}
+

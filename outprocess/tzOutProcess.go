@@ -135,7 +135,7 @@ func (tzOut TzOutProcess) createOpenLogOutputFile(
 	ePrefix += "TzOutProcess.createOpenLogOutputFile() "
 
 	fmtDateTimeSecondStr := "20060102150405"
-	currDateTimeStr := tzdatastructs.CurrentDateTime.Format(fmtDateTimeSecondStr)
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(fmtDateTimeSecondStr)
 
 	fileNameExt :=   currDateTimeStr +"_ianaformatInfoLog" +".txt"
 
@@ -226,7 +226,7 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 	ePrefix += "TzOutProcess.createTimeZoneTypeComments() "
 
 
-	currDateTimeStr := tzdatastructs.CurrentDateTime.Format(tzdatastructs.FmtDateTime)
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTime)
 
 	regionalStats, err := tzOut.createIanaRegionalTimeZoneStats(tzStats, ePrefix)
 
@@ -488,7 +488,7 @@ func (tzOut TzOutProcess) writeLogData(
 
 	maxLineLen := 65
 	totalLineLen := 30
-	leftMarginLen := 5
+	leftMarginLen := 2
 
 	strOps := strops.StrOps{}
 
@@ -501,117 +501,128 @@ func (tzOut TzOutProcess) writeLogData(
 			"Error='%v'\n", err.Error())
 	}
 
-	var temp string
+	var temp, dashLineBreak, equalLineBreak, leftMarginStr, elapsedTimeStr,
+		totalLineBreak, grandTotalLineBreak string
 
 	outputStr += "\n"
-	temp, err = strOps.MakeSingleCharString('-', maxLineLen)
+	dashLineBreak, err = strOps.MakeSingleCharString('-', maxLineLen)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
-			"Error returned by strOps.MakeSingleCharString('-', maxLineLen)\n" +
+			"'dashLineBreak' error returned by strOps.MakeSingleCharString('-', maxLineLen)\n" +
 			"maxLineLen='%v'\n" +
 			"Error='%v'\n", maxLineLen, err.Error())
 	}
 
-	lineBreak := temp
-	outputStr += lineBreak + "\n"
-	currDateTimeStr := tzdatastructs.CurrentDateTime.Format(tzdatastructs.FmtDateTime)
-	endDateTimeStr := time.Now().Format(tzdatastructs.FmtDateTime)
+	equalLineBreak, err = strOps.MakeSingleCharString('=', maxLineLen)
 
-	temp, err = strOps.MakeSingleCharString(' ', leftMarginLen)
 	if err != nil {
 		return fmt.Errorf(ePrefix +
-			"Error returned by strOps.MakeSingleCharString(' ', leftMarginLen)\n" +
+			"'equalLineBreak' error returned by strOps.MakeSingleCharString('=', maxLineLen)\n" +
+			"maxLineLen='%v'\n" +
+			"Error='%v'\n", maxLineLen, err.Error())
+	}
+
+	leftMarginStr, err = strOps.MakeSingleCharString(' ', leftMarginLen)
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"'leftMarginStr' error returned by strOps.MakeSingleCharString(' ', leftMarginLen)\n" +
 			"Error='%v'\n", err.Error())
 	}
 
-	leftMargStr := temp
-
-	temp, err = strOps.MakeSingleCharString('=', totalLineLen)
+	totalLineBreak, err = strOps.MakeSingleCharString('=', totalLineLen)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
-			"Error returned by strOps.MakeSingleCharString('=', totalLineLen)\n" +
+			"'totalLineBreak' error returned by strOps.MakeSingleCharString('=', totalLineLen)\n" +
 			"maxLineLen='%v'\n" +
 			"Error='%v'\n", maxLineLen, err.Error())
 	}
 
-	totalLineBreak := temp
-
-	temp, err = strOps.MakeSingleCharString('*', totalLineLen)
+	grandTotalLineBreak, err = strOps.MakeSingleCharString('*', totalLineLen)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
-			"Error returned by strOps.MakeSingleCharString('=', totalLineLen)\n" +
+			"'grandTotalLineBreak' error returned by strOps.MakeSingleCharString('=', totalLineLen)\n" +
 			"maxLineLen='%v'\n" +
 			"Error='%v'\n", maxLineLen, err.Error())
 	}
 
-	grandTotalLineBreak := temp
+	outputStr += dashLineBreak + "\n"
+	tzdatastructs.ApplicationEndDateTime = time.Now()
 
-	outputStr += leftMargStr + "Starting Date-Time: " +
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTime)
+	endDateTimeStr := tzdatastructs.ApplicationEndDateTime.Format(tzdatastructs.FmtDateTime)
+	elapsedTimeStr =
+		TzStrFmt{}.ElapsedTime(
+			tzdatastructs.ApplicationStartDateTime,
+			tzdatastructs.ApplicationEndDateTime)
+
+	outputStr += leftMarginStr + "Starting Date-Time: " +
 		currDateTimeStr + "\n"
-	outputStr += leftMargStr + "  Ending Date-Time:" +
+	outputStr += leftMarginStr + "  Ending Date-Time: " +
 		endDateTimeStr + "\n"
+	outputStr += leftMarginStr + "      Elapsed Time: " +
+		elapsedTimeStr + "\n"
 	outputStr += lineBreak + "\n\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"IanaVersion: " + tzStats.IanaVersion + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumOfLinkConflictResolved: " +
 		fmt.Sprintf("%4d\n", tzStats.NumOfLinkConflictResolved)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumOfBackZoneConflicts: " +
 		fmt.Sprintf("%4d\n\n", tzStats.NumOfBackZoneConflicts)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumIanaStdTZones: " +
 		fmt.Sprintf("%4d\n", tzStats.NumIanaStdTZones)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumIanaLinkTZones: " +
 		fmt.Sprintf("%4d\n", tzStats.NumIanaLinkTZones)
 
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalIanaStdTzLinkZones: " +
 		fmt.Sprintf("%4d\n\n", tzStats.TotalIanaStdTzLinkZones)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumMilitaryTZones: " +
 		fmt.Sprintf("%4d\n", tzStats.NumMilitaryTZones)
 
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumOtherTZones: " +
 		fmt.Sprintf("%4d\n", tzStats.NumOtherTZones)
 
 	outputStr += grandTotalLineBreak + "\n"
 	outputStr += grandTotalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalZones: " +
 		fmt.Sprintf("%4d\n", tzStats.TotalZones)
 
 	outputStr += grandTotalLineBreak + "\n"
 	outputStr += grandTotalLineBreak + "\n\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumMajorTZoneGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumMajorTZoneGroups)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumMajorLinkGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumMajorLinkGroups)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumMajorMilitaryGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumMajorMilitaryGroups)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumMajorOtherGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumMajorOtherGroups)
 
@@ -619,76 +630,76 @@ func (tzOut TzOutProcess) writeLogData(
 	outputStr += totalLineBreak + "\n"
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalMajorGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.TotalMajorGroups)
 
 	outputStr += totalLineBreak + "\n"
 	outputStr += totalLineBreak + "\n\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel2StdSubTZoneGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel2StdSubTZoneGroups)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel3StdSubTZoneGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel3StdSubTZoneGroups)
 
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalSubTZoneGroups: " +
 		fmt.Sprintf("%4d\n\n", tzStats.TotalSubTZoneGroups)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel2LinkSubGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel2LinkSubGroups)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel3LinkSubGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel3LinkSubGroups)
 
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalLinkSubGroups: " +
 		fmt.Sprintf("%4d\n\n", tzStats.TotalLinkSubGroups)
 
 	outputStr += totalLineBreak + "\n"
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalSubGroups: " +
 		fmt.Sprintf("%4d\n", tzStats.TotalSubGroups)
 
 	outputStr += totalLineBreak + "\n"
 	outputStr += totalLineBreak + "\n\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel1TZoneCollections: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel1TZoneCollections)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel2TZoneCollections: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel2TZoneCollections)
 
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalTimeZoneCollections: " +
 		fmt.Sprintf("%4d\n\n", tzStats.TotalTimeZoneCollections)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel1LinkZoneCollections: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel1LinkZoneCollections)
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"NumLevel2LinkZoneCollections: " +
 		fmt.Sprintf("%4d\n", tzStats.NumLevel2LinkZoneCollections)
 
 	outputStr += totalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalLinkZoneCollections: " +
 		fmt.Sprintf("%4d\n\n", tzStats.TotalLinkZoneCollections)
 
@@ -696,7 +707,7 @@ func (tzOut TzOutProcess) writeLogData(
 	outputStr += grandTotalLineBreak + "\n"
 	outputStr += grandTotalLineBreak + "\n"
 
-	outputStr += leftMargStr +
+	outputStr += leftMarginStr +
 		"TotalZoneCollections: " +
 		fmt.Sprintf("%4d\n", tzStats.TotalZoneCollections)
 
