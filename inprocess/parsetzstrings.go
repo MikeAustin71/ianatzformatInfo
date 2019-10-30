@@ -1745,7 +1745,7 @@ func (parseTz *ParseIanaTzData) zoneCfgTwoElements(
 	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 	tzDataDto.SetIsInitialized(true)
 
-	err := tzdeclarations.TzZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)
+	err := tzdeclarations.ZoneInfoZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)
 
 	if err != nil {
 		return err
@@ -1900,7 +1900,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 		tzDataDto.SetIsInitialized(true)
 
-		err := tzdeclarations.TzZoneDeclarations{}.PlaceHolderZoneFuncDeclaration(&tzDataDto, ePrefix)
+		err := tzdeclarations.ZoneInfoZoneDeclarations{}.PlaceHolderZoneFuncDeclaration(&tzDataDto, ePrefix)
 
 		if err != nil {
 			return err
@@ -2014,7 +2014,7 @@ func (parseTz *ParseIanaTzData) zoneCfgThreeElements(
 		tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
 		tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
 		tzDataDto.SetIsInitialized(true)
-		err := tzdeclarations.TzZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)
+		err := tzdeclarations.ZoneInfoZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)
 
 		if err != nil {
 			return err
