@@ -6,6 +6,7 @@ import (
 	"time"
 )
 
+
 type TzStrFmt struct {
 	InputStr     string
 	OutputStr    string
@@ -57,6 +58,38 @@ func (tzFmtStr TzStrFmt) LeftJustifyField(
 
 
 	return str + padStr, nil
+}
+
+// RightJustifyStr - Right Justifies a string in a field length specified by input
+// parameter 'fieldLen'.
+func (tzFmtStr TzStrFmt) RightJustifyStr(str string, fieldLen int, ePrefix string) (string, error) {
+
+	ePrefix += "TzStrFmt.RightJustifyStr() "
+
+	lenStr := len(str)
+
+	if lenStr > fieldLen {
+		return "", fmt.Errorf(ePrefix +
+			"\nError: Input Parameter 'str' exceeds 'fieldLen'.\n" +
+			"str length='%v'\n" +
+			"fieldLen='%v'\n", lenStr, fieldLen)
+	}
+
+	if lenStr == fieldLen {
+		return str, nil
+	}
+
+	padLen := fieldLen - lenStr
+
+	padStr, err := strops.StrOps{}.MakeSingleCharString(' ', padLen)
+
+	if err != nil {
+		return "", fmt.Errorf(ePrefix +
+			"\nError returned by strops.StrOps{}.MakeSingleCharString(' ', padLen)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return padStr + str, nil
 }
 
 // RightJustifyNum - Right Justifies an integer number. The number is first

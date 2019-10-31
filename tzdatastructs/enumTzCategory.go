@@ -163,7 +163,7 @@ func (tzCat TimeZoneCategory) UtilityIsValid() error {
 //  For all of the cases shown above,
 //  t is now equal to TimeZoneCategory(0).TimeZone()
 //
-func (tzClass TimeZoneCategory) UtilityParseString(
+func (tzCat TimeZoneCategory) UtilityParseString(
 	valueString string,
 	caseSensitive bool) (TimeZoneCategory, error) {
 
@@ -193,7 +193,7 @@ func (tzClass TimeZoneCategory) UtilityParseString(
 
 		if !ok {
 			return TimeZoneCategory(0).None(),
-				errors.New(ePrefix + "Invalid Time Zone Class Code!")
+				errors.New(ePrefix + "Invalid Time Zone Category Code!")
 		}
 
 	} else {
@@ -204,7 +204,7 @@ func (tzClass TimeZoneCategory) UtilityParseString(
 
 		if !ok {
 			return TimeZoneCategory(0).None(),
-				errors.New(ePrefix + "Invalid Permission Code!")
+				errors.New(ePrefix + "Invalid Time Zone Category Code!")
 		}
 
 	}
@@ -226,7 +226,7 @@ func (tzCat TimeZoneCategory) UtilityValue() TimeZoneCategory {
 
 
 // TZCat - public global variable of
-// type TimeZoneClass.
+// type TimeZoneCategory.
 //
 // This variable serves as an easier, short hand
 // technique for accessing TimeZoneCategory
