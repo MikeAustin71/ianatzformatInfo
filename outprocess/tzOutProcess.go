@@ -86,60 +86,7 @@ func (tzOut TzOutProcess) WriteOutput(
 		return err
 	}
 
-	f, err = tzOut.createOpenLogOutputFile(outputPathDirMgr, ePrefix)
-
-	if err != nil {
-		return err
-	}
-
-	tzLog := TzLogOps{}
-
-err = tzLog.WriteLogFile(f, tzStats, ePrefix)
-
-if err != nil {
-	_ = f.CloseThisFile()
-	return err
-}
-
-	errArray = make([]error, 0)
-
-	err2 = f.FlushBytesToDisk()
-
-	if err2 != nil {
-
-		errArray = append(errArray, fmt.Errorf(ePrefix +
-			"\nError returned by f.FlushBytesToDisk()\n" +
-			"Error='%v'\n", err2.Error()))
-	}
-
-	err2 = f.CloseThisFile()
-
-	if err2 != nil {
-		errArray = append(errArray, fmt.Errorf(ePrefix +
-			"\nError returned by f.CloseThisFile()\n" +
-			"Error='%v'\n", err2.Error()))
-	}
-
-	if len(errArray) > 0 {
-		err = pathfileops.FileHelper{}.ConsolidateErrors(errArray)
-		return err
-	}
-
 	return nil
-}
-
-func (tzOut TzOutProcess) createOpenLogOutputFile(
-	outputPathDirMgr pathfileops.DirMgr,
-	ePrefix string) (f pathfileops.FileMgr, err error) {
-
-	ePrefix += "TzOutProcess.createOpenLogOutputFile() "
-
-	fmtDateTimeSecondStr := "20060102150405"
-	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(fmtDateTimeSecondStr)
-
-	fileNameExt :=   currDateTimeStr +"_ianaformatInfoLog" +".txt"
-
-	return tzOut.createOpenOutputFile(outputPathDirMgr, fileNameExt, ePrefix)
 }
 
 // Creates and Opens the Go Source Code output file,

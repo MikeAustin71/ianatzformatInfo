@@ -100,6 +100,17 @@ parser := inprocess.ParseZoneInfoData{}
 		return
 	}
 
+	err = outprocess.TzLogOps{}.WriteLogFile(
+		zoneInfoDataDto.AppLogFileMgr,
+		&timeZoneStats,
+		ePrefix)
+
+	if err != nil {
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+
 	fmt.Println("Number Of Conflicts Resolved: ", timeZoneStats.NumOfLinkConflictResolved)
 	fmt.Println("Number Of Backzone Conflicts: ", timeZoneStats.NumOfBackZoneConflicts)
 	fmt.Println("---------------------")
