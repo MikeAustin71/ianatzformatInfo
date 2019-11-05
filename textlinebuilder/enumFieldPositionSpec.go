@@ -1,4 +1,4 @@
-package outprocess
+package textlinebuilder
 
 import (
 	"errors"

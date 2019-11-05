@@ -68,7 +68,6 @@ func main() {
 
 	var zoneInfoDataDto inprocess.ZoneInfoDataDto
 
-
 	fmt.Printf("Base Data Input File:\n     %v\n\n", baseDataInputPathFileName)
 
 	zoneInfoDataDto, err =
@@ -78,7 +77,6 @@ func main() {
 		fmt.Printf("%v\n", err.Error())
 		return
 	}
-
 
 	var timeZoneStats tzdatastructs.TimeZoneStatsDto
 parser := inprocess.ParseZoneInfoData{}
