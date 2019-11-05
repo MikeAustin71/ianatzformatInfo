@@ -100,7 +100,8 @@ parser := inprocess.ParseZoneInfoData{}
 		return
 	}
 
-	err = outprocess.TzLogOps{}.WriteLogFile(
+	tzLog := outprocess.TzLogOps{}
+	err = tzLog.WriteLogFile(
 		zoneInfoDataDto.AppLogFileMgr,
 		&timeZoneStats,
 		ePrefix)

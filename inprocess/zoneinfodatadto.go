@@ -443,10 +443,10 @@ func (zInDto ZoneInfoDataDto) readBaseDataInput(
 		return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err
 	}
 
-	idx += len(outputFieldName)
-	appOutputDir = readDir[idx:]
-	appOutputDir = strings.TrimLeft(appOutputDir, " ")
-	appOutputDir = strings.TrimRight(appOutputDir, " ")
+	idx += len(ianaVersionFieldName)
+	ianaTimeZoneVersion = readDir[idx:]
+	ianaTimeZoneVersion = strings.TrimLeft(ianaTimeZoneVersion, " ")
+	ianaTimeZoneVersion = strings.TrimRight(ianaTimeZoneVersion, " ")
 
 
 	return inputZoneInfoDir, appOutputDir, ianaTimeZoneVersion, err

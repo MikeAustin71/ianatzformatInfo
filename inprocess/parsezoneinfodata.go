@@ -24,6 +24,8 @@ func (parseZInfo ParseZoneInfoData) ParseZoneInfo(
 
 	tzStats := tzdatastructs.TimeZoneStatsDto{}
 
+	tzStats.Initialize()
+
 	zInfoDto.ZoneInfoDirFileInfo.SortByAbsPathFileName(true)
 
 	err := parseZInfo.parseIanaTimeZoneFiles(zInfoDto, &tzStats, ePrefix)
