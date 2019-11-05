@@ -3,7 +3,6 @@ package outprocess
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
-	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/textlinebuilder"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
@@ -377,19 +376,87 @@ lineSpec1 := textlinebuilder.LineSpec{
 		return err
 	}
 
+	totalLineStarts :=
+	tzLog.leftMargin.MarginLength +
+		spec1FieldLen +
+		spacerFieldLen - 2
+
+	totalLineLen := int2FieldLen + 4
+
+	totalLineSpec := textlinebuilder.LineSpec{
+		LineChar:         '-',
+		LineLength:       totalLineLen,
+		LineFieldLength:  totalLineLen,
+		LineFieldPadChar: ' ',
+		LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: totalLineStarts,
+			MarginChar:   ' ',
+		},
+		totalLineSpec,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+	label1 = "Total Time Zones "
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       label1,
+		StrFieldLength: len(label1),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	intSpec2 = textlinebuilder.IntegerSpec{
+		NumericValue:       tzStats.TotalZones,
+		NumericFieldSpec:   int2FieldSpec,
+		NumericFieldLength: int2FieldLen,
+		NumericPadChar:     ' ',
+		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	totalLineStarts = totalLineStarts + 2 -
+		len(label1) - 1
 
 
-	outputStr += leftMarginStr +
-		"Total Iana Time Zones" +
-		fmt.Sprintf("%4d\n\n", tzStats.TotalIanaStdTzLinkZones)
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: totalLineStarts,
+			MarginChar:   ' ',
+		},
+		strSpec1,
+		intSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
-	outputStr += leftMarginStr +
-		"NumMilitaryTZones: " +
-		fmt.Sprintf("%4d\n", tzStats.NumMilitaryTZones)
+	if err != nil {
+		return err
+	}
 
+	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
-	outputStr += leftMarginStr +
-		"NumOtherTZones: " +
-		fmt.Sprintf("%4d\n", tzStats.NumOtherTZones)
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
 
+	err = outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
 }
