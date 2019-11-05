@@ -8,15 +8,6 @@ import (
 	"strings"
 )
 
-type ZoneInfoDataDto struct {
-	ZoneInfoInputDir    string
-	AppOutputDir        string
-	IanaTimeZoneVersion string
-	ZoneInfoDirFileInfo pathfileops.FileMgrCollection
-	ZoneInfoDirMgr      pathfileops.DirMgr
-	AppOutputDirMgr     pathfileops.DirMgr
-}
-
 // AcquireZoneInfo - Reads, parses and returns all information
 // contained in the base data input file, 'targettzdata.txt'.
 // This base data input file must reside in a directory named
