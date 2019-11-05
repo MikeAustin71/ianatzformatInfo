@@ -6,7 +6,6 @@ import (
 	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
-	"os"
 	"time"
 )
 
@@ -91,7 +90,7 @@ parser := inprocess.ParseZoneInfoData{}
 	}
 
 	err = outprocess.TzOutProcess{}.WriteOutput(
-		outputFileDirMgr,
+		zoneInfoDataDto.AppOutputDirMgr,
 		tzdatastructs.OutputFileName,
 		&timeZoneStats,
 		ePrefix)

@@ -728,14 +728,6 @@ func (tzStats *TimeZoneStatsDto) RunTotals(ePrefix string) error {
 			lenWorldRegions, len(tzStats.IanaLinkCounters))
 	}
 
-	if len(tzStats.IanaLinkCounters) != lenWorldRegions {
-		return fmt.Errorf(ePrefix +
-			"Error: Lenght of tzStats.IanaLinkCounters is invalid.\n" +
-			"tzStats.IanaLinkCounters should equal '%v'.\n" +
-			"Instead, tzStats.IanaLinkCounters equals '%v'\n",
-			lenWorldRegions, len(tzStats.IanaLinkCounters))
-	}
-
 	if len(tzStats.IanaTotalTimeZoneLinkCounters) != lenWorldRegions {
 		return fmt.Errorf(ePrefix +
 			"Error: Lenght of tzStats.IanaTotalTimeZoneLinkCounters is invalid.\n" +
