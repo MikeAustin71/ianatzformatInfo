@@ -1,9 +1,10 @@
 package main
-
+/*
 import (
 	"fmt"
 	"time"
 )
+
 
 func main() {
 	nowTime := time.Now()
@@ -23,3 +24,5 @@ func main() {
 
 	return
 }
+
+*/

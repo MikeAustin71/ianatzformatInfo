@@ -156,12 +156,38 @@ func (acTzDat AcquireTzData) getDirectoryInfo(
 		return dirFileInfo, err
 	}
 
-	dirFileInfo, err2 = baseDirMgr.FindFilesByNamePattern("*")
+	var directTreeInfo  pathfileops.DirectoryTreeInfo
+
+	fileSelectCriteria := pathfileops.FileSelectionCriteria{}
+
+	//var errs = make([]error, 0)
+
+	directTreeInfo, err2 = baseDirMgr.FindWalkDirFiles(fileSelectCriteria)
 
 	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
+		err =fmt.Errorf(ePrefix +
+			"\nError returned by baseDirMgr.FindWalkDirFiles(fileSelectCriteria)\n")
+
 		return dirFileInfo, err
 	}
+
+
+	/*
+	if len(errs) > 0 {
+		err2 = pathfileops.FileHelper{}.ConsolidateErrors(errs)
+
+		if err2 != nil {
+			err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
+		} else {
+			err = fmt.Errorf(ePrefix +
+				"\nError: FileHelper{}.ConsolidateErrors(errs) failed!")
+		}
+			return dirFileInfo, err
+		}
+*/
+
+
+	dirFileInfo = directTreeInfo.FoundFiles
 
 	if dirFileInfo.GetNumOfFileMgrs() < 1 {
 		err = fmt.Errorf(ePrefix + "Error: No files located in target 'baseDirMgr'.\n" +

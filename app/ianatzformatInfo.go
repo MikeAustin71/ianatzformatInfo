@@ -45,12 +45,23 @@ func main() {
 
 	tzdatastructs.ApplicationStartDateTime = time.Now()
 
+	/*
 	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
+*/
+
+
+	currWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
+
+	if err != nil {
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
 
 	fmt.Println()
 	fmt.Println("ianatzformatInfo.exe" )

@@ -185,6 +185,8 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 		tZone = strings.Replace(tZone, "\\", "/", -1)
 		zoneArray := strings.Split(tZone, "/")
 
+		fmt.Printf("%v\n", tZone)
+
 		switch len(zoneArray) {
 		case 1:
 			zoneArray = make([]string, 2)
@@ -222,7 +224,7 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 
 
 // zoneCfgTwoElements - Configures and stores data for a two element time zone
-// such as 'America/Chicago'. This method configures both the TimeZoneGroupDto and
+// such as 'Other/CET'. This method configures both the TimeZoneGroupDto and
 // the TimeZoneDataDto.
 //
 // The TimeZoneGroupDto is added to the TimeZoneGroupCollection, 'tzMajorGroupCol'.
@@ -246,15 +248,15 @@ func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
 	groupAlreadyExists, _ :=
 		tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
 			"", // Parent Group Name - ""
-			zoneArray[0]) // Group Name - 'America'
+			zoneArray[0]) // Group Name - 'Other'
 
 	if !groupAlreadyExists{
 
 		// Configure Time Zone Level-1 Major Group
-		// Example: 'America/Chicago'
+		// Example: 'Other/CET'
 		tzGroup := tzdatastructs.TimeZoneGroupDto{}
 		tzGroup.ParentGroupName = ""
-		tzGroup.GroupName = zoneArray[0] // America
+		tzGroup.GroupName = zoneArray[0] // Other
 
 		tzGroup.GroupSortValue = tzGroup.NewSortValue(zoneArray[0])
 
@@ -265,7 +267,7 @@ func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
 
 		tzGroup.TypeValue = "string"
 
-		// Example: 'America'
+		// Example: 'Other'
 		tzGroup.IanaVariableName =
 			strops.StrOps{}.UpperCaseFirstLetter(zoneArray[0])
 
@@ -289,8 +291,8 @@ func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
 
 	containsZone, _ := tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
 		"", // Parent Group Name - ""
-		zoneArray[0], // Group Name - 'America'
-		zoneArray[1]) // Tz = 'Chicago'
+		zoneArray[0], // Group Name - 'Other'
+		zoneArray[1]) // Tz = 'CET'
 
 	if containsZone {
 		return nil
@@ -299,33 +301,32 @@ func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
 	// Configure Standard Level-1 Iana Time Zone Data Dto
 	tzDataDto := tzdatastructs.TimeZoneDataDto{}
 
-	tzDataDto.GroupName = zoneArray[0] // America - majorGroup
-	tzDataDto.TzName = zoneArray[1] // Chicago - tzName
+	tzDataDto.GroupName = zoneArray[0] // Other - majorGroup
+	tzDataDto.TzName = zoneArray[1] // CET - tzName
 	tzDataDto.TzAliasValue = ""
-	tzDataDto.TzCanonicalValue =
-		zoneArray[0] + tzdatastructs.ZoneSeparator + zoneArray[1]  // 'America/Chicago'
-	tzDataDto.TzValue = tzDataDto.TzCanonicalValue // 'America/Chicago'
+	tzDataDto.TzCanonicalValue = zoneArray[1]  // 'CET'
+	tzDataDto.TzValue = tzDataDto.TzCanonicalValue // 'CET'
 	tzDataDto.TzSortValue =
 		tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzDataDto.TzCanonicalValue)
 
 	// Example func signature
-	// func (amer americaTimeZones) Chicago() string { return "America/Chicago" }
+	// func (other otherTimeZones) CET() string { return "CET" }
 
-	// Example: americaTimeZones
+	// Example: otherTimeZones
 	tzDataDto.FuncType =
 		strops.StrOps{}.LowerCaseFirstLetter(zoneArray[0]) +
 			tzdatastructs.MasterGroupTypeSuffix
 
-	// Example: 'ameri'
+	// Example: 'other'
 	tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
 
-	// Example: 'America/Chicago'
-	// FuncName: Chicago()
+	// Example: 'Other/CET'
+	// FuncName: CET()
 	tzDataDto.FuncName = parseZInfo.zoneCfgValidFuncName(zoneArray[1])
 
 	tzDataDto.FuncReturnType = "string"
 
-	// Example Function Return Value = "America/Chicago"
+	// Example Function Return Value = "Other/CET"
 	tzDataDto.FuncReturnValue =
 		fmt.Sprintf("\"%v\"", tzDataDto.TzCanonicalValue)
 
