@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
-	"local.com/amarillomike/ianatzformatInfo/fileops"
 	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
@@ -46,7 +45,9 @@ func main() {
 
 	tzdatastructs.ApplicationStartDateTime = time.Now()
 
-	executableWorkingDirMgr, err := fileops.FileOps{}.GetApplicationDirectory(ePrefix)
+	// executableWorkingDirMgr, err := fileops.FileOps{}.GetApplicationDirectory(ePrefix)
+
+	executableWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
 
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
@@ -54,7 +55,7 @@ func main() {
 	}
 
 
-	// executableWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
+
 
 	fmt.Println()
 	fmt.Println("ianatzformatInfo.exe" )
@@ -82,6 +83,7 @@ func main() {
 		fmt.Printf("%v\n", err.Error())
 		return
 	}
+
 
 	var timeZoneStats tzdatastructs.TimeZoneStatsDto
 parser := inprocess.ParseZoneInfoData{}

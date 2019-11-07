@@ -144,7 +144,7 @@ func (tzLog *TzLogOps) WriteLogHeader(
 
 	strSpec2 = textlinebuilder.StringSpec{
 		StrValue:       tzStats.IanaVersion,
-		StrFieldLength: tzLog.maxLineLen - 25,
+		StrFieldLength: len(tzStats.IanaVersion) + 1,
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
 	}

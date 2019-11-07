@@ -38,9 +38,8 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 		zoneInfoDto := ZoneInfoDataDto{}
 		
 	baseDataInputFileMgr, err2 :=
-			fileops.FileOps{}.CreateOpenFile(baseDataDirMgr, baseDataFileNameExt, ePrefix)
-			//zInDto.createInputFileMgr(baseDataFileNameExt, ePrefix)
-	
+		pathfileops.FileMgr{}.NewFromDirMgrFileNameExt(baseDataDirMgr, baseDataFileNameExt)
+
 	if err2 != nil {
 		return zoneInfoDto, err2
 	}
@@ -301,7 +300,7 @@ func (zInDto ZoneInfoDataDto) readBaseDataInput(
 
 	if lBArray < 3 {
 		err = fmt.Errorf(ePrefix +
-			"Error: Read only %v bytes from file 'baseDataInputFileMgr' (targettzdata.txt Path)\n" +
+			"Error: Read only %v bytes from file 'baseDataInputFileMgr' (targettzdata.txt)\n" +
 			"baseDataInputFileMgr='%v'\n",
 			lBArray,
 			baseDataInputFileMgr.GetAbsolutePathFileName())

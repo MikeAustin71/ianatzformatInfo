@@ -26,7 +26,9 @@ func (parseZInfo ParseZoneInfoData) ParseZoneInfo(
 
 	tzStats.Initialize()
 
-	zInfoDto.ZoneInfoDirTreeInfo.SortByAbsPathFileName(true)
+	zInfoDto.ZoneInfoDirTreeInfo.FoundFiles.SortByAbsPathFileName(true)
+
+	tzStats.IanaVersion = zInfoDto.IanaTimeZoneVersion
 
 	err := parseZInfo.parseIanaTimeZoneFiles(zInfoDto, &tzStats, ePrefix)
 
@@ -35,6 +37,16 @@ func (parseZInfo ParseZoneInfoData) ParseZoneInfo(
 	}
 
 	err = parseZInfo.configMilitaryTimeZones( &tzStats, ePrefix)
+
+	if err != nil {
+		return tzStats, err
+	}
+
+	err = tzStats.RunTotals(ePrefix)
+
+	if err != nil {
+		return tzStats, err
+	}
 
 	return tzStats, nil
 }
@@ -157,7 +169,7 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 
 	ePrefix += "ParseZoneInfoData.parseIanaTimeZoneFiles() "
 
-	numOfZoneInfoFMgrs := zInfoDto.ZoneInfoDirTreeInfo.GetNumOfFileMgrs()
+	numOfZoneInfoFMgrs := zInfoDto.ZoneInfoDirTreeInfo.FoundFiles.GetNumOfFileMgrs()
 
 	if numOfZoneInfoFMgrs < 30 {
 		return fmt.Errorf(ePrefix+
@@ -171,7 +183,7 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 
 	for i := 0; i < numOfZoneInfoFMgrs; i++ {
 
-		fMgr, err := zInfoDto.ZoneInfoDirTreeInfo.PeekFileMgrAtIndex(i)
+		fMgr, err := zInfoDto.ZoneInfoDirTreeInfo.FoundFiles.PeekFileMgrAtIndex(i)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix+
@@ -180,17 +192,38 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 				"Error='%v'\n", i, err.Error())
 		}
 
-		absPathFileName := fMgr.GetAbsolutePathFileName()
-		tZone := absPathFileName[lenTopDir:]
-		tZone = strings.Replace(tZone, "\\", "/", -1)
-		zoneArray := strings.Split(tZone, "/")
+		tZone := fMgr.GetFileName()
+
+		filePath := fMgr.GetDirMgr()
+
+
+		absPath := filePath.GetAbsolutePath()
+
+		var zoneArray []string
+		var tZonePath string
+
+		if len(absPath) <= lenTopDir {
+			tZonePath = ""
+		} else {
+			tZonePath = absPath[lenTopDir:]
+		}
+
+
+		if len(tZonePath) == 0 {
+			zoneArray = make([]string, 1)
+
+		} else {
+			tZonePath = strings.Replace(tZonePath, "\\", "/", -1)
+			zoneArray = strings.Split(tZonePath, "/")
+			zoneArray = append(zoneArray, tZone)
+		}
 
 		switch len(zoneArray) {
 		case 1:
 			zoneArray = make([]string, 2)
 			zoneArray[0] = "Other"
 			zoneArray[1] = tZone
-			err = parseZInfo.zoneConfigTwoElements(fMgr, zoneArray, tzStats, ePrefix)
+			err = parseZInfo.zoneConfigOneElement(fMgr, zoneArray, tzStats, ePrefix)
 
 			if err != nil {
 				return err
@@ -220,21 +253,22 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 	return nil
 }
 
-
-// zoneCfgTwoElements - Configures and stores data for a two element time zone
-// such as 'Other/CET'. This method configures both the TimeZoneGroupDto and
-// the TimeZoneDataDto.
+// zoneCfgOneElement - Configures and stores data for a time zone which contains
+// only one element. An example of this is "CET' (Central European Time). This
+// method classifies single element IANA time zones as 'Other' time zones.
+//
+// This method configures both the TimeZoneGroupDto and the TimeZoneDataDto.
 //
 // The TimeZoneGroupDto is added to the TimeZoneGroupCollection, 'tzMajorGroupCol'.
 // The TimeZoneDataDto is added to the TimeZoneData Collection, 'tzDataCol'
 //
-func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
+func (parseZInfo ParseZoneInfoData) zoneConfigOneElement(
 	fMgr pathfileops.FileMgr,
 	zoneArray []string,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
-	ePrefix += "ParseZoneInfoData.zoneConfigTwoElements() "
+	ePrefix += "ParseZoneInfoData.zoneConfigOneElement() "
 
 	if len(zoneArray) != 2 {
 		return fmt.Errorf(ePrefix +
@@ -348,6 +382,137 @@ func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
 		return err
 	}
 
+
+	return nil
+}
+
+// zoneCfgTwoElements - Configures and stores data for a two element time zone
+// such as 'America/Chicago'. This method configures both the TimeZoneGroupDto and
+// the TimeZoneDataDto.
+//
+// The TimeZoneGroupDto is added to the TimeZoneGroupCollection, 'tzMajorGroupCol'.
+// The TimeZoneDataDto is added to the TimeZoneData Collection, 'tzDataCol'
+//
+func (parseZInfo ParseZoneInfoData) zoneConfigTwoElements(
+	fMgr pathfileops.FileMgr,
+	zoneArray []string,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "ParseZoneInfoData.zoneConfigTwoElements() "
+
+	if len(zoneArray) != 2 {
+		return fmt.Errorf(ePrefix +
+			"\nError: Input Parameter length 'zoneArray' is NOT equal to '2'.\n" +
+			"'zoneArray' length='%v'\n", len(zoneArray))
+	}
+
+
+	groupAlreadyExists, _ :=
+		tzStats.TzGroups[tzdatastructs.Level_01_Idx].ContainsGroupName(
+			"", // Parent Group Name - ""
+			zoneArray[0]) // Group Name - 'America'
+
+	if !groupAlreadyExists{
+
+		// Configure Time Zone Level-1 Major Group
+		// Example: 'America/Chicago'
+		tzGroup := tzdatastructs.TimeZoneGroupDto{}
+		tzGroup.ParentGroupName = ""
+		tzGroup.GroupName = zoneArray[0] // America
+
+		tzGroup.GroupSortValue = tzGroup.NewSortValue(zoneArray[0])
+
+		// Example: 'americaTimeZones'
+		tzGroup.TypeName =
+			strops.StrOps{}.LowerCaseFirstLetter(zoneArray[0])  +
+				tzdatastructs.MasterGroupTypeSuffix
+
+		tzGroup.TypeValue = "string"
+
+		// Example: 'America'
+		tzGroup.IanaVariableName =
+			strops.StrOps{}.UpperCaseFirstLetter(zoneArray[0])
+
+		tzGroup.SourceFileNameExt = fMgr.GetFileNameExt()
+		tzGroup.GroupType = tzdatastructs.TzGrpType.Standard()
+		tzGroup.GroupClass = tzdatastructs.TzGrpClass.IANA()
+		tzGroup.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+		tzGroup.SetIsInitialized(true)
+		err := tzdeclarations.TzGroupDeclarations{}.StandardGrpDeclaration(&tzGroup, ePrefix)
+
+		if err != nil {
+			return err
+		}
+
+		err = tzStats.CountMajorTimeZoneGroup(tzGroup, ePrefix)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	containsZone, _ := tzStats.TzData[tzdatastructs.Level_01_Idx].ContainsTzName(
+		"", // Parent Group Name - ""
+		zoneArray[0], // Group Name - 'America'
+		zoneArray[1]) // Tz = 'Chicago'
+
+	if containsZone {
+		return nil
+	}
+
+	// Configure Standard Level-1 Iana Time Zone Data Dto
+	tzDataDto := tzdatastructs.TimeZoneDataDto{}
+
+	tzDataDto.GroupName = zoneArray[0] // America - majorGroup
+	tzDataDto.TzName = zoneArray[1] // Chicago - tzName
+	tzDataDto.TzAliasValue = ""
+	tzDataDto.TzCanonicalValue =
+		zoneArray[0] + "/" + zoneArray[1]  // 'America/Chicago'
+	tzDataDto.TzValue = tzDataDto.TzCanonicalValue // 'America/Chicago'
+	tzDataDto.TzSortValue =
+		tzdatastructs.TimeZoneDataDto{}.NewSortValue(tzDataDto.TzCanonicalValue)
+
+	// Example func signature
+	// func (ameri americaTimeZones) Chicago() string { return "America/Chicago" }
+
+	// Example: americaTimeZones
+	tzDataDto.FuncType =
+		strops.StrOps{}.LowerCaseFirstLetter(zoneArray[0]) +
+			tzdatastructs.MasterGroupTypeSuffix
+
+	// Example: 'ameri'
+	tzDataDto.FuncSelfReferenceVariable = tzDataDto.FuncType[0:5]
+
+	// Example: 'America/Chicago'
+	// FuncName: Chicago()
+	tzDataDto.FuncName = parseZInfo.zoneCfgValidFuncName(zoneArray[1])
+
+	tzDataDto.FuncReturnType = "string"
+
+	// Example Function Return Value = "America/Chicago"
+	tzDataDto.FuncReturnValue =
+		fmt.Sprintf("\"%v\"", tzDataDto.TzCanonicalValue)
+
+	tzDataDto.SourceFileNameExt = fMgr.GetFileNameExt()
+	tzDataDto.TzClass = tzdatastructs.TZClass.Canonical()
+	tzDataDto.TzType = tzdatastructs.TZType.Standard()
+	tzDataDto.TzCategory = tzdatastructs.TZCat.TimeZone()
+	tzDataDto.TzSource = tzdatastructs.TZSrc.Iana()
+	tzDataDto.DeprecationStatus = tzdatastructs.DepStatusCode.Valid()
+	tzDataDto.SetIsInitialized(true)
+
+	err := tzdeclarations.TzZoneDeclarations{}.StandardZoneFuncDeclaration(&tzDataDto, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzStats.CountIanaStdZone(tzDataDto, tzdatastructs.Level_01_Idx, ePrefix)
+
+	if err != nil {
+		return err
+	}
 
 	return nil
 }

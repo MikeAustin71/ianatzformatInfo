@@ -2,7 +2,7 @@ package main
 
 
 
-// TimeZones - This type and its associated methods encapsulate 0 IANA Time
+// TimeZones - This type and its associated methods encapsulate 593 IANA Time
 // Zones, 25-Military Time Zones and 0-Other Time Zones. This type is
 // therefore used as a comprehensive enumeration of Global Time Zones.
 //
@@ -29,7 +29,7 @@ package main
 //
 // For easy access to the all Time Zones it is recommended that you use the
 // global variable 'TZones' declared below. This variable instantiates the
-// 'TimeZones' type. It is therefore much easier to access any of the 0 time
+// 'TimeZones' type. It is therefore much easier to access any of the 618 time
 // zones using dot operators and intellisense (a.k.a. intelligent code completion).
 //
 // Examples:
@@ -56,42 +56,42 @@ package main
 //                                        Zones    Zones    Zones
 // --------------------------------------------------------------
 // 
-// Africa                                     0        0        0
-// America                                   26        0        0
-// Antarctica                                 0        0        0
-// Asia                                       0        0        0
-// Atlantic                                   1        0        0
-// Australia                                  0        0        0
-// Europe                                     0        0        0
-// Indian                                     2        0        0
-// Pacific                                    2        0        0
-// Etc                                        0        0        0
-// Other                                    562        0        0
+// Africa                                    54        0       54
+// America                                  166        0      166
+// Antarctica                                12        0       12
+// Asia                                      99        0       99
+// Atlantic                                  12        0       12
+// Australia                                 23        0       23
+// Europe                                    63        0       63
+// Indian                                    11        0       11
+// Pacific                                   43        0       43
+// Etc                                       35        0       35
+// Other                                     75        0       75
 // ==============================================================
-//                              Total         0        0        0
+//                              Total       593        0      593
 //
 // ----------------------------------------------------------------------------
 // 
-// This TimeZones Type is based on IANA Time Zone Database Version: 
+// This TimeZones Type is based on IANA Time Zone Database Version: 2019c
 // 
 //           IANA Standard Time Zones : 593
 //           IANA Link Time Zones     :   0
 //                                         -------
-//                 Sub-Total IANA Time Zones:   0
+//                 Sub-Total IANA Time Zones: 593
 // 
 //                Military Time Zones :  25
 //                   Other Time Zones :   0
 //                                         -------
-//                          Total Time Zones:   0
+//                          Total Time Zones: 618
 // 
 //       Standard Time Zone Sub-Groups:   4
 //           Link Time Zone Sub-Groups:   0
 //                                         -------
-//                Total Time Zone Sub-Groups:   0
+//                Total Time Zone Sub-Groups:   4
 // 
 //                  Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-06 Wednesday 18:01:37 -0600 CST
+// Type Creation Date: 2019-11-07 Thursday 17:19:40 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -132,275 +132,275 @@ var TZones = TimeZones{}
 //  
 type africaTimeZones string
 
-// Abidjan - IANA Time Zone 'Abidjan'.
+// Abidjan - IANA Time Zone 'Africa/Abidjan'.
 // IANA Source File: Abidjan
 //  
-func (afric africaTimeZones) Abidjan() string {return "Abidjan" }
+func (afric africaTimeZones) Abidjan() string {return "Africa/Abidjan" }
 
-// Accra - IANA Time Zone 'Accra'.
+// Accra - IANA Time Zone 'Africa/Accra'.
 // IANA Source File: Accra
 //  
-func (afric africaTimeZones) Accra() string {return "Accra" }
+func (afric africaTimeZones) Accra() string {return "Africa/Accra" }
 
-// Addis_Ababa - IANA Time Zone 'Addis_Ababa'.
+// Addis_Ababa - IANA Time Zone 'Africa/Addis_Ababa'.
 // IANA Source File: Addis_Ababa
 //  
-func (afric africaTimeZones) Addis_Ababa() string {return "Addis_Ababa" }
+func (afric africaTimeZones) Addis_Ababa() string {return "Africa/Addis_Ababa" }
 
-// Algiers - IANA Time Zone 'Algiers'.
+// Algiers - IANA Time Zone 'Africa/Algiers'.
 // IANA Source File: Algiers
 //  
-func (afric africaTimeZones) Algiers() string {return "Algiers" }
+func (afric africaTimeZones) Algiers() string {return "Africa/Algiers" }
 
-// Asmara - IANA Time Zone 'Asmara'.
+// Asmara - IANA Time Zone 'Africa/Asmara'.
 // IANA Source File: Asmara
 //  
-func (afric africaTimeZones) Asmara() string {return "Asmara" }
+func (afric africaTimeZones) Asmara() string {return "Africa/Asmara" }
 
-// Asmera - IANA Time Zone 'Asmera'.
+// Asmera - IANA Time Zone 'Africa/Asmera'.
 // IANA Source File: Asmera
 //  
-func (afric africaTimeZones) Asmera() string {return "Asmera" }
+func (afric africaTimeZones) Asmera() string {return "Africa/Asmera" }
 
-// Bamako - IANA Time Zone 'Bamako'.
+// Bamako - IANA Time Zone 'Africa/Bamako'.
 // IANA Source File: Bamako
 //  
-func (afric africaTimeZones) Bamako() string {return "Bamako" }
+func (afric africaTimeZones) Bamako() string {return "Africa/Bamako" }
 
-// Bangui - IANA Time Zone 'Bangui'.
+// Bangui - IANA Time Zone 'Africa/Bangui'.
 // IANA Source File: Bangui
 //  
-func (afric africaTimeZones) Bangui() string {return "Bangui" }
+func (afric africaTimeZones) Bangui() string {return "Africa/Bangui" }
 
-// Banjul - IANA Time Zone 'Banjul'.
+// Banjul - IANA Time Zone 'Africa/Banjul'.
 // IANA Source File: Banjul
 //  
-func (afric africaTimeZones) Banjul() string {return "Banjul" }
+func (afric africaTimeZones) Banjul() string {return "Africa/Banjul" }
 
-// Bissau - IANA Time Zone 'Bissau'.
+// Bissau - IANA Time Zone 'Africa/Bissau'.
 // IANA Source File: Bissau
 //  
-func (afric africaTimeZones) Bissau() string {return "Bissau" }
+func (afric africaTimeZones) Bissau() string {return "Africa/Bissau" }
 
-// Blantyre - IANA Time Zone 'Blantyre'.
+// Blantyre - IANA Time Zone 'Africa/Blantyre'.
 // IANA Source File: Blantyre
 //  
-func (afric africaTimeZones) Blantyre() string {return "Blantyre" }
+func (afric africaTimeZones) Blantyre() string {return "Africa/Blantyre" }
 
-// Brazzaville - IANA Time Zone 'Brazzaville'.
+// Brazzaville - IANA Time Zone 'Africa/Brazzaville'.
 // IANA Source File: Brazzaville
 //  
-func (afric africaTimeZones) Brazzaville() string {return "Brazzaville" }
+func (afric africaTimeZones) Brazzaville() string {return "Africa/Brazzaville" }
 
-// Bujumbura - IANA Time Zone 'Bujumbura'.
+// Bujumbura - IANA Time Zone 'Africa/Bujumbura'.
 // IANA Source File: Bujumbura
 //  
-func (afric africaTimeZones) Bujumbura() string {return "Bujumbura" }
+func (afric africaTimeZones) Bujumbura() string {return "Africa/Bujumbura" }
 
-// Cairo - IANA Time Zone 'Cairo'.
+// Cairo - IANA Time Zone 'Africa/Cairo'.
 // IANA Source File: Cairo
 //  
-func (afric africaTimeZones) Cairo() string {return "Cairo" }
+func (afric africaTimeZones) Cairo() string {return "Africa/Cairo" }
 
-// Casablanca - IANA Time Zone 'Casablanca'.
+// Casablanca - IANA Time Zone 'Africa/Casablanca'.
 // IANA Source File: Casablanca
 //  
-func (afric africaTimeZones) Casablanca() string {return "Casablanca" }
+func (afric africaTimeZones) Casablanca() string {return "Africa/Casablanca" }
 
-// Ceuta - IANA Time Zone 'Ceuta'.
+// Ceuta - IANA Time Zone 'Africa/Ceuta'.
 // IANA Source File: Ceuta
 //  
-func (afric africaTimeZones) Ceuta() string {return "Ceuta" }
+func (afric africaTimeZones) Ceuta() string {return "Africa/Ceuta" }
 
-// Conakry - IANA Time Zone 'Conakry'.
+// Conakry - IANA Time Zone 'Africa/Conakry'.
 // IANA Source File: Conakry
 //  
-func (afric africaTimeZones) Conakry() string {return "Conakry" }
+func (afric africaTimeZones) Conakry() string {return "Africa/Conakry" }
 
-// Dakar - IANA Time Zone 'Dakar'.
+// Dakar - IANA Time Zone 'Africa/Dakar'.
 // IANA Source File: Dakar
 //  
-func (afric africaTimeZones) Dakar() string {return "Dakar" }
+func (afric africaTimeZones) Dakar() string {return "Africa/Dakar" }
 
-// Dar_es_Salaam - IANA Time Zone 'Dar_es_Salaam'.
+// Dar_es_Salaam - IANA Time Zone 'Africa/Dar_es_Salaam'.
 // IANA Source File: Dar_es_Salaam
 //  
-func (afric africaTimeZones) Dar_es_Salaam() string {return "Dar_es_Salaam" }
+func (afric africaTimeZones) Dar_es_Salaam() string {return "Africa/Dar_es_Salaam" }
 
-// Djibouti - IANA Time Zone 'Djibouti'.
+// Djibouti - IANA Time Zone 'Africa/Djibouti'.
 // IANA Source File: Djibouti
 //  
-func (afric africaTimeZones) Djibouti() string {return "Djibouti" }
+func (afric africaTimeZones) Djibouti() string {return "Africa/Djibouti" }
 
-// Douala - IANA Time Zone 'Douala'.
+// Douala - IANA Time Zone 'Africa/Douala'.
 // IANA Source File: Douala
 //  
-func (afric africaTimeZones) Douala() string {return "Douala" }
+func (afric africaTimeZones) Douala() string {return "Africa/Douala" }
 
-// El_Aaiun - IANA Time Zone 'El_Aaiun'.
+// El_Aaiun - IANA Time Zone 'Africa/El_Aaiun'.
 // IANA Source File: El_Aaiun
 //  
-func (afric africaTimeZones) El_Aaiun() string {return "El_Aaiun" }
+func (afric africaTimeZones) El_Aaiun() string {return "Africa/El_Aaiun" }
 
-// Freetown - IANA Time Zone 'Freetown'.
+// Freetown - IANA Time Zone 'Africa/Freetown'.
 // IANA Source File: Freetown
 //  
-func (afric africaTimeZones) Freetown() string {return "Freetown" }
+func (afric africaTimeZones) Freetown() string {return "Africa/Freetown" }
 
-// Gaborone - IANA Time Zone 'Gaborone'.
+// Gaborone - IANA Time Zone 'Africa/Gaborone'.
 // IANA Source File: Gaborone
 //  
-func (afric africaTimeZones) Gaborone() string {return "Gaborone" }
+func (afric africaTimeZones) Gaborone() string {return "Africa/Gaborone" }
 
-// Harare - IANA Time Zone 'Harare'.
+// Harare - IANA Time Zone 'Africa/Harare'.
 // IANA Source File: Harare
 //  
-func (afric africaTimeZones) Harare() string {return "Harare" }
+func (afric africaTimeZones) Harare() string {return "Africa/Harare" }
 
-// Johannesburg - IANA Time Zone 'Johannesburg'.
+// Johannesburg - IANA Time Zone 'Africa/Johannesburg'.
 // IANA Source File: Johannesburg
 //  
-func (afric africaTimeZones) Johannesburg() string {return "Johannesburg" }
+func (afric africaTimeZones) Johannesburg() string {return "Africa/Johannesburg" }
 
-// Juba - IANA Time Zone 'Juba'.
+// Juba - IANA Time Zone 'Africa/Juba'.
 // IANA Source File: Juba
 //  
-func (afric africaTimeZones) Juba() string {return "Juba" }
+func (afric africaTimeZones) Juba() string {return "Africa/Juba" }
 
-// Kampala - IANA Time Zone 'Kampala'.
+// Kampala - IANA Time Zone 'Africa/Kampala'.
 // IANA Source File: Kampala
 //  
-func (afric africaTimeZones) Kampala() string {return "Kampala" }
+func (afric africaTimeZones) Kampala() string {return "Africa/Kampala" }
 
-// Khartoum - IANA Time Zone 'Khartoum'.
+// Khartoum - IANA Time Zone 'Africa/Khartoum'.
 // IANA Source File: Khartoum
 //  
-func (afric africaTimeZones) Khartoum() string {return "Khartoum" }
+func (afric africaTimeZones) Khartoum() string {return "Africa/Khartoum" }
 
-// Kigali - IANA Time Zone 'Kigali'.
+// Kigali - IANA Time Zone 'Africa/Kigali'.
 // IANA Source File: Kigali
 //  
-func (afric africaTimeZones) Kigali() string {return "Kigali" }
+func (afric africaTimeZones) Kigali() string {return "Africa/Kigali" }
 
-// Kinshasa - IANA Time Zone 'Kinshasa'.
+// Kinshasa - IANA Time Zone 'Africa/Kinshasa'.
 // IANA Source File: Kinshasa
 //  
-func (afric africaTimeZones) Kinshasa() string {return "Kinshasa" }
+func (afric africaTimeZones) Kinshasa() string {return "Africa/Kinshasa" }
 
-// Lagos - IANA Time Zone 'Lagos'.
+// Lagos - IANA Time Zone 'Africa/Lagos'.
 // IANA Source File: Lagos
 //  
-func (afric africaTimeZones) Lagos() string {return "Lagos" }
+func (afric africaTimeZones) Lagos() string {return "Africa/Lagos" }
 
-// Libreville - IANA Time Zone 'Libreville'.
+// Libreville - IANA Time Zone 'Africa/Libreville'.
 // IANA Source File: Libreville
 //  
-func (afric africaTimeZones) Libreville() string {return "Libreville" }
+func (afric africaTimeZones) Libreville() string {return "Africa/Libreville" }
 
-// Lome - IANA Time Zone 'Lome'.
+// Lome - IANA Time Zone 'Africa/Lome'.
 // IANA Source File: Lome
 //  
-func (afric africaTimeZones) Lome() string {return "Lome" }
+func (afric africaTimeZones) Lome() string {return "Africa/Lome" }
 
-// Luanda - IANA Time Zone 'Luanda'.
+// Luanda - IANA Time Zone 'Africa/Luanda'.
 // IANA Source File: Luanda
 //  
-func (afric africaTimeZones) Luanda() string {return "Luanda" }
+func (afric africaTimeZones) Luanda() string {return "Africa/Luanda" }
 
-// Lubumbashi - IANA Time Zone 'Lubumbashi'.
+// Lubumbashi - IANA Time Zone 'Africa/Lubumbashi'.
 // IANA Source File: Lubumbashi
 //  
-func (afric africaTimeZones) Lubumbashi() string {return "Lubumbashi" }
+func (afric africaTimeZones) Lubumbashi() string {return "Africa/Lubumbashi" }
 
-// Lusaka - IANA Time Zone 'Lusaka'.
+// Lusaka - IANA Time Zone 'Africa/Lusaka'.
 // IANA Source File: Lusaka
 //  
-func (afric africaTimeZones) Lusaka() string {return "Lusaka" }
+func (afric africaTimeZones) Lusaka() string {return "Africa/Lusaka" }
 
-// Malabo - IANA Time Zone 'Malabo'.
+// Malabo - IANA Time Zone 'Africa/Malabo'.
 // IANA Source File: Malabo
 //  
-func (afric africaTimeZones) Malabo() string {return "Malabo" }
+func (afric africaTimeZones) Malabo() string {return "Africa/Malabo" }
 
-// Maputo - IANA Time Zone 'Maputo'.
+// Maputo - IANA Time Zone 'Africa/Maputo'.
 // IANA Source File: Maputo
 //  
-func (afric africaTimeZones) Maputo() string {return "Maputo" }
+func (afric africaTimeZones) Maputo() string {return "Africa/Maputo" }
 
-// Maseru - IANA Time Zone 'Maseru'.
+// Maseru - IANA Time Zone 'Africa/Maseru'.
 // IANA Source File: Maseru
 //  
-func (afric africaTimeZones) Maseru() string {return "Maseru" }
+func (afric africaTimeZones) Maseru() string {return "Africa/Maseru" }
 
-// Mbabane - IANA Time Zone 'Mbabane'.
+// Mbabane - IANA Time Zone 'Africa/Mbabane'.
 // IANA Source File: Mbabane
 //  
-func (afric africaTimeZones) Mbabane() string {return "Mbabane" }
+func (afric africaTimeZones) Mbabane() string {return "Africa/Mbabane" }
 
-// Mogadishu - IANA Time Zone 'Mogadishu'.
+// Mogadishu - IANA Time Zone 'Africa/Mogadishu'.
 // IANA Source File: Mogadishu
 //  
-func (afric africaTimeZones) Mogadishu() string {return "Mogadishu" }
+func (afric africaTimeZones) Mogadishu() string {return "Africa/Mogadishu" }
 
-// Monrovia - IANA Time Zone 'Monrovia'.
+// Monrovia - IANA Time Zone 'Africa/Monrovia'.
 // IANA Source File: Monrovia
 //  
-func (afric africaTimeZones) Monrovia() string {return "Monrovia" }
+func (afric africaTimeZones) Monrovia() string {return "Africa/Monrovia" }
 
-// Nairobi - IANA Time Zone 'Nairobi'.
+// Nairobi - IANA Time Zone 'Africa/Nairobi'.
 // IANA Source File: Nairobi
 //  
-func (afric africaTimeZones) Nairobi() string {return "Nairobi" }
+func (afric africaTimeZones) Nairobi() string {return "Africa/Nairobi" }
 
-// Ndjamena - IANA Time Zone 'Ndjamena'.
+// Ndjamena - IANA Time Zone 'Africa/Ndjamena'.
 // IANA Source File: Ndjamena
 //  
-func (afric africaTimeZones) Ndjamena() string {return "Ndjamena" }
+func (afric africaTimeZones) Ndjamena() string {return "Africa/Ndjamena" }
 
-// Niamey - IANA Time Zone 'Niamey'.
+// Niamey - IANA Time Zone 'Africa/Niamey'.
 // IANA Source File: Niamey
 //  
-func (afric africaTimeZones) Niamey() string {return "Niamey" }
+func (afric africaTimeZones) Niamey() string {return "Africa/Niamey" }
 
-// Nouakchott - IANA Time Zone 'Nouakchott'.
+// Nouakchott - IANA Time Zone 'Africa/Nouakchott'.
 // IANA Source File: Nouakchott
 //  
-func (afric africaTimeZones) Nouakchott() string {return "Nouakchott" }
+func (afric africaTimeZones) Nouakchott() string {return "Africa/Nouakchott" }
 
-// Ouagadougou - IANA Time Zone 'Ouagadougou'.
+// Ouagadougou - IANA Time Zone 'Africa/Ouagadougou'.
 // IANA Source File: Ouagadougou
 //  
-func (afric africaTimeZones) Ouagadougou() string {return "Ouagadougou" }
+func (afric africaTimeZones) Ouagadougou() string {return "Africa/Ouagadougou" }
 
-// Porto-Novo - IANA Time Zone 'Porto-Novo'.
+// Porto-Novo - IANA Time Zone 'Africa/Porto-Novo'.
 // IANA Source File: Porto-Novo
 //  
-func (afric africaTimeZones) PortoMinusNovo() string {return "Porto-Novo" }
+func (afric africaTimeZones) PortoMinusNovo() string {return "Africa/Porto-Novo" }
 
-// Sao_Tome - IANA Time Zone 'Sao_Tome'.
+// Sao_Tome - IANA Time Zone 'Africa/Sao_Tome'.
 // IANA Source File: Sao_Tome
 //  
-func (afric africaTimeZones) Sao_Tome() string {return "Sao_Tome" }
+func (afric africaTimeZones) Sao_Tome() string {return "Africa/Sao_Tome" }
 
-// Timbuktu - IANA Time Zone 'Timbuktu'.
+// Timbuktu - IANA Time Zone 'Africa/Timbuktu'.
 // IANA Source File: Timbuktu
 //  
-func (afric africaTimeZones) Timbuktu() string {return "Timbuktu" }
+func (afric africaTimeZones) Timbuktu() string {return "Africa/Timbuktu" }
 
-// Tripoli - IANA Time Zone 'Tripoli'.
+// Tripoli - IANA Time Zone 'Africa/Tripoli'.
 // IANA Source File: Tripoli
 //  
-func (afric africaTimeZones) Tripoli() string {return "Tripoli" }
+func (afric africaTimeZones) Tripoli() string {return "Africa/Tripoli" }
 
-// Tunis - IANA Time Zone 'Tunis'.
+// Tunis - IANA Time Zone 'Africa/Tunis'.
 // IANA Source File: Tunis
 //  
-func (afric africaTimeZones) Tunis() string {return "Tunis" }
+func (afric africaTimeZones) Tunis() string {return "Africa/Tunis" }
 
-// Windhoek - IANA Time Zone 'Windhoek'.
+// Windhoek - IANA Time Zone 'Africa/Windhoek'.
 // IANA Source File: Windhoek
 //  
-func (afric africaTimeZones) Windhoek() string {return "Windhoek" }
+func (afric africaTimeZones) Windhoek() string {return "Africa/Windhoek" }
 
 
 // americaTimeZones - IANA Time Zones for 'America'.
@@ -415,725 +415,725 @@ func (afric africaTimeZones) Windhoek() string {return "Windhoek" }
 //  
 type americaTimeZones string
 
-// Adak - IANA Time Zone 'Adak'.
+// Adak - IANA Time Zone 'America/Adak'.
 // IANA Source File: Adak
 //  
-func (ameri americaTimeZones) Adak() string {return "Adak" }
+func (ameri americaTimeZones) Adak() string {return "America/Adak" }
 
-// Anchorage - IANA Time Zone 'Anchorage'.
+// Anchorage - IANA Time Zone 'America/Anchorage'.
 // IANA Source File: Anchorage
 //  
-func (ameri americaTimeZones) Anchorage() string {return "Anchorage" }
+func (ameri americaTimeZones) Anchorage() string {return "America/Anchorage" }
 
-// Anguilla - IANA Time Zone 'Anguilla'.
+// Anguilla - IANA Time Zone 'America/Anguilla'.
 // IANA Source File: Anguilla
 //  
-func (ameri americaTimeZones) Anguilla() string {return "Anguilla" }
+func (ameri americaTimeZones) Anguilla() string {return "America/Anguilla" }
 
-// Antigua - IANA Time Zone 'Antigua'.
+// Antigua - IANA Time Zone 'America/Antigua'.
 // IANA Source File: Antigua
 //  
-func (ameri americaTimeZones) Antigua() string {return "Antigua" }
+func (ameri americaTimeZones) Antigua() string {return "America/Antigua" }
 
-// Araguaina - IANA Time Zone 'Araguaina'.
+// Araguaina - IANA Time Zone 'America/Araguaina'.
 // IANA Source File: Araguaina
 //  
-func (ameri americaTimeZones) Araguaina() string {return "Araguaina" }
+func (ameri americaTimeZones) Araguaina() string {return "America/Araguaina" }
+
+// Aruba - IANA Time Zone 'America/Aruba'.
+// IANA Source File: Aruba
+//  
+func (ameri americaTimeZones) Aruba() string {return "America/Aruba" }
+
+// Asuncion - IANA Time Zone 'America/Asuncion'.
+// IANA Source File: Asuncion
+//  
+func (ameri americaTimeZones) Asuncion() string {return "America/Asuncion" }
+
+// Atikokan - IANA Time Zone 'America/Atikokan'.
+// IANA Source File: Atikokan
+//  
+func (ameri americaTimeZones) Atikokan() string {return "America/Atikokan" }
+
+// Atka - IANA Time Zone 'America/Atka'.
+// IANA Source File: Atka
+//  
+func (ameri americaTimeZones) Atka() string {return "America/Atka" }
+
+// Bahia - IANA Time Zone 'America/Bahia'.
+// IANA Source File: Bahia
+//  
+func (ameri americaTimeZones) Bahia() string {return "America/Bahia" }
+
+// Bahia_Banderas - IANA Time Zone 'America/Bahia_Banderas'.
+// IANA Source File: Bahia_Banderas
+//  
+func (ameri americaTimeZones) Bahia_Banderas() string {return "America/Bahia_Banderas" }
+
+// Barbados - IANA Time Zone 'America/Barbados'.
+// IANA Source File: Barbados
+//  
+func (ameri americaTimeZones) Barbados() string {return "America/Barbados" }
+
+// Belem - IANA Time Zone 'America/Belem'.
+// IANA Source File: Belem
+//  
+func (ameri americaTimeZones) Belem() string {return "America/Belem" }
+
+// Belize - IANA Time Zone 'America/Belize'.
+// IANA Source File: Belize
+//  
+func (ameri americaTimeZones) Belize() string {return "America/Belize" }
+
+// Blanc-Sablon - IANA Time Zone 'America/Blanc-Sablon'.
+// IANA Source File: Blanc-Sablon
+//  
+func (ameri americaTimeZones) BlancMinusSablon() string {return "America/Blanc-Sablon" }
+
+// Boa_Vista - IANA Time Zone 'America/Boa_Vista'.
+// IANA Source File: Boa_Vista
+//  
+func (ameri americaTimeZones) Boa_Vista() string {return "America/Boa_Vista" }
+
+// Bogota - IANA Time Zone 'America/Bogota'.
+// IANA Source File: Bogota
+//  
+func (ameri americaTimeZones) Bogota() string {return "America/Bogota" }
+
+// Boise - IANA Time Zone 'America/Boise'.
+// IANA Source File: Boise
+//  
+func (ameri americaTimeZones) Boise() string {return "America/Boise" }
+
+// Buenos_Aires - IANA Time Zone 'America/Buenos_Aires'.
+// IANA Source File: Buenos_Aires
+//  
+func (ameri americaTimeZones) Buenos_Aires() string {return "America/Buenos_Aires" }
+
+// Cambridge_Bay - IANA Time Zone 'America/Cambridge_Bay'.
+// IANA Source File: Cambridge_Bay
+//  
+func (ameri americaTimeZones) Cambridge_Bay() string {return "America/Cambridge_Bay" }
+
+// Campo_Grande - IANA Time Zone 'America/Campo_Grande'.
+// IANA Source File: Campo_Grande
+//  
+func (ameri americaTimeZones) Campo_Grande() string {return "America/Campo_Grande" }
+
+// Cancun - IANA Time Zone 'America/Cancun'.
+// IANA Source File: Cancun
+//  
+func (ameri americaTimeZones) Cancun() string {return "America/Cancun" }
+
+// Caracas - IANA Time Zone 'America/Caracas'.
+// IANA Source File: Caracas
+//  
+func (ameri americaTimeZones) Caracas() string {return "America/Caracas" }
+
+// Catamarca - IANA Time Zone 'America/Catamarca'.
+// IANA Source File: Catamarca
+//  
+func (ameri americaTimeZones) Catamarca() string {return "America/Catamarca" }
+
+// Cayenne - IANA Time Zone 'America/Cayenne'.
+// IANA Source File: Cayenne
+//  
+func (ameri americaTimeZones) Cayenne() string {return "America/Cayenne" }
+
+// Cayman - IANA Time Zone 'America/Cayman'.
+// IANA Source File: Cayman
+//  
+func (ameri americaTimeZones) Cayman() string {return "America/Cayman" }
+
+// Chicago - IANA Time Zone 'America/Chicago'.
+// IANA Source File: Chicago
+//  
+func (ameri americaTimeZones) Chicago() string {return "America/Chicago" }
+
+// Chihuahua - IANA Time Zone 'America/Chihuahua'.
+// IANA Source File: Chihuahua
+//  
+func (ameri americaTimeZones) Chihuahua() string {return "America/Chihuahua" }
+
+// Coral_Harbour - IANA Time Zone 'America/Coral_Harbour'.
+// IANA Source File: Coral_Harbour
+//  
+func (ameri americaTimeZones) Coral_Harbour() string {return "America/Coral_Harbour" }
+
+// Cordoba - IANA Time Zone 'America/Cordoba'.
+// IANA Source File: Cordoba
+//  
+func (ameri americaTimeZones) Cordoba() string {return "America/Cordoba" }
+
+// Costa_Rica - IANA Time Zone 'America/Costa_Rica'.
+// IANA Source File: Costa_Rica
+//  
+func (ameri americaTimeZones) Costa_Rica() string {return "America/Costa_Rica" }
+
+// Creston - IANA Time Zone 'America/Creston'.
+// IANA Source File: Creston
+//  
+func (ameri americaTimeZones) Creston() string {return "America/Creston" }
+
+// Cuiaba - IANA Time Zone 'America/Cuiaba'.
+// IANA Source File: Cuiaba
+//  
+func (ameri americaTimeZones) Cuiaba() string {return "America/Cuiaba" }
+
+// Curacao - IANA Time Zone 'America/Curacao'.
+// IANA Source File: Curacao
+//  
+func (ameri americaTimeZones) Curacao() string {return "America/Curacao" }
+
+// Danmarkshavn - IANA Time Zone 'America/Danmarkshavn'.
+// IANA Source File: Danmarkshavn
+//  
+func (ameri americaTimeZones) Danmarkshavn() string {return "America/Danmarkshavn" }
+
+// Dawson - IANA Time Zone 'America/Dawson'.
+// IANA Source File: Dawson
+//  
+func (ameri americaTimeZones) Dawson() string {return "America/Dawson" }
+
+// Dawson_Creek - IANA Time Zone 'America/Dawson_Creek'.
+// IANA Source File: Dawson_Creek
+//  
+func (ameri americaTimeZones) Dawson_Creek() string {return "America/Dawson_Creek" }
+
+// Denver - IANA Time Zone 'America/Denver'.
+// IANA Source File: Denver
+//  
+func (ameri americaTimeZones) Denver() string {return "America/Denver" }
+
+// Detroit - IANA Time Zone 'America/Detroit'.
+// IANA Source File: Detroit
+//  
+func (ameri americaTimeZones) Detroit() string {return "America/Detroit" }
+
+// Dominica - IANA Time Zone 'America/Dominica'.
+// IANA Source File: Dominica
+//  
+func (ameri americaTimeZones) Dominica() string {return "America/Dominica" }
+
+// Edmonton - IANA Time Zone 'America/Edmonton'.
+// IANA Source File: Edmonton
+//  
+func (ameri americaTimeZones) Edmonton() string {return "America/Edmonton" }
+
+// Eirunepe - IANA Time Zone 'America/Eirunepe'.
+// IANA Source File: Eirunepe
+//  
+func (ameri americaTimeZones) Eirunepe() string {return "America/Eirunepe" }
+
+// El_Salvador - IANA Time Zone 'America/El_Salvador'.
+// IANA Source File: El_Salvador
+//  
+func (ameri americaTimeZones) El_Salvador() string {return "America/El_Salvador" }
+
+// Ensenada - IANA Time Zone 'America/Ensenada'.
+// IANA Source File: Ensenada
+//  
+func (ameri americaTimeZones) Ensenada() string {return "America/Ensenada" }
+
+// Fort_Nelson - IANA Time Zone 'America/Fort_Nelson'.
+// IANA Source File: Fort_Nelson
+//  
+func (ameri americaTimeZones) Fort_Nelson() string {return "America/Fort_Nelson" }
+
+// Fort_Wayne - IANA Time Zone 'America/Fort_Wayne'.
+// IANA Source File: Fort_Wayne
+//  
+func (ameri americaTimeZones) Fort_Wayne() string {return "America/Fort_Wayne" }
+
+// Fortaleza - IANA Time Zone 'America/Fortaleza'.
+// IANA Source File: Fortaleza
+//  
+func (ameri americaTimeZones) Fortaleza() string {return "America/Fortaleza" }
+
+// Glace_Bay - IANA Time Zone 'America/Glace_Bay'.
+// IANA Source File: Glace_Bay
+//  
+func (ameri americaTimeZones) Glace_Bay() string {return "America/Glace_Bay" }
+
+// Godthab - IANA Time Zone 'America/Godthab'.
+// IANA Source File: Godthab
+//  
+func (ameri americaTimeZones) Godthab() string {return "America/Godthab" }
+
+// Goose_Bay - IANA Time Zone 'America/Goose_Bay'.
+// IANA Source File: Goose_Bay
+//  
+func (ameri americaTimeZones) Goose_Bay() string {return "America/Goose_Bay" }
+
+// Grand_Turk - IANA Time Zone 'America/Grand_Turk'.
+// IANA Source File: Grand_Turk
+//  
+func (ameri americaTimeZones) Grand_Turk() string {return "America/Grand_Turk" }
+
+// Grenada - IANA Time Zone 'America/Grenada'.
+// IANA Source File: Grenada
+//  
+func (ameri americaTimeZones) Grenada() string {return "America/Grenada" }
+
+// Guadeloupe - IANA Time Zone 'America/Guadeloupe'.
+// IANA Source File: Guadeloupe
+//  
+func (ameri americaTimeZones) Guadeloupe() string {return "America/Guadeloupe" }
+
+// Guatemala - IANA Time Zone 'America/Guatemala'.
+// IANA Source File: Guatemala
+//  
+func (ameri americaTimeZones) Guatemala() string {return "America/Guatemala" }
+
+// Guayaquil - IANA Time Zone 'America/Guayaquil'.
+// IANA Source File: Guayaquil
+//  
+func (ameri americaTimeZones) Guayaquil() string {return "America/Guayaquil" }
+
+// Guyana - IANA Time Zone 'America/Guyana'.
+// IANA Source File: Guyana
+//  
+func (ameri americaTimeZones) Guyana() string {return "America/Guyana" }
+
+// Halifax - IANA Time Zone 'America/Halifax'.
+// IANA Source File: Halifax
+//  
+func (ameri americaTimeZones) Halifax() string {return "America/Halifax" }
+
+// Havana - IANA Time Zone 'America/Havana'.
+// IANA Source File: Havana
+//  
+func (ameri americaTimeZones) Havana() string {return "America/Havana" }
+
+// Hermosillo - IANA Time Zone 'America/Hermosillo'.
+// IANA Source File: Hermosillo
+//  
+func (ameri americaTimeZones) Hermosillo() string {return "America/Hermosillo" }
+
+// Indianapolis - IANA Time Zone 'America/Indianapolis'.
+// IANA Source File: Indianapolis
+//  
+func (ameri americaTimeZones) Indianapolis() string {return "America/Indianapolis" }
+
+// Inuvik - IANA Time Zone 'America/Inuvik'.
+// IANA Source File: Inuvik
+//  
+func (ameri americaTimeZones) Inuvik() string {return "America/Inuvik" }
+
+// Iqaluit - IANA Time Zone 'America/Iqaluit'.
+// IANA Source File: Iqaluit
+//  
+func (ameri americaTimeZones) Iqaluit() string {return "America/Iqaluit" }
+
+// Jamaica - IANA Time Zone 'America/Jamaica'.
+// IANA Source File: Jamaica
+//  
+func (ameri americaTimeZones) Jamaica() string {return "America/Jamaica" }
+
+// Jujuy - IANA Time Zone 'America/Jujuy'.
+// IANA Source File: Jujuy
+//  
+func (ameri americaTimeZones) Jujuy() string {return "America/Jujuy" }
+
+// Juneau - IANA Time Zone 'America/Juneau'.
+// IANA Source File: Juneau
+//  
+func (ameri americaTimeZones) Juneau() string {return "America/Juneau" }
+
+// Knox_IN - IANA Time Zone 'America/Knox_IN'.
+// IANA Source File: Knox_IN
+//  
+func (ameri americaTimeZones) Knox_IN() string {return "America/Knox_IN" }
+
+// Kralendijk - IANA Time Zone 'America/Kralendijk'.
+// IANA Source File: Kralendijk
+//  
+func (ameri americaTimeZones) Kralendijk() string {return "America/Kralendijk" }
+
+// La_Paz - IANA Time Zone 'America/La_Paz'.
+// IANA Source File: La_Paz
+//  
+func (ameri americaTimeZones) La_Paz() string {return "America/La_Paz" }
+
+// Lima - IANA Time Zone 'America/Lima'.
+// IANA Source File: Lima
+//  
+func (ameri americaTimeZones) Lima() string {return "America/Lima" }
+
+// Los_Angeles - IANA Time Zone 'America/Los_Angeles'.
+// IANA Source File: Los_Angeles
+//  
+func (ameri americaTimeZones) Los_Angeles() string {return "America/Los_Angeles" }
+
+// Louisville - IANA Time Zone 'America/Louisville'.
+// IANA Source File: Louisville
+//  
+func (ameri americaTimeZones) Louisville() string {return "America/Louisville" }
+
+// Lower_Princes - IANA Time Zone 'America/Lower_Princes'.
+// IANA Source File: Lower_Princes
+//  
+func (ameri americaTimeZones) Lower_Princes() string {return "America/Lower_Princes" }
+
+// Maceio - IANA Time Zone 'America/Maceio'.
+// IANA Source File: Maceio
+//  
+func (ameri americaTimeZones) Maceio() string {return "America/Maceio" }
+
+// Managua - IANA Time Zone 'America/Managua'.
+// IANA Source File: Managua
+//  
+func (ameri americaTimeZones) Managua() string {return "America/Managua" }
+
+// Manaus - IANA Time Zone 'America/Manaus'.
+// IANA Source File: Manaus
+//  
+func (ameri americaTimeZones) Manaus() string {return "America/Manaus" }
+
+// Marigot - IANA Time Zone 'America/Marigot'.
+// IANA Source File: Marigot
+//  
+func (ameri americaTimeZones) Marigot() string {return "America/Marigot" }
+
+// Martinique - IANA Time Zone 'America/Martinique'.
+// IANA Source File: Martinique
+//  
+func (ameri americaTimeZones) Martinique() string {return "America/Martinique" }
+
+// Matamoros - IANA Time Zone 'America/Matamoros'.
+// IANA Source File: Matamoros
+//  
+func (ameri americaTimeZones) Matamoros() string {return "America/Matamoros" }
+
+// Mazatlan - IANA Time Zone 'America/Mazatlan'.
+// IANA Source File: Mazatlan
+//  
+func (ameri americaTimeZones) Mazatlan() string {return "America/Mazatlan" }
+
+// Mendoza - IANA Time Zone 'America/Mendoza'.
+// IANA Source File: Mendoza
+//  
+func (ameri americaTimeZones) Mendoza() string {return "America/Mendoza" }
+
+// Menominee - IANA Time Zone 'America/Menominee'.
+// IANA Source File: Menominee
+//  
+func (ameri americaTimeZones) Menominee() string {return "America/Menominee" }
+
+// Merida - IANA Time Zone 'America/Merida'.
+// IANA Source File: Merida
+//  
+func (ameri americaTimeZones) Merida() string {return "America/Merida" }
+
+// Metlakatla - IANA Time Zone 'America/Metlakatla'.
+// IANA Source File: Metlakatla
+//  
+func (ameri americaTimeZones) Metlakatla() string {return "America/Metlakatla" }
+
+// Mexico_City - IANA Time Zone 'America/Mexico_City'.
+// IANA Source File: Mexico_City
+//  
+func (ameri americaTimeZones) Mexico_City() string {return "America/Mexico_City" }
+
+// Miquelon - IANA Time Zone 'America/Miquelon'.
+// IANA Source File: Miquelon
+//  
+func (ameri americaTimeZones) Miquelon() string {return "America/Miquelon" }
+
+// Moncton - IANA Time Zone 'America/Moncton'.
+// IANA Source File: Moncton
+//  
+func (ameri americaTimeZones) Moncton() string {return "America/Moncton" }
+
+// Monterrey - IANA Time Zone 'America/Monterrey'.
+// IANA Source File: Monterrey
+//  
+func (ameri americaTimeZones) Monterrey() string {return "America/Monterrey" }
+
+// Montevideo - IANA Time Zone 'America/Montevideo'.
+// IANA Source File: Montevideo
+//  
+func (ameri americaTimeZones) Montevideo() string {return "America/Montevideo" }
+
+// Montreal - IANA Time Zone 'America/Montreal'.
+// IANA Source File: Montreal
+//  
+func (ameri americaTimeZones) Montreal() string {return "America/Montreal" }
+
+// Montserrat - IANA Time Zone 'America/Montserrat'.
+// IANA Source File: Montserrat
+//  
+func (ameri americaTimeZones) Montserrat() string {return "America/Montserrat" }
+
+// Nassau - IANA Time Zone 'America/Nassau'.
+// IANA Source File: Nassau
+//  
+func (ameri americaTimeZones) Nassau() string {return "America/Nassau" }
+
+// New_York - IANA Time Zone 'America/New_York'.
+// IANA Source File: New_York
+//  
+func (ameri americaTimeZones) New_York() string {return "America/New_York" }
+
+// Nipigon - IANA Time Zone 'America/Nipigon'.
+// IANA Source File: Nipigon
+//  
+func (ameri americaTimeZones) Nipigon() string {return "America/Nipigon" }
+
+// Nome - IANA Time Zone 'America/Nome'.
+// IANA Source File: Nome
+//  
+func (ameri americaTimeZones) Nome() string {return "America/Nome" }
+
+// Noronha - IANA Time Zone 'America/Noronha'.
+// IANA Source File: Noronha
+//  
+func (ameri americaTimeZones) Noronha() string {return "America/Noronha" }
+
+// Ojinaga - IANA Time Zone 'America/Ojinaga'.
+// IANA Source File: Ojinaga
+//  
+func (ameri americaTimeZones) Ojinaga() string {return "America/Ojinaga" }
+
+// Panama - IANA Time Zone 'America/Panama'.
+// IANA Source File: Panama
+//  
+func (ameri americaTimeZones) Panama() string {return "America/Panama" }
+
+// Pangnirtung - IANA Time Zone 'America/Pangnirtung'.
+// IANA Source File: Pangnirtung
+//  
+func (ameri americaTimeZones) Pangnirtung() string {return "America/Pangnirtung" }
+
+// Paramaribo - IANA Time Zone 'America/Paramaribo'.
+// IANA Source File: Paramaribo
+//  
+func (ameri americaTimeZones) Paramaribo() string {return "America/Paramaribo" }
+
+// Phoenix - IANA Time Zone 'America/Phoenix'.
+// IANA Source File: Phoenix
+//  
+func (ameri americaTimeZones) Phoenix() string {return "America/Phoenix" }
+
+// Port-au-Prince - IANA Time Zone 'America/Port-au-Prince'.
+// IANA Source File: Port-au-Prince
+//  
+func (ameri americaTimeZones) PortMinusauMinusPrince() string {return "America/Port-au-Prince" }
+
+// Port_of_Spain - IANA Time Zone 'America/Port_of_Spain'.
+// IANA Source File: Port_of_Spain
+//  
+func (ameri americaTimeZones) Port_of_Spain() string {return "America/Port_of_Spain" }
+
+// Porto_Acre - IANA Time Zone 'America/Porto_Acre'.
+// IANA Source File: Porto_Acre
+//  
+func (ameri americaTimeZones) Porto_Acre() string {return "America/Porto_Acre" }
+
+// Porto_Velho - IANA Time Zone 'America/Porto_Velho'.
+// IANA Source File: Porto_Velho
+//  
+func (ameri americaTimeZones) Porto_Velho() string {return "America/Porto_Velho" }
+
+// Puerto_Rico - IANA Time Zone 'America/Puerto_Rico'.
+// IANA Source File: Puerto_Rico
+//  
+func (ameri americaTimeZones) Puerto_Rico() string {return "America/Puerto_Rico" }
+
+// Punta_Arenas - IANA Time Zone 'America/Punta_Arenas'.
+// IANA Source File: Punta_Arenas
+//  
+func (ameri americaTimeZones) Punta_Arenas() string {return "America/Punta_Arenas" }
+
+// Rainy_River - IANA Time Zone 'America/Rainy_River'.
+// IANA Source File: Rainy_River
+//  
+func (ameri americaTimeZones) Rainy_River() string {return "America/Rainy_River" }
+
+// Rankin_Inlet - IANA Time Zone 'America/Rankin_Inlet'.
+// IANA Source File: Rankin_Inlet
+//  
+func (ameri americaTimeZones) Rankin_Inlet() string {return "America/Rankin_Inlet" }
+
+// Recife - IANA Time Zone 'America/Recife'.
+// IANA Source File: Recife
+//  
+func (ameri americaTimeZones) Recife() string {return "America/Recife" }
+
+// Regina - IANA Time Zone 'America/Regina'.
+// IANA Source File: Regina
+//  
+func (ameri americaTimeZones) Regina() string {return "America/Regina" }
+
+// Resolute - IANA Time Zone 'America/Resolute'.
+// IANA Source File: Resolute
+//  
+func (ameri americaTimeZones) Resolute() string {return "America/Resolute" }
+
+// Rio_Branco - IANA Time Zone 'America/Rio_Branco'.
+// IANA Source File: Rio_Branco
+//  
+func (ameri americaTimeZones) Rio_Branco() string {return "America/Rio_Branco" }
+
+// Rosario - IANA Time Zone 'America/Rosario'.
+// IANA Source File: Rosario
+//  
+func (ameri americaTimeZones) Rosario() string {return "America/Rosario" }
+
+// Santa_Isabel - IANA Time Zone 'America/Santa_Isabel'.
+// IANA Source File: Santa_Isabel
+//  
+func (ameri americaTimeZones) Santa_Isabel() string {return "America/Santa_Isabel" }
+
+// Santarem - IANA Time Zone 'America/Santarem'.
+// IANA Source File: Santarem
+//  
+func (ameri americaTimeZones) Santarem() string {return "America/Santarem" }
+
+// Santiago - IANA Time Zone 'America/Santiago'.
+// IANA Source File: Santiago
+//  
+func (ameri americaTimeZones) Santiago() string {return "America/Santiago" }
+
+// Santo_Domingo - IANA Time Zone 'America/Santo_Domingo'.
+// IANA Source File: Santo_Domingo
+//  
+func (ameri americaTimeZones) Santo_Domingo() string {return "America/Santo_Domingo" }
+
+// Sao_Paulo - IANA Time Zone 'America/Sao_Paulo'.
+// IANA Source File: Sao_Paulo
+//  
+func (ameri americaTimeZones) Sao_Paulo() string {return "America/Sao_Paulo" }
+
+// Scoresbysund - IANA Time Zone 'America/Scoresbysund'.
+// IANA Source File: Scoresbysund
+//  
+func (ameri americaTimeZones) Scoresbysund() string {return "America/Scoresbysund" }
+
+// Shiprock - IANA Time Zone 'America/Shiprock'.
+// IANA Source File: Shiprock
+//  
+func (ameri americaTimeZones) Shiprock() string {return "America/Shiprock" }
+
+// Sitka - IANA Time Zone 'America/Sitka'.
+// IANA Source File: Sitka
+//  
+func (ameri americaTimeZones) Sitka() string {return "America/Sitka" }
+
+// St_Barthelemy - IANA Time Zone 'America/St_Barthelemy'.
+// IANA Source File: St_Barthelemy
+//  
+func (ameri americaTimeZones) St_Barthelemy() string {return "America/St_Barthelemy" }
+
+// St_Johns - IANA Time Zone 'America/St_Johns'.
+// IANA Source File: St_Johns
+//  
+func (ameri americaTimeZones) St_Johns() string {return "America/St_Johns" }
+
+// St_Kitts - IANA Time Zone 'America/St_Kitts'.
+// IANA Source File: St_Kitts
+//  
+func (ameri americaTimeZones) St_Kitts() string {return "America/St_Kitts" }
+
+// St_Lucia - IANA Time Zone 'America/St_Lucia'.
+// IANA Source File: St_Lucia
+//  
+func (ameri americaTimeZones) St_Lucia() string {return "America/St_Lucia" }
+
+// St_Thomas - IANA Time Zone 'America/St_Thomas'.
+// IANA Source File: St_Thomas
+//  
+func (ameri americaTimeZones) St_Thomas() string {return "America/St_Thomas" }
+
+// St_Vincent - IANA Time Zone 'America/St_Vincent'.
+// IANA Source File: St_Vincent
+//  
+func (ameri americaTimeZones) St_Vincent() string {return "America/St_Vincent" }
+
+// Swift_Current - IANA Time Zone 'America/Swift_Current'.
+// IANA Source File: Swift_Current
+//  
+func (ameri americaTimeZones) Swift_Current() string {return "America/Swift_Current" }
+
+// Tegucigalpa - IANA Time Zone 'America/Tegucigalpa'.
+// IANA Source File: Tegucigalpa
+//  
+func (ameri americaTimeZones) Tegucigalpa() string {return "America/Tegucigalpa" }
+
+// Thule - IANA Time Zone 'America/Thule'.
+// IANA Source File: Thule
+//  
+func (ameri americaTimeZones) Thule() string {return "America/Thule" }
+
+// Thunder_Bay - IANA Time Zone 'America/Thunder_Bay'.
+// IANA Source File: Thunder_Bay
+//  
+func (ameri americaTimeZones) Thunder_Bay() string {return "America/Thunder_Bay" }
+
+// Tijuana - IANA Time Zone 'America/Tijuana'.
+// IANA Source File: Tijuana
+//  
+func (ameri americaTimeZones) Tijuana() string {return "America/Tijuana" }
+
+// Toronto - IANA Time Zone 'America/Toronto'.
+// IANA Source File: Toronto
+//  
+func (ameri americaTimeZones) Toronto() string {return "America/Toronto" }
+
+// Tortola - IANA Time Zone 'America/Tortola'.
+// IANA Source File: Tortola
+//  
+func (ameri americaTimeZones) Tortola() string {return "America/Tortola" }
+
+// Vancouver - IANA Time Zone 'America/Vancouver'.
+// IANA Source File: Vancouver
+//  
+func (ameri americaTimeZones) Vancouver() string {return "America/Vancouver" }
+
+// Virgin - IANA Time Zone 'America/Virgin'.
+// IANA Source File: Virgin
+//  
+func (ameri americaTimeZones) Virgin() string {return "America/Virgin" }
+
+// Whitehorse - IANA Time Zone 'America/Whitehorse'.
+// IANA Source File: Whitehorse
+//  
+func (ameri americaTimeZones) Whitehorse() string {return "America/Whitehorse" }
+
+// Winnipeg - IANA Time Zone 'America/Winnipeg'.
+// IANA Source File: Winnipeg
+//  
+func (ameri americaTimeZones) Winnipeg() string {return "America/Winnipeg" }
+
+// Yakutat - IANA Time Zone 'America/Yakutat'.
+// IANA Source File: Yakutat
+//  
+func (ameri americaTimeZones) Yakutat() string {return "America/Yakutat" }
+
+// Yellowknife - IANA Time Zone 'America/Yellowknife'.
+// IANA Source File: Yellowknife
+//  
+func (ameri americaTimeZones) Yellowknife() string {return "America/Yellowknife" }
 
 // Argentina - A place holder which defines a sub-group
 // of IANA Time Zones.
 //  
 func (ameri americaTimeZones) Argentina() argentinaTimeZones {return "" }
 
-// Aruba - IANA Time Zone 'Aruba'.
-// IANA Source File: Aruba
-//  
-func (ameri americaTimeZones) Aruba() string {return "Aruba" }
-
-// Asuncion - IANA Time Zone 'Asuncion'.
-// IANA Source File: Asuncion
-//  
-func (ameri americaTimeZones) Asuncion() string {return "Asuncion" }
-
-// Atikokan - IANA Time Zone 'Atikokan'.
-// IANA Source File: Atikokan
-//  
-func (ameri americaTimeZones) Atikokan() string {return "Atikokan" }
-
-// Atka - IANA Time Zone 'Atka'.
-// IANA Source File: Atka
-//  
-func (ameri americaTimeZones) Atka() string {return "Atka" }
-
-// Bahia - IANA Time Zone 'Bahia'.
-// IANA Source File: Bahia
-//  
-func (ameri americaTimeZones) Bahia() string {return "Bahia" }
-
-// Bahia_Banderas - IANA Time Zone 'Bahia_Banderas'.
-// IANA Source File: Bahia_Banderas
-//  
-func (ameri americaTimeZones) Bahia_Banderas() string {return "Bahia_Banderas" }
-
-// Barbados - IANA Time Zone 'Barbados'.
-// IANA Source File: Barbados
-//  
-func (ameri americaTimeZones) Barbados() string {return "Barbados" }
-
-// Belem - IANA Time Zone 'Belem'.
-// IANA Source File: Belem
-//  
-func (ameri americaTimeZones) Belem() string {return "Belem" }
-
-// Belize - IANA Time Zone 'Belize'.
-// IANA Source File: Belize
-//  
-func (ameri americaTimeZones) Belize() string {return "Belize" }
-
-// Blanc-Sablon - IANA Time Zone 'Blanc-Sablon'.
-// IANA Source File: Blanc-Sablon
-//  
-func (ameri americaTimeZones) BlancMinusSablon() string {return "Blanc-Sablon" }
-
-// Boa_Vista - IANA Time Zone 'Boa_Vista'.
-// IANA Source File: Boa_Vista
-//  
-func (ameri americaTimeZones) Boa_Vista() string {return "Boa_Vista" }
-
-// Bogota - IANA Time Zone 'Bogota'.
-// IANA Source File: Bogota
-//  
-func (ameri americaTimeZones) Bogota() string {return "Bogota" }
-
-// Boise - IANA Time Zone 'Boise'.
-// IANA Source File: Boise
-//  
-func (ameri americaTimeZones) Boise() string {return "Boise" }
-
-// Buenos_Aires - IANA Time Zone 'Buenos_Aires'.
-// IANA Source File: Buenos_Aires
-//  
-func (ameri americaTimeZones) Buenos_Aires() string {return "Buenos_Aires" }
-
-// Cambridge_Bay - IANA Time Zone 'Cambridge_Bay'.
-// IANA Source File: Cambridge_Bay
-//  
-func (ameri americaTimeZones) Cambridge_Bay() string {return "Cambridge_Bay" }
-
-// Campo_Grande - IANA Time Zone 'Campo_Grande'.
-// IANA Source File: Campo_Grande
-//  
-func (ameri americaTimeZones) Campo_Grande() string {return "Campo_Grande" }
-
-// Cancun - IANA Time Zone 'Cancun'.
-// IANA Source File: Cancun
-//  
-func (ameri americaTimeZones) Cancun() string {return "Cancun" }
-
-// Caracas - IANA Time Zone 'Caracas'.
-// IANA Source File: Caracas
-//  
-func (ameri americaTimeZones) Caracas() string {return "Caracas" }
-
-// Catamarca - IANA Time Zone 'Catamarca'.
-// IANA Source File: Catamarca
-//  
-func (ameri americaTimeZones) Catamarca() string {return "Catamarca" }
-
-// Cayenne - IANA Time Zone 'Cayenne'.
-// IANA Source File: Cayenne
-//  
-func (ameri americaTimeZones) Cayenne() string {return "Cayenne" }
-
-// Cayman - IANA Time Zone 'Cayman'.
-// IANA Source File: Cayman
-//  
-func (ameri americaTimeZones) Cayman() string {return "Cayman" }
-
-// Chicago - IANA Time Zone 'Chicago'.
-// IANA Source File: Chicago
-//  
-func (ameri americaTimeZones) Chicago() string {return "Chicago" }
-
-// Chihuahua - IANA Time Zone 'Chihuahua'.
-// IANA Source File: Chihuahua
-//  
-func (ameri americaTimeZones) Chihuahua() string {return "Chihuahua" }
-
-// Coral_Harbour - IANA Time Zone 'Coral_Harbour'.
-// IANA Source File: Coral_Harbour
-//  
-func (ameri americaTimeZones) Coral_Harbour() string {return "Coral_Harbour" }
-
-// Cordoba - IANA Time Zone 'Cordoba'.
-// IANA Source File: Cordoba
-//  
-func (ameri americaTimeZones) Cordoba() string {return "Cordoba" }
-
-// Costa_Rica - IANA Time Zone 'Costa_Rica'.
-// IANA Source File: Costa_Rica
-//  
-func (ameri americaTimeZones) Costa_Rica() string {return "Costa_Rica" }
-
-// Creston - IANA Time Zone 'Creston'.
-// IANA Source File: Creston
-//  
-func (ameri americaTimeZones) Creston() string {return "Creston" }
-
-// Cuiaba - IANA Time Zone 'Cuiaba'.
-// IANA Source File: Cuiaba
-//  
-func (ameri americaTimeZones) Cuiaba() string {return "Cuiaba" }
-
-// Curacao - IANA Time Zone 'Curacao'.
-// IANA Source File: Curacao
-//  
-func (ameri americaTimeZones) Curacao() string {return "Curacao" }
-
-// Danmarkshavn - IANA Time Zone 'Danmarkshavn'.
-// IANA Source File: Danmarkshavn
-//  
-func (ameri americaTimeZones) Danmarkshavn() string {return "Danmarkshavn" }
-
-// Dawson - IANA Time Zone 'Dawson'.
-// IANA Source File: Dawson
-//  
-func (ameri americaTimeZones) Dawson() string {return "Dawson" }
-
-// Dawson_Creek - IANA Time Zone 'Dawson_Creek'.
-// IANA Source File: Dawson_Creek
-//  
-func (ameri americaTimeZones) Dawson_Creek() string {return "Dawson_Creek" }
-
-// Denver - IANA Time Zone 'Denver'.
-// IANA Source File: Denver
-//  
-func (ameri americaTimeZones) Denver() string {return "Denver" }
-
-// Detroit - IANA Time Zone 'Detroit'.
-// IANA Source File: Detroit
-//  
-func (ameri americaTimeZones) Detroit() string {return "Detroit" }
-
-// Dominica - IANA Time Zone 'Dominica'.
-// IANA Source File: Dominica
-//  
-func (ameri americaTimeZones) Dominica() string {return "Dominica" }
-
-// Edmonton - IANA Time Zone 'Edmonton'.
-// IANA Source File: Edmonton
-//  
-func (ameri americaTimeZones) Edmonton() string {return "Edmonton" }
-
-// Eirunepe - IANA Time Zone 'Eirunepe'.
-// IANA Source File: Eirunepe
-//  
-func (ameri americaTimeZones) Eirunepe() string {return "Eirunepe" }
-
-// El_Salvador - IANA Time Zone 'El_Salvador'.
-// IANA Source File: El_Salvador
-//  
-func (ameri americaTimeZones) El_Salvador() string {return "El_Salvador" }
-
-// Ensenada - IANA Time Zone 'Ensenada'.
-// IANA Source File: Ensenada
-//  
-func (ameri americaTimeZones) Ensenada() string {return "Ensenada" }
-
-// Fort_Nelson - IANA Time Zone 'Fort_Nelson'.
-// IANA Source File: Fort_Nelson
-//  
-func (ameri americaTimeZones) Fort_Nelson() string {return "Fort_Nelson" }
-
-// Fort_Wayne - IANA Time Zone 'Fort_Wayne'.
-// IANA Source File: Fort_Wayne
-//  
-func (ameri americaTimeZones) Fort_Wayne() string {return "Fort_Wayne" }
-
-// Fortaleza - IANA Time Zone 'Fortaleza'.
-// IANA Source File: Fortaleza
-//  
-func (ameri americaTimeZones) Fortaleza() string {return "Fortaleza" }
-
-// Glace_Bay - IANA Time Zone 'Glace_Bay'.
-// IANA Source File: Glace_Bay
-//  
-func (ameri americaTimeZones) Glace_Bay() string {return "Glace_Bay" }
-
-// Godthab - IANA Time Zone 'Godthab'.
-// IANA Source File: Godthab
-//  
-func (ameri americaTimeZones) Godthab() string {return "Godthab" }
-
-// Goose_Bay - IANA Time Zone 'Goose_Bay'.
-// IANA Source File: Goose_Bay
-//  
-func (ameri americaTimeZones) Goose_Bay() string {return "Goose_Bay" }
-
-// Grand_Turk - IANA Time Zone 'Grand_Turk'.
-// IANA Source File: Grand_Turk
-//  
-func (ameri americaTimeZones) Grand_Turk() string {return "Grand_Turk" }
-
-// Grenada - IANA Time Zone 'Grenada'.
-// IANA Source File: Grenada
-//  
-func (ameri americaTimeZones) Grenada() string {return "Grenada" }
-
-// Guadeloupe - IANA Time Zone 'Guadeloupe'.
-// IANA Source File: Guadeloupe
-//  
-func (ameri americaTimeZones) Guadeloupe() string {return "Guadeloupe" }
-
-// Guatemala - IANA Time Zone 'Guatemala'.
-// IANA Source File: Guatemala
-//  
-func (ameri americaTimeZones) Guatemala() string {return "Guatemala" }
-
-// Guayaquil - IANA Time Zone 'Guayaquil'.
-// IANA Source File: Guayaquil
-//  
-func (ameri americaTimeZones) Guayaquil() string {return "Guayaquil" }
-
-// Guyana - IANA Time Zone 'Guyana'.
-// IANA Source File: Guyana
-//  
-func (ameri americaTimeZones) Guyana() string {return "Guyana" }
-
-// Halifax - IANA Time Zone 'Halifax'.
-// IANA Source File: Halifax
-//  
-func (ameri americaTimeZones) Halifax() string {return "Halifax" }
-
-// Havana - IANA Time Zone 'Havana'.
-// IANA Source File: Havana
-//  
-func (ameri americaTimeZones) Havana() string {return "Havana" }
-
-// Hermosillo - IANA Time Zone 'Hermosillo'.
-// IANA Source File: Hermosillo
-//  
-func (ameri americaTimeZones) Hermosillo() string {return "Hermosillo" }
-
 // Indiana - A place holder which defines a sub-group
 // of IANA Time Zones.
 //  
 func (ameri americaTimeZones) Indiana() indianaTimeZones {return "" }
-
-// Indianapolis - IANA Time Zone 'Indianapolis'.
-// IANA Source File: Indianapolis
-//  
-func (ameri americaTimeZones) Indianapolis() string {return "Indianapolis" }
-
-// Inuvik - IANA Time Zone 'Inuvik'.
-// IANA Source File: Inuvik
-//  
-func (ameri americaTimeZones) Inuvik() string {return "Inuvik" }
-
-// Iqaluit - IANA Time Zone 'Iqaluit'.
-// IANA Source File: Iqaluit
-//  
-func (ameri americaTimeZones) Iqaluit() string {return "Iqaluit" }
-
-// Jamaica - IANA Time Zone 'Jamaica'.
-// IANA Source File: Jamaica
-//  
-func (ameri americaTimeZones) Jamaica() string {return "Jamaica" }
-
-// Jujuy - IANA Time Zone 'Jujuy'.
-// IANA Source File: Jujuy
-//  
-func (ameri americaTimeZones) Jujuy() string {return "Jujuy" }
-
-// Juneau - IANA Time Zone 'Juneau'.
-// IANA Source File: Juneau
-//  
-func (ameri americaTimeZones) Juneau() string {return "Juneau" }
 
 // Kentucky - A place holder which defines a sub-group
 // of IANA Time Zones.
 //  
 func (ameri americaTimeZones) Kentucky() kentuckyTimeZones {return "" }
 
-// Knox_IN - IANA Time Zone 'Knox_IN'.
-// IANA Source File: Knox_IN
-//  
-func (ameri americaTimeZones) Knox_IN() string {return "Knox_IN" }
-
-// Kralendijk - IANA Time Zone 'Kralendijk'.
-// IANA Source File: Kralendijk
-//  
-func (ameri americaTimeZones) Kralendijk() string {return "Kralendijk" }
-
-// La_Paz - IANA Time Zone 'La_Paz'.
-// IANA Source File: La_Paz
-//  
-func (ameri americaTimeZones) La_Paz() string {return "La_Paz" }
-
-// Lima - IANA Time Zone 'Lima'.
-// IANA Source File: Lima
-//  
-func (ameri americaTimeZones) Lima() string {return "Lima" }
-
-// Los_Angeles - IANA Time Zone 'Los_Angeles'.
-// IANA Source File: Los_Angeles
-//  
-func (ameri americaTimeZones) Los_Angeles() string {return "Los_Angeles" }
-
-// Louisville - IANA Time Zone 'Louisville'.
-// IANA Source File: Louisville
-//  
-func (ameri americaTimeZones) Louisville() string {return "Louisville" }
-
-// Lower_Princes - IANA Time Zone 'Lower_Princes'.
-// IANA Source File: Lower_Princes
-//  
-func (ameri americaTimeZones) Lower_Princes() string {return "Lower_Princes" }
-
-// Maceio - IANA Time Zone 'Maceio'.
-// IANA Source File: Maceio
-//  
-func (ameri americaTimeZones) Maceio() string {return "Maceio" }
-
-// Managua - IANA Time Zone 'Managua'.
-// IANA Source File: Managua
-//  
-func (ameri americaTimeZones) Managua() string {return "Managua" }
-
-// Manaus - IANA Time Zone 'Manaus'.
-// IANA Source File: Manaus
-//  
-func (ameri americaTimeZones) Manaus() string {return "Manaus" }
-
-// Marigot - IANA Time Zone 'Marigot'.
-// IANA Source File: Marigot
-//  
-func (ameri americaTimeZones) Marigot() string {return "Marigot" }
-
-// Martinique - IANA Time Zone 'Martinique'.
-// IANA Source File: Martinique
-//  
-func (ameri americaTimeZones) Martinique() string {return "Martinique" }
-
-// Matamoros - IANA Time Zone 'Matamoros'.
-// IANA Source File: Matamoros
-//  
-func (ameri americaTimeZones) Matamoros() string {return "Matamoros" }
-
-// Mazatlan - IANA Time Zone 'Mazatlan'.
-// IANA Source File: Mazatlan
-//  
-func (ameri americaTimeZones) Mazatlan() string {return "Mazatlan" }
-
-// Mendoza - IANA Time Zone 'Mendoza'.
-// IANA Source File: Mendoza
-//  
-func (ameri americaTimeZones) Mendoza() string {return "Mendoza" }
-
-// Menominee - IANA Time Zone 'Menominee'.
-// IANA Source File: Menominee
-//  
-func (ameri americaTimeZones) Menominee() string {return "Menominee" }
-
-// Merida - IANA Time Zone 'Merida'.
-// IANA Source File: Merida
-//  
-func (ameri americaTimeZones) Merida() string {return "Merida" }
-
-// Metlakatla - IANA Time Zone 'Metlakatla'.
-// IANA Source File: Metlakatla
-//  
-func (ameri americaTimeZones) Metlakatla() string {return "Metlakatla" }
-
-// Mexico_City - IANA Time Zone 'Mexico_City'.
-// IANA Source File: Mexico_City
-//  
-func (ameri americaTimeZones) Mexico_City() string {return "Mexico_City" }
-
-// Miquelon - IANA Time Zone 'Miquelon'.
-// IANA Source File: Miquelon
-//  
-func (ameri americaTimeZones) Miquelon() string {return "Miquelon" }
-
-// Moncton - IANA Time Zone 'Moncton'.
-// IANA Source File: Moncton
-//  
-func (ameri americaTimeZones) Moncton() string {return "Moncton" }
-
-// Monterrey - IANA Time Zone 'Monterrey'.
-// IANA Source File: Monterrey
-//  
-func (ameri americaTimeZones) Monterrey() string {return "Monterrey" }
-
-// Montevideo - IANA Time Zone 'Montevideo'.
-// IANA Source File: Montevideo
-//  
-func (ameri americaTimeZones) Montevideo() string {return "Montevideo" }
-
-// Montreal - IANA Time Zone 'Montreal'.
-// IANA Source File: Montreal
-//  
-func (ameri americaTimeZones) Montreal() string {return "Montreal" }
-
-// Montserrat - IANA Time Zone 'Montserrat'.
-// IANA Source File: Montserrat
-//  
-func (ameri americaTimeZones) Montserrat() string {return "Montserrat" }
-
-// Nassau - IANA Time Zone 'Nassau'.
-// IANA Source File: Nassau
-//  
-func (ameri americaTimeZones) Nassau() string {return "Nassau" }
-
-// New_York - IANA Time Zone 'New_York'.
-// IANA Source File: New_York
-//  
-func (ameri americaTimeZones) New_York() string {return "New_York" }
-
-// Nipigon - IANA Time Zone 'Nipigon'.
-// IANA Source File: Nipigon
-//  
-func (ameri americaTimeZones) Nipigon() string {return "Nipigon" }
-
-// Nome - IANA Time Zone 'Nome'.
-// IANA Source File: Nome
-//  
-func (ameri americaTimeZones) Nome() string {return "Nome" }
-
-// Noronha - IANA Time Zone 'Noronha'.
-// IANA Source File: Noronha
-//  
-func (ameri americaTimeZones) Noronha() string {return "Noronha" }
-
 // North_Dakota - A place holder which defines a sub-group
 // of IANA Time Zones.
 //  
 func (ameri americaTimeZones) North_Dakota() north_DakotaTimeZones {return "" }
-
-// Ojinaga - IANA Time Zone 'Ojinaga'.
-// IANA Source File: Ojinaga
-//  
-func (ameri americaTimeZones) Ojinaga() string {return "Ojinaga" }
-
-// Panama - IANA Time Zone 'Panama'.
-// IANA Source File: Panama
-//  
-func (ameri americaTimeZones) Panama() string {return "Panama" }
-
-// Pangnirtung - IANA Time Zone 'Pangnirtung'.
-// IANA Source File: Pangnirtung
-//  
-func (ameri americaTimeZones) Pangnirtung() string {return "Pangnirtung" }
-
-// Paramaribo - IANA Time Zone 'Paramaribo'.
-// IANA Source File: Paramaribo
-//  
-func (ameri americaTimeZones) Paramaribo() string {return "Paramaribo" }
-
-// Phoenix - IANA Time Zone 'Phoenix'.
-// IANA Source File: Phoenix
-//  
-func (ameri americaTimeZones) Phoenix() string {return "Phoenix" }
-
-// Port-au-Prince - IANA Time Zone 'Port-au-Prince'.
-// IANA Source File: Port-au-Prince
-//  
-func (ameri americaTimeZones) PortMinusauMinusPrince() string {return "Port-au-Prince" }
-
-// Port_of_Spain - IANA Time Zone 'Port_of_Spain'.
-// IANA Source File: Port_of_Spain
-//  
-func (ameri americaTimeZones) Port_of_Spain() string {return "Port_of_Spain" }
-
-// Porto_Acre - IANA Time Zone 'Porto_Acre'.
-// IANA Source File: Porto_Acre
-//  
-func (ameri americaTimeZones) Porto_Acre() string {return "Porto_Acre" }
-
-// Porto_Velho - IANA Time Zone 'Porto_Velho'.
-// IANA Source File: Porto_Velho
-//  
-func (ameri americaTimeZones) Porto_Velho() string {return "Porto_Velho" }
-
-// Puerto_Rico - IANA Time Zone 'Puerto_Rico'.
-// IANA Source File: Puerto_Rico
-//  
-func (ameri americaTimeZones) Puerto_Rico() string {return "Puerto_Rico" }
-
-// Punta_Arenas - IANA Time Zone 'Punta_Arenas'.
-// IANA Source File: Punta_Arenas
-//  
-func (ameri americaTimeZones) Punta_Arenas() string {return "Punta_Arenas" }
-
-// Rainy_River - IANA Time Zone 'Rainy_River'.
-// IANA Source File: Rainy_River
-//  
-func (ameri americaTimeZones) Rainy_River() string {return "Rainy_River" }
-
-// Rankin_Inlet - IANA Time Zone 'Rankin_Inlet'.
-// IANA Source File: Rankin_Inlet
-//  
-func (ameri americaTimeZones) Rankin_Inlet() string {return "Rankin_Inlet" }
-
-// Recife - IANA Time Zone 'Recife'.
-// IANA Source File: Recife
-//  
-func (ameri americaTimeZones) Recife() string {return "Recife" }
-
-// Regina - IANA Time Zone 'Regina'.
-// IANA Source File: Regina
-//  
-func (ameri americaTimeZones) Regina() string {return "Regina" }
-
-// Resolute - IANA Time Zone 'Resolute'.
-// IANA Source File: Resolute
-//  
-func (ameri americaTimeZones) Resolute() string {return "Resolute" }
-
-// Rio_Branco - IANA Time Zone 'Rio_Branco'.
-// IANA Source File: Rio_Branco
-//  
-func (ameri americaTimeZones) Rio_Branco() string {return "Rio_Branco" }
-
-// Rosario - IANA Time Zone 'Rosario'.
-// IANA Source File: Rosario
-//  
-func (ameri americaTimeZones) Rosario() string {return "Rosario" }
-
-// Santa_Isabel - IANA Time Zone 'Santa_Isabel'.
-// IANA Source File: Santa_Isabel
-//  
-func (ameri americaTimeZones) Santa_Isabel() string {return "Santa_Isabel" }
-
-// Santarem - IANA Time Zone 'Santarem'.
-// IANA Source File: Santarem
-//  
-func (ameri americaTimeZones) Santarem() string {return "Santarem" }
-
-// Santiago - IANA Time Zone 'Santiago'.
-// IANA Source File: Santiago
-//  
-func (ameri americaTimeZones) Santiago() string {return "Santiago" }
-
-// Santo_Domingo - IANA Time Zone 'Santo_Domingo'.
-// IANA Source File: Santo_Domingo
-//  
-func (ameri americaTimeZones) Santo_Domingo() string {return "Santo_Domingo" }
-
-// Sao_Paulo - IANA Time Zone 'Sao_Paulo'.
-// IANA Source File: Sao_Paulo
-//  
-func (ameri americaTimeZones) Sao_Paulo() string {return "Sao_Paulo" }
-
-// Scoresbysund - IANA Time Zone 'Scoresbysund'.
-// IANA Source File: Scoresbysund
-//  
-func (ameri americaTimeZones) Scoresbysund() string {return "Scoresbysund" }
-
-// Shiprock - IANA Time Zone 'Shiprock'.
-// IANA Source File: Shiprock
-//  
-func (ameri americaTimeZones) Shiprock() string {return "Shiprock" }
-
-// Sitka - IANA Time Zone 'Sitka'.
-// IANA Source File: Sitka
-//  
-func (ameri americaTimeZones) Sitka() string {return "Sitka" }
-
-// St_Barthelemy - IANA Time Zone 'St_Barthelemy'.
-// IANA Source File: St_Barthelemy
-//  
-func (ameri americaTimeZones) St_Barthelemy() string {return "St_Barthelemy" }
-
-// St_Johns - IANA Time Zone 'St_Johns'.
-// IANA Source File: St_Johns
-//  
-func (ameri americaTimeZones) St_Johns() string {return "St_Johns" }
-
-// St_Kitts - IANA Time Zone 'St_Kitts'.
-// IANA Source File: St_Kitts
-//  
-func (ameri americaTimeZones) St_Kitts() string {return "St_Kitts" }
-
-// St_Lucia - IANA Time Zone 'St_Lucia'.
-// IANA Source File: St_Lucia
-//  
-func (ameri americaTimeZones) St_Lucia() string {return "St_Lucia" }
-
-// St_Thomas - IANA Time Zone 'St_Thomas'.
-// IANA Source File: St_Thomas
-//  
-func (ameri americaTimeZones) St_Thomas() string {return "St_Thomas" }
-
-// St_Vincent - IANA Time Zone 'St_Vincent'.
-// IANA Source File: St_Vincent
-//  
-func (ameri americaTimeZones) St_Vincent() string {return "St_Vincent" }
-
-// Swift_Current - IANA Time Zone 'Swift_Current'.
-// IANA Source File: Swift_Current
-//  
-func (ameri americaTimeZones) Swift_Current() string {return "Swift_Current" }
-
-// Tegucigalpa - IANA Time Zone 'Tegucigalpa'.
-// IANA Source File: Tegucigalpa
-//  
-func (ameri americaTimeZones) Tegucigalpa() string {return "Tegucigalpa" }
-
-// Thule - IANA Time Zone 'Thule'.
-// IANA Source File: Thule
-//  
-func (ameri americaTimeZones) Thule() string {return "Thule" }
-
-// Thunder_Bay - IANA Time Zone 'Thunder_Bay'.
-// IANA Source File: Thunder_Bay
-//  
-func (ameri americaTimeZones) Thunder_Bay() string {return "Thunder_Bay" }
-
-// Tijuana - IANA Time Zone 'Tijuana'.
-// IANA Source File: Tijuana
-//  
-func (ameri americaTimeZones) Tijuana() string {return "Tijuana" }
-
-// Toronto - IANA Time Zone 'Toronto'.
-// IANA Source File: Toronto
-//  
-func (ameri americaTimeZones) Toronto() string {return "Toronto" }
-
-// Tortola - IANA Time Zone 'Tortola'.
-// IANA Source File: Tortola
-//  
-func (ameri americaTimeZones) Tortola() string {return "Tortola" }
-
-// Vancouver - IANA Time Zone 'Vancouver'.
-// IANA Source File: Vancouver
-//  
-func (ameri americaTimeZones) Vancouver() string {return "Vancouver" }
-
-// Virgin - IANA Time Zone 'Virgin'.
-// IANA Source File: Virgin
-//  
-func (ameri americaTimeZones) Virgin() string {return "Virgin" }
-
-// Whitehorse - IANA Time Zone 'Whitehorse'.
-// IANA Source File: Whitehorse
-//  
-func (ameri americaTimeZones) Whitehorse() string {return "Whitehorse" }
-
-// Winnipeg - IANA Time Zone 'Winnipeg'.
-// IANA Source File: Winnipeg
-//  
-func (ameri americaTimeZones) Winnipeg() string {return "Winnipeg" }
-
-// Yakutat - IANA Time Zone 'Yakutat'.
-// IANA Source File: Yakutat
-//  
-func (ameri americaTimeZones) Yakutat() string {return "Yakutat" }
-
-// Yellowknife - IANA Time Zone 'Yellowknife'.
-// IANA Source File: Yellowknife
-//  
-func (ameri americaTimeZones) Yellowknife() string {return "Yellowknife" }
 
 
 // antarcticaTimeZones - IANA Time Zones for 'Antarctica'.
@@ -1148,65 +1148,65 @@ func (ameri americaTimeZones) Yellowknife() string {return "Yellowknife" }
 //  
 type antarcticaTimeZones string
 
-// Casey - IANA Time Zone 'Casey'.
+// Casey - IANA Time Zone 'Antarctica/Casey'.
 // IANA Source File: Casey
 //  
-func (antar antarcticaTimeZones) Casey() string {return "Casey" }
+func (antar antarcticaTimeZones) Casey() string {return "Antarctica/Casey" }
 
-// Davis - IANA Time Zone 'Davis'.
+// Davis - IANA Time Zone 'Antarctica/Davis'.
 // IANA Source File: Davis
 //  
-func (antar antarcticaTimeZones) Davis() string {return "Davis" }
+func (antar antarcticaTimeZones) Davis() string {return "Antarctica/Davis" }
 
-// DumontDUrville - IANA Time Zone 'DumontDUrville'.
+// DumontDUrville - IANA Time Zone 'Antarctica/DumontDUrville'.
 // IANA Source File: DumontDUrville
 //  
-func (antar antarcticaTimeZones) DumontDUrville() string {return "DumontDUrville" }
+func (antar antarcticaTimeZones) DumontDUrville() string {return "Antarctica/DumontDUrville" }
 
-// Macquarie - IANA Time Zone 'Macquarie'.
+// Macquarie - IANA Time Zone 'Antarctica/Macquarie'.
 // IANA Source File: Macquarie
 //  
-func (antar antarcticaTimeZones) Macquarie() string {return "Macquarie" }
+func (antar antarcticaTimeZones) Macquarie() string {return "Antarctica/Macquarie" }
 
-// Mawson - IANA Time Zone 'Mawson'.
+// Mawson - IANA Time Zone 'Antarctica/Mawson'.
 // IANA Source File: Mawson
 //  
-func (antar antarcticaTimeZones) Mawson() string {return "Mawson" }
+func (antar antarcticaTimeZones) Mawson() string {return "Antarctica/Mawson" }
 
-// McMurdo - IANA Time Zone 'McMurdo'.
+// McMurdo - IANA Time Zone 'Antarctica/McMurdo'.
 // IANA Source File: McMurdo
 //  
-func (antar antarcticaTimeZones) McMurdo() string {return "McMurdo" }
+func (antar antarcticaTimeZones) McMurdo() string {return "Antarctica/McMurdo" }
 
-// Palmer - IANA Time Zone 'Palmer'.
+// Palmer - IANA Time Zone 'Antarctica/Palmer'.
 // IANA Source File: Palmer
 //  
-func (antar antarcticaTimeZones) Palmer() string {return "Palmer" }
+func (antar antarcticaTimeZones) Palmer() string {return "Antarctica/Palmer" }
 
-// Rothera - IANA Time Zone 'Rothera'.
+// Rothera - IANA Time Zone 'Antarctica/Rothera'.
 // IANA Source File: Rothera
 //  
-func (antar antarcticaTimeZones) Rothera() string {return "Rothera" }
+func (antar antarcticaTimeZones) Rothera() string {return "Antarctica/Rothera" }
 
-// South_Pole - IANA Time Zone 'South_Pole'.
+// South_Pole - IANA Time Zone 'Antarctica/South_Pole'.
 // IANA Source File: South_Pole
 //  
-func (antar antarcticaTimeZones) South_Pole() string {return "South_Pole" }
+func (antar antarcticaTimeZones) South_Pole() string {return "Antarctica/South_Pole" }
 
-// Syowa - IANA Time Zone 'Syowa'.
+// Syowa - IANA Time Zone 'Antarctica/Syowa'.
 // IANA Source File: Syowa
 //  
-func (antar antarcticaTimeZones) Syowa() string {return "Syowa" }
+func (antar antarcticaTimeZones) Syowa() string {return "Antarctica/Syowa" }
 
-// Troll - IANA Time Zone 'Troll'.
+// Troll - IANA Time Zone 'Antarctica/Troll'.
 // IANA Source File: Troll
 //  
-func (antar antarcticaTimeZones) Troll() string {return "Troll" }
+func (antar antarcticaTimeZones) Troll() string {return "Antarctica/Troll" }
 
-// Vostok - IANA Time Zone 'Vostok'.
+// Vostok - IANA Time Zone 'Antarctica/Vostok'.
 // IANA Source File: Vostok
 //  
-func (antar antarcticaTimeZones) Vostok() string {return "Vostok" }
+func (antar antarcticaTimeZones) Vostok() string {return "Antarctica/Vostok" }
 
 
 // arcticTimeZones - IANA Time Zones for 'Arctic'.
@@ -1221,10 +1221,10 @@ func (antar antarcticaTimeZones) Vostok() string {return "Vostok" }
 //  
 type arcticTimeZones string
 
-// Longyearbyen - IANA Time Zone 'Longyearbyen'.
+// Longyearbyen - IANA Time Zone 'Arctic/Longyearbyen'.
 // IANA Source File: Longyearbyen
 //  
-func (arcti arcticTimeZones) Longyearbyen() string {return "Longyearbyen" }
+func (arcti arcticTimeZones) Longyearbyen() string {return "Arctic/Longyearbyen" }
 
 
 // asiaTimeZones - IANA Time Zones for 'Asia'.
@@ -1239,500 +1239,500 @@ func (arcti arcticTimeZones) Longyearbyen() string {return "Longyearbyen" }
 //  
 type asiaTimeZones string
 
-// Aden - IANA Time Zone 'Aden'.
+// Aden - IANA Time Zone 'Asia/Aden'.
 // IANA Source File: Aden
 //  
-func (asiaT asiaTimeZones) Aden() string {return "Aden" }
+func (asiaT asiaTimeZones) Aden() string {return "Asia/Aden" }
 
-// Almaty - IANA Time Zone 'Almaty'.
+// Almaty - IANA Time Zone 'Asia/Almaty'.
 // IANA Source File: Almaty
 //  
-func (asiaT asiaTimeZones) Almaty() string {return "Almaty" }
+func (asiaT asiaTimeZones) Almaty() string {return "Asia/Almaty" }
 
-// Amman - IANA Time Zone 'Amman'.
+// Amman - IANA Time Zone 'Asia/Amman'.
 // IANA Source File: Amman
 //  
-func (asiaT asiaTimeZones) Amman() string {return "Amman" }
+func (asiaT asiaTimeZones) Amman() string {return "Asia/Amman" }
 
-// Anadyr - IANA Time Zone 'Anadyr'.
+// Anadyr - IANA Time Zone 'Asia/Anadyr'.
 // IANA Source File: Anadyr
 //  
-func (asiaT asiaTimeZones) Anadyr() string {return "Anadyr" }
+func (asiaT asiaTimeZones) Anadyr() string {return "Asia/Anadyr" }
 
-// Aqtau - IANA Time Zone 'Aqtau'.
+// Aqtau - IANA Time Zone 'Asia/Aqtau'.
 // IANA Source File: Aqtau
 //  
-func (asiaT asiaTimeZones) Aqtau() string {return "Aqtau" }
+func (asiaT asiaTimeZones) Aqtau() string {return "Asia/Aqtau" }
 
-// Aqtobe - IANA Time Zone 'Aqtobe'.
+// Aqtobe - IANA Time Zone 'Asia/Aqtobe'.
 // IANA Source File: Aqtobe
 //  
-func (asiaT asiaTimeZones) Aqtobe() string {return "Aqtobe" }
+func (asiaT asiaTimeZones) Aqtobe() string {return "Asia/Aqtobe" }
 
-// Ashgabat - IANA Time Zone 'Ashgabat'.
+// Ashgabat - IANA Time Zone 'Asia/Ashgabat'.
 // IANA Source File: Ashgabat
 //  
-func (asiaT asiaTimeZones) Ashgabat() string {return "Ashgabat" }
+func (asiaT asiaTimeZones) Ashgabat() string {return "Asia/Ashgabat" }
 
-// Ashkhabad - IANA Time Zone 'Ashkhabad'.
+// Ashkhabad - IANA Time Zone 'Asia/Ashkhabad'.
 // IANA Source File: Ashkhabad
 //  
-func (asiaT asiaTimeZones) Ashkhabad() string {return "Ashkhabad" }
+func (asiaT asiaTimeZones) Ashkhabad() string {return "Asia/Ashkhabad" }
 
-// Atyrau - IANA Time Zone 'Atyrau'.
+// Atyrau - IANA Time Zone 'Asia/Atyrau'.
 // IANA Source File: Atyrau
 //  
-func (asiaT asiaTimeZones) Atyrau() string {return "Atyrau" }
+func (asiaT asiaTimeZones) Atyrau() string {return "Asia/Atyrau" }
 
-// Baghdad - IANA Time Zone 'Baghdad'.
+// Baghdad - IANA Time Zone 'Asia/Baghdad'.
 // IANA Source File: Baghdad
 //  
-func (asiaT asiaTimeZones) Baghdad() string {return "Baghdad" }
+func (asiaT asiaTimeZones) Baghdad() string {return "Asia/Baghdad" }
 
-// Bahrain - IANA Time Zone 'Bahrain'.
+// Bahrain - IANA Time Zone 'Asia/Bahrain'.
 // IANA Source File: Bahrain
 //  
-func (asiaT asiaTimeZones) Bahrain() string {return "Bahrain" }
+func (asiaT asiaTimeZones) Bahrain() string {return "Asia/Bahrain" }
 
-// Baku - IANA Time Zone 'Baku'.
+// Baku - IANA Time Zone 'Asia/Baku'.
 // IANA Source File: Baku
 //  
-func (asiaT asiaTimeZones) Baku() string {return "Baku" }
+func (asiaT asiaTimeZones) Baku() string {return "Asia/Baku" }
 
-// Bangkok - IANA Time Zone 'Bangkok'.
+// Bangkok - IANA Time Zone 'Asia/Bangkok'.
 // IANA Source File: Bangkok
 //  
-func (asiaT asiaTimeZones) Bangkok() string {return "Bangkok" }
+func (asiaT asiaTimeZones) Bangkok() string {return "Asia/Bangkok" }
 
-// Barnaul - IANA Time Zone 'Barnaul'.
+// Barnaul - IANA Time Zone 'Asia/Barnaul'.
 // IANA Source File: Barnaul
 //  
-func (asiaT asiaTimeZones) Barnaul() string {return "Barnaul" }
+func (asiaT asiaTimeZones) Barnaul() string {return "Asia/Barnaul" }
 
-// Beirut - IANA Time Zone 'Beirut'.
+// Beirut - IANA Time Zone 'Asia/Beirut'.
 // IANA Source File: Beirut
 //  
-func (asiaT asiaTimeZones) Beirut() string {return "Beirut" }
+func (asiaT asiaTimeZones) Beirut() string {return "Asia/Beirut" }
 
-// Bishkek - IANA Time Zone 'Bishkek'.
+// Bishkek - IANA Time Zone 'Asia/Bishkek'.
 // IANA Source File: Bishkek
 //  
-func (asiaT asiaTimeZones) Bishkek() string {return "Bishkek" }
+func (asiaT asiaTimeZones) Bishkek() string {return "Asia/Bishkek" }
 
-// Brunei - IANA Time Zone 'Brunei'.
+// Brunei - IANA Time Zone 'Asia/Brunei'.
 // IANA Source File: Brunei
 //  
-func (asiaT asiaTimeZones) Brunei() string {return "Brunei" }
+func (asiaT asiaTimeZones) Brunei() string {return "Asia/Brunei" }
 
-// Calcutta - IANA Time Zone 'Calcutta'.
+// Calcutta - IANA Time Zone 'Asia/Calcutta'.
 // IANA Source File: Calcutta
 //  
-func (asiaT asiaTimeZones) Calcutta() string {return "Calcutta" }
+func (asiaT asiaTimeZones) Calcutta() string {return "Asia/Calcutta" }
 
-// Chita - IANA Time Zone 'Chita'.
+// Chita - IANA Time Zone 'Asia/Chita'.
 // IANA Source File: Chita
 //  
-func (asiaT asiaTimeZones) Chita() string {return "Chita" }
+func (asiaT asiaTimeZones) Chita() string {return "Asia/Chita" }
 
-// Choibalsan - IANA Time Zone 'Choibalsan'.
+// Choibalsan - IANA Time Zone 'Asia/Choibalsan'.
 // IANA Source File: Choibalsan
 //  
-func (asiaT asiaTimeZones) Choibalsan() string {return "Choibalsan" }
+func (asiaT asiaTimeZones) Choibalsan() string {return "Asia/Choibalsan" }
 
-// Chongqing - IANA Time Zone 'Chongqing'.
+// Chongqing - IANA Time Zone 'Asia/Chongqing'.
 // IANA Source File: Chongqing
 //  
-func (asiaT asiaTimeZones) Chongqing() string {return "Chongqing" }
+func (asiaT asiaTimeZones) Chongqing() string {return "Asia/Chongqing" }
 
-// Chungking - IANA Time Zone 'Chungking'.
+// Chungking - IANA Time Zone 'Asia/Chungking'.
 // IANA Source File: Chungking
 //  
-func (asiaT asiaTimeZones) Chungking() string {return "Chungking" }
+func (asiaT asiaTimeZones) Chungking() string {return "Asia/Chungking" }
 
-// Colombo - IANA Time Zone 'Colombo'.
+// Colombo - IANA Time Zone 'Asia/Colombo'.
 // IANA Source File: Colombo
 //  
-func (asiaT asiaTimeZones) Colombo() string {return "Colombo" }
+func (asiaT asiaTimeZones) Colombo() string {return "Asia/Colombo" }
 
-// Dacca - IANA Time Zone 'Dacca'.
+// Dacca - IANA Time Zone 'Asia/Dacca'.
 // IANA Source File: Dacca
 //  
-func (asiaT asiaTimeZones) Dacca() string {return "Dacca" }
+func (asiaT asiaTimeZones) Dacca() string {return "Asia/Dacca" }
 
-// Damascus - IANA Time Zone 'Damascus'.
+// Damascus - IANA Time Zone 'Asia/Damascus'.
 // IANA Source File: Damascus
 //  
-func (asiaT asiaTimeZones) Damascus() string {return "Damascus" }
+func (asiaT asiaTimeZones) Damascus() string {return "Asia/Damascus" }
 
-// Dhaka - IANA Time Zone 'Dhaka'.
+// Dhaka - IANA Time Zone 'Asia/Dhaka'.
 // IANA Source File: Dhaka
 //  
-func (asiaT asiaTimeZones) Dhaka() string {return "Dhaka" }
+func (asiaT asiaTimeZones) Dhaka() string {return "Asia/Dhaka" }
 
-// Dili - IANA Time Zone 'Dili'.
+// Dili - IANA Time Zone 'Asia/Dili'.
 // IANA Source File: Dili
 //  
-func (asiaT asiaTimeZones) Dili() string {return "Dili" }
+func (asiaT asiaTimeZones) Dili() string {return "Asia/Dili" }
 
-// Dubai - IANA Time Zone 'Dubai'.
+// Dubai - IANA Time Zone 'Asia/Dubai'.
 // IANA Source File: Dubai
 //  
-func (asiaT asiaTimeZones) Dubai() string {return "Dubai" }
+func (asiaT asiaTimeZones) Dubai() string {return "Asia/Dubai" }
 
-// Dushanbe - IANA Time Zone 'Dushanbe'.
+// Dushanbe - IANA Time Zone 'Asia/Dushanbe'.
 // IANA Source File: Dushanbe
 //  
-func (asiaT asiaTimeZones) Dushanbe() string {return "Dushanbe" }
+func (asiaT asiaTimeZones) Dushanbe() string {return "Asia/Dushanbe" }
 
-// Famagusta - IANA Time Zone 'Famagusta'.
+// Famagusta - IANA Time Zone 'Asia/Famagusta'.
 // IANA Source File: Famagusta
 //  
-func (asiaT asiaTimeZones) Famagusta() string {return "Famagusta" }
+func (asiaT asiaTimeZones) Famagusta() string {return "Asia/Famagusta" }
 
-// Gaza - IANA Time Zone 'Gaza'.
+// Gaza - IANA Time Zone 'Asia/Gaza'.
 // IANA Source File: Gaza
 //  
-func (asiaT asiaTimeZones) Gaza() string {return "Gaza" }
+func (asiaT asiaTimeZones) Gaza() string {return "Asia/Gaza" }
 
-// Harbin - IANA Time Zone 'Harbin'.
+// Harbin - IANA Time Zone 'Asia/Harbin'.
 // IANA Source File: Harbin
 //  
-func (asiaT asiaTimeZones) Harbin() string {return "Harbin" }
+func (asiaT asiaTimeZones) Harbin() string {return "Asia/Harbin" }
 
-// Hebron - IANA Time Zone 'Hebron'.
+// Hebron - IANA Time Zone 'Asia/Hebron'.
 // IANA Source File: Hebron
 //  
-func (asiaT asiaTimeZones) Hebron() string {return "Hebron" }
+func (asiaT asiaTimeZones) Hebron() string {return "Asia/Hebron" }
 
-// Ho_Chi_Minh - IANA Time Zone 'Ho_Chi_Minh'.
+// Ho_Chi_Minh - IANA Time Zone 'Asia/Ho_Chi_Minh'.
 // IANA Source File: Ho_Chi_Minh
 //  
-func (asiaT asiaTimeZones) Ho_Chi_Minh() string {return "Ho_Chi_Minh" }
+func (asiaT asiaTimeZones) Ho_Chi_Minh() string {return "Asia/Ho_Chi_Minh" }
 
-// Hong_Kong - IANA Time Zone 'Hong_Kong'.
+// Hong_Kong - IANA Time Zone 'Asia/Hong_Kong'.
 // IANA Source File: Hong_Kong
 //  
-func (asiaT asiaTimeZones) Hong_Kong() string {return "Hong_Kong" }
+func (asiaT asiaTimeZones) Hong_Kong() string {return "Asia/Hong_Kong" }
 
-// Hovd - IANA Time Zone 'Hovd'.
+// Hovd - IANA Time Zone 'Asia/Hovd'.
 // IANA Source File: Hovd
 //  
-func (asiaT asiaTimeZones) Hovd() string {return "Hovd" }
+func (asiaT asiaTimeZones) Hovd() string {return "Asia/Hovd" }
 
-// Irkutsk - IANA Time Zone 'Irkutsk'.
+// Irkutsk - IANA Time Zone 'Asia/Irkutsk'.
 // IANA Source File: Irkutsk
 //  
-func (asiaT asiaTimeZones) Irkutsk() string {return "Irkutsk" }
+func (asiaT asiaTimeZones) Irkutsk() string {return "Asia/Irkutsk" }
 
-// Istanbul - IANA Time Zone 'Istanbul'.
+// Istanbul - IANA Time Zone 'Asia/Istanbul'.
 // IANA Source File: Istanbul
 //  
-func (asiaT asiaTimeZones) Istanbul() string {return "Istanbul" }
+func (asiaT asiaTimeZones) Istanbul() string {return "Asia/Istanbul" }
 
-// Jakarta - IANA Time Zone 'Jakarta'.
+// Jakarta - IANA Time Zone 'Asia/Jakarta'.
 // IANA Source File: Jakarta
 //  
-func (asiaT asiaTimeZones) Jakarta() string {return "Jakarta" }
+func (asiaT asiaTimeZones) Jakarta() string {return "Asia/Jakarta" }
 
-// Jayapura - IANA Time Zone 'Jayapura'.
+// Jayapura - IANA Time Zone 'Asia/Jayapura'.
 // IANA Source File: Jayapura
 //  
-func (asiaT asiaTimeZones) Jayapura() string {return "Jayapura" }
+func (asiaT asiaTimeZones) Jayapura() string {return "Asia/Jayapura" }
 
-// Jerusalem - IANA Time Zone 'Jerusalem'.
+// Jerusalem - IANA Time Zone 'Asia/Jerusalem'.
 // IANA Source File: Jerusalem
 //  
-func (asiaT asiaTimeZones) Jerusalem() string {return "Jerusalem" }
+func (asiaT asiaTimeZones) Jerusalem() string {return "Asia/Jerusalem" }
 
-// Kabul - IANA Time Zone 'Kabul'.
+// Kabul - IANA Time Zone 'Asia/Kabul'.
 // IANA Source File: Kabul
 //  
-func (asiaT asiaTimeZones) Kabul() string {return "Kabul" }
+func (asiaT asiaTimeZones) Kabul() string {return "Asia/Kabul" }
 
-// Kamchatka - IANA Time Zone 'Kamchatka'.
+// Kamchatka - IANA Time Zone 'Asia/Kamchatka'.
 // IANA Source File: Kamchatka
 //  
-func (asiaT asiaTimeZones) Kamchatka() string {return "Kamchatka" }
+func (asiaT asiaTimeZones) Kamchatka() string {return "Asia/Kamchatka" }
 
-// Karachi - IANA Time Zone 'Karachi'.
+// Karachi - IANA Time Zone 'Asia/Karachi'.
 // IANA Source File: Karachi
 //  
-func (asiaT asiaTimeZones) Karachi() string {return "Karachi" }
+func (asiaT asiaTimeZones) Karachi() string {return "Asia/Karachi" }
 
-// Kashgar - IANA Time Zone 'Kashgar'.
+// Kashgar - IANA Time Zone 'Asia/Kashgar'.
 // IANA Source File: Kashgar
 //  
-func (asiaT asiaTimeZones) Kashgar() string {return "Kashgar" }
+func (asiaT asiaTimeZones) Kashgar() string {return "Asia/Kashgar" }
 
-// Kathmandu - IANA Time Zone 'Kathmandu'.
+// Kathmandu - IANA Time Zone 'Asia/Kathmandu'.
 // IANA Source File: Kathmandu
 //  
-func (asiaT asiaTimeZones) Kathmandu() string {return "Kathmandu" }
+func (asiaT asiaTimeZones) Kathmandu() string {return "Asia/Kathmandu" }
 
-// Katmandu - IANA Time Zone 'Katmandu'.
+// Katmandu - IANA Time Zone 'Asia/Katmandu'.
 // IANA Source File: Katmandu
 //  
-func (asiaT asiaTimeZones) Katmandu() string {return "Katmandu" }
+func (asiaT asiaTimeZones) Katmandu() string {return "Asia/Katmandu" }
 
-// Khandyga - IANA Time Zone 'Khandyga'.
+// Khandyga - IANA Time Zone 'Asia/Khandyga'.
 // IANA Source File: Khandyga
 //  
-func (asiaT asiaTimeZones) Khandyga() string {return "Khandyga" }
+func (asiaT asiaTimeZones) Khandyga() string {return "Asia/Khandyga" }
 
-// Kolkata - IANA Time Zone 'Kolkata'.
+// Kolkata - IANA Time Zone 'Asia/Kolkata'.
 // IANA Source File: Kolkata
 //  
-func (asiaT asiaTimeZones) Kolkata() string {return "Kolkata" }
+func (asiaT asiaTimeZones) Kolkata() string {return "Asia/Kolkata" }
 
-// Krasnoyarsk - IANA Time Zone 'Krasnoyarsk'.
+// Krasnoyarsk - IANA Time Zone 'Asia/Krasnoyarsk'.
 // IANA Source File: Krasnoyarsk
 //  
-func (asiaT asiaTimeZones) Krasnoyarsk() string {return "Krasnoyarsk" }
+func (asiaT asiaTimeZones) Krasnoyarsk() string {return "Asia/Krasnoyarsk" }
 
-// Kuala_Lumpur - IANA Time Zone 'Kuala_Lumpur'.
+// Kuala_Lumpur - IANA Time Zone 'Asia/Kuala_Lumpur'.
 // IANA Source File: Kuala_Lumpur
 //  
-func (asiaT asiaTimeZones) Kuala_Lumpur() string {return "Kuala_Lumpur" }
+func (asiaT asiaTimeZones) Kuala_Lumpur() string {return "Asia/Kuala_Lumpur" }
 
-// Kuching - IANA Time Zone 'Kuching'.
+// Kuching - IANA Time Zone 'Asia/Kuching'.
 // IANA Source File: Kuching
 //  
-func (asiaT asiaTimeZones) Kuching() string {return "Kuching" }
+func (asiaT asiaTimeZones) Kuching() string {return "Asia/Kuching" }
 
-// Kuwait - IANA Time Zone 'Kuwait'.
+// Kuwait - IANA Time Zone 'Asia/Kuwait'.
 // IANA Source File: Kuwait
 //  
-func (asiaT asiaTimeZones) Kuwait() string {return "Kuwait" }
+func (asiaT asiaTimeZones) Kuwait() string {return "Asia/Kuwait" }
 
-// Macao - IANA Time Zone 'Macao'.
+// Macao - IANA Time Zone 'Asia/Macao'.
 // IANA Source File: Macao
 //  
-func (asiaT asiaTimeZones) Macao() string {return "Macao" }
+func (asiaT asiaTimeZones) Macao() string {return "Asia/Macao" }
 
-// Macau - IANA Time Zone 'Macau'.
+// Macau - IANA Time Zone 'Asia/Macau'.
 // IANA Source File: Macau
 //  
-func (asiaT asiaTimeZones) Macau() string {return "Macau" }
+func (asiaT asiaTimeZones) Macau() string {return "Asia/Macau" }
 
-// Magadan - IANA Time Zone 'Magadan'.
+// Magadan - IANA Time Zone 'Asia/Magadan'.
 // IANA Source File: Magadan
 //  
-func (asiaT asiaTimeZones) Magadan() string {return "Magadan" }
+func (asiaT asiaTimeZones) Magadan() string {return "Asia/Magadan" }
 
-// Makassar - IANA Time Zone 'Makassar'.
+// Makassar - IANA Time Zone 'Asia/Makassar'.
 // IANA Source File: Makassar
 //  
-func (asiaT asiaTimeZones) Makassar() string {return "Makassar" }
+func (asiaT asiaTimeZones) Makassar() string {return "Asia/Makassar" }
 
-// Manila - IANA Time Zone 'Manila'.
+// Manila - IANA Time Zone 'Asia/Manila'.
 // IANA Source File: Manila
 //  
-func (asiaT asiaTimeZones) Manila() string {return "Manila" }
+func (asiaT asiaTimeZones) Manila() string {return "Asia/Manila" }
 
-// Muscat - IANA Time Zone 'Muscat'.
+// Muscat - IANA Time Zone 'Asia/Muscat'.
 // IANA Source File: Muscat
 //  
-func (asiaT asiaTimeZones) Muscat() string {return "Muscat" }
+func (asiaT asiaTimeZones) Muscat() string {return "Asia/Muscat" }
 
-// Nicosia - IANA Time Zone 'Nicosia'.
+// Nicosia - IANA Time Zone 'Asia/Nicosia'.
 // IANA Source File: Nicosia
 //  
-func (asiaT asiaTimeZones) Nicosia() string {return "Nicosia" }
+func (asiaT asiaTimeZones) Nicosia() string {return "Asia/Nicosia" }
 
-// Novokuznetsk - IANA Time Zone 'Novokuznetsk'.
+// Novokuznetsk - IANA Time Zone 'Asia/Novokuznetsk'.
 // IANA Source File: Novokuznetsk
 //  
-func (asiaT asiaTimeZones) Novokuznetsk() string {return "Novokuznetsk" }
+func (asiaT asiaTimeZones) Novokuznetsk() string {return "Asia/Novokuznetsk" }
 
-// Novosibirsk - IANA Time Zone 'Novosibirsk'.
+// Novosibirsk - IANA Time Zone 'Asia/Novosibirsk'.
 // IANA Source File: Novosibirsk
 //  
-func (asiaT asiaTimeZones) Novosibirsk() string {return "Novosibirsk" }
+func (asiaT asiaTimeZones) Novosibirsk() string {return "Asia/Novosibirsk" }
 
-// Omsk - IANA Time Zone 'Omsk'.
+// Omsk - IANA Time Zone 'Asia/Omsk'.
 // IANA Source File: Omsk
 //  
-func (asiaT asiaTimeZones) Omsk() string {return "Omsk" }
+func (asiaT asiaTimeZones) Omsk() string {return "Asia/Omsk" }
 
-// Oral - IANA Time Zone 'Oral'.
+// Oral - IANA Time Zone 'Asia/Oral'.
 // IANA Source File: Oral
 //  
-func (asiaT asiaTimeZones) Oral() string {return "Oral" }
+func (asiaT asiaTimeZones) Oral() string {return "Asia/Oral" }
 
-// Phnom_Penh - IANA Time Zone 'Phnom_Penh'.
+// Phnom_Penh - IANA Time Zone 'Asia/Phnom_Penh'.
 // IANA Source File: Phnom_Penh
 //  
-func (asiaT asiaTimeZones) Phnom_Penh() string {return "Phnom_Penh" }
+func (asiaT asiaTimeZones) Phnom_Penh() string {return "Asia/Phnom_Penh" }
 
-// Pontianak - IANA Time Zone 'Pontianak'.
+// Pontianak - IANA Time Zone 'Asia/Pontianak'.
 // IANA Source File: Pontianak
 //  
-func (asiaT asiaTimeZones) Pontianak() string {return "Pontianak" }
+func (asiaT asiaTimeZones) Pontianak() string {return "Asia/Pontianak" }
 
-// Pyongyang - IANA Time Zone 'Pyongyang'.
+// Pyongyang - IANA Time Zone 'Asia/Pyongyang'.
 // IANA Source File: Pyongyang
 //  
-func (asiaT asiaTimeZones) Pyongyang() string {return "Pyongyang" }
+func (asiaT asiaTimeZones) Pyongyang() string {return "Asia/Pyongyang" }
 
-// Qatar - IANA Time Zone 'Qatar'.
+// Qatar - IANA Time Zone 'Asia/Qatar'.
 // IANA Source File: Qatar
 //  
-func (asiaT asiaTimeZones) Qatar() string {return "Qatar" }
+func (asiaT asiaTimeZones) Qatar() string {return "Asia/Qatar" }
 
-// Qostanay - IANA Time Zone 'Qostanay'.
+// Qostanay - IANA Time Zone 'Asia/Qostanay'.
 // IANA Source File: Qostanay
 //  
-func (asiaT asiaTimeZones) Qostanay() string {return "Qostanay" }
+func (asiaT asiaTimeZones) Qostanay() string {return "Asia/Qostanay" }
 
-// Qyzylorda - IANA Time Zone 'Qyzylorda'.
+// Qyzylorda - IANA Time Zone 'Asia/Qyzylorda'.
 // IANA Source File: Qyzylorda
 //  
-func (asiaT asiaTimeZones) Qyzylorda() string {return "Qyzylorda" }
+func (asiaT asiaTimeZones) Qyzylorda() string {return "Asia/Qyzylorda" }
 
-// Rangoon - IANA Time Zone 'Rangoon'.
+// Rangoon - IANA Time Zone 'Asia/Rangoon'.
 // IANA Source File: Rangoon
 //  
-func (asiaT asiaTimeZones) Rangoon() string {return "Rangoon" }
+func (asiaT asiaTimeZones) Rangoon() string {return "Asia/Rangoon" }
 
-// Riyadh - IANA Time Zone 'Riyadh'.
+// Riyadh - IANA Time Zone 'Asia/Riyadh'.
 // IANA Source File: Riyadh
 //  
-func (asiaT asiaTimeZones) Riyadh() string {return "Riyadh" }
+func (asiaT asiaTimeZones) Riyadh() string {return "Asia/Riyadh" }
 
-// Saigon - IANA Time Zone 'Saigon'.
+// Saigon - IANA Time Zone 'Asia/Saigon'.
 // IANA Source File: Saigon
 //  
-func (asiaT asiaTimeZones) Saigon() string {return "Saigon" }
+func (asiaT asiaTimeZones) Saigon() string {return "Asia/Saigon" }
 
-// Sakhalin - IANA Time Zone 'Sakhalin'.
+// Sakhalin - IANA Time Zone 'Asia/Sakhalin'.
 // IANA Source File: Sakhalin
 //  
-func (asiaT asiaTimeZones) Sakhalin() string {return "Sakhalin" }
+func (asiaT asiaTimeZones) Sakhalin() string {return "Asia/Sakhalin" }
 
-// Samarkand - IANA Time Zone 'Samarkand'.
+// Samarkand - IANA Time Zone 'Asia/Samarkand'.
 // IANA Source File: Samarkand
 //  
-func (asiaT asiaTimeZones) Samarkand() string {return "Samarkand" }
+func (asiaT asiaTimeZones) Samarkand() string {return "Asia/Samarkand" }
 
-// Seoul - IANA Time Zone 'Seoul'.
+// Seoul - IANA Time Zone 'Asia/Seoul'.
 // IANA Source File: Seoul
 //  
-func (asiaT asiaTimeZones) Seoul() string {return "Seoul" }
+func (asiaT asiaTimeZones) Seoul() string {return "Asia/Seoul" }
 
-// Shanghai - IANA Time Zone 'Shanghai'.
+// Shanghai - IANA Time Zone 'Asia/Shanghai'.
 // IANA Source File: Shanghai
 //  
-func (asiaT asiaTimeZones) Shanghai() string {return "Shanghai" }
+func (asiaT asiaTimeZones) Shanghai() string {return "Asia/Shanghai" }
 
-// Singapore - IANA Time Zone 'Singapore'.
+// Singapore - IANA Time Zone 'Asia/Singapore'.
 // IANA Source File: Singapore
 //  
-func (asiaT asiaTimeZones) Singapore() string {return "Singapore" }
+func (asiaT asiaTimeZones) Singapore() string {return "Asia/Singapore" }
 
-// Srednekolymsk - IANA Time Zone 'Srednekolymsk'.
+// Srednekolymsk - IANA Time Zone 'Asia/Srednekolymsk'.
 // IANA Source File: Srednekolymsk
 //  
-func (asiaT asiaTimeZones) Srednekolymsk() string {return "Srednekolymsk" }
+func (asiaT asiaTimeZones) Srednekolymsk() string {return "Asia/Srednekolymsk" }
 
-// Taipei - IANA Time Zone 'Taipei'.
+// Taipei - IANA Time Zone 'Asia/Taipei'.
 // IANA Source File: Taipei
 //  
-func (asiaT asiaTimeZones) Taipei() string {return "Taipei" }
+func (asiaT asiaTimeZones) Taipei() string {return "Asia/Taipei" }
 
-// Tashkent - IANA Time Zone 'Tashkent'.
+// Tashkent - IANA Time Zone 'Asia/Tashkent'.
 // IANA Source File: Tashkent
 //  
-func (asiaT asiaTimeZones) Tashkent() string {return "Tashkent" }
+func (asiaT asiaTimeZones) Tashkent() string {return "Asia/Tashkent" }
 
-// Tbilisi - IANA Time Zone 'Tbilisi'.
+// Tbilisi - IANA Time Zone 'Asia/Tbilisi'.
 // IANA Source File: Tbilisi
 //  
-func (asiaT asiaTimeZones) Tbilisi() string {return "Tbilisi" }
+func (asiaT asiaTimeZones) Tbilisi() string {return "Asia/Tbilisi" }
 
-// Tehran - IANA Time Zone 'Tehran'.
+// Tehran - IANA Time Zone 'Asia/Tehran'.
 // IANA Source File: Tehran
 //  
-func (asiaT asiaTimeZones) Tehran() string {return "Tehran" }
+func (asiaT asiaTimeZones) Tehran() string {return "Asia/Tehran" }
 
-// Tel_Aviv - IANA Time Zone 'Tel_Aviv'.
+// Tel_Aviv - IANA Time Zone 'Asia/Tel_Aviv'.
 // IANA Source File: Tel_Aviv
 //  
-func (asiaT asiaTimeZones) Tel_Aviv() string {return "Tel_Aviv" }
+func (asiaT asiaTimeZones) Tel_Aviv() string {return "Asia/Tel_Aviv" }
 
-// Thimbu - IANA Time Zone 'Thimbu'.
+// Thimbu - IANA Time Zone 'Asia/Thimbu'.
 // IANA Source File: Thimbu
 //  
-func (asiaT asiaTimeZones) Thimbu() string {return "Thimbu" }
+func (asiaT asiaTimeZones) Thimbu() string {return "Asia/Thimbu" }
 
-// Thimphu - IANA Time Zone 'Thimphu'.
+// Thimphu - IANA Time Zone 'Asia/Thimphu'.
 // IANA Source File: Thimphu
 //  
-func (asiaT asiaTimeZones) Thimphu() string {return "Thimphu" }
+func (asiaT asiaTimeZones) Thimphu() string {return "Asia/Thimphu" }
 
-// Tokyo - IANA Time Zone 'Tokyo'.
+// Tokyo - IANA Time Zone 'Asia/Tokyo'.
 // IANA Source File: Tokyo
 //  
-func (asiaT asiaTimeZones) Tokyo() string {return "Tokyo" }
+func (asiaT asiaTimeZones) Tokyo() string {return "Asia/Tokyo" }
 
-// Tomsk - IANA Time Zone 'Tomsk'.
+// Tomsk - IANA Time Zone 'Asia/Tomsk'.
 // IANA Source File: Tomsk
 //  
-func (asiaT asiaTimeZones) Tomsk() string {return "Tomsk" }
+func (asiaT asiaTimeZones) Tomsk() string {return "Asia/Tomsk" }
 
-// Ujung_Pandang - IANA Time Zone 'Ujung_Pandang'.
+// Ujung_Pandang - IANA Time Zone 'Asia/Ujung_Pandang'.
 // IANA Source File: Ujung_Pandang
 //  
-func (asiaT asiaTimeZones) Ujung_Pandang() string {return "Ujung_Pandang" }
+func (asiaT asiaTimeZones) Ujung_Pandang() string {return "Asia/Ujung_Pandang" }
 
-// Ulaanbaatar - IANA Time Zone 'Ulaanbaatar'.
+// Ulaanbaatar - IANA Time Zone 'Asia/Ulaanbaatar'.
 // IANA Source File: Ulaanbaatar
 //  
-func (asiaT asiaTimeZones) Ulaanbaatar() string {return "Ulaanbaatar" }
+func (asiaT asiaTimeZones) Ulaanbaatar() string {return "Asia/Ulaanbaatar" }
 
-// Ulan_Bator - IANA Time Zone 'Ulan_Bator'.
+// Ulan_Bator - IANA Time Zone 'Asia/Ulan_Bator'.
 // IANA Source File: Ulan_Bator
 //  
-func (asiaT asiaTimeZones) Ulan_Bator() string {return "Ulan_Bator" }
+func (asiaT asiaTimeZones) Ulan_Bator() string {return "Asia/Ulan_Bator" }
 
-// Urumqi - IANA Time Zone 'Urumqi'.
+// Urumqi - IANA Time Zone 'Asia/Urumqi'.
 // IANA Source File: Urumqi
 //  
-func (asiaT asiaTimeZones) Urumqi() string {return "Urumqi" }
+func (asiaT asiaTimeZones) Urumqi() string {return "Asia/Urumqi" }
 
-// Ust-Nera - IANA Time Zone 'Ust-Nera'.
+// Ust-Nera - IANA Time Zone 'Asia/Ust-Nera'.
 // IANA Source File: Ust-Nera
 //  
-func (asiaT asiaTimeZones) UstMinusNera() string {return "Ust-Nera" }
+func (asiaT asiaTimeZones) UstMinusNera() string {return "Asia/Ust-Nera" }
 
-// Vientiane - IANA Time Zone 'Vientiane'.
+// Vientiane - IANA Time Zone 'Asia/Vientiane'.
 // IANA Source File: Vientiane
 //  
-func (asiaT asiaTimeZones) Vientiane() string {return "Vientiane" }
+func (asiaT asiaTimeZones) Vientiane() string {return "Asia/Vientiane" }
 
-// Vladivostok - IANA Time Zone 'Vladivostok'.
+// Vladivostok - IANA Time Zone 'Asia/Vladivostok'.
 // IANA Source File: Vladivostok
 //  
-func (asiaT asiaTimeZones) Vladivostok() string {return "Vladivostok" }
+func (asiaT asiaTimeZones) Vladivostok() string {return "Asia/Vladivostok" }
 
-// Yakutsk - IANA Time Zone 'Yakutsk'.
+// Yakutsk - IANA Time Zone 'Asia/Yakutsk'.
 // IANA Source File: Yakutsk
 //  
-func (asiaT asiaTimeZones) Yakutsk() string {return "Yakutsk" }
+func (asiaT asiaTimeZones) Yakutsk() string {return "Asia/Yakutsk" }
 
-// Yangon - IANA Time Zone 'Yangon'.
+// Yangon - IANA Time Zone 'Asia/Yangon'.
 // IANA Source File: Yangon
 //  
-func (asiaT asiaTimeZones) Yangon() string {return "Yangon" }
+func (asiaT asiaTimeZones) Yangon() string {return "Asia/Yangon" }
 
-// Yekaterinburg - IANA Time Zone 'Yekaterinburg'.
+// Yekaterinburg - IANA Time Zone 'Asia/Yekaterinburg'.
 // IANA Source File: Yekaterinburg
 //  
-func (asiaT asiaTimeZones) Yekaterinburg() string {return "Yekaterinburg" }
+func (asiaT asiaTimeZones) Yekaterinburg() string {return "Asia/Yekaterinburg" }
 
-// Yerevan - IANA Time Zone 'Yerevan'.
+// Yerevan - IANA Time Zone 'Asia/Yerevan'.
 // IANA Source File: Yerevan
 //  
-func (asiaT asiaTimeZones) Yerevan() string {return "Yerevan" }
+func (asiaT asiaTimeZones) Yerevan() string {return "Asia/Yerevan" }
 
 
 // atlanticTimeZones - IANA Time Zones for 'Atlantic'.
@@ -1747,65 +1747,65 @@ func (asiaT asiaTimeZones) Yerevan() string {return "Yerevan" }
 //  
 type atlanticTimeZones string
 
-// Azores - IANA Time Zone 'Azores'.
+// Azores - IANA Time Zone 'Atlantic/Azores'.
 // IANA Source File: Azores
 //  
-func (atlan atlanticTimeZones) Azores() string {return "Azores" }
+func (atlan atlanticTimeZones) Azores() string {return "Atlantic/Azores" }
 
-// Bermuda - IANA Time Zone 'Bermuda'.
+// Bermuda - IANA Time Zone 'Atlantic/Bermuda'.
 // IANA Source File: Bermuda
 //  
-func (atlan atlanticTimeZones) Bermuda() string {return "Bermuda" }
+func (atlan atlanticTimeZones) Bermuda() string {return "Atlantic/Bermuda" }
 
-// Canary - IANA Time Zone 'Canary'.
+// Canary - IANA Time Zone 'Atlantic/Canary'.
 // IANA Source File: Canary
 //  
-func (atlan atlanticTimeZones) Canary() string {return "Canary" }
+func (atlan atlanticTimeZones) Canary() string {return "Atlantic/Canary" }
 
-// Cape_Verde - IANA Time Zone 'Cape_Verde'.
+// Cape_Verde - IANA Time Zone 'Atlantic/Cape_Verde'.
 // IANA Source File: Cape_Verde
 //  
-func (atlan atlanticTimeZones) Cape_Verde() string {return "Cape_Verde" }
+func (atlan atlanticTimeZones) Cape_Verde() string {return "Atlantic/Cape_Verde" }
 
-// Faeroe - IANA Time Zone 'Faeroe'.
+// Faeroe - IANA Time Zone 'Atlantic/Faeroe'.
 // IANA Source File: Faeroe
 //  
-func (atlan atlanticTimeZones) Faeroe() string {return "Faeroe" }
+func (atlan atlanticTimeZones) Faeroe() string {return "Atlantic/Faeroe" }
 
-// Faroe - IANA Time Zone 'Faroe'.
+// Faroe - IANA Time Zone 'Atlantic/Faroe'.
 // IANA Source File: Faroe
 //  
-func (atlan atlanticTimeZones) Faroe() string {return "Faroe" }
+func (atlan atlanticTimeZones) Faroe() string {return "Atlantic/Faroe" }
 
-// Jan_Mayen - IANA Time Zone 'Jan_Mayen'.
+// Jan_Mayen - IANA Time Zone 'Atlantic/Jan_Mayen'.
 // IANA Source File: Jan_Mayen
 //  
-func (atlan atlanticTimeZones) Jan_Mayen() string {return "Jan_Mayen" }
+func (atlan atlanticTimeZones) Jan_Mayen() string {return "Atlantic/Jan_Mayen" }
 
-// Madeira - IANA Time Zone 'Madeira'.
+// Madeira - IANA Time Zone 'Atlantic/Madeira'.
 // IANA Source File: Madeira
 //  
-func (atlan atlanticTimeZones) Madeira() string {return "Madeira" }
+func (atlan atlanticTimeZones) Madeira() string {return "Atlantic/Madeira" }
 
-// Reykjavik - IANA Time Zone 'Reykjavik'.
+// Reykjavik - IANA Time Zone 'Atlantic/Reykjavik'.
 // IANA Source File: Reykjavik
 //  
-func (atlan atlanticTimeZones) Reykjavik() string {return "Reykjavik" }
+func (atlan atlanticTimeZones) Reykjavik() string {return "Atlantic/Reykjavik" }
 
-// South_Georgia - IANA Time Zone 'South_Georgia'.
+// South_Georgia - IANA Time Zone 'Atlantic/South_Georgia'.
 // IANA Source File: South_Georgia
 //  
-func (atlan atlanticTimeZones) South_Georgia() string {return "South_Georgia" }
+func (atlan atlanticTimeZones) South_Georgia() string {return "Atlantic/South_Georgia" }
 
-// St_Helena - IANA Time Zone 'St_Helena'.
+// St_Helena - IANA Time Zone 'Atlantic/St_Helena'.
 // IANA Source File: St_Helena
 //  
-func (atlan atlanticTimeZones) St_Helena() string {return "St_Helena" }
+func (atlan atlanticTimeZones) St_Helena() string {return "Atlantic/St_Helena" }
 
-// Stanley - IANA Time Zone 'Stanley'.
+// Stanley - IANA Time Zone 'Atlantic/Stanley'.
 // IANA Source File: Stanley
 //  
-func (atlan atlanticTimeZones) Stanley() string {return "Stanley" }
+func (atlan atlanticTimeZones) Stanley() string {return "Atlantic/Stanley" }
 
 
 // australiaTimeZones - IANA Time Zones for 'Australia'.
@@ -1820,120 +1820,120 @@ func (atlan atlanticTimeZones) Stanley() string {return "Stanley" }
 //  
 type australiaTimeZones string
 
-// ACT - IANA Time Zone 'ACT'.
+// ACT - IANA Time Zone 'Australia/ACT'.
 // IANA Source File: ACT
 //  
-func (austr australiaTimeZones) ACT() string {return "ACT" }
+func (austr australiaTimeZones) ACT() string {return "Australia/ACT" }
 
-// Adelaide - IANA Time Zone 'Adelaide'.
+// Adelaide - IANA Time Zone 'Australia/Adelaide'.
 // IANA Source File: Adelaide
 //  
-func (austr australiaTimeZones) Adelaide() string {return "Adelaide" }
+func (austr australiaTimeZones) Adelaide() string {return "Australia/Adelaide" }
 
-// Brisbane - IANA Time Zone 'Brisbane'.
+// Brisbane - IANA Time Zone 'Australia/Brisbane'.
 // IANA Source File: Brisbane
 //  
-func (austr australiaTimeZones) Brisbane() string {return "Brisbane" }
+func (austr australiaTimeZones) Brisbane() string {return "Australia/Brisbane" }
 
-// Broken_Hill - IANA Time Zone 'Broken_Hill'.
+// Broken_Hill - IANA Time Zone 'Australia/Broken_Hill'.
 // IANA Source File: Broken_Hill
 //  
-func (austr australiaTimeZones) Broken_Hill() string {return "Broken_Hill" }
+func (austr australiaTimeZones) Broken_Hill() string {return "Australia/Broken_Hill" }
 
-// Canberra - IANA Time Zone 'Canberra'.
+// Canberra - IANA Time Zone 'Australia/Canberra'.
 // IANA Source File: Canberra
 //  
-func (austr australiaTimeZones) Canberra() string {return "Canberra" }
+func (austr australiaTimeZones) Canberra() string {return "Australia/Canberra" }
 
-// Currie - IANA Time Zone 'Currie'.
+// Currie - IANA Time Zone 'Australia/Currie'.
 // IANA Source File: Currie
 //  
-func (austr australiaTimeZones) Currie() string {return "Currie" }
+func (austr australiaTimeZones) Currie() string {return "Australia/Currie" }
 
-// Darwin - IANA Time Zone 'Darwin'.
+// Darwin - IANA Time Zone 'Australia/Darwin'.
 // IANA Source File: Darwin
 //  
-func (austr australiaTimeZones) Darwin() string {return "Darwin" }
+func (austr australiaTimeZones) Darwin() string {return "Australia/Darwin" }
 
-// Eucla - IANA Time Zone 'Eucla'.
+// Eucla - IANA Time Zone 'Australia/Eucla'.
 // IANA Source File: Eucla
 //  
-func (austr australiaTimeZones) Eucla() string {return "Eucla" }
+func (austr australiaTimeZones) Eucla() string {return "Australia/Eucla" }
 
-// Hobart - IANA Time Zone 'Hobart'.
+// Hobart - IANA Time Zone 'Australia/Hobart'.
 // IANA Source File: Hobart
 //  
-func (austr australiaTimeZones) Hobart() string {return "Hobart" }
+func (austr australiaTimeZones) Hobart() string {return "Australia/Hobart" }
 
-// LHI - IANA Time Zone 'LHI'.
+// LHI - IANA Time Zone 'Australia/LHI'.
 // IANA Source File: LHI
 //  
-func (austr australiaTimeZones) LHI() string {return "LHI" }
+func (austr australiaTimeZones) LHI() string {return "Australia/LHI" }
 
-// Lindeman - IANA Time Zone 'Lindeman'.
+// Lindeman - IANA Time Zone 'Australia/Lindeman'.
 // IANA Source File: Lindeman
 //  
-func (austr australiaTimeZones) Lindeman() string {return "Lindeman" }
+func (austr australiaTimeZones) Lindeman() string {return "Australia/Lindeman" }
 
-// Lord_Howe - IANA Time Zone 'Lord_Howe'.
+// Lord_Howe - IANA Time Zone 'Australia/Lord_Howe'.
 // IANA Source File: Lord_Howe
 //  
-func (austr australiaTimeZones) Lord_Howe() string {return "Lord_Howe" }
+func (austr australiaTimeZones) Lord_Howe() string {return "Australia/Lord_Howe" }
 
-// Melbourne - IANA Time Zone 'Melbourne'.
+// Melbourne - IANA Time Zone 'Australia/Melbourne'.
 // IANA Source File: Melbourne
 //  
-func (austr australiaTimeZones) Melbourne() string {return "Melbourne" }
+func (austr australiaTimeZones) Melbourne() string {return "Australia/Melbourne" }
 
-// North - IANA Time Zone 'North'.
+// North - IANA Time Zone 'Australia/North'.
 // IANA Source File: North
 //  
-func (austr australiaTimeZones) North() string {return "North" }
+func (austr australiaTimeZones) North() string {return "Australia/North" }
 
-// NSW - IANA Time Zone 'NSW'.
+// NSW - IANA Time Zone 'Australia/NSW'.
 // IANA Source File: NSW
 //  
-func (austr australiaTimeZones) NSW() string {return "NSW" }
+func (austr australiaTimeZones) NSW() string {return "Australia/NSW" }
 
-// Perth - IANA Time Zone 'Perth'.
+// Perth - IANA Time Zone 'Australia/Perth'.
 // IANA Source File: Perth
 //  
-func (austr australiaTimeZones) Perth() string {return "Perth" }
+func (austr australiaTimeZones) Perth() string {return "Australia/Perth" }
 
-// Queensland - IANA Time Zone 'Queensland'.
+// Queensland - IANA Time Zone 'Australia/Queensland'.
 // IANA Source File: Queensland
 //  
-func (austr australiaTimeZones) Queensland() string {return "Queensland" }
+func (austr australiaTimeZones) Queensland() string {return "Australia/Queensland" }
 
-// South - IANA Time Zone 'South'.
+// South - IANA Time Zone 'Australia/South'.
 // IANA Source File: South
 //  
-func (austr australiaTimeZones) South() string {return "South" }
+func (austr australiaTimeZones) South() string {return "Australia/South" }
 
-// Sydney - IANA Time Zone 'Sydney'.
+// Sydney - IANA Time Zone 'Australia/Sydney'.
 // IANA Source File: Sydney
 //  
-func (austr australiaTimeZones) Sydney() string {return "Sydney" }
+func (austr australiaTimeZones) Sydney() string {return "Australia/Sydney" }
 
-// Tasmania - IANA Time Zone 'Tasmania'.
+// Tasmania - IANA Time Zone 'Australia/Tasmania'.
 // IANA Source File: Tasmania
 //  
-func (austr australiaTimeZones) Tasmania() string {return "Tasmania" }
+func (austr australiaTimeZones) Tasmania() string {return "Australia/Tasmania" }
 
-// Victoria - IANA Time Zone 'Victoria'.
+// Victoria - IANA Time Zone 'Australia/Victoria'.
 // IANA Source File: Victoria
 //  
-func (austr australiaTimeZones) Victoria() string {return "Victoria" }
+func (austr australiaTimeZones) Victoria() string {return "Australia/Victoria" }
 
-// West - IANA Time Zone 'West'.
+// West - IANA Time Zone 'Australia/West'.
 // IANA Source File: West
 //  
-func (austr australiaTimeZones) West() string {return "West" }
+func (austr australiaTimeZones) West() string {return "Australia/West" }
 
-// Yancowinna - IANA Time Zone 'Yancowinna'.
+// Yancowinna - IANA Time Zone 'Australia/Yancowinna'.
 // IANA Source File: Yancowinna
 //  
-func (austr australiaTimeZones) Yancowinna() string {return "Yancowinna" }
+func (austr australiaTimeZones) Yancowinna() string {return "Australia/Yancowinna" }
 
 
 // brazilTimeZones - IANA Time Zones for 'Brazil'.
@@ -1948,25 +1948,25 @@ func (austr australiaTimeZones) Yancowinna() string {return "Yancowinna" }
 //  
 type brazilTimeZones string
 
-// Acre - IANA Time Zone 'Acre'.
+// Acre - IANA Time Zone 'Brazil/Acre'.
 // IANA Source File: Acre
 //  
-func (brazi brazilTimeZones) Acre() string {return "Acre" }
+func (brazi brazilTimeZones) Acre() string {return "Brazil/Acre" }
 
-// DeNoronha - IANA Time Zone 'DeNoronha'.
+// DeNoronha - IANA Time Zone 'Brazil/DeNoronha'.
 // IANA Source File: DeNoronha
 //  
-func (brazi brazilTimeZones) DeNoronha() string {return "DeNoronha" }
+func (brazi brazilTimeZones) DeNoronha() string {return "Brazil/DeNoronha" }
 
-// East - IANA Time Zone 'East'.
+// East - IANA Time Zone 'Brazil/East'.
 // IANA Source File: East
 //  
-func (brazi brazilTimeZones) East() string {return "East" }
+func (brazi brazilTimeZones) East() string {return "Brazil/East" }
 
-// West - IANA Time Zone 'West'.
+// West - IANA Time Zone 'Brazil/West'.
 // IANA Source File: West
 //  
-func (brazi brazilTimeZones) West() string {return "West" }
+func (brazi brazilTimeZones) West() string {return "Brazil/West" }
 
 
 // canadaTimeZones - IANA Time Zones for 'Canada'.
@@ -1981,45 +1981,45 @@ func (brazi brazilTimeZones) West() string {return "West" }
 //  
 type canadaTimeZones string
 
-// Atlantic - IANA Time Zone 'Atlantic'.
+// Atlantic - IANA Time Zone 'Canada/Atlantic'.
 // IANA Source File: Atlantic
 //  
-func (canad canadaTimeZones) Atlantic() string {return "Atlantic" }
+func (canad canadaTimeZones) Atlantic() string {return "Canada/Atlantic" }
 
-// Central - IANA Time Zone 'Central'.
+// Central - IANA Time Zone 'Canada/Central'.
 // IANA Source File: Central
 //  
-func (canad canadaTimeZones) Central() string {return "Central" }
+func (canad canadaTimeZones) Central() string {return "Canada/Central" }
 
-// Eastern - IANA Time Zone 'Eastern'.
+// Eastern - IANA Time Zone 'Canada/Eastern'.
 // IANA Source File: Eastern
 //  
-func (canad canadaTimeZones) Eastern() string {return "Eastern" }
+func (canad canadaTimeZones) Eastern() string {return "Canada/Eastern" }
 
-// Mountain - IANA Time Zone 'Mountain'.
+// Mountain - IANA Time Zone 'Canada/Mountain'.
 // IANA Source File: Mountain
 //  
-func (canad canadaTimeZones) Mountain() string {return "Mountain" }
+func (canad canadaTimeZones) Mountain() string {return "Canada/Mountain" }
 
-// Newfoundland - IANA Time Zone 'Newfoundland'.
+// Newfoundland - IANA Time Zone 'Canada/Newfoundland'.
 // IANA Source File: Newfoundland
 //  
-func (canad canadaTimeZones) Newfoundland() string {return "Newfoundland" }
+func (canad canadaTimeZones) Newfoundland() string {return "Canada/Newfoundland" }
 
-// Pacific - IANA Time Zone 'Pacific'.
+// Pacific - IANA Time Zone 'Canada/Pacific'.
 // IANA Source File: Pacific
 //  
-func (canad canadaTimeZones) Pacific() string {return "Pacific" }
+func (canad canadaTimeZones) Pacific() string {return "Canada/Pacific" }
 
-// Saskatchewan - IANA Time Zone 'Saskatchewan'.
+// Saskatchewan - IANA Time Zone 'Canada/Saskatchewan'.
 // IANA Source File: Saskatchewan
 //  
-func (canad canadaTimeZones) Saskatchewan() string {return "Saskatchewan" }
+func (canad canadaTimeZones) Saskatchewan() string {return "Canada/Saskatchewan" }
 
-// Yukon - IANA Time Zone 'Yukon'.
+// Yukon - IANA Time Zone 'Canada/Yukon'.
 // IANA Source File: Yukon
 //  
-func (canad canadaTimeZones) Yukon() string {return "Yukon" }
+func (canad canadaTimeZones) Yukon() string {return "Canada/Yukon" }
 
 
 // chileTimeZones - IANA Time Zones for 'Chile'.
@@ -2034,15 +2034,15 @@ func (canad canadaTimeZones) Yukon() string {return "Yukon" }
 //  
 type chileTimeZones string
 
-// Continental - IANA Time Zone 'Continental'.
+// Continental - IANA Time Zone 'Chile/Continental'.
 // IANA Source File: Continental
 //  
-func (chile chileTimeZones) Continental() string {return "Continental" }
+func (chile chileTimeZones) Continental() string {return "Chile/Continental" }
 
-// EasterIsland - IANA Time Zone 'EasterIsland'.
+// EasterIsland - IANA Time Zone 'Chile/EasterIsland'.
 // IANA Source File: EasterIsland
 //  
-func (chile chileTimeZones) EasterIsland() string {return "EasterIsland" }
+func (chile chileTimeZones) EasterIsland() string {return "Chile/EasterIsland" }
 
 
 // etcTimeZones - IANA Time Zones for 'Etc'.
@@ -2057,180 +2057,180 @@ func (chile chileTimeZones) EasterIsland() string {return "EasterIsland" }
 //  
 type etcTimeZones string
 
-// GMT - IANA Time Zone 'GMT'.
+// GMT - IANA Time Zone 'Etc/GMT'.
 // IANA Source File: GMT
 //  
-func (etcTi etcTimeZones) GMT() string {return "GMT" }
+func (etcTi etcTimeZones) GMT() string {return "Etc/GMT" }
 
-// GMT+0 - IANA Time Zone 'GMT+0'.
+// GMT+0 - IANA Time Zone 'Etc/GMT+0'.
 // IANA Source File: GMT+0
 //  
-func (etcTi etcTimeZones) GMTPlus00() string {return "GMT+0" }
+func (etcTi etcTimeZones) GMTPlus00() string {return "Etc/GMT+0" }
 
-// GMT+1 - IANA Time Zone 'GMT+1'.
+// GMT+1 - IANA Time Zone 'Etc/GMT+1'.
 // IANA Source File: GMT+1
 //  
-func (etcTi etcTimeZones) GMTPlus01() string {return "GMT+1" }
+func (etcTi etcTimeZones) GMTPlus01() string {return "Etc/GMT+1" }
 
-// GMT+2 - IANA Time Zone 'GMT+2'.
+// GMT+2 - IANA Time Zone 'Etc/GMT+2'.
 // IANA Source File: GMT+2
 //  
-func (etcTi etcTimeZones) GMTPlus02() string {return "GMT+2" }
+func (etcTi etcTimeZones) GMTPlus02() string {return "Etc/GMT+2" }
 
-// GMT+3 - IANA Time Zone 'GMT+3'.
+// GMT+3 - IANA Time Zone 'Etc/GMT+3'.
 // IANA Source File: GMT+3
 //  
-func (etcTi etcTimeZones) GMTPlus03() string {return "GMT+3" }
+func (etcTi etcTimeZones) GMTPlus03() string {return "Etc/GMT+3" }
 
-// GMT+4 - IANA Time Zone 'GMT+4'.
+// GMT+4 - IANA Time Zone 'Etc/GMT+4'.
 // IANA Source File: GMT+4
 //  
-func (etcTi etcTimeZones) GMTPlus04() string {return "GMT+4" }
+func (etcTi etcTimeZones) GMTPlus04() string {return "Etc/GMT+4" }
 
-// GMT+5 - IANA Time Zone 'GMT+5'.
+// GMT+5 - IANA Time Zone 'Etc/GMT+5'.
 // IANA Source File: GMT+5
 //  
-func (etcTi etcTimeZones) GMTPlus05() string {return "GMT+5" }
+func (etcTi etcTimeZones) GMTPlus05() string {return "Etc/GMT+5" }
 
-// GMT+6 - IANA Time Zone 'GMT+6'.
+// GMT+6 - IANA Time Zone 'Etc/GMT+6'.
 // IANA Source File: GMT+6
 //  
-func (etcTi etcTimeZones) GMTPlus06() string {return "GMT+6" }
+func (etcTi etcTimeZones) GMTPlus06() string {return "Etc/GMT+6" }
 
-// GMT+7 - IANA Time Zone 'GMT+7'.
+// GMT+7 - IANA Time Zone 'Etc/GMT+7'.
 // IANA Source File: GMT+7
 //  
-func (etcTi etcTimeZones) GMTPlus07() string {return "GMT+7" }
+func (etcTi etcTimeZones) GMTPlus07() string {return "Etc/GMT+7" }
 
-// GMT+8 - IANA Time Zone 'GMT+8'.
+// GMT+8 - IANA Time Zone 'Etc/GMT+8'.
 // IANA Source File: GMT+8
 //  
-func (etcTi etcTimeZones) GMTPlus08() string {return "GMT+8" }
+func (etcTi etcTimeZones) GMTPlus08() string {return "Etc/GMT+8" }
 
-// GMT+9 - IANA Time Zone 'GMT+9'.
+// GMT+9 - IANA Time Zone 'Etc/GMT+9'.
 // IANA Source File: GMT+9
 //  
-func (etcTi etcTimeZones) GMTPlus09() string {return "GMT+9" }
+func (etcTi etcTimeZones) GMTPlus09() string {return "Etc/GMT+9" }
 
-// GMT+10 - IANA Time Zone 'GMT+10'.
+// GMT+10 - IANA Time Zone 'Etc/GMT+10'.
 // IANA Source File: GMT+10
 //  
-func (etcTi etcTimeZones) GMTPlus10() string {return "GMT+10" }
+func (etcTi etcTimeZones) GMTPlus10() string {return "Etc/GMT+10" }
 
-// GMT+11 - IANA Time Zone 'GMT+11'.
+// GMT+11 - IANA Time Zone 'Etc/GMT+11'.
 // IANA Source File: GMT+11
 //  
-func (etcTi etcTimeZones) GMTPlus11() string {return "GMT+11" }
+func (etcTi etcTimeZones) GMTPlus11() string {return "Etc/GMT+11" }
 
-// GMT+12 - IANA Time Zone 'GMT+12'.
+// GMT+12 - IANA Time Zone 'Etc/GMT+12'.
 // IANA Source File: GMT+12
 //  
-func (etcTi etcTimeZones) GMTPlus12() string {return "GMT+12" }
+func (etcTi etcTimeZones) GMTPlus12() string {return "Etc/GMT+12" }
 
-// GMT-0 - IANA Time Zone 'GMT-0'.
+// GMT-0 - IANA Time Zone 'Etc/GMT-0'.
 // IANA Source File: GMT-0
 //  
-func (etcTi etcTimeZones) GMTMinus00() string {return "GMT-0" }
+func (etcTi etcTimeZones) GMTMinus00() string {return "Etc/GMT-0" }
 
-// GMT-1 - IANA Time Zone 'GMT-1'.
+// GMT-1 - IANA Time Zone 'Etc/GMT-1'.
 // IANA Source File: GMT-1
 //  
-func (etcTi etcTimeZones) GMTMinus01() string {return "GMT-1" }
+func (etcTi etcTimeZones) GMTMinus01() string {return "Etc/GMT-1" }
 
-// GMT-2 - IANA Time Zone 'GMT-2'.
+// GMT-2 - IANA Time Zone 'Etc/GMT-2'.
 // IANA Source File: GMT-2
 //  
-func (etcTi etcTimeZones) GMTMinus02() string {return "GMT-2" }
+func (etcTi etcTimeZones) GMTMinus02() string {return "Etc/GMT-2" }
 
-// GMT-3 - IANA Time Zone 'GMT-3'.
+// GMT-3 - IANA Time Zone 'Etc/GMT-3'.
 // IANA Source File: GMT-3
 //  
-func (etcTi etcTimeZones) GMTMinus03() string {return "GMT-3" }
+func (etcTi etcTimeZones) GMTMinus03() string {return "Etc/GMT-3" }
 
-// GMT-4 - IANA Time Zone 'GMT-4'.
+// GMT-4 - IANA Time Zone 'Etc/GMT-4'.
 // IANA Source File: GMT-4
 //  
-func (etcTi etcTimeZones) GMTMinus04() string {return "GMT-4" }
+func (etcTi etcTimeZones) GMTMinus04() string {return "Etc/GMT-4" }
 
-// GMT-5 - IANA Time Zone 'GMT-5'.
+// GMT-5 - IANA Time Zone 'Etc/GMT-5'.
 // IANA Source File: GMT-5
 //  
-func (etcTi etcTimeZones) GMTMinus05() string {return "GMT-5" }
+func (etcTi etcTimeZones) GMTMinus05() string {return "Etc/GMT-5" }
 
-// GMT-6 - IANA Time Zone 'GMT-6'.
+// GMT-6 - IANA Time Zone 'Etc/GMT-6'.
 // IANA Source File: GMT-6
 //  
-func (etcTi etcTimeZones) GMTMinus06() string {return "GMT-6" }
+func (etcTi etcTimeZones) GMTMinus06() string {return "Etc/GMT-6" }
 
-// GMT-7 - IANA Time Zone 'GMT-7'.
+// GMT-7 - IANA Time Zone 'Etc/GMT-7'.
 // IANA Source File: GMT-7
 //  
-func (etcTi etcTimeZones) GMTMinus07() string {return "GMT-7" }
+func (etcTi etcTimeZones) GMTMinus07() string {return "Etc/GMT-7" }
 
-// GMT-8 - IANA Time Zone 'GMT-8'.
+// GMT-8 - IANA Time Zone 'Etc/GMT-8'.
 // IANA Source File: GMT-8
 //  
-func (etcTi etcTimeZones) GMTMinus08() string {return "GMT-8" }
+func (etcTi etcTimeZones) GMTMinus08() string {return "Etc/GMT-8" }
 
-// GMT-9 - IANA Time Zone 'GMT-9'.
+// GMT-9 - IANA Time Zone 'Etc/GMT-9'.
 // IANA Source File: GMT-9
 //  
-func (etcTi etcTimeZones) GMTMinus09() string {return "GMT-9" }
+func (etcTi etcTimeZones) GMTMinus09() string {return "Etc/GMT-9" }
 
-// GMT-10 - IANA Time Zone 'GMT-10'.
+// GMT-10 - IANA Time Zone 'Etc/GMT-10'.
 // IANA Source File: GMT-10
 //  
-func (etcTi etcTimeZones) GMTMinus10() string {return "GMT-10" }
+func (etcTi etcTimeZones) GMTMinus10() string {return "Etc/GMT-10" }
 
-// GMT-11 - IANA Time Zone 'GMT-11'.
+// GMT-11 - IANA Time Zone 'Etc/GMT-11'.
 // IANA Source File: GMT-11
 //  
-func (etcTi etcTimeZones) GMTMinus11() string {return "GMT-11" }
+func (etcTi etcTimeZones) GMTMinus11() string {return "Etc/GMT-11" }
 
-// GMT-12 - IANA Time Zone 'GMT-12'.
+// GMT-12 - IANA Time Zone 'Etc/GMT-12'.
 // IANA Source File: GMT-12
 //  
-func (etcTi etcTimeZones) GMTMinus12() string {return "GMT-12" }
+func (etcTi etcTimeZones) GMTMinus12() string {return "Etc/GMT-12" }
 
-// GMT-13 - IANA Time Zone 'GMT-13'.
+// GMT-13 - IANA Time Zone 'Etc/GMT-13'.
 // IANA Source File: GMT-13
 //  
-func (etcTi etcTimeZones) GMTMinus13() string {return "GMT-13" }
+func (etcTi etcTimeZones) GMTMinus13() string {return "Etc/GMT-13" }
 
-// GMT-14 - IANA Time Zone 'GMT-14'.
+// GMT-14 - IANA Time Zone 'Etc/GMT-14'.
 // IANA Source File: GMT-14
 //  
-func (etcTi etcTimeZones) GMTMinus14() string {return "GMT-14" }
+func (etcTi etcTimeZones) GMTMinus14() string {return "Etc/GMT-14" }
 
-// GMT0 - IANA Time Zone 'GMT0'.
+// GMT0 - IANA Time Zone 'Etc/GMT0'.
 // IANA Source File: GMT0
 //  
-func (etcTi etcTimeZones) GMT00() string {return "GMT0" }
+func (etcTi etcTimeZones) GMT00() string {return "Etc/GMT0" }
 
-// Greenwich - IANA Time Zone 'Greenwich'.
+// Greenwich - IANA Time Zone 'Etc/Greenwich'.
 // IANA Source File: Greenwich
 //  
-func (etcTi etcTimeZones) Greenwich() string {return "Greenwich" }
+func (etcTi etcTimeZones) Greenwich() string {return "Etc/Greenwich" }
 
-// UCT - IANA Time Zone 'UCT'.
+// UCT - IANA Time Zone 'Etc/UCT'.
 // IANA Source File: UCT
 //  
-func (etcTi etcTimeZones) UCT() string {return "UCT" }
+func (etcTi etcTimeZones) UCT() string {return "Etc/UCT" }
 
-// Universal - IANA Time Zone 'Universal'.
+// Universal - IANA Time Zone 'Etc/Universal'.
 // IANA Source File: Universal
 //  
-func (etcTi etcTimeZones) Universal() string {return "Universal" }
+func (etcTi etcTimeZones) Universal() string {return "Etc/Universal" }
 
-// UTC - IANA Time Zone 'UTC'.
+// UTC - IANA Time Zone 'Etc/UTC'.
 // IANA Source File: UTC
 //  
-func (etcTi etcTimeZones) UTC() string {return "UTC" }
+func (etcTi etcTimeZones) UTC() string {return "Etc/UTC" }
 
-// Zulu - IANA Time Zone 'Zulu'.
+// Zulu - IANA Time Zone 'Etc/Zulu'.
 // IANA Source File: Zulu
 //  
-func (etcTi etcTimeZones) Zulu() string {return "Zulu" }
+func (etcTi etcTimeZones) Zulu() string {return "Etc/Zulu" }
 
 
 // europeTimeZones - IANA Time Zones for 'Europe'.
@@ -2245,320 +2245,320 @@ func (etcTi etcTimeZones) Zulu() string {return "Zulu" }
 //  
 type europeTimeZones string
 
-// Amsterdam - IANA Time Zone 'Amsterdam'.
+// Amsterdam - IANA Time Zone 'Europe/Amsterdam'.
 // IANA Source File: Amsterdam
 //  
-func (europ europeTimeZones) Amsterdam() string {return "Amsterdam" }
+func (europ europeTimeZones) Amsterdam() string {return "Europe/Amsterdam" }
 
-// Andorra - IANA Time Zone 'Andorra'.
+// Andorra - IANA Time Zone 'Europe/Andorra'.
 // IANA Source File: Andorra
 //  
-func (europ europeTimeZones) Andorra() string {return "Andorra" }
+func (europ europeTimeZones) Andorra() string {return "Europe/Andorra" }
 
-// Astrakhan - IANA Time Zone 'Astrakhan'.
+// Astrakhan - IANA Time Zone 'Europe/Astrakhan'.
 // IANA Source File: Astrakhan
 //  
-func (europ europeTimeZones) Astrakhan() string {return "Astrakhan" }
+func (europ europeTimeZones) Astrakhan() string {return "Europe/Astrakhan" }
 
-// Athens - IANA Time Zone 'Athens'.
+// Athens - IANA Time Zone 'Europe/Athens'.
 // IANA Source File: Athens
 //  
-func (europ europeTimeZones) Athens() string {return "Athens" }
+func (europ europeTimeZones) Athens() string {return "Europe/Athens" }
 
-// Belfast - IANA Time Zone 'Belfast'.
+// Belfast - IANA Time Zone 'Europe/Belfast'.
 // IANA Source File: Belfast
 //  
-func (europ europeTimeZones) Belfast() string {return "Belfast" }
+func (europ europeTimeZones) Belfast() string {return "Europe/Belfast" }
 
-// Belgrade - IANA Time Zone 'Belgrade'.
+// Belgrade - IANA Time Zone 'Europe/Belgrade'.
 // IANA Source File: Belgrade
 //  
-func (europ europeTimeZones) Belgrade() string {return "Belgrade" }
+func (europ europeTimeZones) Belgrade() string {return "Europe/Belgrade" }
 
-// Berlin - IANA Time Zone 'Berlin'.
+// Berlin - IANA Time Zone 'Europe/Berlin'.
 // IANA Source File: Berlin
 //  
-func (europ europeTimeZones) Berlin() string {return "Berlin" }
+func (europ europeTimeZones) Berlin() string {return "Europe/Berlin" }
 
-// Bratislava - IANA Time Zone 'Bratislava'.
+// Bratislava - IANA Time Zone 'Europe/Bratislava'.
 // IANA Source File: Bratislava
 //  
-func (europ europeTimeZones) Bratislava() string {return "Bratislava" }
+func (europ europeTimeZones) Bratislava() string {return "Europe/Bratislava" }
 
-// Brussels - IANA Time Zone 'Brussels'.
+// Brussels - IANA Time Zone 'Europe/Brussels'.
 // IANA Source File: Brussels
 //  
-func (europ europeTimeZones) Brussels() string {return "Brussels" }
+func (europ europeTimeZones) Brussels() string {return "Europe/Brussels" }
 
-// Bucharest - IANA Time Zone 'Bucharest'.
+// Bucharest - IANA Time Zone 'Europe/Bucharest'.
 // IANA Source File: Bucharest
 //  
-func (europ europeTimeZones) Bucharest() string {return "Bucharest" }
+func (europ europeTimeZones) Bucharest() string {return "Europe/Bucharest" }
 
-// Budapest - IANA Time Zone 'Budapest'.
+// Budapest - IANA Time Zone 'Europe/Budapest'.
 // IANA Source File: Budapest
 //  
-func (europ europeTimeZones) Budapest() string {return "Budapest" }
+func (europ europeTimeZones) Budapest() string {return "Europe/Budapest" }
 
-// Busingen - IANA Time Zone 'Busingen'.
+// Busingen - IANA Time Zone 'Europe/Busingen'.
 // IANA Source File: Busingen
 //  
-func (europ europeTimeZones) Busingen() string {return "Busingen" }
+func (europ europeTimeZones) Busingen() string {return "Europe/Busingen" }
 
-// Chisinau - IANA Time Zone 'Chisinau'.
+// Chisinau - IANA Time Zone 'Europe/Chisinau'.
 // IANA Source File: Chisinau
 //  
-func (europ europeTimeZones) Chisinau() string {return "Chisinau" }
+func (europ europeTimeZones) Chisinau() string {return "Europe/Chisinau" }
 
-// Copenhagen - IANA Time Zone 'Copenhagen'.
+// Copenhagen - IANA Time Zone 'Europe/Copenhagen'.
 // IANA Source File: Copenhagen
 //  
-func (europ europeTimeZones) Copenhagen() string {return "Copenhagen" }
+func (europ europeTimeZones) Copenhagen() string {return "Europe/Copenhagen" }
 
-// Dublin - IANA Time Zone 'Dublin'.
+// Dublin - IANA Time Zone 'Europe/Dublin'.
 // IANA Source File: Dublin
 //  
-func (europ europeTimeZones) Dublin() string {return "Dublin" }
+func (europ europeTimeZones) Dublin() string {return "Europe/Dublin" }
 
-// Gibraltar - IANA Time Zone 'Gibraltar'.
+// Gibraltar - IANA Time Zone 'Europe/Gibraltar'.
 // IANA Source File: Gibraltar
 //  
-func (europ europeTimeZones) Gibraltar() string {return "Gibraltar" }
+func (europ europeTimeZones) Gibraltar() string {return "Europe/Gibraltar" }
 
-// Guernsey - IANA Time Zone 'Guernsey'.
+// Guernsey - IANA Time Zone 'Europe/Guernsey'.
 // IANA Source File: Guernsey
 //  
-func (europ europeTimeZones) Guernsey() string {return "Guernsey" }
+func (europ europeTimeZones) Guernsey() string {return "Europe/Guernsey" }
 
-// Helsinki - IANA Time Zone 'Helsinki'.
+// Helsinki - IANA Time Zone 'Europe/Helsinki'.
 // IANA Source File: Helsinki
 //  
-func (europ europeTimeZones) Helsinki() string {return "Helsinki" }
+func (europ europeTimeZones) Helsinki() string {return "Europe/Helsinki" }
 
-// Isle_of_Man - IANA Time Zone 'Isle_of_Man'.
+// Isle_of_Man - IANA Time Zone 'Europe/Isle_of_Man'.
 // IANA Source File: Isle_of_Man
 //  
-func (europ europeTimeZones) Isle_of_Man() string {return "Isle_of_Man" }
+func (europ europeTimeZones) Isle_of_Man() string {return "Europe/Isle_of_Man" }
 
-// Istanbul - IANA Time Zone 'Istanbul'.
+// Istanbul - IANA Time Zone 'Europe/Istanbul'.
 // IANA Source File: Istanbul
 //  
-func (europ europeTimeZones) Istanbul() string {return "Istanbul" }
+func (europ europeTimeZones) Istanbul() string {return "Europe/Istanbul" }
 
-// Jersey - IANA Time Zone 'Jersey'.
+// Jersey - IANA Time Zone 'Europe/Jersey'.
 // IANA Source File: Jersey
 //  
-func (europ europeTimeZones) Jersey() string {return "Jersey" }
+func (europ europeTimeZones) Jersey() string {return "Europe/Jersey" }
 
-// Kaliningrad - IANA Time Zone 'Kaliningrad'.
+// Kaliningrad - IANA Time Zone 'Europe/Kaliningrad'.
 // IANA Source File: Kaliningrad
 //  
-func (europ europeTimeZones) Kaliningrad() string {return "Kaliningrad" }
+func (europ europeTimeZones) Kaliningrad() string {return "Europe/Kaliningrad" }
 
-// Kiev - IANA Time Zone 'Kiev'.
+// Kiev - IANA Time Zone 'Europe/Kiev'.
 // IANA Source File: Kiev
 //  
-func (europ europeTimeZones) Kiev() string {return "Kiev" }
+func (europ europeTimeZones) Kiev() string {return "Europe/Kiev" }
 
-// Kirov - IANA Time Zone 'Kirov'.
+// Kirov - IANA Time Zone 'Europe/Kirov'.
 // IANA Source File: Kirov
 //  
-func (europ europeTimeZones) Kirov() string {return "Kirov" }
+func (europ europeTimeZones) Kirov() string {return "Europe/Kirov" }
 
-// Lisbon - IANA Time Zone 'Lisbon'.
+// Lisbon - IANA Time Zone 'Europe/Lisbon'.
 // IANA Source File: Lisbon
 //  
-func (europ europeTimeZones) Lisbon() string {return "Lisbon" }
+func (europ europeTimeZones) Lisbon() string {return "Europe/Lisbon" }
 
-// Ljubljana - IANA Time Zone 'Ljubljana'.
+// Ljubljana - IANA Time Zone 'Europe/Ljubljana'.
 // IANA Source File: Ljubljana
 //  
-func (europ europeTimeZones) Ljubljana() string {return "Ljubljana" }
+func (europ europeTimeZones) Ljubljana() string {return "Europe/Ljubljana" }
 
-// London - IANA Time Zone 'London'.
+// London - IANA Time Zone 'Europe/London'.
 // IANA Source File: London
 //  
-func (europ europeTimeZones) London() string {return "London" }
+func (europ europeTimeZones) London() string {return "Europe/London" }
 
-// Luxembourg - IANA Time Zone 'Luxembourg'.
+// Luxembourg - IANA Time Zone 'Europe/Luxembourg'.
 // IANA Source File: Luxembourg
 //  
-func (europ europeTimeZones) Luxembourg() string {return "Luxembourg" }
+func (europ europeTimeZones) Luxembourg() string {return "Europe/Luxembourg" }
 
-// Madrid - IANA Time Zone 'Madrid'.
+// Madrid - IANA Time Zone 'Europe/Madrid'.
 // IANA Source File: Madrid
 //  
-func (europ europeTimeZones) Madrid() string {return "Madrid" }
+func (europ europeTimeZones) Madrid() string {return "Europe/Madrid" }
 
-// Malta - IANA Time Zone 'Malta'.
+// Malta - IANA Time Zone 'Europe/Malta'.
 // IANA Source File: Malta
 //  
-func (europ europeTimeZones) Malta() string {return "Malta" }
+func (europ europeTimeZones) Malta() string {return "Europe/Malta" }
 
-// Mariehamn - IANA Time Zone 'Mariehamn'.
+// Mariehamn - IANA Time Zone 'Europe/Mariehamn'.
 // IANA Source File: Mariehamn
 //  
-func (europ europeTimeZones) Mariehamn() string {return "Mariehamn" }
+func (europ europeTimeZones) Mariehamn() string {return "Europe/Mariehamn" }
 
-// Minsk - IANA Time Zone 'Minsk'.
+// Minsk - IANA Time Zone 'Europe/Minsk'.
 // IANA Source File: Minsk
 //  
-func (europ europeTimeZones) Minsk() string {return "Minsk" }
+func (europ europeTimeZones) Minsk() string {return "Europe/Minsk" }
 
-// Monaco - IANA Time Zone 'Monaco'.
+// Monaco - IANA Time Zone 'Europe/Monaco'.
 // IANA Source File: Monaco
 //  
-func (europ europeTimeZones) Monaco() string {return "Monaco" }
+func (europ europeTimeZones) Monaco() string {return "Europe/Monaco" }
 
-// Moscow - IANA Time Zone 'Moscow'.
+// Moscow - IANA Time Zone 'Europe/Moscow'.
 // IANA Source File: Moscow
 //  
-func (europ europeTimeZones) Moscow() string {return "Moscow" }
+func (europ europeTimeZones) Moscow() string {return "Europe/Moscow" }
 
-// Nicosia - IANA Time Zone 'Nicosia'.
+// Nicosia - IANA Time Zone 'Europe/Nicosia'.
 // IANA Source File: Nicosia
 //  
-func (europ europeTimeZones) Nicosia() string {return "Nicosia" }
+func (europ europeTimeZones) Nicosia() string {return "Europe/Nicosia" }
 
-// Oslo - IANA Time Zone 'Oslo'.
+// Oslo - IANA Time Zone 'Europe/Oslo'.
 // IANA Source File: Oslo
 //  
-func (europ europeTimeZones) Oslo() string {return "Oslo" }
+func (europ europeTimeZones) Oslo() string {return "Europe/Oslo" }
 
-// Paris - IANA Time Zone 'Paris'.
+// Paris - IANA Time Zone 'Europe/Paris'.
 // IANA Source File: Paris
 //  
-func (europ europeTimeZones) Paris() string {return "Paris" }
+func (europ europeTimeZones) Paris() string {return "Europe/Paris" }
 
-// Podgorica - IANA Time Zone 'Podgorica'.
+// Podgorica - IANA Time Zone 'Europe/Podgorica'.
 // IANA Source File: Podgorica
 //  
-func (europ europeTimeZones) Podgorica() string {return "Podgorica" }
+func (europ europeTimeZones) Podgorica() string {return "Europe/Podgorica" }
 
-// Prague - IANA Time Zone 'Prague'.
+// Prague - IANA Time Zone 'Europe/Prague'.
 // IANA Source File: Prague
 //  
-func (europ europeTimeZones) Prague() string {return "Prague" }
+func (europ europeTimeZones) Prague() string {return "Europe/Prague" }
 
-// Riga - IANA Time Zone 'Riga'.
+// Riga - IANA Time Zone 'Europe/Riga'.
 // IANA Source File: Riga
 //  
-func (europ europeTimeZones) Riga() string {return "Riga" }
+func (europ europeTimeZones) Riga() string {return "Europe/Riga" }
 
-// Rome - IANA Time Zone 'Rome'.
+// Rome - IANA Time Zone 'Europe/Rome'.
 // IANA Source File: Rome
 //  
-func (europ europeTimeZones) Rome() string {return "Rome" }
+func (europ europeTimeZones) Rome() string {return "Europe/Rome" }
 
-// Samara - IANA Time Zone 'Samara'.
+// Samara - IANA Time Zone 'Europe/Samara'.
 // IANA Source File: Samara
 //  
-func (europ europeTimeZones) Samara() string {return "Samara" }
+func (europ europeTimeZones) Samara() string {return "Europe/Samara" }
 
-// San_Marino - IANA Time Zone 'San_Marino'.
+// San_Marino - IANA Time Zone 'Europe/San_Marino'.
 // IANA Source File: San_Marino
 //  
-func (europ europeTimeZones) San_Marino() string {return "San_Marino" }
+func (europ europeTimeZones) San_Marino() string {return "Europe/San_Marino" }
 
-// Sarajevo - IANA Time Zone 'Sarajevo'.
+// Sarajevo - IANA Time Zone 'Europe/Sarajevo'.
 // IANA Source File: Sarajevo
 //  
-func (europ europeTimeZones) Sarajevo() string {return "Sarajevo" }
+func (europ europeTimeZones) Sarajevo() string {return "Europe/Sarajevo" }
 
-// Saratov - IANA Time Zone 'Saratov'.
+// Saratov - IANA Time Zone 'Europe/Saratov'.
 // IANA Source File: Saratov
 //  
-func (europ europeTimeZones) Saratov() string {return "Saratov" }
+func (europ europeTimeZones) Saratov() string {return "Europe/Saratov" }
 
-// Simferopol - IANA Time Zone 'Simferopol'.
+// Simferopol - IANA Time Zone 'Europe/Simferopol'.
 // IANA Source File: Simferopol
 //  
-func (europ europeTimeZones) Simferopol() string {return "Simferopol" }
+func (europ europeTimeZones) Simferopol() string {return "Europe/Simferopol" }
 
-// Skopje - IANA Time Zone 'Skopje'.
+// Skopje - IANA Time Zone 'Europe/Skopje'.
 // IANA Source File: Skopje
 //  
-func (europ europeTimeZones) Skopje() string {return "Skopje" }
+func (europ europeTimeZones) Skopje() string {return "Europe/Skopje" }
 
-// Sofia - IANA Time Zone 'Sofia'.
+// Sofia - IANA Time Zone 'Europe/Sofia'.
 // IANA Source File: Sofia
 //  
-func (europ europeTimeZones) Sofia() string {return "Sofia" }
+func (europ europeTimeZones) Sofia() string {return "Europe/Sofia" }
 
-// Stockholm - IANA Time Zone 'Stockholm'.
+// Stockholm - IANA Time Zone 'Europe/Stockholm'.
 // IANA Source File: Stockholm
 //  
-func (europ europeTimeZones) Stockholm() string {return "Stockholm" }
+func (europ europeTimeZones) Stockholm() string {return "Europe/Stockholm" }
 
-// Tallinn - IANA Time Zone 'Tallinn'.
+// Tallinn - IANA Time Zone 'Europe/Tallinn'.
 // IANA Source File: Tallinn
 //  
-func (europ europeTimeZones) Tallinn() string {return "Tallinn" }
+func (europ europeTimeZones) Tallinn() string {return "Europe/Tallinn" }
 
-// Tirane - IANA Time Zone 'Tirane'.
+// Tirane - IANA Time Zone 'Europe/Tirane'.
 // IANA Source File: Tirane
 //  
-func (europ europeTimeZones) Tirane() string {return "Tirane" }
+func (europ europeTimeZones) Tirane() string {return "Europe/Tirane" }
 
-// Tiraspol - IANA Time Zone 'Tiraspol'.
+// Tiraspol - IANA Time Zone 'Europe/Tiraspol'.
 // IANA Source File: Tiraspol
 //  
-func (europ europeTimeZones) Tiraspol() string {return "Tiraspol" }
+func (europ europeTimeZones) Tiraspol() string {return "Europe/Tiraspol" }
 
-// Ulyanovsk - IANA Time Zone 'Ulyanovsk'.
+// Ulyanovsk - IANA Time Zone 'Europe/Ulyanovsk'.
 // IANA Source File: Ulyanovsk
 //  
-func (europ europeTimeZones) Ulyanovsk() string {return "Ulyanovsk" }
+func (europ europeTimeZones) Ulyanovsk() string {return "Europe/Ulyanovsk" }
 
-// Uzhgorod - IANA Time Zone 'Uzhgorod'.
+// Uzhgorod - IANA Time Zone 'Europe/Uzhgorod'.
 // IANA Source File: Uzhgorod
 //  
-func (europ europeTimeZones) Uzhgorod() string {return "Uzhgorod" }
+func (europ europeTimeZones) Uzhgorod() string {return "Europe/Uzhgorod" }
 
-// Vaduz - IANA Time Zone 'Vaduz'.
+// Vaduz - IANA Time Zone 'Europe/Vaduz'.
 // IANA Source File: Vaduz
 //  
-func (europ europeTimeZones) Vaduz() string {return "Vaduz" }
+func (europ europeTimeZones) Vaduz() string {return "Europe/Vaduz" }
 
-// Vatican - IANA Time Zone 'Vatican'.
+// Vatican - IANA Time Zone 'Europe/Vatican'.
 // IANA Source File: Vatican
 //  
-func (europ europeTimeZones) Vatican() string {return "Vatican" }
+func (europ europeTimeZones) Vatican() string {return "Europe/Vatican" }
 
-// Vienna - IANA Time Zone 'Vienna'.
+// Vienna - IANA Time Zone 'Europe/Vienna'.
 // IANA Source File: Vienna
 //  
-func (europ europeTimeZones) Vienna() string {return "Vienna" }
+func (europ europeTimeZones) Vienna() string {return "Europe/Vienna" }
 
-// Vilnius - IANA Time Zone 'Vilnius'.
+// Vilnius - IANA Time Zone 'Europe/Vilnius'.
 // IANA Source File: Vilnius
 //  
-func (europ europeTimeZones) Vilnius() string {return "Vilnius" }
+func (europ europeTimeZones) Vilnius() string {return "Europe/Vilnius" }
 
-// Volgograd - IANA Time Zone 'Volgograd'.
+// Volgograd - IANA Time Zone 'Europe/Volgograd'.
 // IANA Source File: Volgograd
 //  
-func (europ europeTimeZones) Volgograd() string {return "Volgograd" }
+func (europ europeTimeZones) Volgograd() string {return "Europe/Volgograd" }
 
-// Warsaw - IANA Time Zone 'Warsaw'.
+// Warsaw - IANA Time Zone 'Europe/Warsaw'.
 // IANA Source File: Warsaw
 //  
-func (europ europeTimeZones) Warsaw() string {return "Warsaw" }
+func (europ europeTimeZones) Warsaw() string {return "Europe/Warsaw" }
 
-// Zagreb - IANA Time Zone 'Zagreb'.
+// Zagreb - IANA Time Zone 'Europe/Zagreb'.
 // IANA Source File: Zagreb
 //  
-func (europ europeTimeZones) Zagreb() string {return "Zagreb" }
+func (europ europeTimeZones) Zagreb() string {return "Europe/Zagreb" }
 
-// Zaporozhye - IANA Time Zone 'Zaporozhye'.
+// Zaporozhye - IANA Time Zone 'Europe/Zaporozhye'.
 // IANA Source File: Zaporozhye
 //  
-func (europ europeTimeZones) Zaporozhye() string {return "Zaporozhye" }
+func (europ europeTimeZones) Zaporozhye() string {return "Europe/Zaporozhye" }
 
-// Zurich - IANA Time Zone 'Zurich'.
+// Zurich - IANA Time Zone 'Europe/Zurich'.
 // IANA Source File: Zurich
 //  
-func (europ europeTimeZones) Zurich() string {return "Zurich" }
+func (europ europeTimeZones) Zurich() string {return "Europe/Zurich" }
 
 
 // indianTimeZones - IANA Time Zones for 'Indian'.
@@ -2573,60 +2573,60 @@ func (europ europeTimeZones) Zurich() string {return "Zurich" }
 //  
 type indianTimeZones string
 
-// Antananarivo - IANA Time Zone 'Antananarivo'.
+// Antananarivo - IANA Time Zone 'Indian/Antananarivo'.
 // IANA Source File: Antananarivo
 //  
-func (india indianTimeZones) Antananarivo() string {return "Antananarivo" }
+func (india indianTimeZones) Antananarivo() string {return "Indian/Antananarivo" }
 
-// Chagos - IANA Time Zone 'Chagos'.
+// Chagos - IANA Time Zone 'Indian/Chagos'.
 // IANA Source File: Chagos
 //  
-func (india indianTimeZones) Chagos() string {return "Chagos" }
+func (india indianTimeZones) Chagos() string {return "Indian/Chagos" }
 
-// Christmas - IANA Time Zone 'Christmas'.
+// Christmas - IANA Time Zone 'Indian/Christmas'.
 // IANA Source File: Christmas
 //  
-func (india indianTimeZones) Christmas() string {return "Christmas" }
+func (india indianTimeZones) Christmas() string {return "Indian/Christmas" }
 
-// Cocos - IANA Time Zone 'Cocos'.
+// Cocos - IANA Time Zone 'Indian/Cocos'.
 // IANA Source File: Cocos
 //  
-func (india indianTimeZones) Cocos() string {return "Cocos" }
+func (india indianTimeZones) Cocos() string {return "Indian/Cocos" }
 
-// Comoro - IANA Time Zone 'Comoro'.
+// Comoro - IANA Time Zone 'Indian/Comoro'.
 // IANA Source File: Comoro
 //  
-func (india indianTimeZones) Comoro() string {return "Comoro" }
+func (india indianTimeZones) Comoro() string {return "Indian/Comoro" }
 
-// Kerguelen - IANA Time Zone 'Kerguelen'.
+// Kerguelen - IANA Time Zone 'Indian/Kerguelen'.
 // IANA Source File: Kerguelen
 //  
-func (india indianTimeZones) Kerguelen() string {return "Kerguelen" }
+func (india indianTimeZones) Kerguelen() string {return "Indian/Kerguelen" }
 
-// Mahe - IANA Time Zone 'Mahe'.
+// Mahe - IANA Time Zone 'Indian/Mahe'.
 // IANA Source File: Mahe
 //  
-func (india indianTimeZones) Mahe() string {return "Mahe" }
+func (india indianTimeZones) Mahe() string {return "Indian/Mahe" }
 
-// Maldives - IANA Time Zone 'Maldives'.
+// Maldives - IANA Time Zone 'Indian/Maldives'.
 // IANA Source File: Maldives
 //  
-func (india indianTimeZones) Maldives() string {return "Maldives" }
+func (india indianTimeZones) Maldives() string {return "Indian/Maldives" }
 
-// Mauritius - IANA Time Zone 'Mauritius'.
+// Mauritius - IANA Time Zone 'Indian/Mauritius'.
 // IANA Source File: Mauritius
 //  
-func (india indianTimeZones) Mauritius() string {return "Mauritius" }
+func (india indianTimeZones) Mauritius() string {return "Indian/Mauritius" }
 
-// Mayotte - IANA Time Zone 'Mayotte'.
+// Mayotte - IANA Time Zone 'Indian/Mayotte'.
 // IANA Source File: Mayotte
 //  
-func (india indianTimeZones) Mayotte() string {return "Mayotte" }
+func (india indianTimeZones) Mayotte() string {return "Indian/Mayotte" }
 
-// Reunion - IANA Time Zone 'Reunion'.
+// Reunion - IANA Time Zone 'Indian/Reunion'.
 // IANA Source File: Reunion
 //  
-func (india indianTimeZones) Reunion() string {return "Reunion" }
+func (india indianTimeZones) Reunion() string {return "Indian/Reunion" }
 
 
 // mexicoTimeZones - IANA Time Zones for 'Mexico'.
@@ -2641,20 +2641,20 @@ func (india indianTimeZones) Reunion() string {return "Reunion" }
 //  
 type mexicoTimeZones string
 
-// BajaNorte - IANA Time Zone 'BajaNorte'.
+// BajaNorte - IANA Time Zone 'Mexico/BajaNorte'.
 // IANA Source File: BajaNorte
 //  
-func (mexic mexicoTimeZones) BajaNorte() string {return "BajaNorte" }
+func (mexic mexicoTimeZones) BajaNorte() string {return "Mexico/BajaNorte" }
 
-// BajaSur - IANA Time Zone 'BajaSur'.
+// BajaSur - IANA Time Zone 'Mexico/BajaSur'.
 // IANA Source File: BajaSur
 //  
-func (mexic mexicoTimeZones) BajaSur() string {return "BajaSur" }
+func (mexic mexicoTimeZones) BajaSur() string {return "Mexico/BajaSur" }
 
-// General - IANA Time Zone 'General'.
+// General - IANA Time Zone 'Mexico/General'.
 // IANA Source File: General
 //  
-func (mexic mexicoTimeZones) General() string {return "General" }
+func (mexic mexicoTimeZones) General() string {return "Mexico/General" }
 
 
 // Military - Military Time Zone Names.
@@ -3138,220 +3138,220 @@ func (other otherTimeZones) Zulu() string {return "Zulu" }
 //  
 type pacificTimeZones string
 
-// Apia - IANA Time Zone 'Apia'.
+// Apia - IANA Time Zone 'Pacific/Apia'.
 // IANA Source File: Apia
 //  
-func (pacif pacificTimeZones) Apia() string {return "Apia" }
+func (pacif pacificTimeZones) Apia() string {return "Pacific/Apia" }
 
-// Auckland - IANA Time Zone 'Auckland'.
+// Auckland - IANA Time Zone 'Pacific/Auckland'.
 // IANA Source File: Auckland
 //  
-func (pacif pacificTimeZones) Auckland() string {return "Auckland" }
+func (pacif pacificTimeZones) Auckland() string {return "Pacific/Auckland" }
 
-// Bougainville - IANA Time Zone 'Bougainville'.
+// Bougainville - IANA Time Zone 'Pacific/Bougainville'.
 // IANA Source File: Bougainville
 //  
-func (pacif pacificTimeZones) Bougainville() string {return "Bougainville" }
+func (pacif pacificTimeZones) Bougainville() string {return "Pacific/Bougainville" }
 
-// Chatham - IANA Time Zone 'Chatham'.
+// Chatham - IANA Time Zone 'Pacific/Chatham'.
 // IANA Source File: Chatham
 //  
-func (pacif pacificTimeZones) Chatham() string {return "Chatham" }
+func (pacif pacificTimeZones) Chatham() string {return "Pacific/Chatham" }
 
-// Chuuk - IANA Time Zone 'Chuuk'.
+// Chuuk - IANA Time Zone 'Pacific/Chuuk'.
 // IANA Source File: Chuuk
 //  
-func (pacif pacificTimeZones) Chuuk() string {return "Chuuk" }
+func (pacif pacificTimeZones) Chuuk() string {return "Pacific/Chuuk" }
 
-// Easter - IANA Time Zone 'Easter'.
+// Easter - IANA Time Zone 'Pacific/Easter'.
 // IANA Source File: Easter
 //  
-func (pacif pacificTimeZones) Easter() string {return "Easter" }
+func (pacif pacificTimeZones) Easter() string {return "Pacific/Easter" }
 
-// Efate - IANA Time Zone 'Efate'.
+// Efate - IANA Time Zone 'Pacific/Efate'.
 // IANA Source File: Efate
 //  
-func (pacif pacificTimeZones) Efate() string {return "Efate" }
+func (pacif pacificTimeZones) Efate() string {return "Pacific/Efate" }
 
-// Enderbury - IANA Time Zone 'Enderbury'.
+// Enderbury - IANA Time Zone 'Pacific/Enderbury'.
 // IANA Source File: Enderbury
 //  
-func (pacif pacificTimeZones) Enderbury() string {return "Enderbury" }
+func (pacif pacificTimeZones) Enderbury() string {return "Pacific/Enderbury" }
 
-// Fakaofo - IANA Time Zone 'Fakaofo'.
+// Fakaofo - IANA Time Zone 'Pacific/Fakaofo'.
 // IANA Source File: Fakaofo
 //  
-func (pacif pacificTimeZones) Fakaofo() string {return "Fakaofo" }
+func (pacif pacificTimeZones) Fakaofo() string {return "Pacific/Fakaofo" }
 
-// Fiji - IANA Time Zone 'Fiji'.
+// Fiji - IANA Time Zone 'Pacific/Fiji'.
 // IANA Source File: Fiji
 //  
-func (pacif pacificTimeZones) Fiji() string {return "Fiji" }
+func (pacif pacificTimeZones) Fiji() string {return "Pacific/Fiji" }
 
-// Funafuti - IANA Time Zone 'Funafuti'.
+// Funafuti - IANA Time Zone 'Pacific/Funafuti'.
 // IANA Source File: Funafuti
 //  
-func (pacif pacificTimeZones) Funafuti() string {return "Funafuti" }
+func (pacif pacificTimeZones) Funafuti() string {return "Pacific/Funafuti" }
 
-// Galapagos - IANA Time Zone 'Galapagos'.
+// Galapagos - IANA Time Zone 'Pacific/Galapagos'.
 // IANA Source File: Galapagos
 //  
-func (pacif pacificTimeZones) Galapagos() string {return "Galapagos" }
+func (pacif pacificTimeZones) Galapagos() string {return "Pacific/Galapagos" }
 
-// Gambier - IANA Time Zone 'Gambier'.
+// Gambier - IANA Time Zone 'Pacific/Gambier'.
 // IANA Source File: Gambier
 //  
-func (pacif pacificTimeZones) Gambier() string {return "Gambier" }
+func (pacif pacificTimeZones) Gambier() string {return "Pacific/Gambier" }
 
-// Guadalcanal - IANA Time Zone 'Guadalcanal'.
+// Guadalcanal - IANA Time Zone 'Pacific/Guadalcanal'.
 // IANA Source File: Guadalcanal
 //  
-func (pacif pacificTimeZones) Guadalcanal() string {return "Guadalcanal" }
+func (pacif pacificTimeZones) Guadalcanal() string {return "Pacific/Guadalcanal" }
 
-// Guam - IANA Time Zone 'Guam'.
+// Guam - IANA Time Zone 'Pacific/Guam'.
 // IANA Source File: Guam
 //  
-func (pacif pacificTimeZones) Guam() string {return "Guam" }
+func (pacif pacificTimeZones) Guam() string {return "Pacific/Guam" }
 
-// Honolulu - IANA Time Zone 'Honolulu'.
+// Honolulu - IANA Time Zone 'Pacific/Honolulu'.
 // IANA Source File: Honolulu
 //  
-func (pacif pacificTimeZones) Honolulu() string {return "Honolulu" }
+func (pacif pacificTimeZones) Honolulu() string {return "Pacific/Honolulu" }
 
-// Johnston - IANA Time Zone 'Johnston'.
+// Johnston - IANA Time Zone 'Pacific/Johnston'.
 // IANA Source File: Johnston
 //  
-func (pacif pacificTimeZones) Johnston() string {return "Johnston" }
+func (pacif pacificTimeZones) Johnston() string {return "Pacific/Johnston" }
 
-// Kiritimati - IANA Time Zone 'Kiritimati'.
+// Kiritimati - IANA Time Zone 'Pacific/Kiritimati'.
 // IANA Source File: Kiritimati
 //  
-func (pacif pacificTimeZones) Kiritimati() string {return "Kiritimati" }
+func (pacif pacificTimeZones) Kiritimati() string {return "Pacific/Kiritimati" }
 
-// Kosrae - IANA Time Zone 'Kosrae'.
+// Kosrae - IANA Time Zone 'Pacific/Kosrae'.
 // IANA Source File: Kosrae
 //  
-func (pacif pacificTimeZones) Kosrae() string {return "Kosrae" }
+func (pacif pacificTimeZones) Kosrae() string {return "Pacific/Kosrae" }
 
-// Kwajalein - IANA Time Zone 'Kwajalein'.
+// Kwajalein - IANA Time Zone 'Pacific/Kwajalein'.
 // IANA Source File: Kwajalein
 //  
-func (pacif pacificTimeZones) Kwajalein() string {return "Kwajalein" }
+func (pacif pacificTimeZones) Kwajalein() string {return "Pacific/Kwajalein" }
 
-// Majuro - IANA Time Zone 'Majuro'.
+// Majuro - IANA Time Zone 'Pacific/Majuro'.
 // IANA Source File: Majuro
 //  
-func (pacif pacificTimeZones) Majuro() string {return "Majuro" }
+func (pacif pacificTimeZones) Majuro() string {return "Pacific/Majuro" }
 
-// Marquesas - IANA Time Zone 'Marquesas'.
+// Marquesas - IANA Time Zone 'Pacific/Marquesas'.
 // IANA Source File: Marquesas
 //  
-func (pacif pacificTimeZones) Marquesas() string {return "Marquesas" }
+func (pacif pacificTimeZones) Marquesas() string {return "Pacific/Marquesas" }
 
-// Midway - IANA Time Zone 'Midway'.
+// Midway - IANA Time Zone 'Pacific/Midway'.
 // IANA Source File: Midway
 //  
-func (pacif pacificTimeZones) Midway() string {return "Midway" }
+func (pacif pacificTimeZones) Midway() string {return "Pacific/Midway" }
 
-// Nauru - IANA Time Zone 'Nauru'.
+// Nauru - IANA Time Zone 'Pacific/Nauru'.
 // IANA Source File: Nauru
 //  
-func (pacif pacificTimeZones) Nauru() string {return "Nauru" }
+func (pacif pacificTimeZones) Nauru() string {return "Pacific/Nauru" }
 
-// Niue - IANA Time Zone 'Niue'.
+// Niue - IANA Time Zone 'Pacific/Niue'.
 // IANA Source File: Niue
 //  
-func (pacif pacificTimeZones) Niue() string {return "Niue" }
+func (pacif pacificTimeZones) Niue() string {return "Pacific/Niue" }
 
-// Norfolk - IANA Time Zone 'Norfolk'.
+// Norfolk - IANA Time Zone 'Pacific/Norfolk'.
 // IANA Source File: Norfolk
 //  
-func (pacif pacificTimeZones) Norfolk() string {return "Norfolk" }
+func (pacif pacificTimeZones) Norfolk() string {return "Pacific/Norfolk" }
 
-// Noumea - IANA Time Zone 'Noumea'.
+// Noumea - IANA Time Zone 'Pacific/Noumea'.
 // IANA Source File: Noumea
 //  
-func (pacif pacificTimeZones) Noumea() string {return "Noumea" }
+func (pacif pacificTimeZones) Noumea() string {return "Pacific/Noumea" }
 
-// Pago_Pago - IANA Time Zone 'Pago_Pago'.
+// Pago_Pago - IANA Time Zone 'Pacific/Pago_Pago'.
 // IANA Source File: Pago_Pago
 //  
-func (pacif pacificTimeZones) Pago_Pago() string {return "Pago_Pago" }
+func (pacif pacificTimeZones) Pago_Pago() string {return "Pacific/Pago_Pago" }
 
-// Palau - IANA Time Zone 'Palau'.
+// Palau - IANA Time Zone 'Pacific/Palau'.
 // IANA Source File: Palau
 //  
-func (pacif pacificTimeZones) Palau() string {return "Palau" }
+func (pacif pacificTimeZones) Palau() string {return "Pacific/Palau" }
 
-// Pitcairn - IANA Time Zone 'Pitcairn'.
+// Pitcairn - IANA Time Zone 'Pacific/Pitcairn'.
 // IANA Source File: Pitcairn
 //  
-func (pacif pacificTimeZones) Pitcairn() string {return "Pitcairn" }
+func (pacif pacificTimeZones) Pitcairn() string {return "Pacific/Pitcairn" }
 
-// Pohnpei - IANA Time Zone 'Pohnpei'.
+// Pohnpei - IANA Time Zone 'Pacific/Pohnpei'.
 // IANA Source File: Pohnpei
 //  
-func (pacif pacificTimeZones) Pohnpei() string {return "Pohnpei" }
+func (pacif pacificTimeZones) Pohnpei() string {return "Pacific/Pohnpei" }
 
-// Ponape - IANA Time Zone 'Ponape'.
+// Ponape - IANA Time Zone 'Pacific/Ponape'.
 // IANA Source File: Ponape
 //  
-func (pacif pacificTimeZones) Ponape() string {return "Ponape" }
+func (pacif pacificTimeZones) Ponape() string {return "Pacific/Ponape" }
 
-// Port_Moresby - IANA Time Zone 'Port_Moresby'.
+// Port_Moresby - IANA Time Zone 'Pacific/Port_Moresby'.
 // IANA Source File: Port_Moresby
 //  
-func (pacif pacificTimeZones) Port_Moresby() string {return "Port_Moresby" }
+func (pacif pacificTimeZones) Port_Moresby() string {return "Pacific/Port_Moresby" }
 
-// Rarotonga - IANA Time Zone 'Rarotonga'.
+// Rarotonga - IANA Time Zone 'Pacific/Rarotonga'.
 // IANA Source File: Rarotonga
 //  
-func (pacif pacificTimeZones) Rarotonga() string {return "Rarotonga" }
+func (pacif pacificTimeZones) Rarotonga() string {return "Pacific/Rarotonga" }
 
-// Saipan - IANA Time Zone 'Saipan'.
+// Saipan - IANA Time Zone 'Pacific/Saipan'.
 // IANA Source File: Saipan
 //  
-func (pacif pacificTimeZones) Saipan() string {return "Saipan" }
+func (pacif pacificTimeZones) Saipan() string {return "Pacific/Saipan" }
 
-// Samoa - IANA Time Zone 'Samoa'.
+// Samoa - IANA Time Zone 'Pacific/Samoa'.
 // IANA Source File: Samoa
 //  
-func (pacif pacificTimeZones) Samoa() string {return "Samoa" }
+func (pacif pacificTimeZones) Samoa() string {return "Pacific/Samoa" }
 
-// Tahiti - IANA Time Zone 'Tahiti'.
+// Tahiti - IANA Time Zone 'Pacific/Tahiti'.
 // IANA Source File: Tahiti
 //  
-func (pacif pacificTimeZones) Tahiti() string {return "Tahiti" }
+func (pacif pacificTimeZones) Tahiti() string {return "Pacific/Tahiti" }
 
-// Tarawa - IANA Time Zone 'Tarawa'.
+// Tarawa - IANA Time Zone 'Pacific/Tarawa'.
 // IANA Source File: Tarawa
 //  
-func (pacif pacificTimeZones) Tarawa() string {return "Tarawa" }
+func (pacif pacificTimeZones) Tarawa() string {return "Pacific/Tarawa" }
 
-// Tongatapu - IANA Time Zone 'Tongatapu'.
+// Tongatapu - IANA Time Zone 'Pacific/Tongatapu'.
 // IANA Source File: Tongatapu
 //  
-func (pacif pacificTimeZones) Tongatapu() string {return "Tongatapu" }
+func (pacif pacificTimeZones) Tongatapu() string {return "Pacific/Tongatapu" }
 
-// Truk - IANA Time Zone 'Truk'.
+// Truk - IANA Time Zone 'Pacific/Truk'.
 // IANA Source File: Truk
 //  
-func (pacif pacificTimeZones) Truk() string {return "Truk" }
+func (pacif pacificTimeZones) Truk() string {return "Pacific/Truk" }
 
-// Wake - IANA Time Zone 'Wake'.
+// Wake - IANA Time Zone 'Pacific/Wake'.
 // IANA Source File: Wake
 //  
-func (pacif pacificTimeZones) Wake() string {return "Wake" }
+func (pacif pacificTimeZones) Wake() string {return "Pacific/Wake" }
 
-// Wallis - IANA Time Zone 'Wallis'.
+// Wallis - IANA Time Zone 'Pacific/Wallis'.
 // IANA Source File: Wallis
 //  
-func (pacif pacificTimeZones) Wallis() string {return "Wallis" }
+func (pacif pacificTimeZones) Wallis() string {return "Pacific/Wallis" }
 
-// Yap - IANA Time Zone 'Yap'.
+// Yap - IANA Time Zone 'Pacific/Yap'.
 // IANA Source File: Yap
 //  
-func (pacif pacificTimeZones) Yap() string {return "Yap" }
+func (pacif pacificTimeZones) Yap() string {return "Pacific/Yap" }
 
 
 // uSTimeZones - IANA Time Zones for 'US'.
@@ -3366,65 +3366,65 @@ func (pacif pacificTimeZones) Yap() string {return "Yap" }
 //  
 type uSTimeZones string
 
-// Alaska - IANA Time Zone 'Alaska'.
+// Alaska - IANA Time Zone 'US/Alaska'.
 // IANA Source File: Alaska
 //  
-func (uSTim uSTimeZones) Alaska() string {return "Alaska" }
+func (uSTim uSTimeZones) Alaska() string {return "US/Alaska" }
 
-// Aleutian - IANA Time Zone 'Aleutian'.
+// Aleutian - IANA Time Zone 'US/Aleutian'.
 // IANA Source File: Aleutian
 //  
-func (uSTim uSTimeZones) Aleutian() string {return "Aleutian" }
+func (uSTim uSTimeZones) Aleutian() string {return "US/Aleutian" }
 
-// Arizona - IANA Time Zone 'Arizona'.
+// Arizona - IANA Time Zone 'US/Arizona'.
 // IANA Source File: Arizona
 //  
-func (uSTim uSTimeZones) Arizona() string {return "Arizona" }
+func (uSTim uSTimeZones) Arizona() string {return "US/Arizona" }
 
-// Central - IANA Time Zone 'Central'.
+// Central - IANA Time Zone 'US/Central'.
 // IANA Source File: Central
 //  
-func (uSTim uSTimeZones) Central() string {return "Central" }
+func (uSTim uSTimeZones) Central() string {return "US/Central" }
 
-// East-Indiana - IANA Time Zone 'East-Indiana'.
+// East-Indiana - IANA Time Zone 'US/East-Indiana'.
 // IANA Source File: East-Indiana
 //  
-func (uSTim uSTimeZones) EastMinusIndiana() string {return "East-Indiana" }
+func (uSTim uSTimeZones) EastMinusIndiana() string {return "US/East-Indiana" }
 
-// Eastern - IANA Time Zone 'Eastern'.
+// Eastern - IANA Time Zone 'US/Eastern'.
 // IANA Source File: Eastern
 //  
-func (uSTim uSTimeZones) Eastern() string {return "Eastern" }
+func (uSTim uSTimeZones) Eastern() string {return "US/Eastern" }
 
-// Hawaii - IANA Time Zone 'Hawaii'.
+// Hawaii - IANA Time Zone 'US/Hawaii'.
 // IANA Source File: Hawaii
 //  
-func (uSTim uSTimeZones) Hawaii() string {return "Hawaii" }
+func (uSTim uSTimeZones) Hawaii() string {return "US/Hawaii" }
 
-// Indiana-Starke - IANA Time Zone 'Indiana-Starke'.
+// Indiana-Starke - IANA Time Zone 'US/Indiana-Starke'.
 // IANA Source File: Indiana-Starke
 //  
-func (uSTim uSTimeZones) IndianaMinusStarke() string {return "Indiana-Starke" }
+func (uSTim uSTimeZones) IndianaMinusStarke() string {return "US/Indiana-Starke" }
 
-// Michigan - IANA Time Zone 'Michigan'.
+// Michigan - IANA Time Zone 'US/Michigan'.
 // IANA Source File: Michigan
 //  
-func (uSTim uSTimeZones) Michigan() string {return "Michigan" }
+func (uSTim uSTimeZones) Michigan() string {return "US/Michigan" }
 
-// Mountain - IANA Time Zone 'Mountain'.
+// Mountain - IANA Time Zone 'US/Mountain'.
 // IANA Source File: Mountain
 //  
-func (uSTim uSTimeZones) Mountain() string {return "Mountain" }
+func (uSTim uSTimeZones) Mountain() string {return "US/Mountain" }
 
-// Pacific - IANA Time Zone 'Pacific'.
+// Pacific - IANA Time Zone 'US/Pacific'.
 // IANA Source File: Pacific
 //  
-func (uSTim uSTimeZones) Pacific() string {return "Pacific" }
+func (uSTim uSTimeZones) Pacific() string {return "US/Pacific" }
 
-// Samoa - IANA Time Zone 'Samoa'.
+// Samoa - IANA Time Zone 'US/Samoa'.
 // IANA Source File: Samoa
 //  
-func (uSTim uSTimeZones) Samoa() string {return "Samoa" }
+func (uSTim uSTimeZones) Samoa() string {return "US/Samoa" }
 
 
 // argentinaTimeZones - A Sub-Group of Time Zones. These are
