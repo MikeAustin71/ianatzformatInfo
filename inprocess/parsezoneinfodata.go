@@ -26,7 +26,7 @@ func (parseZInfo ParseZoneInfoData) ParseZoneInfo(
 
 	tzStats.Initialize()
 
-	zInfoDto.ZoneInfoDirFileInfo.SortByAbsPathFileName(true)
+	zInfoDto.ZoneInfoDirTreeInfo.SortByAbsPathFileName(true)
 
 	err := parseZInfo.parseIanaTimeZoneFiles(zInfoDto, &tzStats, ePrefix)
 
@@ -157,7 +157,7 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 
 	ePrefix += "ParseZoneInfoData.parseIanaTimeZoneFiles() "
 
-	numOfZoneInfoFMgrs := zInfoDto.ZoneInfoDirFileInfo.GetNumOfFileMgrs()
+	numOfZoneInfoFMgrs := zInfoDto.ZoneInfoDirTreeInfo.GetNumOfFileMgrs()
 
 	if numOfZoneInfoFMgrs < 30 {
 		return fmt.Errorf(ePrefix+
@@ -171,11 +171,11 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 
 	for i := 0; i < numOfZoneInfoFMgrs; i++ {
 
-		fMgr, err := zInfoDto.ZoneInfoDirFileInfo.PeekFileMgrAtIndex(i)
+		fMgr, err := zInfoDto.ZoneInfoDirTreeInfo.PeekFileMgrAtIndex(i)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix+
-				"Error returned by zInfoDto.ZoneInfoDirFileInfo.PeekFileMgrAtIndex(i)\n"+
+				"Error returned by zInfoDto.ZoneInfoDirTreeInfo.PeekFileMgrAtIndex(i)\n"+
 				"i='%v'\n"+
 				"Error='%v'\n", i, err.Error())
 		}
@@ -184,8 +184,6 @@ func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
 		tZone := absPathFileName[lenTopDir:]
 		tZone = strings.Replace(tZone, "\\", "/", -1)
 		zoneArray := strings.Split(tZone, "/")
-
-		fmt.Printf("%v\n", tZone)
 
 		switch len(zoneArray) {
 		case 1:

@@ -5,20 +5,22 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
+	"local.com/amarillomike/ianatzformatInfo/fileops"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
 )
 
 
 type ZoneInfoDataDto struct {
-	ZoneInfoInputDir    string
-	AppOutputDir        string
-	AppLogfilePathName  string
-	IanaTimeZoneVersion string
-	ZoneInfoDirFileInfo pathfileops.FileMgrCollection
-	ZoneInfoDirMgr      pathfileops.DirMgr
-	AppOutputDirMgr     pathfileops.DirMgr
-	AppLogFileMgr       pathfileops.FileMgr
+	ZoneInfoInputDir        string
+	AppInputPathFileNameExt string
+	AppOutputDir            string
+	AppLogPathFileNameExt   string
+	IanaTimeZoneVersion     string
+	ZoneInfoDirTreeInfo     pathfileops.DirectoryTreeInfo
+	ZoneInfoDirMgr          pathfileops.DirMgr
+	AppOutputDirMgr         pathfileops.DirMgr
+	AppLogFileMgr           pathfileops.FileMgr
 }
 
 // AcquireZoneInfo - Reads, parses and returns all information
@@ -27,19 +29,23 @@ type ZoneInfoDataDto struct {
 //'input' which is located immediately underneath the directory
 // containing this application executable.
 func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
-	baseDataInputPathFileName,
+	baseDataDirMgr pathfileops.DirMgr,
+	baseDataFileNameExt,
 	ePrefix string) (ZoneInfoDataDto, error) {
 		
 		ePrefix += "ZoneInfoDataDto.AcquireZoneInfo() "
 
 		zoneInfoDto := ZoneInfoDataDto{}
 		
-	baseDataInputFileMgr, err2 := 
-			zInDto.createInputFileMgr(baseDataInputPathFileName, ePrefix)
+	baseDataInputFileMgr, err2 :=
+			fileops.FileOps{}.CreateOpenFile(baseDataDirMgr, baseDataFileNameExt, ePrefix)
+			//zInDto.createInputFileMgr(baseDataFileNameExt, ePrefix)
 	
 	if err2 != nil {
 		return zoneInfoDto, err2
 	}
+
+	zoneInfoDto.AppInputPathFileNameExt = baseDataInputFileMgr.GetAbsolutePathFileName()
 
 	zoneInfoDto.ZoneInfoInputDir,
 	zoneInfoDto.AppOutputDir,
@@ -51,7 +57,7 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 		return ZoneInfoDataDto{}, err2
 	}
 
-	zoneInfoDto.ZoneInfoDirFileInfo, err2 =
+	zoneInfoDto.ZoneInfoDirTreeInfo, err2 =
 		zInDto.getZoneInfoDirFileInfo(zoneInfoDto.ZoneInfoInputDir, ePrefix)
 
 	if err2 != nil {
@@ -79,7 +85,7 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 		return ZoneInfoDataDto{}, err2
 	}
 
-	zoneInfoDto.AppLogfilePathName =
+	zoneInfoDto.AppLogPathFileNameExt =
 		zoneInfoDto.AppLogFileMgr.GetAbsolutePathFileName()
 
 	return zoneInfoDto, nil
@@ -138,90 +144,28 @@ func (zInDto ZoneInfoDataDto) createInputFileMgr(
 // file name then creates and opens the file.
 func (zInDto ZoneInfoDataDto) createOpenLogOutputFile(
 	outputPathDirMgr pathfileops.DirMgr,
-	ePrefix string) (f pathfileops.FileMgr, err error) {
+	ePrefix string) (pathfileops.FileMgr, error) {
 
-	ePrefix += "TzOutProcess.createOpenLogOutputFile() "
+	ePrefix += "ZoneInfoDataDto.createOpenLogOutputFile() "
 
 	fmtDateTimeSecondStr := "20060102150405"
 	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(fmtDateTimeSecondStr)
 
 	fileNameExt :=   currDateTimeStr +"_ianaformatInfoLog" +".txt"
-	f = pathfileops.FileMgr{}
-	err = nil
-	var err2 error
 
+	return fileops.FileOps{}.CreateOpenFile(outputPathDirMgr, fileNameExt, ePrefix)
 
-	f, err2 = pathfileops.FileMgr{}.NewFromDirMgrFileNameExt(outputPathDirMgr, fileNameExt)
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v", err2.Error())
-		return f, err
-	}
-
-	err = f.IsFileMgrValid(ePrefix)
-
-	if err != nil {
-		return f, err
-	}
-
-	fileExists, err2 := f.DoesThisFileExist()
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v", err2.Error())
-		return f, err
-	}
-
-	if fileExists {
-
-		err2 = f.DeleteThisFile()
-
-		if err2 != nil {
-			err = fmt.Errorf(ePrefix+"%v", err2.Error())
-			return f, err
-		}
-
-		fileExists, err2 = f.DoesThisFileExist()
-
-		if err2 != nil {
-			err = fmt.Errorf(ePrefix+"%v", err2.Error())
-			return f, err
-		}
-
-		if fileExists {
-			err = fmt.Errorf(ePrefix+"Existing Output File FAILED to Delete! "+
-				"Output File= '%v' ", f.GetAbsolutePathFileName())
-			return f, err
-		}
-
-	}
-
-	err2 = f.CreateThisFile()
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v", err2.Error())
-		return f, err
-	}
-
-	err2 = f.OpenThisFileReadWrite()
-
-	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v", err2.Error())
-		return f, err
-	}
-
-	err = nil
-
-	return f, err
 }
 
 // getZoneInfoDirFileInfo - Receives the Zone Info directory path as input and returns
 // a collection of file managers for every file in the Zone Info directory tree.
 //
 func (zInDto ZoneInfoDataDto) getZoneInfoDirFileInfo(
-	zoneInfoInputDir, ePrefix string) (zoneInfoDirFileInfo pathfileops.FileMgrCollection, err error) {
+	zoneInfoInputDir,
+	ePrefix string) (zoneInfoDirFileInfo pathfileops.DirectoryTreeInfo, err error) {
 
 	ePrefix += "ZoneInfoDataDto.getZoneInfoDirFileInfo() "
-	zoneInfoDirFileInfo = pathfileops.FileMgrCollection{}
+	zoneInfoDirFileInfo = pathfileops.DirectoryTreeInfo{}
 	err = nil
 
 
@@ -256,16 +200,27 @@ func (zInDto ZoneInfoDataDto) getZoneInfoDirFileInfo(
 		return zoneInfoDirFileInfo, err
 	}
 
-	zoneInfoDirFileInfo, err2 = zoneInfoInputDirMgr.FindFilesByNamePattern("*")
+	fileSelectCriteria := pathfileops.FileSelectionCriteria{}
+
+	var errs []error
+
+	zoneInfoDirFileInfo, errs = zoneInfoInputDirMgr.FindDirectoryTreeFiles(fileSelectCriteria)
+
+	err2 = pathfileops.FileHelper{}.ConsolidateErrors(errs)
 
 	if err2 != nil {
-		err = fmt.Errorf(ePrefix+"%v\n", err2.Error())
+
+		err =fmt.Errorf(ePrefix +
+			"\nError returned by baseDirMgr.FindDirectoryTreeFiles(fileSelectCriteria)\n" +
+			"Error='%v'\n", err2.Error())
+
 		return zoneInfoDirFileInfo, err
 	}
 
-	if zoneInfoDirFileInfo.GetNumOfFileMgrs() < 1 {
-		err = fmt.Errorf(ePrefix + "Error: No files located in target 'zoneInfoInputDirMgr'.\n" +
-			"'zoneInfoInputDirMgr='%v'\n", zoneInfoInputDirMgr.GetAbsolutePath())
+
+	if zoneInfoDirFileInfo.FoundFiles.GetNumOfFileMgrs() < 1 {
+		err = fmt.Errorf(ePrefix + "Error: No files located in target 'baseDirMgr'.\n" +
+			"'baseDirMgr='%v'\n", zoneInfoInputDirMgr.GetAbsolutePath())
 	}
 
 	err = nil

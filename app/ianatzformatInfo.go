@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"local.com/amarillomike/ianatzformatInfo/fileops"
 	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
@@ -45,43 +46,37 @@ func main() {
 
 	tzdatastructs.ApplicationStartDateTime = time.Now()
 
-	/*
-	currWorkingDirMgr, err := inprocess.AcquireTzData{}.SetCurrentWorkingDirectory(ePrefix)
+	executableWorkingDirMgr, err := fileops.FileOps{}.GetApplicationDirectory(ePrefix)
 
 	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
-		return
-	}
-*/
-
-
-	currWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
-
-	if err != nil {
-		fmt.Printf(ePrefix+"%v\n", err.Error())
+		fmt.Printf("%v\n", err.Error())
 		return
 	}
 
+
+	// executableWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
 
 	fmt.Println()
 	fmt.Println("ianatzformatInfo.exe" )
 	fmt.Println("--------------------")
-	fmt.Printf("Current Working Directory:\n     %v\n\n", currWorkingDirMgr.GetAbsolutePath())
+	fmt.Printf("Current Working Directory:\n     %v\n\n", executableWorkingDirMgr.GetAbsolutePath())
 
-	targetInputDir :=
-		currWorkingDirMgr.GetAbsolutePathWithSeparator() + "input"
+	var baseDataInputDirMgr pathfileops.DirMgr
 
-	baseDataInputPathFileName :=
-		pathfileops.FileHelper{}.JoinPathsAdjustSeparators(
-			targetInputDir,
-			tzdatastructs.AppInputParametersFileName)
+	baseDataInputDirMgr, err = pathfileops.DirMgr{}.New(
+		executableWorkingDirMgr.GetAbsolutePathWithSeparator() + "input")
+
 
 	var zoneInfoDataDto inprocess.ZoneInfoDataDto
 
-	fmt.Printf("Base Data Input File:\n     %v\n\n", baseDataInputPathFileName)
+	// fmt.Printf("Base Data Input File:\n     %v\n\n", baseDataInputPathFileName)
 
+	// tzdatastructs.AppInputParametersFileName = "targettzdata.txt"
 	zoneInfoDataDto, err =
-		inprocess.ZoneInfoDataDto{}.AcquireZoneInfo(baseDataInputPathFileName, ePrefix)
+		inprocess.ZoneInfoDataDto{}.AcquireZoneInfo(
+			baseDataInputDirMgr,
+			tzdatastructs.AppInputParametersFileName,
+			ePrefix)
 
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
