@@ -8,6 +8,9 @@ import (
 
 var CurWorkingDirectory pathfileops.DirMgr
 
+var ErrorCount  int
+var WarningCount int
+
 var ApplicationStartDateTime time.Time
 var ApplicationEndDateTime time.Time
 

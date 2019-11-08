@@ -400,6 +400,7 @@ func (txtBuilder TextLineBuilder) CreateLineSpec(
 
 	var err error
 
+
 	for i:=0; i < lineSpec.LineLength; i++ {
 
 		_, err = xb.WriteRune(lineSpec.LineChar)
@@ -412,9 +413,20 @@ func (txtBuilder TextLineBuilder) CreateLineSpec(
 		}
 	}
 
-	if lineSpec.LineLength == lineSpec.LineFieldLength {
+	lineStr := xb.String()
 
-		_, err = b.WriteString(xb.String())
+	lenLineStr := len(lineStr)
+
+	if lenLineStr != lineSpec.LineLength {
+		return fmt.Errorf(ePrefix +
+			"\nError: Expected line length='%v'.\n" +
+			"Instead, actual line length='%v'.\n", lineSpec.LineLength, lenLineStr)
+	}
+
+	// if lineSpec.LineLength == lineSpec.LineFieldLength {
+	if lenLineStr == lineSpec.LineFieldLength {
+
+		_, err = b.WriteString(lineStr)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -439,7 +451,7 @@ func (txtBuilder TextLineBuilder) CreateLineSpec(
 		case FieldPos.LeftJustify() :
 
 			err = txtBuilder.LeftJustifyField(
-				xb.String(),
+				lineStr,
 				lineSpec.LineFieldLength,
 				lineSpec.LineFieldPadChar,
 				b,
@@ -448,7 +460,7 @@ func (txtBuilder TextLineBuilder) CreateLineSpec(
 		case FieldPos.RightJustify() :
 
 			err = txtBuilder.RightJustifyField(
-				xb.String(),
+				lineStr,
 				lineSpec.LineFieldLength,
 				lineSpec.LineFieldPadChar,
 				b,
@@ -457,7 +469,7 @@ func (txtBuilder TextLineBuilder) CreateLineSpec(
 		case FieldPos.Center() :
 
 			err = txtBuilder.CenterInField(
-				xb.String(),
+				lineStr,
 				lineSpec.LineFieldLength,
 				lineSpec.LineFieldPadChar,
 				b,

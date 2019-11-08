@@ -91,7 +91,7 @@ package main
 // 
 //                  Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-07 Thursday 17:19:40 -0600 CST
+// Type Creation Date: 2019-11-08 Friday 00:00:41 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {

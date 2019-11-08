@@ -52,6 +52,13 @@ func (tzLog *TzLogOps) WriteLogFile(
 		return err
 	}
 
+	err = tzLog.WriteLogFooter(outputFileMgr, tzStats, ePrefix)
+
+	if err != nil {
+		_ = outputFileMgr.CloseThisFile()
+		return err
+	}
+
 	err = outputFileMgr.CloseThisFile()
 
 	if err != nil {
@@ -67,22 +74,22 @@ func (tzLog *TzLogOps) WriteLogFile(
 func (tzLog *TzLogOps) InitializeLogOps() {
 
 	tzLog.leftMarginLength = 2
-	tzLog.maxLineLen = 65
+	tzLog.maxLineLen = 78
 
 	tzLog.dashLineBreakStr = textlinebuilder.LineSpec{
 		LineChar:         '-',
 		LineLength:       tzLog.maxLineLen,
-		LineFieldLength:  tzLog.maxLineLen,
+		LineFieldLength:  tzLog.maxLineLen + tzLog.leftMarginLength,
 		LineFieldPadChar: ' ',
-		LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
+		LinePosition:     textlinebuilder.FieldPos.RightJustify(),
 	}
 
 	tzLog.equalLineBreakStr = textlinebuilder.LineSpec{
 		LineChar:         '=',
 		LineLength:       tzLog.maxLineLen,
-		LineFieldLength:  tzLog.maxLineLen,
+		LineFieldLength:  tzLog.maxLineLen + tzLog.leftMarginLength,
 		LineFieldPadChar: ' ',
-		LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
+		LinePosition:     textlinebuilder.FieldPos.RightJustify(),
 	}
 
 	tzLog.leftMargin = textlinebuilder.MarginSpec{
@@ -93,6 +100,308 @@ func (tzLog *TzLogOps) InitializeLogOps() {
 
 	tzLog.newLine.AddNewLine = true
 
+}
+
+
+func (tzLog *TzLogOps) WriteLogFooter(
+	outputFileMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "TzLogOps.WriteLogFooter() "
+	var b strings.Builder
+	b.Grow(1024)
+
+	label1 := "End Of Execution"
+
+	strSpec1 := textlinebuilder.StringSpec{
+		StrValue:       label1,
+		StrFieldLength: tzLog.maxLineLen,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	strSpec2 := textlinebuilder.StringSpec{
+		StrValue:       "ianatzformatInfo.go",
+		StrFieldLength: tzLog.maxLineLen,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	err := textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.equalLineBreakStr,
+		tzLog.newLine,
+		strSpec1,
+		tzLog.newLine,
+		strSpec2,
+		tzLog.newLine,
+		tzLog.equalLineBreakStr,
+		tzLog.newLine,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Iana Time Zone Version: ",
+		StrFieldLength: 25,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       tzStats.IanaVersion,
+		StrFieldLength: len(tzStats.IanaVersion),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Errors and Warnings",
+		StrFieldLength: 50,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		strSpec1,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Error Count",
+		StrFieldLength: 50,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		strSpec1,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Error Count",
+		StrFieldLength: 25,
+		StrPadChar:     '.',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	intSpec3 := textlinebuilder.IntegerSpec{
+		NumericValue:       tzdatastructs.ErrorCount,
+		NumericFieldSpec:   "%3d",
+		NumericFieldLength: 10,
+		NumericPadChar:     '.',
+		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		intSpec3,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Warning Count",
+		StrFieldLength: 25,
+		StrPadChar:     '.',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	intSpec3 = textlinebuilder.IntegerSpec{
+		NumericValue:       tzdatastructs.WarningCount,
+		NumericFieldSpec:   "%3d",
+		NumericFieldLength: 10,
+		NumericPadChar:     '.',
+		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		intSpec3,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Execution Times",
+		StrFieldLength: 50,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		strSpec1,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Starting Date Time: ",
+		StrFieldLength: 20,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	tzdatastructs.ApplicationEndDateTime = time.Now()
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTime)
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       currDateTimeStr,
+		StrFieldLength: len(currDateTimeStr),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		tzLog.newLine )
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Ending Date Time: ",
+		StrFieldLength: 20,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	endDateTimeStr := tzdatastructs.ApplicationEndDateTime.Format(tzdatastructs.FmtDateTime)
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       endDateTimeStr,
+		StrFieldLength: len(endDateTimeStr),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		tzLog.newLine )
+
+	if err != nil {
+		return err
+	}
+
+	elapsedTimeStr :=
+		TzStrFmt{}.ElapsedTime(
+			tzdatastructs.ApplicationStartDateTime,
+			tzdatastructs.ApplicationEndDateTime)
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Elapsed Time: ",
+		StrFieldLength: 20,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       elapsedTimeStr,
+		StrFieldLength: len(elapsedTimeStr),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		tzLog.newLine,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.equalLineBreakStr,
+		tzLog.newLine,
+		tzLog.equalLineBreakStr,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
 }
 
 // WriteLogHeader - Writes Log title, header and timing
@@ -145,99 +454,6 @@ func (tzLog *TzLogOps) WriteLogHeader(
 	strSpec2 = textlinebuilder.StringSpec{
 		StrValue:       tzStats.IanaVersion,
 		StrFieldLength: len(tzStats.IanaVersion) + 1,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
-	}
-
-	err = textlinebuilder.TextLineBuilder{}.Build(
-		&b,
-		ePrefix,
-		tzLog.leftMargin,
-		strSpec1,
-		strSpec2,
-		tzLog.newLine,
-		tzLog.dashLineBreakStr,
-		tzLog.newLine,
-		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
-
-	if err != nil {
-		return err
-	}
-
-
-	strSpec1 = textlinebuilder.StringSpec{
-		StrValue:       "Starting Date Time: ",
-		StrFieldLength: 25,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
-	}
-
-	tzdatastructs.ApplicationEndDateTime = time.Now()
-	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTime)
-
-	strSpec2 = textlinebuilder.StringSpec{
-		StrValue:       currDateTimeStr,
-		StrFieldLength: tzLog.maxLineLen - 25,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
-	}
-
-	err = textlinebuilder.TextLineBuilder{}.Build(
-		&b,
-		ePrefix,
-		tzLog.leftMargin,
-		strSpec1,
-		strSpec2,
-		tzLog.newLine )
-
-	if err != nil {
-		return err
-	}
-
-	strSpec1 = textlinebuilder.StringSpec{
-		StrValue:       "Ending Date Time: ",
-		StrFieldLength: 25,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
-	}
-
-	endDateTimeStr := tzdatastructs.ApplicationEndDateTime.Format(tzdatastructs.FmtDateTime)
-
-	strSpec2 = textlinebuilder.StringSpec{
-		StrValue:       endDateTimeStr,
-		StrFieldLength: tzLog.maxLineLen - 25,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
-	}
-
-	err = textlinebuilder.TextLineBuilder{}.Build(
-		&b,
-		ePrefix,
-		tzLog.leftMargin,
-		strSpec1,
-		strSpec2,
-		tzLog.newLine )
-
-	if err != nil {
-		return err
-	}
-
-
-	elapsedTimeStr :=
-		TzStrFmt{}.ElapsedTime(
-			tzdatastructs.ApplicationStartDateTime,
-			tzdatastructs.ApplicationEndDateTime)
-
-	strSpec1 = textlinebuilder.StringSpec{
-		StrValue:       "Elapsed Time: ",
-		StrFieldLength: 25,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
-	}
-
-	strSpec2 = textlinebuilder.StringSpec{
-		StrValue:       elapsedTimeStr,
-		StrFieldLength: tzLog.maxLineLen - 25,
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
 	}
