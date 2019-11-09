@@ -120,8 +120,6 @@ parser := inprocess.ParseZoneInfoData{}
 	}
 
 
-	fmt.Println("Number Of Conflicts Resolved: ", timeZoneStats.NumOfLinkConflictResolved)
-	fmt.Println("Number Of Backzone Conflicts: ", timeZoneStats.NumOfBackZoneConflicts)
 	fmt.Println("---------------------")
 	fmt.Println("Successful Completion")
 	fmt.Println("---------------------")

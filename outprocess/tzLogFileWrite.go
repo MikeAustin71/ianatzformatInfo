@@ -492,6 +492,9 @@ func (tzLog *TzLogOps) WriteLogHeader(
 	return nil
 }
 
+
+// WriteIanaRegionalTotals - Prints totals for IANA
+// time zones by Region.
 func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 	outputFileMgr pathfileops.FileMgr,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
@@ -587,6 +590,7 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 		if err != nil{
 			return err
 		}
+
 	}
 
 	totalLineStarts :=
@@ -631,9 +635,9 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 	}
 
 	intSpec2 = textlinebuilder.IntegerSpec{
-		NumericValue:       tzStats.TotalZones,
+		NumericValue:       tzStats.TotalIanaStdTzLinkZones,
 		NumericFieldSpec:   "%4d",
-		NumericFieldLength: 4,
+		NumericFieldLength: 5,
 		NumericPadChar:     ' ',
 		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -728,7 +732,7 @@ lineSpec1 := textlinebuilder.LineSpec{
 	spec1FieldLen := 30
 	spacerFieldLen := 5
 	int2FieldLen := 4
-	int2FieldSpec := "%" + string(int2FieldLen) + "d"
+	int2FieldSpec := "%4d"
 
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Iana Time Zones",
@@ -857,6 +861,11 @@ lineSpec1 := textlinebuilder.LineSpec{
 			MarginChar:   ' ',
 		},
 		strSpec1,
+		textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 2,
+			MarginChar:   ' ',
+		},
 		intSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 

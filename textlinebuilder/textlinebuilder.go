@@ -237,6 +237,8 @@ func (txtBuilder TextLineBuilder) CreateIntegerSpec(
 				"numStr='%v'\n" +
 				"Error='%v'\n", numStr, err.Error())
 		}
+
+		return nil
 	}
 
 	switch intTxtSpec.NumericPosition {
@@ -439,6 +441,8 @@ func (txtBuilder TextLineBuilder) CreateLineSpec(
 				lineSpec.LineFieldLength,
 				err.Error())
 		}
+
+		return nil
 	}
 
 		if lineSpec.LineFieldPadChar == 0 {
