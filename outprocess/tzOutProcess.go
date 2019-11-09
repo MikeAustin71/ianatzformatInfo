@@ -173,7 +173,7 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 	ePrefix += "TzOutProcess.createTimeZoneTypeComments() "
 
 
-	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTime)
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTimeTzYMD)
 
 	regionalStats, err := tzOut.createIanaRegionalTimeZoneStats(tzStats, ePrefix)
 

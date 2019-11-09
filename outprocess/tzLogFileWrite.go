@@ -195,25 +195,6 @@ func (tzLog *TzLogOps) WriteLogFooter(
 
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Error Count",
-		StrFieldLength: 50,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.Center(),
-	}
-
-	err = textlinebuilder.TextLineBuilder{}.Build(
-		&b,
-		ePrefix,
-		strSpec1,
-		tzLog.newLine,
-		tzLog.dashLineBreakStr,
-		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
-
-	if err != nil {
-		return err
-	}
-
-	strSpec1 = textlinebuilder.StringSpec{
-		StrValue:       "Error Count",
 		StrFieldLength: 25,
 		StrPadChar:     '.',
 		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
@@ -268,8 +249,6 @@ func (tzLog *TzLogOps) WriteLogFooter(
 		return err
 	}
 
-
-
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Execution Times",
 		StrFieldLength: 50,
@@ -289,7 +268,6 @@ func (tzLog *TzLogOps) WriteLogFooter(
 		return err
 	}
 
-
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Starting Date Time: ",
 		StrFieldLength: 20,
@@ -297,8 +275,7 @@ func (tzLog *TzLogOps) WriteLogFooter(
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
 
-	tzdatastructs.ApplicationEndDateTime = time.Now()
-	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTime)
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTimeTzNanoYMD)
 
 	strSpec2 = textlinebuilder.StringSpec{
 		StrValue:       currDateTimeStr,
@@ -326,7 +303,9 @@ func (tzLog *TzLogOps) WriteLogFooter(
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
 
-	endDateTimeStr := tzdatastructs.ApplicationEndDateTime.Format(tzdatastructs.FmtDateTime)
+	tzdatastructs.ApplicationEndDateTime = time.Now()
+
+	endDateTimeStr := tzdatastructs.ApplicationEndDateTime.Format(tzdatastructs.FmtDateTimeTzNanoYMD)
 
 	strSpec2 = textlinebuilder.StringSpec{
 		StrValue:       endDateTimeStr,
@@ -457,6 +436,35 @@ func (tzLog *TzLogOps) WriteLogHeader(
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
 	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Execution Start Time: ",
+		StrFieldLength: 25,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	startTime := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTimeTzNanoYMD)
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       startTime,
+		StrFieldLength: len(startTime) + 1,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
 
 	err = textlinebuilder.TextLineBuilder{}.Build(
 		&b,
@@ -656,6 +664,8 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 		},
 		strSpec1,
 		intSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
 	if err != nil {
@@ -805,7 +815,7 @@ lineSpec1 := textlinebuilder.LineSpec{
 	totalLineStarts :=
 	tzLog.leftMargin.MarginLength +
 		spec1FieldLen +
-		spacerFieldLen - 2
+		spacerFieldLen  + 7 - 2
 
 	totalLineLen := int2FieldLen + 4
 
@@ -863,10 +873,12 @@ lineSpec1 := textlinebuilder.LineSpec{
 		strSpec1,
 		textlinebuilder.MarginSpec{
 			MarginStr:    "",
-			MarginLength: 2,
+			MarginLength: 1,
 			MarginChar:   ' ',
 		},
 		intSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
 	if err != nil {
