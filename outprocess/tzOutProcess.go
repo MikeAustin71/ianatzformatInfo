@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
+	"local.com/amarillomike/ianatzformatInfo/textlinebuilder"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
 )
@@ -417,98 +418,173 @@ func (tzOut TzOutProcess) createIanaRegionalTimeZoneStats(
 	ePrefix string) (string, error) {
 
 	ePrefix += "TzOutProcess.createIanaRegionalTimeZoneStats() "
-	strOps := strops.StrOps{}
 
-	outputStats := ""
+	b := strings.Builder{}
 
-	temp, err := strOps.MakeSingleCharString(' ', 35)
+	b.Grow(2048)
 
-	if err != nil {
-		return outputStats,
-		fmt.Errorf(ePrefix +
-			"Error returned by err := strOps.MakeSingleCharString(' ', 35)\n" +
-			"Error='%v'\n", err.Error())
+	leftMargin := textlinebuilder.MarginSpec{
+		MarginStr:    "// ",
+		MarginLength: 0,
+		MarginChar:   0,
 	}
 
-
-
-	outputStats += "// " + temp + "     " + "Time" + "     " + "Link" + "    " + "Total" + "\n"
-	outputStats += "// " + temp + "    " + "Zones" + "    " + "Zones" + "    " + "Zones" + "\n"
-
-	temp, err = strOps.MakeSingleCharString('-', 62)
-
-	if err != nil {
-		return outputStats,
-			fmt.Errorf(ePrefix +
-				"Error returned by err := strOps.MakeSingleCharString('-', 62)\n" +
-				"Error='%v'\n", err.Error())
+	leftSpacer := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 35,
+		MarginChar:   ' ',
 	}
 
-	outputStats += "// " + temp + "\n"
-	outputStats += "// \n"
+	leftPad := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 5,
+		MarginChar:   ' ',
+	}
+
+	strSpec1 := textlinebuilder.StringSpec{
+		StrValue:       "Time",
+		StrFieldLength: 4,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	newLine := textlinebuilder.NewLineSpec{AddNewLine:true}
+
+	err := textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		leftSpacer,
+		leftPad,
+		strSpec1,
+		newLine)
+
+	if err != nil {
+		return "", err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Zones",
+		StrFieldLength: 5,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	leftPad.MarginLength = 4
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		leftSpacer,
+		leftPad,
+		strSpec1,
+		newLine)
+
+	if err != nil {
+		return "", err
+	}
+
+lineBreak := textlinebuilder.LineSpec{
+	LineChar:         '-',
+	LineLength:       62,
+	LineFieldLength:  62,
+	LineFieldPadChar: ' ',
+	LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
+}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		lineBreak,
+		newLine)
+
+	if err != nil {
+		return "", err
+	}
+
+	intSpec2 := textlinebuilder.IntegerSpec{
+		NumericValue:       99,
+		NumericFieldSpec:   "%4d",
+		NumericFieldLength: 4,
+		NumericPadChar:     ' ',
+		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "xx",
+		StrFieldLength: 35,
+		StrPadChar:     '.',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	leftSpacer = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 5,
+		MarginChar:   '.',
+	}
 
 	for i:=0; i < len(tzStats.IanaTzRegions); i++ {
 
-		region, err := strOps.StrLeftJustify(tzStats.IanaTzRegions[i], 35)
+		strSpec1.StrValue =  tzStats.IanaTzRegions[i]
+
+		intSpec2.NumericValue = tzStats.IanaTzCounters[i]
+
+		err = textlinebuilder.TextLineBuilder{}.Build(
+			&b,
+			ePrefix,
+			leftMargin,
+			strSpec1,
+			leftSpacer,
+			intSpec2,
+			newLine)
 
 		if err != nil {
-			return outputStats,
-				fmt.Errorf(ePrefix +
-					"\nError returned by strOps.StrLeftJustify(tzStats.IanaTzRegions[i], 35)\n" +
-					"Error='%v'\n", err.Error())
+			return "", err
 		}
 
-		tzCount := "     " +
-			fmt.Sprintf("%4d", tzStats.IanaTzCounters[i])
-
-		linkCount := "     " +
-			fmt.Sprintf("%4d", tzStats.IanaLinkCounters[i])
-
-		linkTzCount := "     " +
-			fmt.Sprintf("%4d", tzStats.IanaTotalTimeZoneLinkCounters[i])
-
-		outputStats += "// " +
-			region +
-			tzCount +
-			linkCount +
-			linkTzCount + "\n"
-
 	}
 
-	totalLine, err := strOps.MakeSingleCharString('=', 62)
+	lineBreak.LineChar = '='
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		lineBreak,
+		newLine)
 
 	if err != nil {
-		return "",
-		fmt.Errorf(ePrefix +
-			"\nError returned by strOps.MakeSingleCharString('=', 62)\n" +
-			"Error='%v'\n", err.Error())
+		return "", err
 	}
 
-	outputStats += "// " + totalLine + "\n"
+	strSpec1.StrValue = "Total "
+	strSpec1.StrFieldLength = 35
+	strSpec1.StrPosition = textlinebuilder.FieldPos.RightJustify()
 
-	totalValues := ""
+	leftSpacer.MarginLength = 5
+	leftSpacer.MarginChar  = ' '
 
-	totalValues, err = strOps.StrRightJustify("Total ", 35)
+	intSpec2.NumericValue = tzStats.IanaTotalTimeZones
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		strSpec1,
+		leftSpacer,
+		intSpec2,
+		newLine,
+		leftMargin,
+		newLine)
 
 	if err != nil {
-		return "",
-			fmt.Errorf(ePrefix +
-				"\nError returned by strOps.StrRightJustify(\"Total \", 35)\n" +
-				"Error='%v'\n", err.Error())
+		return "", err
 	}
 
-	totalValues += "     " +
-		fmt.Sprintf("%4d", tzStats.IanaTotalTimeZones)
 
-	totalValues += "     " +
-		fmt.Sprintf("%4d", tzStats.IanaTotalLinks)
-
-	totalValues += "     " +
-		fmt.Sprintf("%4d", tzStats.IanaTotalTimeZonesLinks)
-
-	outputStats += "// " + totalValues + "\n"
-
-	return outputStats, nil
+	return b.String(), nil
 }
 
 // writeHeadersToOutputFile - Writes header information to the
