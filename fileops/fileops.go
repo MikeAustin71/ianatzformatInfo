@@ -77,6 +77,7 @@ func (fOps FileOps) CreateOpenFile(
 	err2 = f.OpenThisFileReadWrite()
 
 	if err2 != nil {
+		_ = f.CloseThisFile()
 		err = fmt.Errorf(ePrefix+"%v", err2.Error())
 		return f, err
 	}

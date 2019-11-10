@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
-	"local.com/amarillomike/ianatzformatInfo/fileops"
-	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
 )
 
@@ -15,12 +13,10 @@ type ZoneInfoDataDto struct {
 	ZoneInfoInputDir        string
 	AppInputPathFileNameExt string
 	AppOutputDir            string
-	AppLogPathFileNameExt   string
 	IanaTimeZoneVersion     string
 	ZoneInfoDirTreeInfo     pathfileops.DirectoryTreeInfo
 	ZoneInfoDirMgr          pathfileops.DirMgr
 	AppOutputDirMgr         pathfileops.DirMgr
-	AppLogFileMgr           pathfileops.FileMgr
 }
 
 // AcquireZoneInfo - Reads, parses and returns all information
@@ -75,18 +71,6 @@ func (zInDto ZoneInfoDataDto) AcquireZoneInfo(
 		return ZoneInfoDataDto{}, err2
 	}
 
-	zoneInfoDto.AppLogFileMgr, err2 =
-		zoneInfoDto.createOpenLogOutputFile(
-			zoneInfoDto.AppOutputDirMgr,
-			ePrefix)
-
-	if err2 != nil {
-		return ZoneInfoDataDto{}, err2
-	}
-
-	zoneInfoDto.AppLogPathFileNameExt =
-		zoneInfoDto.AppLogFileMgr.GetAbsolutePathFileName()
-
 	return zoneInfoDto, nil
 }
 
@@ -137,23 +121,6 @@ func (zInDto ZoneInfoDataDto) createInputFileMgr(
 	err = nil
 
 	return baseDataInputFileMgr, err
-}
-
-// createOpenLogOutputFile - Generates the log path and
-// file name then creates and opens the file.
-func (zInDto ZoneInfoDataDto) createOpenLogOutputFile(
-	outputPathDirMgr pathfileops.DirMgr,
-	ePrefix string) (pathfileops.FileMgr, error) {
-
-	ePrefix += "ZoneInfoDataDto.createOpenLogOutputFile() "
-
-	fmtDateTimeSecondStr := "20060102150405"
-	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(fmtDateTimeSecondStr)
-
-	fileNameExt :=   currDateTimeStr +"_ianaformatInfoLog" +".txt"
-
-	return fileops.FileOps{}.CreateOpenFile(outputPathDirMgr, fileNameExt, ePrefix)
-
 }
 
 // getZoneInfoDirFileInfo - Receives the Zone Info directory path as input and returns

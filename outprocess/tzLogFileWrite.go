@@ -1,8 +1,11 @@
 package outprocess
 
 import (
+	"errors"
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"local.com/amarillomike/ianatzformatInfo/fileops"
+	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/textlinebuilder"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
@@ -12,69 +15,34 @@ import (
 type TzLogOps struct {
 	Input string
 	Output string
-	maxLineLen              int
 	dashLineBreakStr        textlinebuilder.LineSpec
 	equalLineBreakStr       textlinebuilder.LineSpec
+	errorLineBreakStr       textlinebuilder.LineSpec
 	leftMarginLength        int
 	leftMargin              textlinebuilder.MarginSpec
+	maxLineLen              int
 	newLine                 textlinebuilder.NewLineSpec
+	outputFileMgr pathfileops.FileMgr
 }
 
-func (tzLog *TzLogOps) WriteLogFile(
-		outputFileMgr pathfileops.FileMgr,
-	tzStats *tzdatastructs.TimeZoneStatsDto,
+// Initialize the TzLogOps base data fields, create
+// the Log File Manager and write the Log File Header
+func (tzLog *TzLogOps) InitializeLogOps(
+	zoneInfoDataDto *inprocess.ZoneInfoDataDto,
 	ePrefix string) error {
 
-	ePrefix += "TzLogOps.WriteLogFile() "
-
-	var err error
-
-	tzLog.InitializeLogOps()
-
-	err = tzLog.WriteLogHeader(outputFileMgr, tzStats, ePrefix)
-
-	if err != nil {
-		_ = outputFileMgr.CloseThisFile()
-		return err
-	}
-
-	err = tzLog.WriteSummaryTotals(outputFileMgr, tzStats, ePrefix)
-
-	if err != nil {
-		_ = outputFileMgr.CloseThisFile()
-		return err
-	}
-
-	err = tzLog.WriteIanaRegionalTotals(outputFileMgr, tzStats, ePrefix)
-
-	if err != nil {
-		_ = outputFileMgr.CloseThisFile()
-		return err
-	}
-
-	err = tzLog.WriteLogFooter(outputFileMgr, tzStats, ePrefix)
-
-	if err != nil {
-		_ = outputFileMgr.CloseThisFile()
-		return err
-	}
-
-	err = outputFileMgr.CloseThisFile()
-
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"\nError returned by outputFileMgr.CloseThisFile()\n" +
-			"Error='%v'\n", err.Error())
-	}
-
-	return nil
-}
-
-// Initialize the TzLogOps base data fields
-func (tzLog *TzLogOps) InitializeLogOps() {
+	ePrefix += "TzLogOps.InitializeLogOps() "
 
 	tzLog.leftMarginLength = 2
 	tzLog.maxLineLen = 78
+
+	tzLog.errorLineBreakStr = textlinebuilder.LineSpec{
+		LineChar:         '*',
+		LineLength:       tzLog.maxLineLen,
+		LineFieldLength:  tzLog.maxLineLen,
+		LineFieldPadChar: ' ',
+		LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
+	}
 
 	tzLog.dashLineBreakStr = textlinebuilder.LineSpec{
 		LineChar:         '-',
@@ -100,15 +68,113 @@ func (tzLog *TzLogOps) InitializeLogOps() {
 
 	tzLog.newLine.AddNewLine = true
 
+	var err error
+
+	tzLog.outputFileMgr, err = tzLog.createOpenLogOutputFile(zoneInfoDataDto.AppOutputDirMgr, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
+	err = tzLog.WriteHeader(zoneInfoDataDto, ePrefix)
+
+	if err != nil {
+		_ = tzLog.outputFileMgr.CloseThisFile()
+		return err
+	}
+
+	return err
 }
 
+// WriteError - Writes an error message to the log
+// file
+func (tzLog *TzLogOps) WriteError(
+	errMsg error,
+	ePrefix string) error {
 
-func (tzLog *TzLogOps) WriteLogFooter(
-	outputFileMgr pathfileops.FileMgr,
+		ePrefix += "TzLogOps.WriteError() "
+
+		errStr := errMsg.Error()
+		lenErrStr := len(errStr)
+
+		if lenErrStr == 0 {
+			errs := make([]error, 2)
+
+			errs[0] = errMsg
+			errs[1] = errors.New("\n" + ePrefix + "Error message is Empty! Zero string length!\n")
+
+			return pathfileops.FileHelper{}.ConsolidateErrors(errs)
+		}
+
+		b := strings.Builder{}
+		b.Grow(lenErrStr + 5)
+
+		label := "Error"
+
+	strSpec1 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	strSpec2 := textlinebuilder.StringSpec{
+		StrValue:       errStr,
+		StrFieldLength: lenErrStr,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err := textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		tzLog.errorLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		textlinebuilder.MarginSpec{
+				MarginStr:    "",
+				MarginLength: 10,
+				MarginChar:   ' ',
+			},
+		strSpec1,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.errorLineBreakStr,
+		tzLog.leftMargin,
+		strSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		tzLog.errorLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+func (tzLog *TzLogOps) WriteFooter(
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
-	ePrefix += "TzLogOps.WriteLogFooter() "
+	ePrefix += "TzLogOps.WriteFooter() "
 	var b strings.Builder
 	b.Grow(1024)
 
@@ -364,7 +430,7 @@ func (tzLog *TzLogOps) WriteLogFooter(
 		return err
 	}
 
-	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -372,7 +438,7 @@ func (tzLog *TzLogOps) WriteLogFooter(
 			"Error='%v'\n", err.Error())
 	}
 
-	err = outputFileMgr.FlushBytesToDisk()
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -380,34 +446,35 @@ func (tzLog *TzLogOps) WriteLogFooter(
 			"Error='%v'\n", err.Error())
 	}
 
-	return nil
+	err = tzLog.outputFileMgr.CloseThisFile()
+
+	return err
 }
 
-// WriteLogHeader - Writes Log title, header and timing
-// information at top of the Log File.
-func (tzLog *TzLogOps) WriteLogHeader(
-	outputFileMgr pathfileops.FileMgr,
-	tzStats *tzdatastructs.TimeZoneStatsDto,
+// WriteHeader - Writes header information to the
+// Log file.
+func (tzLog *TzLogOps) WriteHeader(
+	zoneInfoDataDto *inprocess.ZoneInfoDataDto,
 	ePrefix string) error {
 
-	ePrefix += "TzLogOps.WriteLogHeader() "
+	ePrefix += "TzLogOps.WriteHeader() "
 	var b strings.Builder
 	b.Grow(2048)
 
 	leadingBlankLines := textlinebuilder.BlankLinesSpec{
-		NumBlankLines: 2,
+		NumBlankLines: 1,
 	}
 
 	var strSpec1, strSpec2 textlinebuilder.StringSpec
 
-	 strSpec1 = textlinebuilder.StringSpec{
-		 StrValue:       "ianatzformatInfo.go",
-		 StrFieldLength: tzLog.maxLineLen,
-		 StrPadChar:     ' ',
-		 StrPosition:    textlinebuilder.FieldPos.Center(),
-	 }
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "ianatzformatInfo.go",
+		StrFieldLength: tzLog.maxLineLen,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
 
-	 err := textlinebuilder.TextLineBuilder{}.Build(
+	err := textlinebuilder.TextLineBuilder{}.Build(
 		&b,
 		ePrefix,
 		leadingBlankLines,
@@ -416,38 +483,12 @@ func (tzLog *TzLogOps) WriteLogHeader(
 		tzLog.newLine,
 		tzLog.equalLineBreakStr,
 		tzLog.newLine,
-		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+		textlinebuilder.BlankLinesSpec{NumBlankLines:1})
 
 	if err != nil {
 		return err
 	}
 
-	strSpec1 = textlinebuilder.StringSpec{
-		StrValue:       "IANA Time Zone Version: ",
-		StrFieldLength: 25,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
-	}
-
-
-	strSpec2 = textlinebuilder.StringSpec{
-		StrValue:       tzStats.IanaVersion,
-		StrFieldLength: len(tzStats.IanaVersion) + 1,
-		StrPadChar:     ' ',
-		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
-	}
-
-	err = textlinebuilder.TextLineBuilder{}.Build(
-		&b,
-		ePrefix,
-		tzLog.leftMargin,
-		strSpec1,
-		strSpec2,
-		tzLog.newLine)
-
-	if err != nil {
-		return err
-	}
 
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Execution Start Time: ",
@@ -465,6 +506,63 @@ func (tzLog *TzLogOps) WriteLogHeader(
 		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
 	}
 
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		tzLog.equalLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+	label:= "Base Data Input"
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 10,
+			MarginChar:   ' ',
+		},
+		strSpec1,
+		tzLog.newLine,
+		tzLog.leftMargin,
+		tzLog.dashLineBreakStr,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "IANA Time Zone Version: ",
+		StrFieldLength: 25,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       zoneInfoDataDto.IanaTimeZoneVersion,
+		StrFieldLength: len(zoneInfoDataDto.IanaTimeZoneVersion) + 1,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
 
 	err = textlinebuilder.TextLineBuilder{}.Build(
 		&b,
@@ -472,16 +570,101 @@ func (tzLog *TzLogOps) WriteLogHeader(
 		tzLog.leftMargin,
 		strSpec1,
 		strSpec2,
-		tzLog.newLine,
-		tzLog.dashLineBreakStr,
-		tzLog.newLine,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Base Data Input File: ",
+		StrFieldLength: 25,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = zoneInfoDataDto.AppInputPathFileNameExt
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label) + 1,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
 
 	if err != nil {
 		return err
 	}
 
-	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Output Source File: ",
+		StrFieldLength: 25,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() +
+		tzdatastructs.OutputFileName
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label) + 1,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Log File: ",
+		StrFieldLength: 25,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = tzLog.outputFileMgr.GetAbsolutePathFileName()
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label) + 1,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		strSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -489,7 +672,7 @@ func (tzLog *TzLogOps) WriteLogHeader(
 			"Error='%v'\n", err.Error())
 	}
 
-	err = outputFileMgr.FlushBytesToDisk()
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -500,11 +683,9 @@ func (tzLog *TzLogOps) WriteLogHeader(
 	return nil
 }
 
-
 // WriteIanaRegionalTotals - Prints totals for IANA
 // time zones by Region.
 func (tzLog *TzLogOps) WriteIanaRegionalTotals(
-	outputFileMgr pathfileops.FileMgr,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
@@ -672,7 +853,7 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 		return err
 	}
 
-	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -680,14 +861,13 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 			"Error='%v'\n", err.Error())
 	}
 
-	err = outputFileMgr.FlushBytesToDisk()
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
 			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
 			"Error='%v'\n", err.Error())
 	}
-
 
 	return nil
 }
@@ -696,7 +876,6 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 // to the log file.
 //
 func (tzLog *TzLogOps) WriteSummaryTotals(
-	outputFileMgr pathfileops.FileMgr,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
@@ -885,7 +1064,7 @@ lineSpec1 := textlinebuilder.LineSpec{
 		return err
 	}
 
-	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -893,7 +1072,7 @@ lineSpec1 := textlinebuilder.LineSpec{
 			"Error='%v'\n", err.Error())
 	}
 
-	err = outputFileMgr.FlushBytesToDisk()
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -902,4 +1081,100 @@ lineSpec1 := textlinebuilder.LineSpec{
 	}
 
 	return nil
+}
+
+
+// WriteWarning - Writes an error message to the log
+// file
+func (tzLog *TzLogOps) WriteWarning(
+	warningMsg string,
+	ePrefix string) error {
+
+	ePrefix += "TzLogOps.WriteError() "
+
+
+	lenWarningStr := len(warningMsg)
+
+	if lenWarningStr == 0 {
+		return errors.New("\n" + ePrefix + "Warning message is Empty! Zero string length!\n")
+	}
+
+	b := strings.Builder{}
+	b.Grow(lenWarningStr + 5)
+
+	label := "Warning"
+
+	strSpec1 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	strSpec2 := textlinebuilder.StringSpec{
+		StrValue:       warningMsg,
+		StrFieldLength: lenWarningStr,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err := textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		tzLog.errorLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 10,
+			MarginChar:   ' ',
+		},
+		strSpec1,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.errorLineBreakStr,
+		tzLog.leftMargin,
+		strSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		tzLog.errorLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+// createOpenLogOutputFile - Generates the log path and
+// file name then creates and opens the file.
+func (tzLog *TzLogOps) createOpenLogOutputFile(
+	outputPathDirMgr pathfileops.DirMgr,
+	ePrefix string) (pathfileops.FileMgr, error) {
+
+	ePrefix += "TzLogOps.createOpenLogOutputFile() "
+
+	fmtDateTimeSecondStr := "20060102150405"
+	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(fmtDateTimeSecondStr)
+
+	fileNameExt :=   currDateTimeStr +"_ianaformatInfoLog" +".txt"
+
+	return fileops.FileOps{}.CreateOpenFile(outputPathDirMgr, fileNameExt, ePrefix)
 }

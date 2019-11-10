@@ -55,12 +55,11 @@ func main() {
 	}
 
 
-
-
 	fmt.Println()
 	fmt.Println("ianatzformatInfo.exe" )
 	fmt.Println("--------------------")
 	fmt.Printf("Current Working Directory:\n     %v\n\n", executableWorkingDirMgr.GetAbsolutePath())
+	fmt.Println()
 
 	var baseDataInputDirMgr pathfileops.DirMgr
 
@@ -85,6 +84,16 @@ func main() {
 	}
 
 
+	tzLog := outprocess.TzLogOps{}
+
+	err = tzLog.InitializeLogOps(&zoneInfoDataDto, ePrefix)
+
+	if err != nil {
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+
 	var timeZoneStats tzdatastructs.TimeZoneStatsDto
 parser := inprocess.ParseZoneInfoData{}
 
@@ -93,6 +102,8 @@ parser := inprocess.ParseZoneInfoData{}
 		 parser.ParseZoneInfo(zoneInfoDataDto, ePrefix)
 
 	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
 		fmt.Printf("%v\n", err.Error())
 		return
 	}
@@ -104,15 +115,31 @@ parser := inprocess.ParseZoneInfoData{}
 		ePrefix)
 
 	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
 		fmt.Printf(ePrefix+"%v\n", err.Error())
 		return
 	}
 
-	tzLog := outprocess.TzLogOps{}
-	err = tzLog.WriteLogFile(
-		zoneInfoDataDto.AppLogFileMgr,
-		&timeZoneStats,
-		ePrefix)
+	err = tzLog.WriteIanaRegionalTotals(&timeZoneStats, ePrefix)
+
+	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+	err = tzLog.WriteSummaryTotals(&timeZoneStats, ePrefix)
+
+	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+	err = tzLog.WriteFooter(&timeZoneStats, ePrefix)
 
 	if err != nil {
 		fmt.Printf(ePrefix+"%v\n", err.Error())

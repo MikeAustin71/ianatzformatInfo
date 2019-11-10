@@ -1,26 +1,22 @@
 
-
                                ianatzformatInfo.go                              
   ==============================================================================
 
+     Execution Start Time: 2019-11-09 Saturday 23:15:16.834453800 -0600 CST 
 
+    ==============================================================================
+
+
+            Base Data Input
+    ------------------------------------------------------------------------------
    IANA Time Zone Version: 2019c 
-     Execution Start Time: 2019-11-09 Saturday 16:47:52.722926300 -0600 CST 
-  ------------------------------------------------------------------------------
+     Base Data Input File: D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt 
 
+       Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
 
-                          Time Zones - Summary                        
-                          --------------------                        
+                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191109231516_ianaformatInfoLog.txt 
 
-
-  Iana Time Zones.................... 593
-
-  Military Time Zones................  25
-
-  Other Non-Iana Time Zones..........   0
-
-                                          --------
-                          Total Time Zones   618
+    ------------------------------------------------------------------------------
 
 
                        Iana Time Zones by Region                      
@@ -40,6 +36,24 @@
   .....Other..............................  75
                                                  --------
                             Total Iana Time Zones   593
+
+  ------------------------------------------------------------------------------
+
+
+                          Time Zones - Summary                        
+                          --------------------                        
+
+
+  Iana Time Zones.................... 593
+
+  Military Time Zones................  25
+
+  Other Non-Iana Time Zones..........   0
+
+                                          --------
+                          Total Time Zones   618
+
+  ------------------------------------------------------------------------------
 
 
 
@@ -64,9 +78,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-09 Saturday 16:47:52.722926300 -0600 CST
-    Ending Date Time: 2019-11-09 Saturday 16:47:53.786496800 -0600 CST
-        Elapsed Time: 1-Seconds 63-Milliseconds 570-Microseconds 500-Nanoseconds
+  Starting Date Time: 2019-11-09 Saturday 23:15:16.834453800 -0600 CST
+    Ending Date Time: 2019-11-09 Saturday 23:15:17.816225800 -0600 CST
+        Elapsed Time: 0-Seconds 981-Milliseconds 772-Microseconds 0-Nanoseconds
   ------------------------------------------------------------------------------
 
 
