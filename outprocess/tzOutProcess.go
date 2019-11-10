@@ -5,6 +5,7 @@ import (
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"strings"
 )
 
 type TzOutProcess struct {
@@ -181,101 +182,232 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		return make([]byte, 0), err
 	}
 
-	outputStr := fmt.Sprintf("\n" +
-		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n" +
-		"// Zones, %v-Military Time Zones and %v-Other Time Zones. This type is\n" +
-		"// therefore used as a comprehensive enumeration of Global Time Zones.\n" +
-		"//\n" +
-		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n" +
-		"//  Reference:\n" +
-		"//    https://golang.org/pkg/time/\n" +
-		"//    https://golang.org/pkg/time/#LoadLocation\n" +
-		"//\n" +
-		"// The IANA Time Zone database is widely recognized as the the world's leading\n" +
-		"// authority on global time zones.\n" +
-		"//\n" +
-		"// The 'TimeZones' type includes one artificial structure element labeled\n" +
-		"// 'Deprecated'. This element encapsulates all of the IANA 'Link' Time Zones.\n" +
-		"// 'Link' Time Zones detail those times zones which IANA has classified as\n" +
-		"// obsolete and no longer in general use. Each one of these deprecated time\n" +
-		"// zones maps to a current, valid IANA time zone.\n"+
-		"//\n" +
-		"// Reference:\n" +
-		"//    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n" +
-		"//    https://en.wikipedia.org/wiki/Tz_database\n" +
-		"//\n" +
-		"// The IANA Time Zone data base and reference information is located at:\n" +
-		"//    https://www.iana.org/time-zones.\n" +
-		"//\n" +
-		"// For easy access to the all Time Zones it is recommended that you use the\n" +
-		"// global variable 'TZones' declared below. This variable instantiates the\n" +
-		"// 'TimeZones' type. It is therefore much easier to access any of the %v time\n" +
-		"// zones using dot operators and intellisense (a.k.a. intelligent code completion).\n" +
-		"//\n" +
-		"// Examples:\n" +
-		"// TZones.America.Argentina().Buenos_Aires() - America/Argentina/Buenos_Aires Time Zone\n" +
-		"// TZones.America.Chicago()                  - America/Chicago USA Central Time Zone\n" +
-		"// TZones.America.New_York()                 - America/New_York USA Eastern Time Zone\n" +
-		"// TZones.America.Denver()                   - America/Denver USA Mountain Time Zone\n" +
-		"// TZones.America.Los_Angeles()              - America/Los_Angeles USA Pacific Time Zone\n" +
-		"// TZones.Europe.London()                    - Europe/London Time Zone\n" +
-		"// TZones.Europe.Paris()                     - Europe/Paris  Time Zone\n" +
-		"// TZones.Asia.Shanghai()                    - Asia/Shanghai Time Zone\n" +
-		"//\n" +
-		"// 'TimeZones' has been adapted to function as an enumeration of valid time zone\n" +
-		"// values. Since Go does not directly support enumerations, the 'TimeZones' type\n" +
-		"// has been configured to function in a manner similar to classic enumerations found\n" +
-		"// in other languages like C#. For additional information, reference:\n" +
-		"//      Jeffrey Richter Using Reflection to implement enumerated types\n" +
-		"//             https://www.youtube.com/watch?v=DyXJy_0v0_U \n" +
-		"//\n" +
-		"// ----------------------------------------------------------------------------\n" +
-		"//                           IANA Time Zones by Region                         \n" +
-		"//\n" +
-		regionalStats +
-		"//\n" +
-		"// ----------------------------------------------------------------------------\n" +
-		"// \n" +
-		"// This TimeZones Type is based on IANA Time Zone Database Version: %v\n" +
-		"// \n" +
-		"//           IANA Standard Time Zones : %3d\n" +
-		"//           IANA Link Time Zones     : %3d\n" +
-		"//                                         -------\n" +
-		"//                 Sub-Total IANA Time Zones: %3d\n" +
-		"// \n" +
-		"//                Military Time Zones : %3d\n" +
-		"//                   Other Time Zones : %3d\n" +
-		"//                                         -------\n" +
-		"//                          Total Time Zones: %3d\n" +
-		"// \n" +
-		"//       Standard Time Zone Sub-Groups: %3d\n" +
-		"//           Link Time Zone Sub-Groups: %3d\n" +
-		"//                                         -------\n" +
-		"//                Total Time Zone Sub-Groups: %3d\n" +
-		"// \n" +
-		"//                  Primary Time Zone Groups: %3d\n" +
-		"// \n" +
-		"// Type Creation Date: %v\n" +
-		"// ----------------------------------------------------------------------------\n" +
-		"// \n",
-		tzStats.TotalIanaStdTzLinkZones,
-		tzStats.NumMilitaryTZones,
-		tzStats.NumOtherTZones,
-		tzStats.TotalZones,
-		tzStats.IanaVersion,
-		tzStats.NumIanaStdTZones,
-		tzStats.NumIanaLinkTZones,
-		tzStats.TotalIanaStdTzLinkZones,
-		tzStats.NumMilitaryTZones,
-		tzStats.NumOtherTZones,
-		tzStats.TotalZones,
-		tzStats.NumLevel2StdSubTZoneGroups,
-		tzStats.NumLevel2LinkSubGroups,
-		tzStats.TotalSubTZoneGroups,
-		tzStats.NumMajorTZoneGroups,
-		currDateTimeStr)
+	b := strings.Builder{}
+	b.Grow(5120)
 
-	return []byte(outputStr), nil
+	b.WriteString(fmt.Sprintf("\n" +
+		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n",
+		tzStats.TotalIanaStdTzLinkZones))
+
+	b.WriteString(fmt.Sprintf(
+		"// Zones, %v-Military Time Zones and %v-Other Non-Iana Time Zones. The 'TimeZones'\n",
+		tzStats.NumMilitaryTZones,tzStats.NumOtherTZones))
+
+	b.WriteString(
+		"// type can therefore be used as a comprehensive enumeration of Global Time Zones.\n")
+
+	b.WriteString("//\n")
+
+	b.WriteString(
+		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n")
+
+	b.WriteString(
+		"//  Reference:\n")
+
+	b.WriteString(
+		"//    https://golang.org/pkg/time/\n")
+
+	b.WriteString(
+		"//    https://golang.org/pkg/time/#LoadLocation\n")
+
+	b.WriteString("//\n")
+
+	b.WriteString(
+		"// The IANA Time Zone database is widely recognized as the the world's leading\n")
+
+	b.WriteString(
+		"// authority on global time zones.\n")
+
+	b.WriteString("//\n")
+
+	b.WriteString(
+		"// Reference:\n")
+
+	b.WriteString(
+		"//    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n")
+
+	b.WriteString(
+			"//    https://en.wikipedia.org/wiki/Tz_database\n")
+
+
+			b.WriteString(
+		"// The 'TimeZones' type was generated by the application 'ianatzformatInfo.exe'\n")
+	b.WriteString(
+		"// This application extracts information from a 'zoneinfo.zip' file. The \n")
+
+	b.WriteString(
+		"// 'zoneinfo.zip' file was in turn generated from time zone database\n)")
+
+	b.WriteString(
+			" files supplied by IANA time zone database.\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+		"// For a information on the IANA Time Zone Database, reference:\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+		"//    https://www.iana.org/time-zones\n")
+
+	b.WriteString(
+		"//    https://data.iana.org/time-zones/releases/\n")
+
+	b.WriteString("// \n")
+
+
+	b.WriteString(
+		"// For information on the application, 'ianatzformatInfo.exe', reference:\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+		"//    https://github.com/MikeAustin71/ianatzformatInfo\n")
+
+	b.WriteString(
+		"// For additional information on locating or creating the 'zoneinfo.zip' file,\n'")
+
+	b.WriteString(
+		"// reference:\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+		"//    https://github.com/MikeAustin71/ianatzformatInfo/blob/master/xtechnotes/TimeZoneDatabaseUpdates.md")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+		"// For easy access to the all Time Zones the global variable, 'TZones',\n")
+
+	b.WriteString(
+		"//  declared below, is recommended. This variable instantiates the 'TimeZones'\n")
+
+	b.WriteString( fmt.Sprintf(
+		"// type. It is therefore much easier to access any of the %v time zones\n",
+		tzStats.TotalZones))
+
+	b.WriteString(
+		"// using dot operators and intellisense (a.k.a. intelligent code completion).\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+	"// Examples:\n")
+
+	b.WriteString(
+		"// TZones.America.Argentina().Buenos_Aires() - America/Argentina/Buenos_Aires Time Zone\n")
+
+	b.WriteString(
+		"// TZones.America.Chicago()                  - America/Chicago USA Central Time Zone\n")
+
+	b.WriteString(
+		"// TZones.America.New_York()                 - America/New_York USA Eastern Time Zone\n")
+
+	b.WriteString(
+		"// TZones.America.Denver()                   - America/Denver USA Mountain Time Zone\n")
+
+	b.WriteString(
+		"// TZones.America.Los_Angeles()              - America/Los_Angeles USA Pacific Time Zone\n")
+
+	b.WriteString(
+		"// TZones.Europe.London()                    - Europe/London Time Zone\n")
+
+	b.WriteString(
+		"// TZones.Europe.Paris()                     - Europe/Paris  Time Zone\n")
+
+	b.WriteString(
+		"// TZones.Asia.Shanghai()                    - Asia/Shanghai Time Zone\n")
+
+	b.WriteString("//\n")
+
+	b.WriteString(
+		"// 'TimeZones' has been adapted to function as an enumeration of valid time zone\n")
+
+	b.WriteString(
+		"// values. Since Go does not directly support enumerations, the 'TimeZones' type\n")
+
+	b.WriteString(
+		"// has been configured to function in a manner similar to classic enumerations found\n")
+
+	b.WriteString(
+		"// in other languages like C#. For additional information, reference:\n")
+
+	b.WriteString(
+		"//    Jeffrey Richter Using Reflection to implement enumerated types\n")
+
+	b.WriteString(
+		"//    https://www.youtube.com/watch?v=DyXJy_0v0_U \n")
+
+	b.WriteString("//\n")
+
+	b.WriteString(
+		"// ----------------------------------------------------------------------------\n")
+
+	b.WriteString(
+		"//                           IANA Time Zones by Region                         \n")
+
+	b.WriteString("//\n")
+
+	b.WriteString(regionalStats)
+
+	b.WriteString("//\n")
+
+	b.WriteString(
+		"// ----------------------------------------------------------------------------\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(fmt.Sprintf(
+		"// This TimeZones Type is based on IANA Time Zone Database Version: %v\n",
+		tzStats.IanaVersion))
+
+	b.WriteString("// \n")
+
+	b.WriteString(fmt.Sprintf(
+		"//           IANA Standard Time Zones : %3d\n",
+		tzStats.NumIanaStdTZones))
+
+	b.WriteString(fmt.Sprintf(
+		"//                Military Time Zones : %3d\n",
+			tzStats.NumMilitaryTZones))
+
+	b.WriteString(fmt.Sprintf(
+		"//           Other Non-Iana Time Zones : %3d\n",
+		tzStats.NumOtherTZones))
+
+	b.WriteString(
+		"//                                         -------\n")
+
+	b.WriteString(fmt.Sprintf(
+		"//                          Total Time Zones: %3d\n",
+		tzStats.TotalZones))
+
+	b.WriteString("// \n")
+
+	b.WriteString(fmt.Sprintf(
+		"//       Standard Time Zone Sub-Groups: %3d\n",
+		tzStats.NumLevel2StdSubTZoneGroups))
+
+	b.WriteString("// \n")
+
+	b.WriteString(fmt.Sprintf(
+		"//                  Primary Time Zone Groups: %3d\n",
+		tzStats.NumMajorTZoneGroups))
+
+	b.WriteString("// \n")
+
+	b.WriteString(fmt.Sprintf(
+		"// Type Creation Date: %v\n",
+			currDateTimeStr))
+
+	b.WriteString(
+		"// ----------------------------------------------------------------------------\n")
+
+	b.WriteString("// \n")
+
+	return []byte(b.String()), nil
 }
 
 // createIanaRegionalTimeZoneStats - Configures Iana Time Zone Regional
