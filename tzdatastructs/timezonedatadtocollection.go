@@ -531,9 +531,16 @@ func (tzDataCol *TimeZoneDataCollection) SortByGroups(caseSensitiveSort bool) {
 	var less func(i, j int) bool
 
 	if !caseSensitiveSort {
+
 		less = func(i, j int) bool {
 
-			if strings.ToLower(tzDataCol.tzDataDtos[i].ParentGroupName) !=
+			if tzDataCol.tzDataDtos[i].WorldRegionSortCode !=
+				tzDataCol.tzDataDtos[j].WorldRegionSortCode {
+
+				return tzDataCol.tzDataDtos[i].WorldRegionSortCode <
+					tzDataCol.tzDataDtos[j].WorldRegionSortCode
+
+			} else if strings.ToLower(tzDataCol.tzDataDtos[i].ParentGroupName) !=
 				strings.ToLower(tzDataCol.tzDataDtos[j].ParentGroupName) {
 
 				return strings.ToLower(tzDataCol.tzDataDtos[i].ParentGroupName) <
@@ -556,7 +563,13 @@ func (tzDataCol *TimeZoneDataCollection) SortByGroups(caseSensitiveSort bool) {
 
 		less = func(i, j int) bool {
 
-			if tzDataCol.tzDataDtos[i].ParentGroupName !=
+			if tzDataCol.tzDataDtos[i].WorldRegionSortCode !=
+				tzDataCol.tzDataDtos[j].WorldRegionSortCode {
+
+				return tzDataCol.tzDataDtos[i].WorldRegionSortCode <
+					tzDataCol.tzDataDtos[j].WorldRegionSortCode
+
+			}else if tzDataCol.tzDataDtos[i].ParentGroupName !=
 				tzDataCol.tzDataDtos[j].ParentGroupName {
 
 				return tzDataCol.tzDataDtos[i].ParentGroupName <

@@ -3,7 +3,6 @@ package tzdatastructs
 import (
 	errors2 "errors"
 	"fmt"
-	"strings"
 )
 
 type TimeZoneStatsDto struct {
@@ -205,16 +204,22 @@ func (tzStats *TimeZoneStatsDto)CountIanaStdZone(
 
 	idx := 0
 
+	tzDataDto.WorldRegionSortCode = -1
+
 	for ; idx < lenRegions; idx++ {
 
-		if strings.HasPrefix(
-			tzDataDto.TzCanonicalValue, tzStats.IanaTzRegions[idx]) {
+	//	if strings.HasPrefix(
+	//		tzDataDto.TzCanonicalValue, tzStats.IanaTzRegions[idx]) {
+		if tzDataDto.ParentGroupName == tzStats.IanaTzRegions[idx] ||
+			tzDataDto.GroupName == tzStats.IanaTzRegions[idx] {
 
+			tzDataDto.WorldRegionSortCode = idx
 			goto storeCapturedTimeZones
 		}
 	}
 
 	idx = lenRegions
+	tzDataDto.WorldRegionSortCode = idx
 
 	storeCapturedTimeZones:
 	

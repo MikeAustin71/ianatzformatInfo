@@ -22,6 +22,7 @@ type TimeZoneDataDto struct {
 	FuncReturnType            string
 	FuncReturnValue           string
 	SourceFileNameExt         string
+	WorldRegionSortCode       int
 
 	// 0 = Unknown
 	// 1 = Canonical
