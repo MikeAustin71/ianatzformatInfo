@@ -333,6 +333,7 @@ func (parseZInfo ParseZoneInfoData) zoneConfigOneElement(
 	// Configure Standard Level-1 Iana Time Zone Data Dto
 	tzDataDto := tzdatastructs.TimeZoneDataDto{}
 
+	tzDataDto.ParentGroupName = ""
 	tzDataDto.GroupName = zoneArray[0] // Other - majorGroup
 	tzDataDto.TzName = zoneArray[1] // CET - tzName
 	tzDataDto.TzAliasValue = ""

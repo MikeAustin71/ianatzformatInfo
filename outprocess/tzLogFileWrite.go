@@ -86,6 +86,54 @@ func (tzLog *TzLogOps) InitializeLogOps(
 	return err
 }
 
+// TestCapturedIanaTimeZones -  This method attempts to initialize
+// captured Iana Time Zones using the current 'Go' zoneinfo.zip
+// database. If a time zone fails to load a warning message is
+// recorded in the log file.
+//
+func (tzLog *TzLogOps) TestCapturedIanaTimeZones(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "TzLogOpsTestCapturedIanaTimeZones() "
+
+	tzStats.IanaCapturedTimeZones.SortByGroupTzName(false)
+
+	numIanaTimeZones := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
+
+	if numIanaTimeZones < 1 {
+		return fmt.Errorf(ePrefix +
+			"\nError: The number of IANA Captured Time Zones is %v\n",
+			numIanaTimeZones)
+	}
+
+	for i:=0; i < numIanaTimeZones; i++ {
+
+		tz, err := tzStats.IanaCapturedTimeZones.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by tzStats.IanaCapturedTimeZones.PeekPtr(i)\n" +
+				"i='%v'\nError='%v'\n", i, err.Error())
+		}
+
+		_, err = time.LoadLocation(tz.TzCanonicalValue)
+
+		if err != nil {
+			warningMsg := fmt.Sprintf(
+				"\nError Returned loading IANA time zone!\n" +
+				"time.LoadLocation(tz.TzCanonicalValue)\n" +
+				"Time Zone (tz.TzCanonicalValue)='%v'\n" +
+				"Error='%v'\n", tz.TzCanonicalValue, err.Error())
+
+			_ = tzLog.WriteWarning(warningMsg, ePrefix)
+		}
+
+	}
+
+	return nil
+}
+
 // WriteError - Writes an error message to the log
 // file
 func (tzLog *TzLogOps) WriteError(
@@ -1085,6 +1133,207 @@ lineSpec1 := textlinebuilder.LineSpec{
 	return nil
 }
 
+// WriteTimeZones - Writes all captured IANA Time Zones
+// in alphabetical order.
+func (tzLog *TzLogOps) WriteTimeZones(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "TzLogOps.WriteTimeZones() "
+
+	tzStats.IanaCapturedTimeZones.SortByGroups(true)
+
+	numOfTimeZones := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
+
+	if numOfTimeZones < 1 {
+
+		return fmt.Errorf(ePrefix +
+			"\nError: Number of tzStats.IanaCapturedTimeZones='%v'\n", numOfTimeZones)
+	}
+
+	b := strings.Builder{}
+
+	b.Grow(5120)
+	
+	label := "Captured IANA Time Zones in Alphabetical Order"
+
+	strSpec2 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	leftSpacer := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 10,
+		MarginChar:   ' ',
+	}
+
+	err := textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		leftSpacer,
+		strSpec2,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+	label = "Expected Number of Total Iana Time Zones: "
+	label2 := "Actual Number of Captured Iana Time Zones: "
+	maxLen := len(label2)
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: maxLen,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+
+	intSpec1 := textlinebuilder.IntegerSpec{
+		NumericValue:       tzStats.TotalIanaStdTzLinkZones,
+		NumericFieldSpec:   "%4d",
+		NumericFieldLength: 4,
+		NumericPadChar:     ' ',
+		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec2,
+		intSpec1,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label2,
+		StrFieldLength: maxLen,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+
+	intSpec1 = textlinebuilder.IntegerSpec{
+		NumericValue:       numOfTimeZones,
+		NumericFieldSpec:   "%4d",
+		NumericFieldLength: 4,
+		NumericPadChar:     ' ',
+		NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec2,
+		intSpec1,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+
+	var rightSpacer textlinebuilder.MarginSpec
+
+	writeCnt := 0
+
+	for i :=0; i < numOfTimeZones; i++ {
+
+		tz, err := tzStats.IanaCapturedTimeZones.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by tzStats.IanaCapturedTimeZones.PeekPtr(i)\n" +
+				"i='%v'\nError='%v'\n", i, err.Error())
+		}
+
+		leftSpacer = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 5,
+			MarginChar:   ' ',
+		}
+
+		writeCnt++
+
+		intSpec1 = textlinebuilder.IntegerSpec{
+			NumericValue:       writeCnt,
+			NumericFieldSpec:   "%4d.",
+			NumericFieldLength: 5,
+			NumericPadChar:     ' ',
+			NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+		}
+
+		rightSpacer = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 5,
+			MarginChar:   ' ',
+		}
+
+		strSpec2 = textlinebuilder.StringSpec{
+			StrValue:       tz.TzCanonicalValue,
+			StrFieldLength: len(tz.TzCanonicalValue),
+			StrPadChar:     ' ',
+			StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+		}
+
+		err = textlinebuilder.TextLineBuilder{}.Build(
+			&b,
+			ePrefix,
+			tzLog.leftMargin,
+			leftSpacer,
+			intSpec1,
+			rightSpacer,
+			strSpec2,
+			tzLog.newLine)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
+
+	if err != nil {
+		return err
+	}
+
+	_, err = tzLog.outputFileMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = tzLog.outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
 
 // WriteWarning - Writes an error message to the log
 // file
@@ -1163,7 +1412,7 @@ func (tzLog *TzLogOps) WriteWarning(
 	}
 
 	tzdatastructs.WarningCount++
-	
+
 	return nil
 }
 

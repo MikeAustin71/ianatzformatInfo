@@ -58,7 +58,7 @@ func main() {
 	fmt.Println()
 	fmt.Println("ianatzformatInfo.exe" )
 	fmt.Println("--------------------")
-	fmt.Printf("Current Working Directory:\n     %v\n\n", executableWorkingDirMgr.GetAbsolutePath())
+	fmt.Printf("Directory Directory:\n     %v\n\n", executableWorkingDirMgr.GetAbsolutePath())
 	fmt.Println()
 
 	var baseDataInputDirMgr pathfileops.DirMgr
@@ -69,7 +69,6 @@ func main() {
 
 	var zoneInfoDataDto inprocess.ZoneInfoDataDto
 
-	// fmt.Printf("Base Data Input File:\n     %v\n\n", baseDataInputPathFileName)
 
 	// tzdatastructs.AppInputParametersFileName = "targettzdata.txt"
 	zoneInfoDataDto, err =
@@ -83,6 +82,7 @@ func main() {
 		return
 	}
 
+	 fmt.Printf("Base Data Input File:\n     %v\n\n", zoneInfoDataDto.AppInputPathFileNameExt)
 
 	tzLog := outprocess.TzLogOps{}
 
@@ -113,6 +113,31 @@ parser := inprocess.ParseZoneInfoData{}
 		tzdatastructs.OutputFileName,
 		&timeZoneStats,
 		ePrefix)
+
+
+	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+	fmt.Printf("Output Source File:\n     %v\n\n",
+		zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() + tzdatastructs.OutputFileName)
+
+	fmt.Printf("Number Of Captured Iana Time Zones: %v\n\n",
+		timeZoneStats.IanaCapturedTimeZones.GetNumberOfTimeZones())
+
+	err = tzLog.TestCapturedIanaTimeZones(&timeZoneStats, ePrefix)
+
+	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+	err = tzLog.WriteTimeZones(&timeZoneStats, ePrefix)
 
 	if err != nil {
 		_ = tzLog.WriteError(err, ePrefix)

@@ -1,0 +1,660 @@
+
+                               ianatzformatInfo.go                              
+  ==============================================================================
+
+     Execution Start Time: 2019-11-11 Monday 03:14:53.256669400 -0600 CST 
+
+    ==============================================================================
+
+
+            Base Data Input
+    ------------------------------------------------------------------------------
+   IANA Time Zone Version: 2019c 
+
+     Base Data Input File: D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt 
+
+       Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
+
+                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191111031453_ianaformatInfoLog.txt 
+
+    ------------------------------------------------------------------------------
+
+
+            Captured IANA Time Zones in Alphabetical Order
+  ------------------------------------------------------------------------------
+
+          1.     Africa/Abidjan
+          2.     Africa/Accra
+          3.     Africa/Addis_Ababa
+          4.     Africa/Algiers
+          5.     Africa/Asmara
+          6.     Africa/Asmera
+          7.     Africa/Bamako
+          8.     Africa/Bangui
+          9.     Africa/Banjul
+         10.     Africa/Bissau
+         11.     Africa/Blantyre
+         12.     Africa/Brazzaville
+         13.     Africa/Bujumbura
+         14.     Africa/Cairo
+         15.     Africa/Casablanca
+         16.     Africa/Ceuta
+         17.     Africa/Conakry
+         18.     Africa/Dakar
+         19.     Africa/Dar_es_Salaam
+         20.     Africa/Djibouti
+         21.     Africa/Douala
+         22.     Africa/El_Aaiun
+         23.     Africa/Freetown
+         24.     Africa/Gaborone
+         25.     Africa/Harare
+         26.     Africa/Johannesburg
+         27.     Africa/Juba
+         28.     Africa/Kampala
+         29.     Africa/Khartoum
+         30.     Africa/Kigali
+         31.     Africa/Kinshasa
+         32.     Africa/Lagos
+         33.     Africa/Libreville
+         34.     Africa/Lome
+         35.     Africa/Luanda
+         36.     Africa/Lubumbashi
+         37.     Africa/Lusaka
+         38.     Africa/Malabo
+         39.     Africa/Maputo
+         40.     Africa/Maseru
+         41.     Africa/Mbabane
+         42.     Africa/Mogadishu
+         43.     Africa/Monrovia
+         44.     Africa/Nairobi
+         45.     Africa/Ndjamena
+         46.     Africa/Niamey
+         47.     Africa/Nouakchott
+         48.     Africa/Ouagadougou
+         49.     Africa/Porto-Novo
+         50.     Africa/Sao_Tome
+         51.     Africa/Timbuktu
+         52.     Africa/Tripoli
+         53.     Africa/Tunis
+         54.     Africa/Windhoek
+         55.     America/Adak
+         56.     America/Anchorage
+         57.     America/Anguilla
+         58.     America/Antigua
+         59.     America/Araguaina
+         60.     America/Aruba
+         61.     America/Asuncion
+         62.     America/Atikokan
+         63.     America/Atka
+         64.     America/Bahia
+         65.     America/Bahia_Banderas
+         66.     America/Barbados
+         67.     America/Belem
+         68.     America/Belize
+         69.     America/Blanc-Sablon
+         70.     America/Boa_Vista
+         71.     America/Bogota
+         72.     America/Boise
+         73.     America/Buenos_Aires
+         74.     America/Cambridge_Bay
+         75.     America/Campo_Grande
+         76.     America/Cancun
+         77.     America/Caracas
+         78.     America/Catamarca
+         79.     America/Cayenne
+         80.     America/Cayman
+         81.     America/Chicago
+         82.     America/Chihuahua
+         83.     America/Coral_Harbour
+         84.     America/Cordoba
+         85.     America/Costa_Rica
+         86.     America/Creston
+         87.     America/Cuiaba
+         88.     America/Curacao
+         89.     America/Danmarkshavn
+         90.     America/Dawson
+         91.     America/Dawson_Creek
+         92.     America/Denver
+         93.     America/Detroit
+         94.     America/Dominica
+         95.     America/Edmonton
+         96.     America/Eirunepe
+         97.     America/El_Salvador
+         98.     America/Ensenada
+         99.     America/Fort_Nelson
+        100.     America/Fort_Wayne
+        101.     America/Fortaleza
+        102.     America/Glace_Bay
+        103.     America/Godthab
+        104.     America/Goose_Bay
+        105.     America/Grand_Turk
+        106.     America/Grenada
+        107.     America/Guadeloupe
+        108.     America/Guatemala
+        109.     America/Guayaquil
+        110.     America/Guyana
+        111.     America/Halifax
+        112.     America/Havana
+        113.     America/Hermosillo
+        114.     America/Indianapolis
+        115.     America/Inuvik
+        116.     America/Iqaluit
+        117.     America/Jamaica
+        118.     America/Jujuy
+        119.     America/Juneau
+        120.     America/Knox_IN
+        121.     America/Kralendijk
+        122.     America/La_Paz
+        123.     America/Lima
+        124.     America/Los_Angeles
+        125.     America/Louisville
+        126.     America/Lower_Princes
+        127.     America/Maceio
+        128.     America/Managua
+        129.     America/Manaus
+        130.     America/Marigot
+        131.     America/Martinique
+        132.     America/Matamoros
+        133.     America/Mazatlan
+        134.     America/Mendoza
+        135.     America/Menominee
+        136.     America/Merida
+        137.     America/Metlakatla
+        138.     America/Mexico_City
+        139.     America/Miquelon
+        140.     America/Moncton
+        141.     America/Monterrey
+        142.     America/Montevideo
+        143.     America/Montreal
+        144.     America/Montserrat
+        145.     America/Nassau
+        146.     America/New_York
+        147.     America/Nipigon
+        148.     America/Nome
+        149.     America/Noronha
+        150.     America/Ojinaga
+        151.     America/Panama
+        152.     America/Pangnirtung
+        153.     America/Paramaribo
+        154.     America/Phoenix
+        155.     America/Port-au-Prince
+        156.     America/Port_of_Spain
+        157.     America/Porto_Acre
+        158.     America/Porto_Velho
+        159.     America/Puerto_Rico
+        160.     America/Punta_Arenas
+        161.     America/Rainy_River
+        162.     America/Rankin_Inlet
+        163.     America/Recife
+        164.     America/Regina
+        165.     America/Resolute
+        166.     America/Rio_Branco
+        167.     America/Rosario
+        168.     America/Santa_Isabel
+        169.     America/Santarem
+        170.     America/Santiago
+        171.     America/Santo_Domingo
+        172.     America/Sao_Paulo
+        173.     America/Scoresbysund
+        174.     America/Shiprock
+        175.     America/Sitka
+        176.     America/St_Barthelemy
+        177.     America/St_Johns
+        178.     America/St_Kitts
+        179.     America/St_Lucia
+        180.     America/St_Thomas
+        181.     America/St_Vincent
+        182.     America/Swift_Current
+        183.     America/Tegucigalpa
+        184.     America/Thule
+        185.     America/Thunder_Bay
+        186.     America/Tijuana
+        187.     America/Toronto
+        188.     America/Tortola
+        189.     America/Vancouver
+        190.     America/Virgin
+        191.     America/Whitehorse
+        192.     America/Winnipeg
+        193.     America/Yakutat
+        194.     America/Yellowknife
+        195.     America/Argentina/Buenos_Aires
+        196.     America/Argentina/Catamarca
+        197.     America/Argentina/ComodRivadavia
+        198.     America/Argentina/Cordoba
+        199.     America/Argentina/Jujuy
+        200.     America/Argentina/La_Rioja
+        201.     America/Argentina/Mendoza
+        202.     America/Argentina/Rio_Gallegos
+        203.     America/Argentina/Salta
+        204.     America/Argentina/San_Juan
+        205.     America/Argentina/San_Luis
+        206.     America/Argentina/Tucuman
+        207.     America/Argentina/Ushuaia
+        208.     America/Indiana/Indianapolis
+        209.     America/Indiana/Knox
+        210.     America/Indiana/Marengo
+        211.     America/Indiana/Petersburg
+        212.     America/Indiana/Tell_City
+        213.     America/Indiana/Vevay
+        214.     America/Indiana/Vincennes
+        215.     America/Indiana/Winamac
+        216.     America/Kentucky/Louisville
+        217.     America/Kentucky/Monticello
+        218.     America/North_Dakota/Beulah
+        219.     America/North_Dakota/Center
+        220.     America/North_Dakota/New_Salem
+        221.     Antarctica/Casey
+        222.     Antarctica/Davis
+        223.     Antarctica/DumontDUrville
+        224.     Antarctica/Macquarie
+        225.     Antarctica/Mawson
+        226.     Antarctica/McMurdo
+        227.     Antarctica/Palmer
+        228.     Antarctica/Rothera
+        229.     Antarctica/South_Pole
+        230.     Antarctica/Syowa
+        231.     Antarctica/Troll
+        232.     Antarctica/Vostok
+        233.     Asia/Aden
+        234.     Asia/Almaty
+        235.     Asia/Amman
+        236.     Asia/Anadyr
+        237.     Asia/Aqtau
+        238.     Asia/Aqtobe
+        239.     Asia/Ashgabat
+        240.     Asia/Ashkhabad
+        241.     Asia/Atyrau
+        242.     Asia/Baghdad
+        243.     Asia/Bahrain
+        244.     Asia/Baku
+        245.     Asia/Bangkok
+        246.     Asia/Barnaul
+        247.     Asia/Beirut
+        248.     Asia/Bishkek
+        249.     Asia/Brunei
+        250.     Asia/Calcutta
+        251.     Asia/Chita
+        252.     Asia/Choibalsan
+        253.     Asia/Chongqing
+        254.     Asia/Chungking
+        255.     Asia/Colombo
+        256.     Asia/Dacca
+        257.     Asia/Damascus
+        258.     Asia/Dhaka
+        259.     Asia/Dili
+        260.     Asia/Dubai
+        261.     Asia/Dushanbe
+        262.     Asia/Famagusta
+        263.     Asia/Gaza
+        264.     Asia/Harbin
+        265.     Asia/Hebron
+        266.     Asia/Ho_Chi_Minh
+        267.     Asia/Hong_Kong
+        268.     Asia/Hovd
+        269.     Asia/Irkutsk
+        270.     Asia/Istanbul
+        271.     Asia/Jakarta
+        272.     Asia/Jayapura
+        273.     Asia/Jerusalem
+        274.     Asia/Kabul
+        275.     Asia/Kamchatka
+        276.     Asia/Karachi
+        277.     Asia/Kashgar
+        278.     Asia/Kathmandu
+        279.     Asia/Katmandu
+        280.     Asia/Khandyga
+        281.     Asia/Kolkata
+        282.     Asia/Krasnoyarsk
+        283.     Asia/Kuala_Lumpur
+        284.     Asia/Kuching
+        285.     Asia/Kuwait
+        286.     Asia/Macao
+        287.     Asia/Macau
+        288.     Asia/Magadan
+        289.     Asia/Makassar
+        290.     Asia/Manila
+        291.     Asia/Muscat
+        292.     Asia/Nicosia
+        293.     Asia/Novokuznetsk
+        294.     Asia/Novosibirsk
+        295.     Asia/Omsk
+        296.     Asia/Oral
+        297.     Asia/Phnom_Penh
+        298.     Asia/Pontianak
+        299.     Asia/Pyongyang
+        300.     Asia/Qatar
+        301.     Asia/Qostanay
+        302.     Asia/Qyzylorda
+        303.     Asia/Rangoon
+        304.     Asia/Riyadh
+        305.     Asia/Saigon
+        306.     Asia/Sakhalin
+        307.     Asia/Samarkand
+        308.     Asia/Seoul
+        309.     Asia/Shanghai
+        310.     Asia/Singapore
+        311.     Asia/Srednekolymsk
+        312.     Asia/Taipei
+        313.     Asia/Tashkent
+        314.     Asia/Tbilisi
+        315.     Asia/Tehran
+        316.     Asia/Tel_Aviv
+        317.     Asia/Thimbu
+        318.     Asia/Thimphu
+        319.     Asia/Tokyo
+        320.     Asia/Tomsk
+        321.     Asia/Ujung_Pandang
+        322.     Asia/Ulaanbaatar
+        323.     Asia/Ulan_Bator
+        324.     Asia/Urumqi
+        325.     Asia/Ust-Nera
+        326.     Asia/Vientiane
+        327.     Asia/Vladivostok
+        328.     Asia/Yakutsk
+        329.     Asia/Yangon
+        330.     Asia/Yekaterinburg
+        331.     Asia/Yerevan
+        332.     Atlantic/Azores
+        333.     Atlantic/Bermuda
+        334.     Atlantic/Canary
+        335.     Atlantic/Cape_Verde
+        336.     Atlantic/Faeroe
+        337.     Atlantic/Faroe
+        338.     Atlantic/Jan_Mayen
+        339.     Atlantic/Madeira
+        340.     Atlantic/Reykjavik
+        341.     Atlantic/South_Georgia
+        342.     Atlantic/St_Helena
+        343.     Atlantic/Stanley
+        344.     Australia/ACT
+        345.     Australia/Adelaide
+        346.     Australia/Brisbane
+        347.     Australia/Broken_Hill
+        348.     Australia/Canberra
+        349.     Australia/Currie
+        350.     Australia/Darwin
+        351.     Australia/Eucla
+        352.     Australia/Hobart
+        353.     Australia/LHI
+        354.     Australia/Lindeman
+        355.     Australia/Lord_Howe
+        356.     Australia/Melbourne
+        357.     Australia/North
+        358.     Australia/NSW
+        359.     Australia/Perth
+        360.     Australia/Queensland
+        361.     Australia/South
+        362.     Australia/Sydney
+        363.     Australia/Tasmania
+        364.     Australia/Victoria
+        365.     Australia/West
+        366.     Australia/Yancowinna
+        367.     Europe/Amsterdam
+        368.     Europe/Andorra
+        369.     Europe/Astrakhan
+        370.     Europe/Athens
+        371.     Europe/Belfast
+        372.     Europe/Belgrade
+        373.     Europe/Berlin
+        374.     Europe/Bratislava
+        375.     Europe/Brussels
+        376.     Europe/Bucharest
+        377.     Europe/Budapest
+        378.     Europe/Busingen
+        379.     Europe/Chisinau
+        380.     Europe/Copenhagen
+        381.     Europe/Dublin
+        382.     Europe/Gibraltar
+        383.     Europe/Guernsey
+        384.     Europe/Helsinki
+        385.     Europe/Isle_of_Man
+        386.     Europe/Istanbul
+        387.     Europe/Jersey
+        388.     Europe/Kaliningrad
+        389.     Europe/Kiev
+        390.     Europe/Kirov
+        391.     Europe/Lisbon
+        392.     Europe/Ljubljana
+        393.     Europe/London
+        394.     Europe/Luxembourg
+        395.     Europe/Madrid
+        396.     Europe/Malta
+        397.     Europe/Mariehamn
+        398.     Europe/Minsk
+        399.     Europe/Monaco
+        400.     Europe/Moscow
+        401.     Europe/Nicosia
+        402.     Europe/Oslo
+        403.     Europe/Paris
+        404.     Europe/Podgorica
+        405.     Europe/Prague
+        406.     Europe/Riga
+        407.     Europe/Rome
+        408.     Europe/Samara
+        409.     Europe/San_Marino
+        410.     Europe/Sarajevo
+        411.     Europe/Saratov
+        412.     Europe/Simferopol
+        413.     Europe/Skopje
+        414.     Europe/Sofia
+        415.     Europe/Stockholm
+        416.     Europe/Tallinn
+        417.     Europe/Tirane
+        418.     Europe/Tiraspol
+        419.     Europe/Ulyanovsk
+        420.     Europe/Uzhgorod
+        421.     Europe/Vaduz
+        422.     Europe/Vatican
+        423.     Europe/Vienna
+        424.     Europe/Vilnius
+        425.     Europe/Volgograd
+        426.     Europe/Warsaw
+        427.     Europe/Zagreb
+        428.     Europe/Zaporozhye
+        429.     Europe/Zurich
+        430.     Indian/Antananarivo
+        431.     Indian/Chagos
+        432.     Indian/Christmas
+        433.     Indian/Cocos
+        434.     Indian/Comoro
+        435.     Indian/Kerguelen
+        436.     Indian/Mahe
+        437.     Indian/Maldives
+        438.     Indian/Mauritius
+        439.     Indian/Mayotte
+        440.     Indian/Reunion
+        441.     Pacific/Apia
+        442.     Pacific/Auckland
+        443.     Pacific/Bougainville
+        444.     Pacific/Chatham
+        445.     Pacific/Chuuk
+        446.     Pacific/Easter
+        447.     Pacific/Efate
+        448.     Pacific/Enderbury
+        449.     Pacific/Fakaofo
+        450.     Pacific/Fiji
+        451.     Pacific/Funafuti
+        452.     Pacific/Galapagos
+        453.     Pacific/Gambier
+        454.     Pacific/Guadalcanal
+        455.     Pacific/Guam
+        456.     Pacific/Honolulu
+        457.     Pacific/Johnston
+        458.     Pacific/Kiritimati
+        459.     Pacific/Kosrae
+        460.     Pacific/Kwajalein
+        461.     Pacific/Majuro
+        462.     Pacific/Marquesas
+        463.     Pacific/Midway
+        464.     Pacific/Nauru
+        465.     Pacific/Niue
+        466.     Pacific/Norfolk
+        467.     Pacific/Noumea
+        468.     Pacific/Pago_Pago
+        469.     Pacific/Palau
+        470.     Pacific/Pitcairn
+        471.     Pacific/Pohnpei
+        472.     Pacific/Ponape
+        473.     Pacific/Port_Moresby
+        474.     Pacific/Rarotonga
+        475.     Pacific/Saipan
+        476.     Pacific/Samoa
+        477.     Pacific/Tahiti
+        478.     Pacific/Tarawa
+        479.     Pacific/Tongatapu
+        480.     Pacific/Truk
+        481.     Pacific/Wake
+        482.     Pacific/Wallis
+        483.     Pacific/Yap
+        484.     Etc/GMT
+        485.     Etc/GMT+0
+        486.     Etc/GMT+1
+        487.     Etc/GMT+2
+        488.     Etc/GMT+3
+        489.     Etc/GMT+4
+        490.     Etc/GMT+5
+        491.     Etc/GMT+6
+        492.     Etc/GMT+7
+        493.     Etc/GMT+8
+        494.     Etc/GMT+9
+        495.     Etc/GMT+10
+        496.     Etc/GMT+11
+        497.     Etc/GMT+12
+        498.     Etc/GMT-0
+        499.     Etc/GMT-1
+        500.     Etc/GMT-2
+        501.     Etc/GMT-3
+        502.     Etc/GMT-4
+        503.     Etc/GMT-5
+        504.     Etc/GMT-6
+        505.     Etc/GMT-7
+        506.     Etc/GMT-8
+        507.     Etc/GMT-9
+        508.     Etc/GMT-10
+        509.     Etc/GMT-11
+        510.     Etc/GMT-12
+        511.     Etc/GMT-13
+        512.     Etc/GMT-14
+        513.     Etc/GMT0
+        514.     Etc/Greenwich
+        515.     Etc/UCT
+        516.     Etc/Universal
+        517.     Etc/UTC
+        518.     Etc/Zulu
+        519.     CET
+        520.     CST6CDT
+        521.     Cuba
+        522.     EET
+        523.     Egypt
+        524.     Eire
+        525.     EST
+        526.     EST5EDT
+        527.     Factory
+        528.     GB
+        529.     GB-Eire
+        530.     GMT
+        531.     GMT+0
+        532.     GMT-0
+        533.     GMT0
+        534.     Greenwich
+        535.     Hongkong
+        536.     HST
+        537.     Iceland
+        538.     Iran
+        539.     Israel
+        540.     Jamaica
+        541.     Japan
+        542.     Kwajalein
+        543.     Libya
+        544.     MET
+        545.     MST
+        546.     MST7MDT
+        547.     Navajo
+        548.     NZ
+        549.     NZ-CHAT
+        550.     Poland
+        551.     Portugal
+        552.     PRC
+        553.     PST8PDT
+        554.     ROC
+        555.     ROK
+        556.     Singapore
+        557.     Turkey
+        558.     UCT
+        559.     Universal
+        560.     UTC
+        561.     W-SU
+        562.     WET
+        563.     Zulu
+
+
+    ------------------------------------------------------------------------------
+
+
+                       Iana Time Zones by Region                      
+                       -------------------------                      
+
+
+  .....Africa.............................  54
+  .....America............................ 166
+  .....Antarctica.........................  12
+  .....Asia...............................  99
+  .....Atlantic...........................  12
+  .....Australia..........................  23
+  .....Europe.............................  63
+  .....Indian.............................  11
+  .....Pacific............................  43
+  .....Etc................................  35
+  .....Other..............................  75
+                                                 --------
+                            Total Iana Time Zones   593
+
+  ------------------------------------------------------------------------------
+
+
+                          Time Zones - Summary                        
+                          --------------------                        
+
+
+  Iana Time Zones.................... 593
+
+  Military Time Zones................  25
+
+  Other Non-Iana Time Zones..........   0
+
+                                          --------
+                          Total Time Zones   618
+
+  ------------------------------------------------------------------------------
+
+
+
+
+  ==============================================================================
+                               End Of Execution                               
+                             ianatzformatInfo.go                              
+  ==============================================================================
+
+
+   Iana Time Zone Version: 2019c
+  ------------------------------------------------------------------------------
+
+
+               Errors and Warnings                
+  ------------------------------------------------------------------------------
+
+  Error Count.....................  0
+  Warning Count...................  0
+  ------------------------------------------------------------------------------
+
+
+                 Execution Times                  
+  ------------------------------------------------------------------------------
+  Starting Date Time: 2019-11-11 Monday 03:14:53.256669400 -0600 CST
+    Ending Date Time: 2019-11-11 Monday 03:14:54.549653600 -0600 CST
+        Elapsed Time: 1-Seconds 292-Milliseconds 984-Microseconds 200-Nanoseconds
+  ------------------------------------------------------------------------------
+
+
+  ==============================================================================
+  ==============================================================================
