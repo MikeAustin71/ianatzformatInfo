@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-09 Saturday 23:15:16.834453800 -0600 CST 
+     Execution Start Time: 2019-11-10 Sunday 19:59:18.337266400 -0600 CST 
 
     ==============================================================================
 
@@ -14,7 +14,7 @@
 
        Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
 
-                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191109231516_ianaformatInfoLog.txt 
+                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191110195918_ianaformatInfoLog.txt 
 
     ------------------------------------------------------------------------------
 
@@ -78,9 +78,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-09 Saturday 23:15:16.834453800 -0600 CST
-    Ending Date Time: 2019-11-09 Saturday 23:15:17.816225800 -0600 CST
-        Elapsed Time: 0-Seconds 981-Milliseconds 772-Microseconds 0-Nanoseconds
+  Starting Date Time: 2019-11-10 Sunday 19:59:18.337266400 -0600 CST
+    Ending Date Time: 2019-11-10 Sunday 19:59:19.542417700 -0600 CST
+        Elapsed Time: 1-Seconds 205-Milliseconds 151-Microseconds 300-Nanoseconds
   ------------------------------------------------------------------------------
 
 

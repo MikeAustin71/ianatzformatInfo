@@ -167,6 +167,8 @@ func (tzLog *TzLogOps) WriteError(
 			"Error='%v'\n", err.Error())
 	}
 
+	tzdatastructs.ErrorCount++
+
 	return nil
 }
 
@@ -570,7 +572,7 @@ func (tzLog *TzLogOps) WriteHeader(
 		tzLog.leftMargin,
 		strSpec1,
 		strSpec2,
-		tzLog.newLine)
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
 
 	if err != nil {
 		return err
@@ -1160,6 +1162,8 @@ func (tzLog *TzLogOps) WriteWarning(
 			"Error='%v'\n", err.Error())
 	}
 
+	tzdatastructs.WarningCount++
+	
 	return nil
 }
 
