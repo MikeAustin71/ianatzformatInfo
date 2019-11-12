@@ -18,7 +18,7 @@ type ParseZoneInfoData struct {
 // ParseZoneInfo - Parses 'zoneinfo' data and generates lists of time zones.
 //
 func (parseZInfo ParseZoneInfoData) ParseZoneInfo(
-	zInfoDto ZoneInfoDataDto, ePrefix string) (tzdatastructs.TimeZoneStatsDto, error) {
+	zInfoDto tzdatastructs.ZoneInfoDataDto, ePrefix string) (tzdatastructs.TimeZoneStatsDto, error) {
 
 	ePrefix += "ParseZoneInfoData.ParseZoneInfo()"
 
@@ -163,7 +163,7 @@ func (parseZInfo ParseZoneInfoData) configMilitaryTimeZones(
 // of the 'zoneinfo' directory tree and generates IANA time zones.
 //
 func (parseZInfo ParseZoneInfoData) parseIanaTimeZoneFiles(
-	zInfoDto ZoneInfoDataDto,
+	zInfoDto tzdatastructs.ZoneInfoDataDto,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 

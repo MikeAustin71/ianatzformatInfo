@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"local.com/amarillomike/ianatzformatInfo/fileops"
-	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/textlinebuilder"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
@@ -28,7 +27,7 @@ type TzLogOps struct {
 // Initialize the TzLogOps base data fields, create
 // the Log File Manager and write the Log File Header
 func (tzLog *TzLogOps) InitializeLogOps(
-	zoneInfoDataDto *inprocess.ZoneInfoDataDto,
+	zoneInfoDataDto *tzdatastructs.ZoneInfoDataDto,
 	ePrefix string) error {
 
 	ePrefix += "TzLogOps.InitializeLogOps() "
@@ -504,7 +503,7 @@ func (tzLog *TzLogOps) WriteFooter(
 // WriteHeader - Writes header information to the
 // Log file.
 func (tzLog *TzLogOps) WriteHeader(
-	zoneInfoDataDto *inprocess.ZoneInfoDataDto,
+	zoneInfoDataDto *tzdatastructs.ZoneInfoDataDto,
 	ePrefix string) error {
 
 	ePrefix += "TzLogOps.WriteHeader() "

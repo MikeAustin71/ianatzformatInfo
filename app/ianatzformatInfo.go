@@ -67,12 +67,12 @@ func main() {
 		executableWorkingDirMgr.GetAbsolutePathWithSeparator() + "input")
 
 
-	var zoneInfoDataDto inprocess.ZoneInfoDataDto
+	var zoneInfoDataDto tzdatastructs.ZoneInfoDataDto
 
 
 	// tzdatastructs.AppInputParametersFileName = "targettzdata.txt"
 	zoneInfoDataDto, err =
-		inprocess.ZoneInfoDataDto{}.AcquireZoneInfo(
+		tzdatastructs.ZoneInfoDataDto{}.AcquireZoneInfo(
 			baseDataInputDirMgr,
 			tzdatastructs.AppInputParametersFileName,
 			ePrefix)
