@@ -62,11 +62,42 @@ func (tzOut TzOutProcess) WriteOutput(
 		return err
 	}
 
+	err2 := f.FlushBytesToDisk()
+
+	if err2 != nil {
+		_ = f.CloseThisFile()
+		return fmt.Errorf(ePrefix +
+			"\nError returned by f.FlushBytesToDisk()\n" +
+			"f='%v'\nError='%v'\n",
+			f.GetAbsolutePathFileName(),
+			err2.Error())
+	}
+
+	leftMargin := textlinebuilder.MarginSpec{
+		MarginStr:    "// ",
+		MarginLength: 0,
+		MarginChar:   0,
+	}
+
+	lineBreakStr := textlinebuilder.LineSpec{
+		LineChar:         '-',
+		LineLength:       60,
+		LineFieldLength:  60,
+		LineFieldPadChar: ' ',
+		LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = TzStrFmt{}.WriteAlphabetizedTimeZoneList(f,leftMargin, lineBreakStr, tzStats, ePrefix)
+
+	if err != nil {
+		return err
+	}
+
 	err = nil
 
 	errArray := make([]error, 0)
 
-	err2 := f.FlushBytesToDisk()
+	err2 = f.FlushBytesToDisk()
 
 	if err2 != nil {
 
@@ -191,7 +222,7 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		tzStats.TotalIanaStdTzLinkZones))
 
 	b.WriteString(fmt.Sprintf(
-		"// Zones, %v-Military Time Zones and %v-Other Non-Iana Time Zones. The 'TimeZones'\n",
+		"// Zones, %v-Military Time Zones and %v-Other Non-Iana Time Zones. This 'TimeZones'\n",
 		tzStats.NumMilitaryTZones,tzStats.NumOtherTZones))
 
 	b.WriteString(
@@ -286,14 +317,11 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"// For easy access to all time zones, use the global variable, 'TZones', declared below.\n")
 
 	b.WriteString(
-		"//  This variable instantiates the 'TimeZones' type. \n")
+		"// This variable instantiates the 'TimeZones' type. 'TZones' allows for much easier access\n")
 
 	b.WriteString( fmt.Sprintf(
-		"// type. It is therefore much easier to access any of the %v time zones using dot\n",
+		"// to any of the %v time zones using dot operators and intellisense (a.k.a. intelligent code completion).\n",
 		tzStats.TotalZones))
-
-	b.WriteString(
-		"// operators and intellisense (a.k.a. intelligent code completion).\n")
 
 	b.WriteString("// \n")
 
@@ -347,6 +375,13 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 		"//    https://www.youtube.com/watch?v=DyXJy_0v0_U \n")
 
 	b.WriteString("//\n")
+	b.WriteString("//\n")
+
+	b.WriteString(fmt.Sprintf(
+		"// A complete alphabetic listing of all %v time zones is provided at the end\n",
+		tzStats.TotalZones))
+
+	b.WriteString("// of this source file.\n")
 
 	b.WriteString(
 		"// ----------------------------------------------------------------------------\n")
@@ -359,6 +394,14 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 	b.WriteString(regionalStats)
 
 	b.WriteString("//\n")
+
+	b.WriteString("//\n")
+
+	b.WriteString("// Note that the 'Other' time zone classification includes deprecated \n")
+
+	b.WriteString("// or obsolete time zones as well as time zone abbreviations.  All\n")
+
+	b.WriteString("// 'deprecated' time zones map to valid current time zones.\n")
 
 	b.WriteString(
 		"// ----------------------------------------------------------------------------\n")
@@ -415,6 +458,7 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 
 	return []byte(b.String()), nil
 }
+
 
 // createIanaRegionalTimeZoneStats - Configures Iana Time Zone Regional
 // Statistics as string returned by the method.

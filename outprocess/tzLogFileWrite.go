@@ -1134,13 +1134,22 @@ lineSpec1 := textlinebuilder.LineSpec{
 }
 
 // WriteTimeZones - Writes all captured IANA Time Zones
-// in alphabetical order.
+// in alphabetical order to the log file.
 func (tzLog *TzLogOps) WriteTimeZones(
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 	ePrefix += "TzLogOps.WriteTimeZones() "
 
+
+	return TzStrFmt{}.WriteAlphabetizedTimeZoneList(
+		tzLog.outputFileMgr,
+		tzLog.leftMargin,
+		tzLog.dashLineBreakStr,
+		tzStats,
+		ePrefix)
+
+/*
 	tzStats.IanaCapturedTimeZones.SortByWorldRegion()
 
 	numOfTimeZones := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
@@ -1466,6 +1475,8 @@ func (tzLog *TzLogOps) WriteTimeZones(
 	}
 
 	return nil
+ */
+
 }
 
 // WriteWarning - Writes an error message to the log

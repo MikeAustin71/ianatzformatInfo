@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-11 Monday 19:26:50.468055600 -0600 CST 
+     Execution Start Time: 2019-11-11 Monday 22:26:52.349433600 -0600 CST 
 
     ==============================================================================
 
@@ -15,23 +15,23 @@
 
        Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
 
-                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191111192650_ianaformatInfoLog.txt 
+                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191111222652_ianaformatInfoLog.txt 
 
     ------------------------------------------------------------------------------
 
 
-            Captured IANA Time Zones in Alphabetical Order
-  ------------------------------------------------------------------------------
-
+            IANA Time Zones Listed in Alphabetical Order
+    ------------------------------------------------------------------------------
+  
    Expected Number of Total Iana Time Zones:  593
-
+  
   Actual Number of Captured Iana Time Zones:  593
-
-
+  
+  
          Item    Region  Region         Time Zone
           No.    Index   Name           Canonical Value
-  ------------------------------------------------------------------------------
-
+    ------------------------------------------------------------------------------
+  
           1.       0     Africa         Africa/Abidjan
           2.       0     Africa         Africa/Accra
           3.       0     Africa         Africa/Addis_Ababa
@@ -625,10 +625,10 @@
         591.      10     Other          W-SU
         592.      10     Other          WET
         593.      10     Other          Zulu
-
+  
     ------------------------------------------------------------------------------
-
-
+  
+  
                        Iana Time Zones by Region                      
                        -------------------------                      
 
@@ -688,9 +688,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-11 Monday 19:26:50.468055600 -0600 CST
-    Ending Date Time: 2019-11-11 Monday 19:26:51.761535800 -0600 CST
-        Elapsed Time: 1-Seconds 293-Milliseconds 480-Microseconds 200-Nanoseconds
+  Starting Date Time: 2019-11-11 Monday 22:26:52.349433600 -0600 CST
+    Ending Date Time: 2019-11-11 Monday 22:26:53.814156100 -0600 CST
+        Elapsed Time: 1-Seconds 464-Milliseconds 722-Microseconds 500-Nanoseconds
   ------------------------------------------------------------------------------
 
 
