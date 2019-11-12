@@ -1141,7 +1141,7 @@ func (tzLog *TzLogOps) WriteTimeZones(
 
 	ePrefix += "TzLogOps.WriteTimeZones() "
 
-	tzStats.IanaCapturedTimeZones.SortByGroups(true)
+	tzStats.IanaCapturedTimeZones.SortByWorldRegion()
 
 	numOfTimeZones := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
 

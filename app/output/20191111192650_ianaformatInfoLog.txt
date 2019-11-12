@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-11 Monday 18:49:30.616407600 -0600 CST 
+     Execution Start Time: 2019-11-11 Monday 19:26:50.468055600 -0600 CST 
 
     ==============================================================================
 
@@ -15,7 +15,7 @@
 
        Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
 
-                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191111184930_ianaformatInfoLog.txt 
+                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191111192650_ianaformatInfoLog.txt 
 
     ------------------------------------------------------------------------------
 
@@ -91,167 +91,167 @@
          57.       1     America        America/Anguilla
          58.       1     America        America/Antigua
          59.       1     America        America/Araguaina
-         60.       1     America        America/Aruba
-         61.       1     America        America/Asuncion
-         62.       1     America        America/Atikokan
-         63.       1     America        America/Atka
-         64.       1     America        America/Bahia
-         65.       1     America        America/Bahia_Banderas
-         66.       1     America        America/Barbados
-         67.       1     America        America/Belem
-         68.       1     America        America/Belize
-         69.       1     America        America/Blanc-Sablon
-         70.       1     America        America/Boa_Vista
-         71.       1     America        America/Bogota
-         72.       1     America        America/Boise
-         73.       1     America        America/Buenos_Aires
-         74.       1     America        America/Cambridge_Bay
-         75.       1     America        America/Campo_Grande
-         76.       1     America        America/Cancun
-         77.       1     America        America/Caracas
-         78.       1     America        America/Catamarca
-         79.       1     America        America/Cayenne
-         80.       1     America        America/Cayman
-         81.       1     America        America/Chicago
-         82.       1     America        America/Chihuahua
-         83.       1     America        America/Coral_Harbour
-         84.       1     America        America/Cordoba
-         85.       1     America        America/Costa_Rica
-         86.       1     America        America/Creston
-         87.       1     America        America/Cuiaba
-         88.       1     America        America/Curacao
-         89.       1     America        America/Danmarkshavn
-         90.       1     America        America/Dawson
-         91.       1     America        America/Dawson_Creek
-         92.       1     America        America/Denver
-         93.       1     America        America/Detroit
-         94.       1     America        America/Dominica
-         95.       1     America        America/Edmonton
-         96.       1     America        America/Eirunepe
-         97.       1     America        America/El_Salvador
-         98.       1     America        America/Ensenada
-         99.       1     America        America/Fort_Nelson
-        100.       1     America        America/Fort_Wayne
-        101.       1     America        America/Fortaleza
-        102.       1     America        America/Glace_Bay
-        103.       1     America        America/Godthab
-        104.       1     America        America/Goose_Bay
-        105.       1     America        America/Grand_Turk
-        106.       1     America        America/Grenada
-        107.       1     America        America/Guadeloupe
-        108.       1     America        America/Guatemala
-        109.       1     America        America/Guayaquil
-        110.       1     America        America/Guyana
-        111.       1     America        America/Halifax
-        112.       1     America        America/Havana
-        113.       1     America        America/Hermosillo
-        114.       1     America        America/Indianapolis
-        115.       1     America        America/Inuvik
-        116.       1     America        America/Iqaluit
-        117.       1     America        America/Jamaica
-        118.       1     America        America/Jujuy
-        119.       1     America        America/Juneau
-        120.       1     America        America/Knox_IN
-        121.       1     America        America/Kralendijk
-        122.       1     America        America/La_Paz
-        123.       1     America        America/Lima
-        124.       1     America        America/Los_Angeles
-        125.       1     America        America/Louisville
-        126.       1     America        America/Lower_Princes
-        127.       1     America        America/Maceio
-        128.       1     America        America/Managua
-        129.       1     America        America/Manaus
-        130.       1     America        America/Marigot
-        131.       1     America        America/Martinique
-        132.       1     America        America/Matamoros
-        133.       1     America        America/Mazatlan
-        134.       1     America        America/Mendoza
-        135.       1     America        America/Menominee
-        136.       1     America        America/Merida
-        137.       1     America        America/Metlakatla
-        138.       1     America        America/Mexico_City
-        139.       1     America        America/Miquelon
-        140.       1     America        America/Moncton
-        141.       1     America        America/Monterrey
-        142.       1     America        America/Montevideo
-        143.       1     America        America/Montreal
-        144.       1     America        America/Montserrat
-        145.       1     America        America/Nassau
-        146.       1     America        America/New_York
-        147.       1     America        America/Nipigon
-        148.       1     America        America/Nome
-        149.       1     America        America/Noronha
-        150.       1     America        America/Ojinaga
-        151.       1     America        America/Panama
-        152.       1     America        America/Pangnirtung
-        153.       1     America        America/Paramaribo
-        154.       1     America        America/Phoenix
-        155.       1     America        America/Port-au-Prince
-        156.       1     America        America/Port_of_Spain
-        157.       1     America        America/Porto_Acre
-        158.       1     America        America/Porto_Velho
-        159.       1     America        America/Puerto_Rico
-        160.       1     America        America/Punta_Arenas
-        161.       1     America        America/Rainy_River
-        162.       1     America        America/Rankin_Inlet
-        163.       1     America        America/Recife
-        164.       1     America        America/Regina
-        165.       1     America        America/Resolute
-        166.       1     America        America/Rio_Branco
-        167.       1     America        America/Rosario
-        168.       1     America        America/Santa_Isabel
-        169.       1     America        America/Santarem
-        170.       1     America        America/Santiago
-        171.       1     America        America/Santo_Domingo
-        172.       1     America        America/Sao_Paulo
-        173.       1     America        America/Scoresbysund
-        174.       1     America        America/Shiprock
-        175.       1     America        America/Sitka
-        176.       1     America        America/St_Barthelemy
-        177.       1     America        America/St_Johns
-        178.       1     America        America/St_Kitts
-        179.       1     America        America/St_Lucia
-        180.       1     America        America/St_Thomas
-        181.       1     America        America/St_Vincent
-        182.       1     America        America/Swift_Current
-        183.       1     America        America/Tegucigalpa
-        184.       1     America        America/Thule
-        185.       1     America        America/Thunder_Bay
-        186.       1     America        America/Tijuana
-        187.       1     America        America/Toronto
-        188.       1     America        America/Tortola
-        189.       1     America        America/Vancouver
-        190.       1     America        America/Virgin
-        191.       1     America        America/Whitehorse
-        192.       1     America        America/Winnipeg
-        193.       1     America        America/Yakutat
-        194.       1     America        America/Yellowknife
-        195.       1     America        America/Argentina/Buenos_Aires
-        196.       1     America        America/Argentina/Catamarca
-        197.       1     America        America/Argentina/ComodRivadavia
-        198.       1     America        America/Argentina/Cordoba
-        199.       1     America        America/Argentina/Jujuy
-        200.       1     America        America/Argentina/La_Rioja
-        201.       1     America        America/Argentina/Mendoza
-        202.       1     America        America/Argentina/Rio_Gallegos
-        203.       1     America        America/Argentina/Salta
-        204.       1     America        America/Argentina/San_Juan
-        205.       1     America        America/Argentina/San_Luis
-        206.       1     America        America/Argentina/Tucuman
-        207.       1     America        America/Argentina/Ushuaia
-        208.       1     America        America/Indiana/Indianapolis
-        209.       1     America        America/Indiana/Knox
-        210.       1     America        America/Indiana/Marengo
-        211.       1     America        America/Indiana/Petersburg
-        212.       1     America        America/Indiana/Tell_City
-        213.       1     America        America/Indiana/Vevay
-        214.       1     America        America/Indiana/Vincennes
-        215.       1     America        America/Indiana/Winamac
-        216.       1     America        America/Kentucky/Louisville
-        217.       1     America        America/Kentucky/Monticello
-        218.       1     America        America/North_Dakota/Beulah
-        219.       1     America        America/North_Dakota/Center
-        220.       1     America        America/North_Dakota/New_Salem
+         60.       1     America        America/Argentina/Buenos_Aires
+         61.       1     America        America/Argentina/Catamarca
+         62.       1     America        America/Argentina/ComodRivadavia
+         63.       1     America        America/Argentina/Cordoba
+         64.       1     America        America/Argentina/Jujuy
+         65.       1     America        America/Argentina/La_Rioja
+         66.       1     America        America/Argentina/Mendoza
+         67.       1     America        America/Argentina/Rio_Gallegos
+         68.       1     America        America/Argentina/Salta
+         69.       1     America        America/Argentina/San_Juan
+         70.       1     America        America/Argentina/San_Luis
+         71.       1     America        America/Argentina/Tucuman
+         72.       1     America        America/Argentina/Ushuaia
+         73.       1     America        America/Aruba
+         74.       1     America        America/Asuncion
+         75.       1     America        America/Atikokan
+         76.       1     America        America/Atka
+         77.       1     America        America/Bahia
+         78.       1     America        America/Bahia_Banderas
+         79.       1     America        America/Barbados
+         80.       1     America        America/Belem
+         81.       1     America        America/Belize
+         82.       1     America        America/Blanc-Sablon
+         83.       1     America        America/Boa_Vista
+         84.       1     America        America/Bogota
+         85.       1     America        America/Boise
+         86.       1     America        America/Buenos_Aires
+         87.       1     America        America/Cambridge_Bay
+         88.       1     America        America/Campo_Grande
+         89.       1     America        America/Cancun
+         90.       1     America        America/Caracas
+         91.       1     America        America/Catamarca
+         92.       1     America        America/Cayenne
+         93.       1     America        America/Cayman
+         94.       1     America        America/Chicago
+         95.       1     America        America/Chihuahua
+         96.       1     America        America/Coral_Harbour
+         97.       1     America        America/Cordoba
+         98.       1     America        America/Costa_Rica
+         99.       1     America        America/Creston
+        100.       1     America        America/Cuiaba
+        101.       1     America        America/Curacao
+        102.       1     America        America/Danmarkshavn
+        103.       1     America        America/Dawson
+        104.       1     America        America/Dawson_Creek
+        105.       1     America        America/Denver
+        106.       1     America        America/Detroit
+        107.       1     America        America/Dominica
+        108.       1     America        America/Edmonton
+        109.       1     America        America/Eirunepe
+        110.       1     America        America/El_Salvador
+        111.       1     America        America/Ensenada
+        112.       1     America        America/Fort_Nelson
+        113.       1     America        America/Fort_Wayne
+        114.       1     America        America/Fortaleza
+        115.       1     America        America/Glace_Bay
+        116.       1     America        America/Godthab
+        117.       1     America        America/Goose_Bay
+        118.       1     America        America/Grand_Turk
+        119.       1     America        America/Grenada
+        120.       1     America        America/Guadeloupe
+        121.       1     America        America/Guatemala
+        122.       1     America        America/Guayaquil
+        123.       1     America        America/Guyana
+        124.       1     America        America/Halifax
+        125.       1     America        America/Havana
+        126.       1     America        America/Hermosillo
+        127.       1     America        America/Indiana/Indianapolis
+        128.       1     America        America/Indiana/Knox
+        129.       1     America        America/Indiana/Marengo
+        130.       1     America        America/Indiana/Petersburg
+        131.       1     America        America/Indiana/Tell_City
+        132.       1     America        America/Indiana/Vevay
+        133.       1     America        America/Indiana/Vincennes
+        134.       1     America        America/Indiana/Winamac
+        135.       1     America        America/Indianapolis
+        136.       1     America        America/Inuvik
+        137.       1     America        America/Iqaluit
+        138.       1     America        America/Jamaica
+        139.       1     America        America/Jujuy
+        140.       1     America        America/Juneau
+        141.       1     America        America/Kentucky/Louisville
+        142.       1     America        America/Kentucky/Monticello
+        143.       1     America        America/Knox_IN
+        144.       1     America        America/Kralendijk
+        145.       1     America        America/La_Paz
+        146.       1     America        America/Lima
+        147.       1     America        America/Los_Angeles
+        148.       1     America        America/Louisville
+        149.       1     America        America/Lower_Princes
+        150.       1     America        America/Maceio
+        151.       1     America        America/Managua
+        152.       1     America        America/Manaus
+        153.       1     America        America/Marigot
+        154.       1     America        America/Martinique
+        155.       1     America        America/Matamoros
+        156.       1     America        America/Mazatlan
+        157.       1     America        America/Mendoza
+        158.       1     America        America/Menominee
+        159.       1     America        America/Merida
+        160.       1     America        America/Metlakatla
+        161.       1     America        America/Mexico_City
+        162.       1     America        America/Miquelon
+        163.       1     America        America/Moncton
+        164.       1     America        America/Monterrey
+        165.       1     America        America/Montevideo
+        166.       1     America        America/Montreal
+        167.       1     America        America/Montserrat
+        168.       1     America        America/Nassau
+        169.       1     America        America/New_York
+        170.       1     America        America/Nipigon
+        171.       1     America        America/Nome
+        172.       1     America        America/Noronha
+        173.       1     America        America/North_Dakota/Beulah
+        174.       1     America        America/North_Dakota/Center
+        175.       1     America        America/North_Dakota/New_Salem
+        176.       1     America        America/Ojinaga
+        177.       1     America        America/Panama
+        178.       1     America        America/Pangnirtung
+        179.       1     America        America/Paramaribo
+        180.       1     America        America/Phoenix
+        181.       1     America        America/Port-au-Prince
+        182.       1     America        America/Port_of_Spain
+        183.       1     America        America/Porto_Acre
+        184.       1     America        America/Porto_Velho
+        185.       1     America        America/Puerto_Rico
+        186.       1     America        America/Punta_Arenas
+        187.       1     America        America/Rainy_River
+        188.       1     America        America/Rankin_Inlet
+        189.       1     America        America/Recife
+        190.       1     America        America/Regina
+        191.       1     America        America/Resolute
+        192.       1     America        America/Rio_Branco
+        193.       1     America        America/Rosario
+        194.       1     America        America/Santa_Isabel
+        195.       1     America        America/Santarem
+        196.       1     America        America/Santiago
+        197.       1     America        America/Santo_Domingo
+        198.       1     America        America/Sao_Paulo
+        199.       1     America        America/Scoresbysund
+        200.       1     America        America/Shiprock
+        201.       1     America        America/Sitka
+        202.       1     America        America/St_Barthelemy
+        203.       1     America        America/St_Johns
+        204.       1     America        America/St_Kitts
+        205.       1     America        America/St_Lucia
+        206.       1     America        America/St_Thomas
+        207.       1     America        America/St_Vincent
+        208.       1     America        America/Swift_Current
+        209.       1     America        America/Tegucigalpa
+        210.       1     America        America/Thule
+        211.       1     America        America/Thunder_Bay
+        212.       1     America        America/Tijuana
+        213.       1     America        America/Toronto
+        214.       1     America        America/Tortola
+        215.       1     America        America/Vancouver
+        216.       1     America        America/Virgin
+        217.       1     America        America/Whitehorse
+        218.       1     America        America/Winnipeg
+        219.       1     America        America/Yakutat
+        220.       1     America        America/Yellowknife
         221.       2     Antarctica     Antarctica/Casey
         222.       2     Antarctica     Antarctica/Davis
         223.       2     Antarctica     Antarctica/DumontDUrville
@@ -388,8 +388,8 @@
         354.       5     Australia      Australia/Lindeman
         355.       5     Australia      Australia/Lord_Howe
         356.       5     Australia      Australia/Melbourne
-        357.       5     Australia      Australia/NSW
-        358.       5     Australia      Australia/North
+        357.       5     Australia      Australia/North
+        358.       5     Australia      Australia/NSW
         359.       5     Australia      Australia/Perth
         360.       5     Australia      Australia/Queensland
         361.       5     Australia      Australia/South
@@ -547,8 +547,8 @@
         513.       9     Etc            Etc/GMT0
         514.       9     Etc            Etc/Greenwich
         515.       9     Etc            Etc/UCT
-        516.       9     Etc            Etc/UTC
-        517.       9     Etc            Etc/Universal
+        516.       9     Etc            Etc/Universal
+        517.       9     Etc            Etc/UTC
         518.       9     Etc            Etc/Zulu
         519.      10     Other          Arctic/Longyearbyen
         520.      10     Other          Brazil/Acre
@@ -563,68 +563,68 @@
         529.      10     Other          Canada/Pacific
         530.      10     Other          Canada/Saskatchewan
         531.      10     Other          Canada/Yukon
-        532.      10     Other          Chile/Continental
-        533.      10     Other          Chile/EasterIsland
-        534.      10     Other          Mexico/BajaNorte
-        535.      10     Other          Mexico/BajaSur
-        536.      10     Other          Mexico/General
-        537.      10     Other          CET
-        538.      10     Other          CST6CDT
-        539.      10     Other          Cuba
-        540.      10     Other          EET
-        541.      10     Other          EST
-        542.      10     Other          EST5EDT
-        543.      10     Other          Egypt
-        544.      10     Other          Eire
-        545.      10     Other          Factory
-        546.      10     Other          GB
-        547.      10     Other          GB-Eire
-        548.      10     Other          GMT
-        549.      10     Other          GMT+0
-        550.      10     Other          GMT-0
-        551.      10     Other          GMT0
-        552.      10     Other          Greenwich
-        553.      10     Other          HST
-        554.      10     Other          Hongkong
-        555.      10     Other          Iceland
-        556.      10     Other          Iran
-        557.      10     Other          Israel
-        558.      10     Other          Jamaica
-        559.      10     Other          Japan
-        560.      10     Other          Kwajalein
-        561.      10     Other          Libya
-        562.      10     Other          MET
+        532.      10     Other          CET
+        533.      10     Other          Chile/Continental
+        534.      10     Other          Chile/EasterIsland
+        535.      10     Other          CST6CDT
+        536.      10     Other          Cuba
+        537.      10     Other          EET
+        538.      10     Other          Egypt
+        539.      10     Other          Eire
+        540.      10     Other          EST
+        541.      10     Other          EST5EDT
+        542.      10     Other          Factory
+        543.      10     Other          GB
+        544.      10     Other          GB-Eire
+        545.      10     Other          GMT
+        546.      10     Other          GMT+0
+        547.      10     Other          GMT-0
+        548.      10     Other          GMT0
+        549.      10     Other          Greenwich
+        550.      10     Other          Hongkong
+        551.      10     Other          HST
+        552.      10     Other          Iceland
+        553.      10     Other          Iran
+        554.      10     Other          Israel
+        555.      10     Other          Jamaica
+        556.      10     Other          Japan
+        557.      10     Other          Kwajalein
+        558.      10     Other          Libya
+        559.      10     Other          MET
+        560.      10     Other          Mexico/BajaNorte
+        561.      10     Other          Mexico/BajaSur
+        562.      10     Other          Mexico/General
         563.      10     Other          MST
         564.      10     Other          MST7MDT
-        565.      10     Other          NZ
-        566.      10     Other          NZ-CHAT
-        567.      10     Other          Navajo
-        568.      10     Other          PRC
-        569.      10     Other          PST8PDT
-        570.      10     Other          Poland
-        571.      10     Other          Portugal
+        565.      10     Other          Navajo
+        566.      10     Other          NZ
+        567.      10     Other          NZ-CHAT
+        568.      10     Other          Poland
+        569.      10     Other          Portugal
+        570.      10     Other          PRC
+        571.      10     Other          PST8PDT
         572.      10     Other          ROC
         573.      10     Other          ROK
         574.      10     Other          Singapore
         575.      10     Other          Turkey
         576.      10     Other          UCT
-        577.      10     Other          UTC
-        578.      10     Other          Universal
-        579.      10     Other          W-SU
-        580.      10     Other          WET
-        581.      10     Other          Zulu
-        582.      10     Other          US/Alaska
-        583.      10     Other          US/Aleutian
-        584.      10     Other          US/Arizona
-        585.      10     Other          US/Central
-        586.      10     Other          US/East-Indiana
-        587.      10     Other          US/Eastern
-        588.      10     Other          US/Hawaii
-        589.      10     Other          US/Indiana-Starke
-        590.      10     Other          US/Michigan
-        591.      10     Other          US/Mountain
-        592.      10     Other          US/Pacific
-        593.      10     Other          US/Samoa
+        577.      10     Other          Universal
+        578.      10     Other          US/Alaska
+        579.      10     Other          US/Aleutian
+        580.      10     Other          US/Arizona
+        581.      10     Other          US/Central
+        582.      10     Other          US/East-Indiana
+        583.      10     Other          US/Eastern
+        584.      10     Other          US/Hawaii
+        585.      10     Other          US/Indiana-Starke
+        586.      10     Other          US/Michigan
+        587.      10     Other          US/Mountain
+        588.      10     Other          US/Pacific
+        589.      10     Other          US/Samoa
+        590.      10     Other          UTC
+        591.      10     Other          W-SU
+        592.      10     Other          WET
+        593.      10     Other          Zulu
 
     ------------------------------------------------------------------------------
 
@@ -688,9 +688,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-11 Monday 18:49:30.616407600 -0600 CST
-    Ending Date Time: 2019-11-11 Monday 18:49:31.979587000 -0600 CST
-        Elapsed Time: 1-Seconds 363-Milliseconds 179-Microseconds 400-Nanoseconds
+  Starting Date Time: 2019-11-11 Monday 19:26:50.468055600 -0600 CST
+    Ending Date Time: 2019-11-11 Monday 19:26:51.761535800 -0600 CST
+        Elapsed Time: 1-Seconds 293-Milliseconds 480-Microseconds 200-Nanoseconds
   ------------------------------------------------------------------------------
 
 

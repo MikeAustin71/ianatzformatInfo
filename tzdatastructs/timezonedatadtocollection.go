@@ -515,10 +515,10 @@ func (tzDataCol *TimeZoneDataCollection) SortByGroupTzName(caseSensitiveSort boo
 	return
 }
 
-// SortByGroupTzName - Sort the collection by TimeZone Parent Group, Group and
-// Time Zone Name.
+// SortByWorldRegion - Sort the collection by Time Zone World Region Code and
+// Time Zone Sort Value.
 //
-func (tzDataCol *TimeZoneDataCollection) SortByGroups(caseSensitiveSort bool) {
+func (tzDataCol *TimeZoneDataCollection) SortByWorldRegion() {
 
 	if tzDataCol.tzDataDtos == nil {
 		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
@@ -530,62 +530,19 @@ func (tzDataCol *TimeZoneDataCollection) SortByGroups(caseSensitiveSort bool) {
 
 	var less func(i, j int) bool
 
-	if !caseSensitiveSort {
 
-		less = func(i, j int) bool {
+	less = func(i, j int) bool {
 
-			if tzDataCol.tzDataDtos[i].WorldRegionSortCode !=
-				tzDataCol.tzDataDtos[j].WorldRegionSortCode {
+		if tzDataCol.tzDataDtos[i].WorldRegionSortCode !=
+			tzDataCol.tzDataDtos[j].WorldRegionSortCode {
 
-				return tzDataCol.tzDataDtos[i].WorldRegionSortCode <
-					tzDataCol.tzDataDtos[j].WorldRegionSortCode
+			return tzDataCol.tzDataDtos[i].WorldRegionSortCode <
+				tzDataCol.tzDataDtos[j].WorldRegionSortCode
 
-			} else if strings.ToLower(tzDataCol.tzDataDtos[i].ParentGroupName) !=
-				strings.ToLower(tzDataCol.tzDataDtos[j].ParentGroupName) {
+		} else {
 
-				return strings.ToLower(tzDataCol.tzDataDtos[i].ParentGroupName) <
-					strings.ToLower(tzDataCol.tzDataDtos[j].ParentGroupName)
-
-			} else if strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) !=
-				strings.ToLower(tzDataCol.tzDataDtos[j].GroupName) {
-
-				return strings.ToLower(tzDataCol.tzDataDtos[i].GroupName) <
-					strings.ToLower(tzDataCol.tzDataDtos[j].GroupName)
-
-			} else {
-
-				return strings.ToLower(tzDataCol.tzDataDtos[i].TzSortValue) <
+			return strings.ToLower(tzDataCol.tzDataDtos[i].TzSortValue) <
 					strings.ToLower(tzDataCol.tzDataDtos[j].TzSortValue)
-			}
-		}
-	} else {
-		// caseSensitive == true
-
-		less = func(i, j int) bool {
-
-			if tzDataCol.tzDataDtos[i].WorldRegionSortCode !=
-				tzDataCol.tzDataDtos[j].WorldRegionSortCode {
-
-				return tzDataCol.tzDataDtos[i].WorldRegionSortCode <
-					tzDataCol.tzDataDtos[j].WorldRegionSortCode
-
-			}else if tzDataCol.tzDataDtos[i].ParentGroupName !=
-				tzDataCol.tzDataDtos[j].ParentGroupName {
-
-				return tzDataCol.tzDataDtos[i].ParentGroupName <
-					tzDataCol.tzDataDtos[j].ParentGroupName
-
-			} else if tzDataCol.tzDataDtos[i].GroupName !=
-				tzDataCol.tzDataDtos[j].GroupName {
-
-				return tzDataCol.tzDataDtos[i].GroupName <
-					tzDataCol.tzDataDtos[j].GroupName
-
-			} else {
-
-				return tzDataCol.tzDataDtos[i].TzSortValue <
-					tzDataCol.tzDataDtos[j].TzSortValue
-			}
 		}
 	}
 
