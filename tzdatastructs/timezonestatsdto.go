@@ -42,10 +42,9 @@ type TimeZoneStatsDto struct {
 	IanaTotalLinks                int
 	IanaTotalTimeZonesLinks       int
 	IanaCapturedTimeZones         TimeZoneDataCollection
-	IanaCapturedLinkZones         TimeZoneDataCollection
+	CapturedMilitaryZones         TimeZoneDataCollection
 	TzGroups                      []TimeZoneGroupCollection
 	TzData                        []TimeZoneDataCollection
-	TzLinks                       []TimeZoneDataCollection
 }
 
 func (tzStats *TimeZoneStatsDto) Initialize() {
@@ -94,15 +93,13 @@ func (tzStats *TimeZoneStatsDto) Initialize() {
 	tzStats.IanaTotalLinks = 0
 	tzStats.IanaTotalTimeZonesLinks = 0
 	tzStats.IanaCapturedTimeZones = TimeZoneDataCollection{}.New()
-	tzStats.IanaCapturedLinkZones = TimeZoneDataCollection{}.New()
+	tzStats.CapturedMilitaryZones = TimeZoneDataCollection{}.New()
 	tzStats.TzGroups = make([]TimeZoneGroupCollection, Level_03_Idx + 1)
 	tzStats.TzData = make([]TimeZoneDataCollection, Level_03_Idx + 1)
-	tzStats.TzLinks = make([]TimeZoneDataCollection, Level_03_Idx + 1)
 
 	for i:=0; i <= Level_03_Idx; i++ {
 		tzStats.TzGroups[i] = TimeZoneGroupCollection{}.New()
 		tzStats.TzData[i] = TimeZoneDataCollection{}.New()
-		tzStats.TzLinks[i] = TimeZoneDataCollection{}.New()
 	}
 
 }
@@ -224,8 +221,7 @@ func (tzStats *TimeZoneStatsDto)CountIanaStdZone(
 	storeCapturedTimeZones:
 	
 		tzDataDto.ArrayStorageLevel = zoneLevel
-	
-	// Other IANA Time Zone
+
 	err = tzStats.IanaCapturedTimeZones.Add(tzDataDto)
 
 	if err != nil {
@@ -393,7 +389,15 @@ func (tzStats *TimeZoneStatsDto) CountMilitaryZone(
 
 	tzDataDto.ArrayStorageLevel = zoneLevel
 
-	err := tzStats.TzData[zoneLevel].Add(tzDataDto)
+	err := tzStats.CapturedMilitaryZones.Add(tzDataDto)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by tzStats.CapturedMilitaryZones.Add(tzDataDto)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = tzStats.TzData[zoneLevel].Add(tzDataDto)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -403,6 +407,7 @@ func (tzStats *TimeZoneStatsDto) CountMilitaryZone(
 	}
 
 	tzStats.NumMilitaryTZones++
+
 
 	return nil
 }

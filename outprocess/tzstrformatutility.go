@@ -451,11 +451,49 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		leftMargin,
 		newLine,
 		leftMargin,
+		newLine,)
+
+	if err != nil {
+		return err
+	}
+
+	label = "Alphabetical Listing Of Military Time Zones"
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label),
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	leftSpacer = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 10,
+		MarginChar:   ' ',
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		leftSpacer,
+		strSpec2,
+		newLine,
+		leftMargin,
+		lineBreakStr,
+		newLine,
+		leftMargin,
+		newLine,
+		leftMargin,
 		newLine)
 
 	if err != nil {
 		return err
 	}
+
+	writeCnt = 0
+
+	
 
 	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
