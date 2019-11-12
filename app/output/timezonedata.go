@@ -101,7 +101,7 @@ package main
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-11 Monday 22:26:52 -0600 CST
+// Type Creation Date: 2019-11-12 Tuesday 00:31:46 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -2065,6 +2065,17 @@ func (chile chileTimeZones) EasterIsland() string {return "Chile/EasterIsland" }
 //   https://en.wikipedia.org/wiki/Tz_database
 //   https://www.iana.org/time-zones
 //  
+//  
+// The 'ETC' group is referenced at the IANA Time Zone Database at:
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+// The special area of "Etc" is used for some administrative zones,
+// particularly for "Etc/UTC" which represents Coordinated Universal Time.
+// In order to conform with the POSIX style, those zone names beginning with
+// "Etc/GMT" have their sign reversed from the standard ISO 8601 convention.
+// In the "Etc" area, zones west of GMT have a positive sign and those east have
+// a negative sign in their name (e.g "Etc/GMT-14" is 14 hours ahead of GMT).
+//  
 type etcTimeZones string
 
 // GMT - IANA Time Zone 'Etc/GMT'.
@@ -2907,6 +2918,11 @@ func (milTz militaryTimeZones) Zulu() string {return "Etc/UTC" }
 //   https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 //   https://en.wikipedia.org/wiki/Tz_database
 //   https://www.iana.org/time-zones
+//  
+//  
+// The 'Other' IANA Time Zone Group contains deprecated or obsolete time zones as
+// well as time zone abbreviations.  All deprecated time zones map to current,
+// valid time zones.
 //  
 type otherTimeZones string
 

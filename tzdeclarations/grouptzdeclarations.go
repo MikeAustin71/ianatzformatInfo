@@ -3,6 +3,7 @@ package tzdeclarations
 import (
 	"fmt"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"strings"
 )
 
 type TzGroupDeclarations struct {
@@ -172,31 +173,52 @@ func (tzGrpDecs TzGroupDeclarations) StandardGrpDeclaration(
 
 	ePrefix += "TzGroupDeclarations.StandardGrpDeclaration() "
 
-	outputStr := "\n"
-	outputStr += tzdatastructs.CommentLead +
+	b := strings.Builder{}
+
+	b.Grow(1024)
+
+
+	b.WriteString("\n")
+	b.WriteString(tzdatastructs.CommentLead +
 		fmt.Sprintf("%v - IANA Time Zones for '%v'.\n",
-			tzGroup.TypeName, tzGroup.GroupName)
-	outputStr += tzdatastructs.CommentBlankLine
-	outputStr += tzdatastructs.CommentLead +
-		"For documentation on IANA Time Zones, see type\n"
-	outputStr += tzdatastructs.CommentLead +
+			tzGroup.TypeName, tzGroup.GroupName))
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"For documentation on IANA Time Zones, see type\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
 		fmt.Sprintf("'%v'.\n",
-			tzdatastructs.PrimaryTimeZoneType)
+			tzdatastructs.PrimaryTimeZoneType))
 
-	outputStr += tzdatastructs.CommentBlankLine
-	outputStr += tzdatastructs.CommentLead + "Reference:\n"
-	outputStr += tzdatastructs.CommentLead + tzdatastructs.RefWikipediaTzList
-	outputStr += tzdatastructs.CommentLead + tzdatastructs.RefWikipediaTzDatabase
-	outputStr += tzdatastructs.CommentLead + tzdatastructs.RefIanaOrgTimeZones
-	outputStr += tzdatastructs.CommentBlankLine
-	outputStr += fmt.Sprintf("type %v %v\n",
-		tzGroup.TypeName, tzGroup.TypeValue)
+	b.WriteString(tzdatastructs.CommentBlankLine)
 
-	outputStr += "\n"
+	b.WriteString(tzdatastructs.CommentLead + "Reference:\n")
+
+	b.WriteString(tzdatastructs.CommentLead + tzdatastructs.RefWikipediaTzList)
+
+	b.WriteString(tzdatastructs.CommentLead + tzdatastructs.RefWikipediaTzDatabase)
+
+	b.WriteString(tzdatastructs.CommentLead + tzdatastructs.RefIanaOrgTimeZones)
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	if tzGroup.GroupName == "Etc" {
+		tzGrpDecs.CreateETCComments(&b)
+	}
+
+	if tzGroup.GroupName == "Other" {
+		tzGrpDecs.CreateOtherGroupComments(&b)
+	}
+
+	b.WriteString(fmt.Sprintf("type %v %v\n",
+		tzGroup.TypeName, tzGroup.TypeValue))
+
+	b.WriteString("\n")
 
 
-	//tzGroup.TypeDeclaration = append(tzGroup.TypeDeclaration, []byte(outputStr) ...)
-	tzGroup.TypeDeclaration = []byte(outputStr)
+	tzGroup.TypeDeclaration = []byte(b.String())
 
 	return nil
 }
@@ -259,3 +281,63 @@ func (tzGrpDecs TzGroupDeclarations) SubGroupDeclaration(
 
 	return nil
 }
+
+
+// CreateETCComments - Generates comments specific to the 'Etc'
+// Group.
+func (tzGrpDecs TzGroupDeclarations) CreateETCComments(
+	b *strings.Builder) {
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	b.WriteString( tzdatastructs.CommentLead +
+		"The 'ETC' group is referenced at the IANA Time Zone Database at:\n")
+
+	b.WriteString( tzdatastructs.CommentLead +
+		"   https://en.wikipedia.org/wiki/Tz_database#Area\n")
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"The special area of \"Etc\" is used for some administrative zones,\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"particularly for \"Etc/UTC\" which represents Coordinated Universal Time.\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"In order to conform with the POSIX style, those zone names beginning with\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"\"Etc/GMT\" have their sign reversed from the standard ISO 8601 convention.\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"In the \"Etc\" area, zones west of GMT have a positive sign and those east have\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"a negative sign in their name (e.g \"Etc/GMT-14\" is 14 hours ahead of GMT).\n")
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	return
+}
+
+// CreateOtherGroupComments - Generates comments specific to the 'Other' Group of
+// IANA Time Zones.
+func (tzGrpDecs TzGroupDeclarations) CreateOtherGroupComments(b *strings.Builder) {
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	b.WriteString( tzdatastructs.CommentLead +
+		"The 'Other' IANA Time Zone Group contains deprecated or obsolete time zones as\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"well as time zone abbreviations.  All deprecated time zones map to current,\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"valid time zones.\n")
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	return
+}
+
