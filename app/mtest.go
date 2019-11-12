@@ -1,4 +1,5 @@
 package main
+
 /*
 import (
 	"fmt"
@@ -7,8 +8,9 @@ import (
 
 
 func main() {
-	nowTime := time.Now()
-	tzLocation := "Factory"
+
+	tzLocation := "Etc/GMT-1"
+
 	location1, err := time.LoadLocation(tzLocation)
 
 	if err != nil {
@@ -18,11 +20,12 @@ func main() {
 		return
 	}
 
+	nowTime := time.Now()
+
 	fmt.Println(nowTime.In(location1))
 	fmt.Printf("Attemped to load location1 '%v'\n",tzLocation )
 	fmt.Printf("Actual Location='%v'\n", location1.String())
 
 	return
 }
-
 */

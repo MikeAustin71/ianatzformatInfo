@@ -101,7 +101,7 @@ package main
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-12 Tuesday 01:03:38 -0600 CST
+// Type Creation Date: 2019-11-12 Tuesday 01:58:25 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -2734,172 +2734,316 @@ func (mexic mexicoTimeZones) General() string {return "Mexico/General" }
 type militaryTimeZones  string
 
 // Alpha - Military Time Zone 'A' or 'Alpha' is equivalent to
-// to IANA Time Zone "Etc/GMT+1".
+// to IANA Time Zone "Etc/GMT-1".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +1 hour.
 //  
-func (milTz militaryTimeZones) Alpha() string {return "Etc/GMT+1" }
+// If the reversal of signs necessary to generate UTC+1 hour is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Alpha() string {return "Etc/GMT-1" }
 
 // Bravo - Military Time Zone 'B' or 'Bravo' is equivalent to
-// to IANA Time Zone "Etc/GMT+2".
+// to IANA Time Zone "Etc/GMT-2".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +2 hours.
 //  
-func (milTz militaryTimeZones) Bravo() string {return "Etc/GMT+2" }
+// If the reversal of signs necessary to generate UTC+2 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Bravo() string {return "Etc/GMT-2" }
 
 // Charlie - Military Time Zone 'C' or 'Charlie' is equivalent to
-// to IANA Time Zone "Etc/GMT+3".
+// to IANA Time Zone "Etc/GMT-3".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +3 hours.
 //  
-func (milTz militaryTimeZones) Charlie() string {return "Etc/GMT+3" }
+// If the reversal of signs necessary to generate UTC+3 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Charlie() string {return "Etc/GMT-3" }
 
 // Delta - Military Time Zone 'D' or 'Delta' is equivalent to
-// to IANA Time Zone "Etc/GMT+4".
+// to IANA Time Zone "Etc/GMT-4".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +4 hours.
 //  
-func (milTz militaryTimeZones) Delta() string {return "Etc/GMT+4" }
+// If the reversal of signs necessary to generate UTC+4 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Delta() string {return "Etc/GMT-4" }
 
 // Echo - Military Time Zone 'E' or 'Echo' is equivalent to
-// to IANA Time Zone "Etc/GMT+5".
+// to IANA Time Zone "Etc/GMT-5".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +5 hours.
 //  
-func (milTz militaryTimeZones) Echo() string {return "Etc/GMT+5" }
+// If the reversal of signs necessary to generate UTC+5 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Echo() string {return "Etc/GMT-5" }
 
 // Foxtrot - Military Time Zone 'F' or 'Foxtrot' is equivalent to
-// to IANA Time Zone "Etc/GMT+6".
+// to IANA Time Zone "Etc/GMT-6".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +6 hours.
 //  
-func (milTz militaryTimeZones) Foxtrot() string {return "Etc/GMT+6" }
+// If the reversal of signs necessary to generate UTC+6 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Foxtrot() string {return "Etc/GMT-6" }
 
 // Golf - Military Time Zone 'G' or 'Golf' is equivalent to
-// to IANA Time Zone "Etc/GMT+7".
+// to IANA Time Zone "Etc/GMT-7".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +7 hours.
 //  
-func (milTz militaryTimeZones) Golf() string {return "Etc/GMT+7" }
+// If the reversal of signs necessary to generate UTC+7 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Golf() string {return "Etc/GMT-7" }
 
 // Hotel - Military Time Zone 'H' or 'Hotel' is equivalent to
-// to IANA Time Zone "Etc/GMT+8".
+// to IANA Time Zone "Etc/GMT-8".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +8 hours.
 //  
-func (milTz militaryTimeZones) Hotel() string {return "Etc/GMT+8" }
+// If the reversal of signs necessary to generate UTC+8 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Hotel() string {return "Etc/GMT-8" }
 
 // India - Military Time Zone 'I' or 'India' is equivalent to
-// to IANA Time Zone "Etc/GMT+9".
+// to IANA Time Zone "Etc/GMT-9".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +9 hours.
 //  
-func (milTz militaryTimeZones) India() string {return "Etc/GMT+9" }
+// If the reversal of signs necessary to generate UTC+9 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) India() string {return "Etc/GMT-9" }
 
 // Kilo - Military Time Zone 'K' or 'Kilo' is equivalent to
-// to IANA Time Zone "Etc/GMT+10".
+// to IANA Time Zone "Etc/GMT-10".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +10 hours.
 //  
-func (milTz militaryTimeZones) Kilo() string {return "Etc/GMT+10" }
+// If the reversal of signs necessary to generate UTC+10 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Kilo() string {return "Etc/GMT-10" }
 
 // Lima - Military Time Zone 'L' or 'Lima' is equivalent to
-// to IANA Time Zone "Etc/GMT+11".
+// to IANA Time Zone "Etc/GMT-11".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +11 hours.
 //  
-func (milTz militaryTimeZones) Lima() string {return "Etc/GMT+11" }
+// If the reversal of signs necessary to generate UTC+11 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Lima() string {return "Etc/GMT-11" }
 
 // Mike - Military Time Zone 'M' or 'Mike' is equivalent to
-// to IANA Time Zone "Etc/GMT+12".
+// to IANA Time Zone "Etc/GMT-12".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at +12 hours.
 //  
-func (milTz militaryTimeZones) Mike() string {return "Etc/GMT+12" }
+// If the reversal of signs necessary to generate UTC+12 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Mike() string {return "Etc/GMT-12" }
 
 // November - Military Time Zone 'N' or 'November' is equivalent to
-// to IANA Time Zone "Etc/GMT-1".
+// to IANA Time Zone "Etc/GMT+1".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -1 hour.
 //  
-func (milTz militaryTimeZones) November() string {return "Etc/GMT-1" }
+// If the reversal of signs necessary to generate UTC-1 hour is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) November() string {return "Etc/GMT+1" }
 
 // Oscar - Military Time Zone 'O' or 'Oscar' is equivalent to
-// to IANA Time Zone "Etc/GMT-2".
+// to IANA Time Zone "Etc/GMT+2".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -2 hours.
 //  
-func (milTz militaryTimeZones) Oscar() string {return "Etc/GMT-2" }
+// If the reversal of signs necessary to generate UTC-2 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Oscar() string {return "Etc/GMT+2" }
 
 // Papa - Military Time Zone 'P' or 'Papa' is equivalent to
-// to IANA Time Zone "Etc/GMT-3".
+// to IANA Time Zone "Etc/GMT+3".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -3 hours.
 //  
-func (milTz militaryTimeZones) Papa() string {return "Etc/GMT-3" }
+// If the reversal of signs necessary to generate UTC-3 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Papa() string {return "Etc/GMT+3" }
 
 // Quebec - Military Time Zone 'Q' or 'Quebec' is equivalent to
-// to IANA Time Zone "Etc/GMT-4".
+// to IANA Time Zone "Etc/GMT+4".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -4 hours.
 //  
-func (milTz militaryTimeZones) Quebec() string {return "Etc/GMT-4" }
+// If the reversal of signs necessary to generate UTC-4 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Quebec() string {return "Etc/GMT+4" }
 
 // Romeo - Military Time Zone 'R' or 'Romeo' is equivalent to
-// to IANA Time Zone "Etc/GMT-5".
+// to IANA Time Zone "Etc/GMT+5".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -5 hours.
 //  
-func (milTz militaryTimeZones) Romeo() string {return "Etc/GMT-5" }
+// If the reversal of signs necessary to generate UTC-5 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Romeo() string {return "Etc/GMT+5" }
 
 // Sierra - Military Time Zone 'S' or 'Sierra' is equivalent to
-// to IANA Time Zone "Etc/GMT-6".
+// to IANA Time Zone "Etc/GMT+6".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -6 hours.
 //  
-func (milTz militaryTimeZones) Sierra() string {return "Etc/GMT-6" }
+// If the reversal of signs necessary to generate UTC-6 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Sierra() string {return "Etc/GMT+6" }
 
 // Tango - Military Time Zone 'T' or 'Tango' is equivalent to
-// to IANA Time Zone "Etc/GMT-7".
+// to IANA Time Zone "Etc/GMT+7".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -7 hours.
 //  
-func (milTz militaryTimeZones) Tango() string {return "Etc/GMT-7" }
+// If the reversal of signs necessary to generate UTC-7 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Tango() string {return "Etc/GMT+7" }
 
 // Uniform - Military Time Zone 'U' or 'Uniform' is equivalent to
-// to IANA Time Zone "Etc/GMT-8".
+// to IANA Time Zone "Etc/GMT+8".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -8 hours.
 //  
-func (milTz militaryTimeZones) Uniform() string {return "Etc/GMT-8" }
+// If the reversal of signs necessary to generate UTC-8 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Uniform() string {return "Etc/GMT+8" }
 
 // Victor - Military Time Zone 'V' or 'Victor' is equivalent to
-// to IANA Time Zone "Etc/GMT-9".
+// to IANA Time Zone "Etc/GMT+9".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -9 hours.
 //  
-func (milTz militaryTimeZones) Victor() string {return "Etc/GMT-9" }
+// If the reversal of signs necessary to generate UTC-9 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Victor() string {return "Etc/GMT+9" }
 
 // Whiskey - Military Time Zone 'W' or 'Whiskey' is equivalent to
-// to IANA Time Zone "Etc/GMT-10".
+// to IANA Time Zone "Etc/GMT+10".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -10 hours.
 //  
-func (milTz militaryTimeZones) Whiskey() string {return "Etc/GMT-10" }
+// If the reversal of signs necessary to generate UTC-10 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Whiskey() string {return "Etc/GMT+10" }
 
 // Xray - Military Time Zone 'X' or 'Xray' is equivalent to
-// to IANA Time Zone "Etc/GMT-11".
+// to IANA Time Zone "Etc/GMT+11".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -11 hours.
 //  
-func (milTz militaryTimeZones) Xray() string {return "Etc/GMT-11" }
+// If the reversal of signs necessary to generate UTC-11 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Xray() string {return "Etc/GMT+11" }
 
 // Yankee - Military Time Zone 'Y' or 'Yankee' is equivalent to
-// to IANA Time Zone "Etc/GMT-12".
+// to IANA Time Zone "Etc/GMT+12".
 //  
 // Offset from Universal Coordinated Time (UTC) is computed at -12 hours.
 //  
-func (milTz militaryTimeZones) Yankee() string {return "Etc/GMT-12" }
+// If the reversal of signs necessary to generate UTC-12 hours is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//  
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//  
+func (milTz militaryTimeZones) Yankee() string {return "Etc/GMT+12" }
 
 // Zulu - Military Time Zone 'Z' or 'Zulu' is equivalent to
 // to IANA Time Zone "Etc/UTC".

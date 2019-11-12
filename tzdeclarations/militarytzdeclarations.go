@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/MikeAustin71/stringopsgo/strops/v2"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"strings"
 )
 
 type TzMilitaryDeclarations struct {
@@ -88,12 +89,12 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 // ---------------------------------------------------------------------------
 //
 // Example:
-//   Alpha - Military Time Zone 'A' or 'Alpha' is equivalent
-//   IANA Time Zone "Etc/GMT+1"
+//   Alpha - Military Time Zone 'A' or 'Alpha' is equivalent TO
+//   IANA Time Zone "Etc/GMT-1"
 //
 //   Offset from UTC is computed at +1 hours.
 //
-//   func (milTz militaryTimeZones)Alpha() string { return "Etc/GMT+1" }
+//   func (milTz militaryTimeZones)Alpha() string { return "Etc/GMT-1" }
 //
 // ----------------------------------------------------------------------------
 //
@@ -112,36 +113,66 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 
 	if nStrDto.NumStrLen == 0 {
 		nStrDto.NumStr = "0"
+	} else {
+		if nStrDto.LeadingSignChar == "+" {
+			nStrDto.NumStr = "-" + nStrDto.NumStr[1:]
+		} else {
+			nStrDto.NumStr = "+" + nStrDto.NumStr[1:]
+		}
 	}
 
-	outputStr := tzdatastructs.CommentLead +
+	b := strings.Builder{}
+
+	b.Grow(512)
+
+	b.WriteString(tzdatastructs.CommentLead +
 		fmt.Sprintf("%v - Military Time Zone '%v' or '%v' is equivalent to\n",
-			tzData.TzName, firstLetter, tzData.TzName)
+			tzData.TzName, firstLetter, tzData.TzName))
 
-	outputStr += tzdatastructs.CommentLead +
-		fmt.Sprintf("to IANA Time Zone \"%v\".\n", tzData.TzValue)
+	b.WriteString(tzdatastructs.CommentLead +
+		fmt.Sprintf("to IANA Time Zone \"%v\".\n", tzData.TzValue))
 
-	utcOffset := nStrDto.NumStr + " hours."
+	utcOffset := nStrDto.NumStr + " hours"
 
 	if nStrDto.NumStr == "+1" || nStrDto.NumStr == "-1" {
-		utcOffset = nStrDto.NumStr + " hour."
+		utcOffset = nStrDto.NumStr + " hour"
 	}
 
-	outputStr += tzdatastructs.CommentBlankLine
-	outputStr += tzdatastructs.CommentLead +
-			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v\n",
-			utcOffset)
+	b.WriteString(tzdatastructs.CommentBlankLine)
 
-	outputStr += tzdatastructs.CommentBlankLine
-	outputStr +=
+	b.WriteString(tzdatastructs.CommentLead +
+			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v.\n",
+			utcOffset))
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	if tzData.TzName != "Zulu" {
+		b.WriteString(tzdatastructs.CommentLead +
+			fmt.Sprintf("If the reversal of signs necessary to generate UTC%v is\n",utcOffset))
+
+		b.WriteString(tzdatastructs.CommentLead +
+			"confusing, see IANA the documentation for the 'ETC' Time Zone Area\n")
+
+		b.WriteString(tzdatastructs.CommentLead +
+			"referenced at:\n")
+
+		b.WriteString(tzdatastructs.CommentBlankLine)
+
+		b.WriteString(tzdatastructs.CommentLead +
+			"   https://en.wikipedia.org/wiki/Tz_database#Area\n")
+
+		b.WriteString(tzdatastructs.CommentBlankLine)
+	}
+
+	b.WriteString(
 		fmt.Sprintf("func (%v %v) %v %v {return %v }\n\n",
 			tzData.FuncSelfReferenceVariable,
 			tzData.FuncType,
 			tzData.FuncName,
 			tzData.FuncReturnType,
-			tzData.FuncReturnValue)
+			tzData.FuncReturnValue))
 
-	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(outputStr) ...)
+	tzData.FuncDeclaration = append(tzData.FuncDeclaration, []byte(b.String()) ...)
 
 	return nil
 }
