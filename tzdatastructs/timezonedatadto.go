@@ -82,6 +82,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.FuncReturnType = tzDataDto.FuncReturnType
 	newTzDto.FuncReturnValue = tzDataDto.FuncReturnValue
 	newTzDto.SourceFileNameExt = tzDataDto.SourceFileNameExt
+	newTzDto.WorldRegionSortCode = tzDataDto.WorldRegionSortCode
 	newTzDto.TzClass = tzDataDto.TzClass
 	newTzDto.TzType = tzDataDto.TzType
 	newTzDto.TzCategory = tzDataDto.TzCategory
@@ -115,6 +116,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.FuncReturnType = inTzDataDto.FuncReturnType
 	tzDataDto.FuncReturnValue = inTzDataDto.FuncReturnValue
 	tzDataDto.SourceFileNameExt = inTzDataDto.SourceFileNameExt
+	tzDataDto.WorldRegionSortCode = inTzDataDto.WorldRegionSortCode
 	tzDataDto.TzClass = inTzDataDto.TzClass
 	tzDataDto.TzType = inTzDataDto.TzType
 	tzDataDto.TzCategory = inTzDataDto.TzCategory
@@ -138,6 +140,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 
 	if tzDataDto.isInitialized == tzDDto.isInitialized &&
+		tzDataDto.WorldRegionSortCode == tzDataDto.WorldRegionSortCode &&
 		tzDataDto.ParentGroupName == tzDDto.ParentGroupName &&
 		tzDataDto.GroupName == tzDDto.GroupName &&
 		tzDataDto.TzName == tzDDto.TzName &&
@@ -173,6 +176,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	funcReturnType,
 	funcReturnValue,
 	srcFileNameExt string,
+	worldRegionSortCode int,
 	tzClass TimeZoneClass,
 	tzType TimeZoneType,
 	tzCategory TimeZoneCategory,
@@ -229,6 +233,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.FuncReturnType = funcReturnType
 	newTzDto.FuncReturnValue = funcReturnValue
 	newTzDto.SourceFileNameExt = srcFileNameExt
+	newTzDto.WorldRegionSortCode = worldRegionSortCode
 	newTzDto.TzClass = tzClass
 	newTzDto.TzType = tzType
 	newTzDto.TzCategory = tzCategory

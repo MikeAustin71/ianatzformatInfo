@@ -1245,10 +1245,124 @@ func (tzLog *TzLogOps) WriteTimeZones(
 		return err
 	}
 
+	label = "Item"
 
-	var rightSpacer textlinebuilder.MarginSpec
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 6,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = "Region"
+
+	strSpec3 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+
+	strSpec4 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 8,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = "Time Zone"
+
+	strSpec5 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 18,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	leftSpacer.MarginLength = 5
+
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		leftSpacer,
+		strSpec2,
+		strSpec3,
+		strSpec4,
+		strSpec5,
+		tzLog.newLine)
+
+	if err != nil {
+		return err
+	}
+
+	label = "No."
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 6,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = "Index"
+
+	strSpec3 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 9,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify() }
+
+	label = "Name"
+
+	strSpec4 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	label = "Canonical Value"
+
+	strSpec5 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 23,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		leftSpacer,
+		strSpec2,
+		strSpec3,
+		strSpec4,
+		strSpec5,
+		tzLog.newLine,
+		tzLog.dashLineBreakStr,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+
+	var intRegion textlinebuilder.IntegerSpec
 
 	writeCnt := 0
+
+	rightSpacer := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 5,
+		MarginChar:   ' ',
+	}
+
+	numOfWorldRegions := len(tzdatastructs.WorldRegions)
 
 	for i :=0; i < numOfTimeZones; i++ {
 
@@ -1276,18 +1390,34 @@ func (tzLog *TzLogOps) WriteTimeZones(
 			NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
 		}
 
-		rightSpacer = textlinebuilder.MarginSpec{
-			MarginStr:    "",
-			MarginLength: 5,
-			MarginChar:   ' ',
+		intRegion = textlinebuilder.IntegerSpec{
+			NumericValue:       tz.WorldRegionSortCode,
+			NumericFieldSpec:   "%3d",
+			NumericFieldLength: 3,
+			NumericPadChar:     ' ',
+			NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
 		}
 
-		strSpec2 = textlinebuilder.StringSpec{
+		strSpec3 = textlinebuilder.StringSpec{
 			StrValue:       tz.TzCanonicalValue,
 			StrFieldLength: len(tz.TzCanonicalValue),
 			StrPadChar:     ' ',
 			StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
 		}
+
+
+		if tz.WorldRegionSortCode < 0 ||
+			tz.WorldRegionSortCode >= numOfWorldRegions {
+			label = "**Error**"
+		} else {
+			label = tzdatastructs.WorldRegions[tz.WorldRegionSortCode]
+		}
+
+		strSpec2 = textlinebuilder.StringSpec{
+			StrValue:       label,
+			StrFieldLength: 15,
+			StrPadChar:     ' ',
+			StrPosition:    textlinebuilder.FieldPos.LeftJustify()}
 
 		err = textlinebuilder.TextLineBuilder{}.Build(
 			&b,
@@ -1296,7 +1426,10 @@ func (tzLog *TzLogOps) WriteTimeZones(
 			leftSpacer,
 			intSpec1,
 			rightSpacer,
+			intRegion,
+			rightSpacer,
 			strSpec2,
+			strSpec3,
 			tzLog.newLine)
 
 		if err != nil {
@@ -1307,7 +1440,7 @@ func (tzLog *TzLogOps) WriteTimeZones(
 	err = textlinebuilder.TextLineBuilder{}.Build(
 		&b,
 		ePrefix,
-		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		textlinebuilder.BlankLinesSpec{NumBlankLines:1},
 		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
