@@ -150,7 +150,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
 	}
 
-	leftSpacer := textlinebuilder.MarginSpec{
+	spacer1 := textlinebuilder.MarginSpec{
 		MarginStr:    "",
 		MarginLength: 10,
 		MarginChar:   ' ',
@@ -160,7 +160,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		&b,
 		ePrefix,
 		leftMargin,
-		leftSpacer,
+		spacer1,
 		strSpec2,
 		newLine,
 		leftMargin,
@@ -282,13 +282,13 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
 
-	leftSpacer.MarginLength = 5
+	spacer1.MarginLength = 5
 
 	err = textlinebuilder.TextLineBuilder{}.Build(
 		&b,
 		ePrefix,
 		leftMargin,
-		leftSpacer,
+		spacer1,
 		strSpec2,
 		strSpec3,
 		strSpec4,
@@ -316,7 +316,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.RightJustify() }
 
-	label = "Name"
+	label = "  Name"
 
 	strSpec4 = textlinebuilder.StringSpec{
 		StrValue:       label,
@@ -339,7 +339,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		&b,
 		ePrefix,
 		leftMargin,
-		leftSpacer,
+		spacer1,
 		strSpec2,
 		strSpec3,
 		strSpec4,
@@ -360,7 +360,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 
 	writeCnt := 0
 
-	rightSpacer := textlinebuilder.MarginSpec{
+	spacer2 := textlinebuilder.MarginSpec{
 		MarginStr:    "",
 		MarginLength: 5,
 		MarginChar:   ' ',
@@ -378,7 +378,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 				"i='%v'\nError='%v'\n", i, err.Error())
 		}
 
-		leftSpacer = textlinebuilder.MarginSpec{
+		spacer1 = textlinebuilder.MarginSpec{
 			MarginStr:    "",
 			MarginLength: 5,
 			MarginChar:   ' ',
@@ -426,11 +426,11 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 			&b,
 			ePrefix,
 			leftMargin,
-			leftSpacer,
+			spacer1,
 			intSpec1,
-			rightSpacer,
+			spacer2,
 			intRegion,
-			rightSpacer,
+			spacer2,
 			strSpec2,
 			strSpec3,
 			newLine)
@@ -466,7 +466,7 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
 
-	leftSpacer = textlinebuilder.MarginSpec{
+	spacer1 = textlinebuilder.MarginSpec{
 		MarginStr:    "",
 		MarginLength: 10,
 		MarginChar:   ' ',
@@ -476,8 +476,456 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		&b,
 		ePrefix,
 		leftMargin,
-		leftSpacer,
+		spacer1,
 		strSpec2,
+		newLine,
+		leftMargin,
+		lineBreakStr,
+		newLine,
+		leftMargin,
+		newLine)
+
+	if err != nil {
+		return err
+	}
+
+	// Title Line 1
+	// Military Letter Code
+
+	spacer1 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 14,
+		MarginChar:   ' ',
+	}
+
+	label = "Military"
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Military Time Zone
+
+	spacer2 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 2,
+		MarginChar:   ' ',
+	}
+
+	label = "Military"
+
+	strSpec3 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+// Equivalent IANA Time Zone
+
+	spacer3 := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 5,
+		MarginChar:   ' ',
+	}
+
+	label = "Equivalent"
+
+	strSpec4 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+// Equivalent UTC Offset
+
+	spacer4 := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 5,
+		MarginChar:   ' ',
+	}
+
+	label = "Equivalent"
+
+	strSpec5 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		spacer1,
+		strSpec2,
+		spacer2,
+		strSpec3,
+		spacer3,
+		strSpec4,
+		spacer4,
+		strSpec5,
+		newLine)
+
+	if err != nil {
+		return err
+	}
+
+	// Title Line 2
+	// Item No.
+	spacer1 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 9,
+		MarginChar:   ' ',
+	}
+
+	label = "Item"
+
+	strSpec1 := textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 5,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Military Letter Code
+
+	spacer2 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 0,
+		MarginChar:   ' ',
+	}
+
+	label = "Letter"
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Military Time Zone
+
+	spacer3 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 1,
+		MarginChar:   ' ',
+	}
+
+	label = "Time"
+
+	strSpec3 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Equivalent IANA Time Zone
+
+	spacer4 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 6,
+		MarginChar:   ' ',
+	}
+
+	label = "IANA"
+
+	strSpec4 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Equivalent UTC Offset
+	label = "UTC"
+
+	spacer5 := textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 0,
+		MarginChar:   ' ',
+	}
+
+	strSpec5 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		spacer1,
+		strSpec1,
+		spacer2,
+		strSpec2,
+		spacer3,
+		strSpec3,
+		spacer4,
+		strSpec4,
+		spacer5,
+		strSpec5,
+		newLine)
+
+	if err != nil {
+		return err
+	}
+
+	// Title Line 3
+	// Military Letter Code
+
+	spacer1 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 9,
+		MarginChar:   ' ',
+	}
+
+	label = "No."
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 5,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	label = "Code"
+
+	spacer2 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 0,
+		MarginChar:   ' ',
+	}
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Military Time Zone
+
+	spacer3 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 1,
+		MarginChar:   ' ',
+	}
+
+	label = "Zone"
+
+	strSpec3 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Equivalent IANA Time Zone
+
+	spacer4 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 7,
+		MarginChar:   ' ',
+	}
+
+	label = "Time Zone"
+
+	strSpec4 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	// Equivalent UTC Offset
+
+	spacer5 = textlinebuilder.MarginSpec{
+		MarginStr:    "",
+		MarginLength: 3,
+		MarginChar:   ' ',
+	}
+
+	label = "Offset"
+
+	strSpec5 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: 10,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.Center(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
+		spacer1,
+		strSpec1,
+		spacer2,
+		strSpec2,
+		spacer3,
+		strSpec3,
+		spacer4,
+		strSpec4,
+		spacer5,
+		strSpec5,
+		newLine,
+		leftMargin,
+		lineBreakStr,
+		newLine,
+		leftMargin,
+		newLine)
+
+	if err != nil {
+		return err
+	}
+
+	numOfMilitaryTimeZones := tzStats.CapturedMilitaryZones.GetNumberOfTimeZones()
+
+	if numOfMilitaryTimeZones < 1 {
+		return fmt.Errorf(ePrefix +
+			"\nNumber of Military Time Zones is INVALID!\n" +
+			"numOfMilitaryTimeZones='%v'\n", numOfMilitaryTimeZones)
+	}
+
+	writeCnt = 0
+
+	for i:=0; i < numOfMilitaryTimeZones; i++ {
+
+		tz, err := tzStats.CapturedMilitaryZones.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by tzStats.CapturedMilitaryZones.PeekPtr(i)\n" +
+				"i='%v'\n" +
+				"Error='%v'\n", i, err.Error())
+		}
+
+		firstLetter := tz.TzName[0:1]
+
+		equivalentUTC, ok := tzdatastructs.MilitaryUTCMap[tz.TzName]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"\nError: Invalid UTC time zone lookup. Invalid Time Zone!\n" +
+				"tz.TzName='%v'\n", tz.TzName)
+		}
+
+
+
+		spacer1 = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 8,
+			MarginChar:   ' ',
+		}
+
+		writeCnt++
+
+		// Item No
+		intSpec1 = textlinebuilder.IntegerSpec{
+			NumericValue:       writeCnt,
+			NumericFieldSpec:   "%3d.",
+			NumericFieldLength: 5,
+			NumericPadChar:     ' ',
+			NumericPosition:    textlinebuilder.FieldPos.RightJustify(),
+		}
+
+		// Military Letter Code
+
+		spacer2 = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 2,
+			MarginChar:   ' ',
+		}
+
+		strSpec2 = textlinebuilder.StringSpec{
+			StrValue:       firstLetter,
+			StrFieldLength: 10,
+			StrPadChar:     ' ',
+			StrPosition:    textlinebuilder.FieldPos.Center(),
+		}
+
+		// Military Time Zone
+
+		spacer3 = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 3,
+			MarginChar:   ' ',
+		}
+
+		strSpec3 = textlinebuilder.StringSpec{
+			StrValue:       tz.TzName,
+			StrFieldLength: 10,
+			StrPadChar:     ' ',
+			StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+		}
+
+		// Equivalent IANA Time Zone
+
+		spacer4 = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 4,
+			MarginChar:   ' ',
+		}
+
+		strSpec4 = textlinebuilder.StringSpec{
+			StrValue:       tz.TzValue,
+			StrFieldLength: 10,
+			StrPadChar:     ' ',
+			StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+		}
+
+		// Equivalent UTC Offset
+
+		spacer5 = textlinebuilder.MarginSpec{
+			MarginStr:    "",
+			MarginLength: 4,
+			MarginChar:   ' ',
+		}
+
+		strSpec5 = textlinebuilder.StringSpec{
+			StrValue:       equivalentUTC,
+			StrFieldLength: 10,
+			StrPadChar:     ' ',
+			StrPosition:    textlinebuilder.FieldPos.Center(),
+		}
+
+		err = textlinebuilder.TextLineBuilder{}.Build(
+			&b,
+			ePrefix,
+			leftMargin,
+			spacer1,
+			intSpec1,
+			spacer2,
+			strSpec2,
+			spacer3,
+			strSpec3,
+			spacer4,
+			strSpec4,
+			spacer5,
+			strSpec5,
+			newLine)
+
+		if err != nil {
+			return err
+		}
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		leftMargin,
 		newLine,
 		leftMargin,
 		lineBreakStr,
@@ -491,9 +939,6 @@ func (tzFmtStr TzStrFmt) WriteAlphabetizedTimeZoneList(
 		return err
 	}
 
-	writeCnt = 0
-
-	
 
 	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
 

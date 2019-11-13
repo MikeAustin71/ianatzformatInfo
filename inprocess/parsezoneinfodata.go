@@ -53,6 +53,8 @@ func (parseZInfo ParseZoneInfoData) ParseZoneInfo(
 
 
 // configMilitaryTimeZones - Creates and stores Military Time Zones
+// https://www.timeanddate.com/time/zones/military
+// https://www.timeanddate.com/worldclock/timezone/alpha
 //
 func (parseZInfo ParseZoneInfoData) configMilitaryTimeZones(
 	tzStats *tzdatastructs.TimeZoneStatsDto,

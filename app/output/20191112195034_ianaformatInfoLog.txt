@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-12 Tuesday 01:58:25.177598500 -0600 CST 
+     Execution Start Time: 2019-11-12 Tuesday 19:50:34.786401100 -0600 CST 
 
     ==============================================================================
 
@@ -15,13 +15,13 @@
 
        Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
 
-                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191112015825_ianaformatInfoLog.txt 
+                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191112195034_ianaformatInfoLog.txt 
 
     ------------------------------------------------------------------------------
 
 
             IANA Time Zones Listed in Alphabetical Order
-    ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
   
    Expected Number of Total Iana Time Zones:  593
   
@@ -29,8 +29,8 @@
   
   
          Item    Region  Region         Time Zone
-          No.    Index   Name           Canonical Value
-    ------------------------------------------------------------------------------
+          No.    Index    Name          Canonical Value
+  ------------------------------------------------------------------------------
   
           1.       0     Africa         Africa/Abidjan
           2.       0     Africa         Africa/Accra
@@ -626,7 +626,44 @@
         592.      10     Other          WET
         593.      10     Other          Zulu
   
-    ------------------------------------------------------------------------------
+  ------------------------------------------------------------------------------
+  
+  
+            Alphabetical Listing Of Military Time Zones
+  ------------------------------------------------------------------------------
+  
+                 Military    Military      Equivalent     Equivalent
+           Item   Letter      Time            IANA          UTC
+            No.    Code       Zone          Time Zone      Offset  
+  ------------------------------------------------------------------------------
+  
+             1.      A        Alpha         Etc/GMT-1       UTC+1   
+             2.      B        Bravo         Etc/GMT-2       UTC+2   
+             3.      C        Charlie       Etc/GMT-3       UTC+3   
+             4.      D        Delta         Etc/GMT-4       UTC+4   
+             5.      E        Echo          Etc/GMT-5       UTC+5   
+             6.      F        Foxtrot       Etc/GMT-6       UTC+6   
+             7.      G        Golf          Etc/GMT-7       UTC+7   
+             8.      H        Hotel         Etc/GMT-8       UTC+8   
+             9.      I        India         Etc/GMT-9       UTC+9   
+            10.      K        Kilo          Etc/GMT-10      UTC+10  
+            11.      L        Lima          Etc/GMT-11      UTC+11  
+            12.      M        Mike          Etc/GMT-12      UTC+12  
+            13.      N        November      Etc/GMT+1       UTC-1   
+            14.      O        Oscar         Etc/GMT+2       UTC-2   
+            15.      P        Papa          Etc/GMT+3       UTC-3   
+            16.      Q        Quebec        Etc/GMT+4       UTC-4   
+            17.      R        Romeo         Etc/GMT+5       UTC-5   
+            18.      S        Sierra        Etc/GMT+6       UTC-6   
+            19.      T        Tango         Etc/GMT+7       UTC-7   
+            20.      U        Uniform       Etc/GMT+8       UTC-8   
+            21.      V        Victor        Etc/GMT+9       UTC-9   
+            22.      W        Whiskey       Etc/GMT+10      UTC-10  
+            23.      X        Xray          Etc/GMT+11      UTC-11  
+            24.      Y        Yankee        Etc/GMT+12      UTC-12  
+            25.      Z        Zulu          Etc/UTC         UTC+0   
+  
+  ------------------------------------------------------------------------------
   
   
                        Iana Time Zones by Region                      
@@ -688,9 +725,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-12 Tuesday 01:58:25.177598500 -0600 CST
-    Ending Date Time: 2019-11-12 Tuesday 01:58:26.619122300 -0600 CST
-        Elapsed Time: 1-Seconds 441-Milliseconds 523-Microseconds 800-Nanoseconds
+  Starting Date Time: 2019-11-12 Tuesday 19:50:34.786401100 -0600 CST
+    Ending Date Time: 2019-11-12 Tuesday 19:50:38.474635200 -0600 CST
+        Elapsed Time: 3-Seconds 688-Milliseconds 234-Microseconds 100-Nanoseconds
   ------------------------------------------------------------------------------
 
 

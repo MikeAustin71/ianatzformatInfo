@@ -103,6 +103,8 @@ func (txtBuilder TextLineBuilder) CenterInField(
 				"strValue='%v'\n" +
 				"Error='%v'\n", strValue, err.Error())
 		}
+
+		return nil
 	}
 
 	if padChar == 0 {

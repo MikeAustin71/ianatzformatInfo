@@ -65,6 +65,33 @@ var MilitaryTzMap = map[string]string{
 	"Yankee":   "Etc/GMT+12",
 	"Zulu":     "Etc/UTC"}
 
+var MilitaryUTCMap = map[string]string{
+	"Alpha":    "UTC+1",
+	"Bravo":    "UTC+2",
+	"Charlie":  "UTC+3",
+	"Delta":    "UTC+4",
+	"Echo":     "UTC+5",
+	"Foxtrot":  "UTC+6",
+	"Golf":     "UTC+7",
+	"Hotel":    "UTC+8",
+	"India":    "UTC+9",
+	"Kilo":     "UTC+10",
+	"Lima":     "UTC+11",
+	"Mike":     "UTC+12",
+	"November": "UTC-1",
+	"Oscar":    "UTC-2",
+	"Papa":     "UTC-3",
+	"Quebec":   "UTC-4",
+	"Romeo":    "UTC-5",
+	"Sierra":   "UTC-6",
+	"Tango":    "UTC-7",
+	"Uniform":  "UTC-8",
+	"Victor":   "UTC-9",
+	"Whiskey":  "UTC-10",
+	"Xray":     "UTC-11",
+	"Yankee":   "UTC-12",
+	"Zulu":     "UTC+0"}
+
 
 // MilitaryTzArray - Array of strings
 // describing official Military Time Zones
