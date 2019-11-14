@@ -46,9 +46,6 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 	b.WriteString(tzdatastructs.CommentLead +
 		"    https://www.timeanddate.com/worldclock/timezone/alpha\n")
 
-	b.WriteString(tzdatastructs.CommentLead +
-		"    https://www.timeanddate.com/time/zones/military\n")
-
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
 	b.WriteString(tzdatastructs.CommentLead +
