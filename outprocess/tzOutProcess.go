@@ -81,8 +81,8 @@ func (tzOut TzOutProcess) WriteOutput(
 
 	lineBreakStr := textlinebuilder.LineSpec{
 		LineChar:         '-',
-		LineLength:       60,
-		LineFieldLength:  60,
+		LineLength:       70,
+		LineFieldLength:  70,
 		LineFieldPadChar: ' ',
 		LinePosition:     textlinebuilder.FieldPos.LeftJustify(),
 	}

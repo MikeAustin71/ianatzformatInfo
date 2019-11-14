@@ -101,7 +101,7 @@ package main
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-12 Tuesday 19:50:34 -0600 CST
+// Type Creation Date: 2019-11-13 Wednesday 21:36:17 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -3793,7 +3793,7 @@ func (north north_DakotaTimeZones) Center() string {return "America/North_Dakota
 func (north north_DakotaTimeZones) New_Salem() string {return "America/North_Dakota/New_Salem" }
 
 //           IANA Time Zones Listed in Alphabetical Order
-// ------------------------------------------------------------
+// ----------------------------------------------------------------------
 // 
 //  Expected Number of Total Iana Time Zones:  593
 // 
@@ -3802,7 +3802,7 @@ func (north north_DakotaTimeZones) New_Salem() string {return "America/North_Dak
 // 
 //        Item    Region  Region         Time Zone
 //         No.    Index    Name          Canonical Value
-// ------------------------------------------------------------
+// ----------------------------------------------------------------------
 // 
 //         1.       0     Africa         Africa/Abidjan
 //         2.       0     Africa         Africa/Accra
@@ -4398,16 +4398,16 @@ func (north north_DakotaTimeZones) New_Salem() string {return "America/North_Dak
 //       592.      10     Other          WET
 //       593.      10     Other          Zulu
 // 
-// ------------------------------------------------------------
+// ----------------------------------------------------------------------
 // 
 // 
 //           Alphabetical Listing Of Military Time Zones
-// ------------------------------------------------------------
+// ----------------------------------------------------------------------
 // 
 //                Military    Military      Equivalent     Equivalent
 //          Item   Letter      Time            IANA          UTC
 //           No.    Code       Zone          Time Zone      Offset  
-// ------------------------------------------------------------
+// ----------------------------------------------------------------------
 // 
 //            1.      A        Alpha         Etc/GMT-1       UTC+1   
 //            2.      B        Bravo         Etc/GMT-2       UTC+2   
@@ -4435,6 +4435,6 @@ func (north north_DakotaTimeZones) New_Salem() string {return "America/North_Dak
 //           24.      Y        Yankee        Etc/GMT+12      UTC-12  
 //           25.      Z        Zulu          Etc/UTC         UTC+0   
 // 
-// ------------------------------------------------------------
+// ----------------------------------------------------------------------
 // 
 // 
