@@ -174,7 +174,7 @@ func (tzSrc TimeZoneSource) UtilityIsValid() error {
 //  For all of the cases shown above,
 //  t is now equal to TimeZoneSource(0).TimeZone()
 //
-func (tzClass TimeZoneSource) UtilityParseString(
+func (tzSrc TimeZoneSource) UtilityParseString(
 	valueString string,
 	caseSensitive bool) (TimeZoneSource, error) {
 

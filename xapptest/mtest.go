@@ -7,10 +7,12 @@ import (
 	"time"
 )
 
+// 2019-11-15 Friday 09:37:19.061195900 +0930 ACST
+// https://yourbasic.org/golang/format-parse-string-time-date-example/
 
 func main() {
 
-	mTest{}.abbrvTest02()
+	mTest{}.parseTime03()
 
 	return
 }
@@ -20,6 +22,46 @@ var xFmtDateTimeTzNanoYMD = "2006-01-02 Monday 15:04:05.000000000 -0700 MST"
 type mTest struct {
 	input  string
 	output string
+}
+
+func (mT mTest) parseTime03() {
+
+	tz := libs.TZones.Africa.Timbuktu()
+	tzLocation := tz
+
+	location1, err := time.LoadLocation(tzLocation)
+
+	if err != nil {
+		fmt.Printf("Error returned by time.LoadLocation(tzLocation).\n"+
+			"tzLocation='%v'\n"+
+			"Error:'%v'\n", tzLocation, err.Error())
+		return
+	}
+
+	// time.Parse("2006 01 02 15 04", "2015 11 11 16 50")
+	tSummer, err := time.ParseInLocation("2006-01-02 15:04:00", "2019-07-15 16:50:00", location1)
+
+	if err != nil {
+		fmt.Printf("Error returned by time.Parse(\"2006-01-02 15:04:00\", \"2015-11-11 16:50:00\").\n" +
+			"Error:'%v'\n", err.Error())
+		return
+	}
+
+	fmt.Println("mTest.parseTime03()")
+
+	fmt.Println("Location: ", tz)
+	fmt.Println("Summer Time: ", tSummer.Format(xFmtDateTimeTzNanoYMD))
+
+	tWinter, err := time.ParseInLocation("2006-01-02 15:04:00", "2019-12-15 16:50:00", location1)
+
+	if err != nil {
+		fmt.Printf("Error returned by time.Parse(\"2006-01-02 15:04:00\", \"2015-11-11 16:50:00\").\n" +
+			"Error:'%v'\n", err.Error())
+		return
+	}
+
+	fmt.Println("Winter Time: ", tWinter.Format(xFmtDateTimeTzNanoYMD))
+
 }
 
 func (mT mTest) abbrvTest02() {
