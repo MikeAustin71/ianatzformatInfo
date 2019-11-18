@@ -2,15 +2,13 @@ package tzdatastructs
 
 const AppInputParametersFileName = "targettzdata.txt"
 
-const OutputFileName = "timezonedata.go"
+const TimeZoneDataOutputFileName = "timezonedata.go"
+
+const TzAbbrvDataOutputFileName = "timezoneabbreviations.go"
 
 const PrimaryTimeZoneType = "TimeZones"
 
 const MasterGroupTypeSuffix = "TimeZones"
-const CommentCharStr = "#"
-const ZoneLabel = "Zone"
-const LinkLabel = "Link"
-const DeprecatedTzGroup = "Deprecated"
 const ZoneSeparator = "/"
 const CommentLead = "// "
 const CommentBlankLine = "//  \n"

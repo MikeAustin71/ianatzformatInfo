@@ -1,7 +1,10 @@
 package tzdatastructs
 
+import (
+	"errors"
+)
 
-type TzAbbrvReferenceDto struct {
+type TzAbbreviationDto struct {
 	Id         string
 	Abbrv      string
 	TzName     string
@@ -10,8 +13,45 @@ type TzAbbrvReferenceDto struct {
 	IanaZone   string
 }
 
+// CopyOut() - Makes and returns a deep copy of the current TzAbbreviationDto
+// object.
+//
+func (TzAbbrv *TzAbbreviationDto) CopyOut() (TzAbbreviationDto) {
 
-var TzAbbreviationReference = map[string]TzAbbrvReferenceDto{
+	newDto := TzAbbreviationDto{}
+
+	newDto.Id = TzAbbrv.Id
+	newDto.Abbrv = TzAbbrv.Abbrv
+	newDto.TzName = TzAbbrv.TzName
+	newDto.Location = TzAbbrv.Location
+	newDto.UtcOffset = TzAbbrv.UtcOffset
+	newDto.IanaZone = TzAbbrv.IanaZone
+
+	return newDto
+}
+
+// CopyIn() - Copies the field values from an incoming TzAbbreviationDto
+// object to the current TzAbbreviationDto object.
+func (TzAbbrv *TzAbbreviationDto) CopyIn(inComing *TzAbbreviationDto) error {
+
+	ePrefix := "TzAbbreviationDto.CopyIn() "
+
+	if inComing == nil {
+		return  errors.New(ePrefix +
+			"Error: Input parameter 'incoming' is nil!")
+	}
+
+	TzAbbrv.Id = inComing.Id
+	TzAbbrv.Abbrv = inComing.Abbrv
+	TzAbbrv.TzName = inComing.TzName
+	TzAbbrv.Location = inComing.Location
+	TzAbbrv.UtcOffset = inComing.UtcOffset
+	TzAbbrv.IanaZone = inComing.IanaZone
+
+	return nil
+}
+
+var TzAbbreviationReference = map[string]TzAbbreviationDto{
 	"A+0100"      :{"A+0100","A","Alpha Time Zone","Military","+0100",""},
 	"ACDT+1030"      :{"ACDT+1030","ACDT","Australian Central Daylight Time","Australia","+1030",""},
 	"ACST+0930"      :{"ACST+0930","ACST","Australian Central Standard Time","Australia","+0930",""},

@@ -322,10 +322,11 @@ func (tzDataCol TimeZoneDataCollection) New() TimeZoneDataCollection {
 	return newTzCol
 }
 
-// PeekPtr - Returns a pointer to the TimeZoneDataDto located in the internal
+// PeekPtr - Returns a pointer to the TimeZoneDataDto object located in the internal
 // TimeZoneDataDto array at input parameter 'index'.
 //
-func (tzDataCol *TimeZoneDataCollection) PeekPtr(index int) (*TimeZoneDataDto, error) {
+func (tzDataCol *TimeZoneDataCollection) PeekPtr(
+	index int) (*TimeZoneDataDto, error) {
 
 	ePrefix := "TimeZoneDataCollection.PeekPtr() "
 

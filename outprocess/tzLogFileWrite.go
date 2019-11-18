@@ -133,6 +133,17 @@ func (tzLog *TzLogOps) TestCapturedIanaTimeZones(
 	return nil
 }
 
+func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+		ePrefix += "TzLogOps.TestIanaTimeZoneAbbreviations() "
+
+
+	return nil
+}
+
+
 // WriteError - Writes an error message to the log
 // file
 func (tzLog *TzLogOps) WriteError(
@@ -661,7 +672,7 @@ func (tzLog *TzLogOps) WriteHeader(
 	}
 
 	label = zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() +
-		tzdatastructs.OutputFileName
+		tzdatastructs.TimeZoneDataOutputFileName
 
 	strSpec2 = textlinebuilder.StringSpec{
 		StrValue:       label,

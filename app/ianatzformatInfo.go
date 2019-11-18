@@ -111,7 +111,7 @@ parser := inprocess.ParseZoneInfoData{}
 
 	err = outprocess.TzOutProcess{}.WriteOutput(
 		zoneInfoDataDto.AppOutputDirMgr,
-		tzdatastructs.OutputFileName,
+		tzdatastructs.TimeZoneDataOutputFileName,
 		&timeZoneStats,
 		ePrefix)
 
@@ -124,7 +124,7 @@ parser := inprocess.ParseZoneInfoData{}
 	}
 
 	fmt.Printf("Output Source File:\n     %v\n\n",
-		zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() + tzdatastructs.OutputFileName)
+		zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() + tzdatastructs.TimeZoneDataOutputFileName)
 
 	fmt.Printf("Number Of Captured Iana Time Zones: %v\n\n",
 		timeZoneStats.IanaCapturedTimeZones.GetNumberOfTimeZones())
