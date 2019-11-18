@@ -43,6 +43,15 @@ func (tzAbbrv *TimeZoneAbbreviationCollection) AddIfNew(
 	return
 }
 
+// New - Returns a new properly initialized instance of a TimeZoneAbbreviationCollection
+func (tzAbbrv TimeZoneAbbreviationCollection) New() (TimeZoneAbbreviationCollection) {
+
+	newAbbrvDto := TimeZoneAbbreviationCollection{}
+	newAbbrvDto.tzAbbreviations = make([]TzAbbreviationDto, 0)
+
+	return newAbbrvDto
+}
+
 // PeekPtr - Returns a pointer to the TzAbbreviationDto object
 // located in the internal tzAbbreviations array at the index
 // specified by input parameter 'index'.

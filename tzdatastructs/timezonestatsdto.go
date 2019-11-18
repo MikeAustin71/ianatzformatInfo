@@ -45,6 +45,7 @@ type TimeZoneStatsDto struct {
 	CapturedMilitaryZones         TimeZoneDataCollection
 	TzGroups                      []TimeZoneGroupCollection
 	TzData                        []TimeZoneDataCollection
+	TzAbbreviations               TimeZoneAbbreviationCollection
 }
 
 func (tzStats *TimeZoneStatsDto) Initialize() {
@@ -94,6 +95,7 @@ func (tzStats *TimeZoneStatsDto) Initialize() {
 	tzStats.IanaTotalTimeZonesLinks = 0
 	tzStats.IanaCapturedTimeZones = TimeZoneDataCollection{}.New()
 	tzStats.CapturedMilitaryZones = TimeZoneDataCollection{}.New()
+	tzStats.TzAbbreviations = TimeZoneAbbreviationCollection{}.New()
 	tzStats.TzGroups = make([]TimeZoneGroupCollection, Level_03_Idx + 1)
 	tzStats.TzData = make([]TimeZoneDataCollection, Level_03_Idx + 1)
 

@@ -133,12 +133,158 @@ func (tzLog *TzLogOps) TestCapturedIanaTimeZones(
 	return nil
 }
 
+// TestIanaTimeZoneAbbreviations - Tests to ensure that all captured
+// iana time zones have valid Time Zone Abbreviations.
 func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
 		ePrefix += "TzLogOps.TestIanaTimeZoneAbbreviations() "
 
+	numIanaTimeZones := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
+
+	var err error
+	var tz *tzdatastructs.TimeZoneDataDto
+	var testLocation *time.Location
+	var testTime time.Time
+	var testTimeStr, tzAbbrv, utcOffset, tzAbbrvId,
+	firstLetter, warningMsg string
+	var testTimeSplitAry []string
+	var ok bool
+	var tzAbbrvDto tzdatastructs.TzAbbreviationDto
+
+	for i:=0; i < numIanaTimeZones; i++ {
+
+		tz, err = tzStats.IanaCapturedTimeZones.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by tzStats.IanaCapturedTimeZones.PeekPtr(i)\n" +
+				"i='%v'\n" +
+				"Error='%v'\n", i, err.Error())
+		}
+
+		// FmtDateTimeTzYM
+
+		testLocation, err = time.LoadLocation(tz.TzCanonicalValue)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by time.LoadLocation(tz.TzCanonicalValue).\n"+
+				"tzLocation='%v'\n"+
+				"Error:'%v'\n", tz.TzCanonicalValue, err.Error())
+		}
+
+		// Test Summer Time
+		testTime, err =
+			time.ParseInLocation("2006-01-02 15:04:00", "2019-06-25 16:50:00", testLocation)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by summer time.Parse(\"2006-01-02 15:04:00\", \"2019-06-25 16:50:00\", " +
+				"testLocation).\n" +
+				"testLocation='%v'\n"+
+				"Error:'%v'\n", tz.TzCanonicalValue, err.Error())
+		}
+
+		testTimeStr = testTime.Format(tzdatastructs.FmtDateTimeTzYM)
+
+		testTimeSplitAry = strings.Split(testTimeStr, " ")
+
+		if len(testTimeSplitAry) != 4 {
+			return fmt.Errorf(ePrefix +
+				"\nError: Expected Test Summer Time to consist of 4-Elements.\n" +
+				"Instead, Test Summer Time Splits as %v-Elements!\n", len(testTimeSplitAry))
+		}
+
+		tzAbbrv = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[3], " "), " ")
+
+		firstLetter = tzAbbrv[0:1]
+
+		if firstLetter == "+" ||
+			firstLetter == "-"{
+			goto winterTimeTest
+		}
+
+		utcOffset = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[2], " "), " ")
+
+		tzAbbrvId = tzAbbrv+utcOffset
+
+		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[tzAbbrvId]
+
+		if !ok {
+			warningMsg = fmt.Sprintf(
+				"\nCould not locate time zone abbreviation for time zone: '%v'\n" +
+					"Expected Time Zone Abbreviation: '%v'\n" +
+					"UTC Offset: '%v'\n" +
+					"Summer Time: '%v'",
+					tz.TzCanonicalValue, tzAbbrv, utcOffset, testTimeStr)
+
+			_ = tzLog.WriteWarning(warningMsg, ePrefix)
+
+			continue
+		}
+
+		tzAbbrvDto.IanaZone = tz.TzCanonicalValue
+
+		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
+
+	winterTimeTest:
+		// Test Winter Time
+		testTime, err =
+			time.ParseInLocation("2006-01-02 15:04:00", "2019-12-23 16:50:00", testLocation)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by summer time.Parse(\"2006-01-02 15:04:00\", \"2019-12-23 16:50:00\", " +
+				"testLocation).\n" +
+				"testLocation='%v'\n"+
+				"Error:'%v'\n", tz.TzCanonicalValue, err.Error())
+		}
+
+		testTimeStr = testTime.Format(tzdatastructs.FmtDateTimeTzYM)
+
+		testTimeSplitAry = strings.Split(testTimeStr, " ")
+
+		if len(testTimeSplitAry) != 4 {
+			return fmt.Errorf(ePrefix +
+				"\nError: Expected Test Winter Time to consist of 4-Elements.\n" +
+				"Instead, Test Summer Time Splits as %v-Elements!\n", len(testTimeSplitAry))
+		}
+
+		tzAbbrv = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[3], " "), " ")
+
+		firstLetter = tzAbbrv[0:1]
+
+		if firstLetter == "+" ||
+			firstLetter == "-"{
+			continue
+		}
+
+		utcOffset = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[2], " "), " ")
+
+		tzAbbrvId = tzAbbrv+utcOffset
+
+		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[tzAbbrvId]
+
+		if !ok {
+			warningMsg = fmt.Sprintf(
+				"\nCould not locate time zone abbreviation for time zone: '%v'\n" +
+					"Expected Time Zone Abbreviation: '%v'\n" +
+					"UTC Offset: '%v'\n" +
+					"Summer Time: '%v'",
+				tz.TzCanonicalValue, tzAbbrv, utcOffset, testTimeStr)
+
+			_ = tzLog.WriteWarning(warningMsg, ePrefix)
+
+			continue
+		}
+
+		tzAbbrvDto.IanaZone = tz.TzCanonicalValue
+
+		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
+
+	}
 
 	return nil
 }

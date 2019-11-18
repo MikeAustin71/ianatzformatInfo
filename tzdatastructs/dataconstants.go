@@ -23,4 +23,5 @@ const RefIanaOrgTimeZones = "  https://www.iana.org/time-zones\n"
 
 const FmtDateTimeTzNanoYMD = "2006-01-02 Monday 15:04:05.000000000 -0700 MST"
 const FmtDateTimeTzYMD = "2006-01-02 Monday 15:04:05 -0700 MST"
+const FmtDateTimeTzYM = "2006-01-02 15:04:05 -0700 MST"
 
