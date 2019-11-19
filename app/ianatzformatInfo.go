@@ -109,7 +109,7 @@ parser := inprocess.ParseZoneInfoData{}
 		return
 	}
 
-	err = outprocess.TzOutTimeZones{}.WriteOutput(
+	err = outprocess.OutputTimeZones{}.WriteOutput(
 		zoneInfoDataDto.AppOutputDirMgr,
 		tzdatastructs.TimeZoneDataOutputFileName,
 		&timeZoneStats,

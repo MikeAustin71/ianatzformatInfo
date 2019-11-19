@@ -4,6 +4,13 @@ import (
 	"errors"
 )
 
+// TzAbbreviationDto - encapsulates Time Zone abbreviation
+// information. A Time Zone Abbreviation must consist entirely
+// of alphabetic characters.
+//
+// The Id is styled as Abbreviation text plus the UTC offset.
+// Example: CST-0600 - Central Standard time with offset UTC-0600.
+//
 type TzAbbreviationDto struct {
 	Id         string
 	Abbrv      string
