@@ -9,18 +9,18 @@ import (
 	"strings"
 )
 
-type TzOutProcess struct {
+type TzOutTimeZones struct {
 	input string
 }
 
 // WriteOutput - Writes all formatted time zone data to the output file.
-func (tzOut TzOutProcess) WriteOutput(
+func (tzOut TzOutTimeZones) WriteOutput(
 	outputPathDirMgr pathfileops.DirMgr,
 	fileNameExt string,
 	tzStats *tzdatastructs.TimeZoneStatsDto, // Time Zone Version
 	ePrefix string) error {
 
-	ePrefix += "TzOutProcess.WriteOutput() "
+	ePrefix += "TzOutTimeZones.WriteOutput() "
 
 	f, err := tzOut.createOpenOutputFile(outputPathDirMgr, fileNameExt, ePrefix)
 
@@ -124,11 +124,11 @@ func (tzOut TzOutProcess) WriteOutput(
 
 // Creates and Opens the Go Source Code output file,
 // 'timezonedata.go'.
-func (tzOut TzOutProcess) createOpenOutputFile(
+func (tzOut TzOutTimeZones) createOpenOutputFile(
 	outputPathDirMgr pathfileops.DirMgr,
 	fileNameExt, ePrefix string) (f pathfileops.FileMgr, err error) {
 
-	ePrefix += "TzOutProcess.CreateOutputFile() "
+	ePrefix += "TzOutTimeZones.CreateOutputFile() "
 
 	f = pathfileops.FileMgr{}
 	err = nil
@@ -200,10 +200,10 @@ func (tzOut TzOutProcess) createOpenOutputFile(
 
 // createTimeZoneTypeComments - Creates comments for the master Time Zone Type.
 //
-func (tzOut TzOutProcess) createTimeZoneTypeComments(
+func (tzOut TzOutTimeZones) createTimeZoneTypeComments(
 	tzStats *tzdatastructs.TimeZoneStatsDto, ePrefix string) ([]byte, error) {
 
-	ePrefix += "TzOutProcess.createTimeZoneTypeComments() "
+	ePrefix += "TzOutTimeZones.createTimeZoneTypeComments() "
 
 
 	currDateTimeStr := tzdatastructs.ApplicationStartDateTime.Format(tzdatastructs.FmtDateTimeTzYMD)
@@ -462,11 +462,11 @@ func (tzOut TzOutProcess) createTimeZoneTypeComments(
 
 // createIanaRegionalTimeZoneStats - Configures Iana Time Zone Regional
 // Statistics as string returned by the method.
-func (tzOut TzOutProcess) createIanaRegionalTimeZoneStats(
+func (tzOut TzOutTimeZones) createIanaRegionalTimeZoneStats(
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) (string, error) {
 
-	ePrefix += "TzOutProcess.createIanaRegionalTimeZoneStats() "
+	ePrefix += "TzOutTimeZones.createIanaRegionalTimeZoneStats() "
 
 	b := strings.Builder{}
 
@@ -642,12 +642,12 @@ lineBreak := textlinebuilder.LineSpec{
 // Input parameter 'outputFileMgr' MUST be open and ready for
 // Write operations.
 //
-func (tzOut TzOutProcess) writeHeadersToOutputFile(
+func (tzOut TzOutTimeZones) writeHeadersToOutputFile(
 	outputFileMgr pathfileops.FileMgr, ePrefix string) (err error) {
 
 		err = nil
 
-	ePrefix += "TzOutProcess.writeHeadersToOutputFile() "
+	ePrefix += "TzOutTimeZones.writeHeadersToOutputFile() "
 
 	if !outputFileMgr.IsInitialized() {
 		err = fmt.Errorf(ePrefix +
@@ -684,12 +684,12 @@ func (tzOut TzOutProcess) writeHeadersToOutputFile(
 
 // writeTimeZones - Writes all time zones and link zones to
 // the output file timezonedata.go.
-func (tzOut TzOutProcess) writeTimeZones(
+func (tzOut TzOutTimeZones) writeTimeZones(
 	outputFileMgr pathfileops.FileMgr,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
-	ePrefix += "TzOutProcess.writeLevelOneTimeZones() "
+	ePrefix += "TzOutTimeZones.writeLevelOneTimeZones() "
 
 	var grp *tzdatastructs.TimeZoneGroupDto
 	var tzCol tzdatastructs.TimeZoneDataCollection
@@ -791,11 +791,11 @@ func (tzOut TzOutProcess) writeTimeZones(
 		return nil
 }
 
-func (tzOut TzOutProcess) writeTimeZoneGlobalType(
+func (tzOut TzOutTimeZones) writeTimeZoneGlobalType(
 	outputFileMgr pathfileops.FileMgr,
 	ePrefix string) error {
 
-	ePrefix += "TzOutProcess.writeTimeZoneGlobalType() "
+	ePrefix += "TzOutTimeZones.writeTimeZoneGlobalType() "
 
 	var err error
 
@@ -813,12 +813,12 @@ func (tzOut TzOutProcess) writeTimeZoneGlobalType(
 }
 
 // Writes Master Type: type TimeZones struct
-func (tzOut TzOutProcess) writeTimeZoneMasterType(
+func (tzOut TzOutTimeZones) writeTimeZoneMasterType(
 	outputFileMgr pathfileops.FileMgr,
 	tzStats *tzdatastructs.TimeZoneStatsDto,
 	ePrefix string) error {
 
-	ePrefix += "TzOutProcess.writeTimeZoneMasterType() "
+	ePrefix += "TzOutTimeZones.writeTimeZoneMasterType() "
 
 	lenMasterGroups := tzStats.TzGroups[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
 

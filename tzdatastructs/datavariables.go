@@ -135,5 +135,3 @@ var WorldRegions = []string {
 	"Pacific",
 	"Etc",
 	"Other" }
-
-

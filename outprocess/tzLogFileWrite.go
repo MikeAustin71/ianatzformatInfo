@@ -149,7 +149,7 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 	var testTime time.Time
 	var testTimeStr, tzAbbrv, utcOffset, tzAbbrvId,
 	firstLetter, warningMsg string
-	var testTimeSplitAry []string
+	var testTimeSplitAry, tzCanonicalValues, tzAbbrvValues []string
 	var ok bool
 	var tzAbbrvDto tzdatastructs.TzAbbreviationDto
 
@@ -229,6 +229,25 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
 
+		tzCanonicalValues, ok = tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId]
+
+		if !ok {
+			tzCanonicalValues = make([]string, 0)
+		}
+
+		tzCanonicalValues = append(tzCanonicalValues, tz.TzCanonicalValue)
+		tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId] = tzCanonicalValues
+
+		tzAbbrvValues, ok = tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue]
+
+		if !ok {
+			tzAbbrvValues = make([]string, 0)
+		}
+
+		tzAbbrvValues = append(tzAbbrvValues, tzAbbrvId)
+
+		tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue] = tzAbbrvValues
+
 	winterTimeTest:
 		// Test Winter Time
 		testTime, err =
@@ -283,6 +302,29 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 		tzAbbrvDto.IanaZone = tz.TzCanonicalValue
 
 		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
+
+		tzAbbrvDto.IanaZone = tz.TzCanonicalValue
+
+		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
+
+		tzCanonicalValues, ok = tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId]
+
+		if !ok {
+			tzCanonicalValues = make([]string, 0)
+		}
+
+		tzCanonicalValues = append(tzCanonicalValues, tz.TzCanonicalValue)
+		tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId] = tzCanonicalValues
+
+		tzAbbrvValues, ok = tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue]
+
+		if !ok {
+			tzAbbrvValues = make([]string, 0)
+		}
+
+		tzAbbrvValues = append(tzAbbrvValues, tzAbbrvId)
+
+		tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue] = tzAbbrvValues
 
 	}
 

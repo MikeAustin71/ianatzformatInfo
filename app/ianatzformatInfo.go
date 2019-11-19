@@ -109,7 +109,7 @@ parser := inprocess.ParseZoneInfoData{}
 		return
 	}
 
-	err = outprocess.TzOutProcess{}.WriteOutput(
+	err = outprocess.TzOutTimeZones{}.WriteOutput(
 		zoneInfoDataDto.AppOutputDirMgr,
 		tzdatastructs.TimeZoneDataOutputFileName,
 		&timeZoneStats,
@@ -130,6 +130,15 @@ parser := inprocess.ParseZoneInfoData{}
 		timeZoneStats.IanaCapturedTimeZones.GetNumberOfTimeZones())
 
 	err = tzLog.TestCapturedIanaTimeZones(&timeZoneStats, ePrefix)
+
+	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+	err = tzLog.TestIanaTimeZoneAbbreviations(&timeZoneStats, ePrefix)
 
 	if err != nil {
 		_ = tzLog.WriteError(err, ePrefix)

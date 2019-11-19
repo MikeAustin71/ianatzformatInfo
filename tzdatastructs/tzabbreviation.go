@@ -16,7 +16,7 @@ type TzAbbreviationDto struct {
 // CopyOut() - Makes and returns a deep copy of the current TzAbbreviationDto
 // object.
 //
-func (TzAbbrv *TzAbbreviationDto) CopyOut() (TzAbbreviationDto) {
+func (TzAbbrv *TzAbbreviationDto) CopyOut() TzAbbreviationDto {
 
 	newDto := TzAbbreviationDto{}
 

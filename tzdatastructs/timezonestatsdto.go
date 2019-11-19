@@ -46,6 +46,10 @@ type TimeZoneStatsDto struct {
 	TzGroups                      []TimeZoneGroupCollection
 	TzData                        []TimeZoneDataCollection
 	TzAbbreviations               TimeZoneAbbreviationCollection
+	MapTzAbbrvsToTimeZones        map[string][]string
+	// Index Abbreviation+Utc Offset to Time Zone Canonical Value
+	MapTimeZonesToTzAbbrvs        map[string][]string
+	// Index TimeZone Canonical Value to Time Zone Abbreviation+Utc Offset
 }
 
 func (tzStats *TimeZoneStatsDto) Initialize() {
