@@ -10,7 +10,17 @@ type TimeZoneAbbreviationCollection struct {
 	tzAbbreviations []TzAbbreviationDto
 }
 
+// GetNumOfAbbreviations - Returns the number of TzAbbreviationDto elements
+// in the collection.
+func (tzAbbrv *TimeZoneAbbreviationCollection) GetNumOfAbbreviations() int {
 
+	if tzAbbrv.tzAbbreviations == nil {
+
+		tzAbbrv.tzAbbreviations = make([]TzAbbreviationDto, 0)
+	}
+
+	return len(tzAbbrv.tzAbbreviations)
+}
 // AddIfNew - Add a new TzAbbreviationDto to the collection
 // provided it does not previously exist in the collection
 func (tzAbbrv *TimeZoneAbbreviationCollection) AddIfNew(

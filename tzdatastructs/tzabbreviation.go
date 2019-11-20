@@ -58,6 +58,8 @@ func (TzAbbrv *TzAbbreviationDto) CopyIn(inComing *TzAbbreviationDto) error {
 	return nil
 }
 
+// TzAbbreviationReference - Includes a reference map covering all known
+// and valid Time Zone abbreviations.
 var TzAbbreviationReference = map[string]TzAbbreviationDto{
 	"A+0100"      :{"A+0100","A","Alpha Time Zone","Military","+0100",""},
 	"ACDT+1030"      :{"ACDT+1030","ACDT","Australian Central Daylight Time","Australia","+1030",""},

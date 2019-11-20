@@ -5,6 +5,7 @@ import (
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
 	"local.com/amarillomike/ianatzformatInfo/fileops"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
+	"sort"
 	"strings"
 )
 
@@ -46,7 +47,48 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) WriteOutput(
 		return err
 	}
 
-	return nil
+	err = outTzAbbrvs.writeMapTzAbbreviationReference(f, tzStats, ePrefix)
+
+	if err != nil {
+		_ = f.CloseThisFile()
+		return err
+	}
+
+	err = outTzAbbrvs.writeMapTzAbbrvsToTimeZones(f, tzStats, ePrefix)
+
+	if err != nil {
+		_ = f.CloseThisFile()
+		return err
+	}
+
+	err = outTzAbbrvs.writeMapTimeZonesToTzAbbrvs(f, tzStats, ePrefix)
+
+	if err != nil {
+		_ = f.CloseThisFile()
+		return err
+	}
+
+	errs := make([]error, 0)
+
+	err = f.FlushBytesToDisk()
+
+	if err != nil {
+		errs = append(errs,
+			fmt.Errorf(ePrefix +
+				"\nError returned by f.FlushBytesToDisk()\n" +
+				"Error='%v'\n", err.Error()))
+	}
+
+	err = f.CloseThisFile()
+
+	if err != nil {
+		errs = append(errs,
+			fmt.Errorf(ePrefix +
+				"\nError returned by f.CloseThisFile()\n" +
+				"Error='%v'\n",err.Error()))
+	}
+
+	return pathfileops.FileHelper{}.ConsolidateErrors(errs)
 }
 
 // writeHeader - Writes header information to the Time Zone
@@ -156,6 +198,242 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeTimeZoneAbbreviationDto(
 	b.WriteString("  TzAbbrv.UtcOffset = inComing.UtcOffset\n")
 	b.WriteString("  return nil\n")
 	b.WriteString("}  \n")
+
+	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by fMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = fMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by fMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+// writeMapTzAbbreviationReference - Writes MapTzAbbreviationReference to the
+// Time Zone Abbreviations output file.
+func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
+	fMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+		ePrefix += "OutputTimeZoneAbbreviations.writeMapTzAbbreviationReference() "
+
+		b := strings.Builder{}
+
+		b.Grow(5120)
+
+		b.WriteString("// MapTzAbbreviationReference - A reference map including all valid\n")
+		b.WriteString("// alphabetic Time Zone abbreviations.\n")
+		b.WriteString("//\n")
+
+		b.WriteString("var MapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{\n")
+
+	tzStats.TzAbbreviations.SortByAbbrv()
+
+	numOfAbbrvs := tzStats.TzAbbreviations.GetNumOfAbbreviations()
+
+	if numOfAbbrvs < 1 {
+		return fmt.Errorf(ePrefix +
+			"\nError: tzStats.TzAbbreviations is EMPTY!\n" +
+			"Number of Abbreviations: '%v'\n", numOfAbbrvs)
+	}
+
+	var outputStr string
+
+	for i:=0; i < numOfAbbrvs; i++ {
+
+		tzAbrv, err := tzStats.TzAbbreviations.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError Returned by tzStats.TzAbbreviations.PeekPtr(i)\n" +
+				"Error='%v'\n", err.Error())
+		}
+
+		outputStr = fmt.Sprintf(
+			"\"%v\"     :{\"%v\",\"%v\",\"%v\",\"%v\",\"%v\"},\n",
+			tzAbrv.Id,
+			tzAbrv.Id,
+			tzAbrv.Abbrv,
+			tzAbrv.TzName,
+			tzAbrv.Location,
+			tzAbrv.UtcOffset)
+
+		b.WriteString(outputStr)
+	}
+
+	b.WriteString("}\n\n\n")
+
+	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by fMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = fMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by fMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+// writeMapTzAbbrvsToTimeZones - A cross reference that maps
+// Time Zone Abbreviations to Time Zone Canonical Values.
+//
+func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbrvsToTimeZones(
+	fMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "OutputTimeZoneAbbreviations.writeMapTzAbbrvsToTimeZones() "
+
+	b := strings.Builder{}
+
+	b.Grow(5120)
+
+	b.WriteString("// MapTzAbbrvsToTimeZones - A cross reference that maps\n")
+	b.WriteString("// Time Zone Abbreviations to Time Zone Canonical Values.\n")
+	b.WriteString("// \n")
+	b.WriteString("var MapTzAbbrvsToTimeZones = map[string][]string {\n")
+
+	abbrvIds := make([]string, 0)
+
+	for idx := range tzStats.MapTzAbbrvsToTimeZones {
+
+		abbrvIds = append(abbrvIds, idx)
+
+	}
+
+	sort.Strings(abbrvIds)
+
+	for i:=0; i < len(abbrvIds); i++ {
+
+		tzCanonicalValues, ok := tzStats.MapTzAbbrvsToTimeZones[abbrvIds[i]]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"\nError: Expected Valid Map Entry for Tz Abbreviation '%v'.\n" +
+				"However, this entry is INVALID!\n")
+		}
+
+		outputStr := fmt.Sprintf("\"%v\"     :{ ",
+			abbrvIds[i])
+
+		lenTzCanonicalValues := len(tzCanonicalValues)
+
+		for j:=0; j < lenTzCanonicalValues; j++ {
+
+			tzStr := fmt.Sprintf("\"%v\"", tzCanonicalValues[j])
+
+			if j == lenTzCanonicalValues - 1 {
+				tzStr += "},\n"
+			} else {
+				tzStr += ","
+			}
+
+			outputStr += tzStr
+		}
+
+		b.WriteString(outputStr)
+	}
+
+	b.WriteString("}\n\n\n")
+
+	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+	return fmt.Errorf(ePrefix +
+	"\n Error returned by fMgr.WriteBytesToFile([]byte(b.String()))\n" +
+	"Error='%v'\n", err.Error())
+	}
+
+	err = fMgr.FlushBytesToDisk()
+
+	if err != nil {
+	return fmt.Errorf(ePrefix +
+	"\n Error returned by fMgr.FlushBytesToDisk()\n" +
+	"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+// writeMapTimeZonesToTzAbbrvs - A cross reference that maps
+// Time Zone Canonical Values to Time Zone Abbreviations.
+//
+func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
+	fMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "OutputTimeZoneAbbreviations.writeMapTimeZonesToTzAbbrvs() "
+
+	b := strings.Builder{}
+
+	b.Grow(5120)
+
+	b.WriteString("// MapTimeZonesToTzAbbrvs - A cross reference that maps\n")
+	b.WriteString("// Time Zone Canonical Values to Time Zone Abbreviations.\n")
+	b.WriteString("// \n")
+	b.WriteString("var MapTimeZonesToTzAbbrvs = map[string][]string {\n")
+
+	timeZoneCanonicalValues := make([]string ,0)
+
+	for idx := range tzStats.MapTimeZonesToTzAbbrvs {
+
+		timeZoneCanonicalValues = append(timeZoneCanonicalValues, idx)
+
+	}
+
+	sort.Strings(timeZoneCanonicalValues)
+
+	for i:=0; i < len(timeZoneCanonicalValues); i++ {
+
+		tzAbbrvValues, ok :=
+			tzStats.MapTimeZonesToTzAbbrvs[timeZoneCanonicalValues[i]]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"\nError: Expected Valid Map Entry for Tz Abbreviation '%v'.\n" +
+				"However, this entry is INVALID!\n")
+		}
+
+		outputStr := fmt.Sprintf("\"%v\"     :{ ",
+			timeZoneCanonicalValues[i])
+
+		lenTzAbbrvValues := len(tzAbbrvValues)
+
+		for j:=0; j < lenTzAbbrvValues; j++ {
+
+			tzStr := fmt.Sprintf("\"%v\"", tzAbbrvValues[j])
+
+			if j == lenTzAbbrvValues - 1 {
+				tzStr += "},\n"
+			} else {
+				tzStr += ","
+			}
+
+			outputStr += tzStr
+		}
+
+	}
+
+	b.WriteString("}\n\n\n")
 
 	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
 
