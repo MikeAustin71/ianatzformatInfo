@@ -147,6 +147,19 @@ parser := inprocess.ParseZoneInfoData{}
 		return
 	}
 
+	err = outprocess.OutputTimeZoneAbbreviations{}.WriteOutput(
+		zoneInfoDataDto,
+		&timeZoneStats,
+		ePrefix)
+
+	if err != nil {
+		_ = tzLog.WriteError(err, ePrefix)
+		_ = tzLog.WriteFooter(&timeZoneStats, ePrefix)
+		fmt.Printf(ePrefix+"%v\n", err.Error())
+		return
+	}
+
+
 	err = tzLog.WriteTimeZones(&timeZoneStats, ePrefix)
 
 	if err != nil {
