@@ -101,7 +101,7 @@ package main
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-13 Wednesday 21:36:17 -0600 CST
+// Type Creation Date: 2019-11-20 Wednesday 20:48:14 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -2685,7 +2685,6 @@ func (mexic mexicoTimeZones) General() string {return "Mexico/General" }
 //     http://www.thefightschool.demon.co.uk/UNMC_Military_Time.htm
 //     https://www.timeanddate.com/time/zones/military
 //     https://www.timeanddate.com/worldclock/timezone/alpha
-//     https://www.timeanddate.com/time/zones/military
 //  
 // Military time zones are commonly used in aviation as well as at sea.
 // They are also known as nautical or maritime time zones.

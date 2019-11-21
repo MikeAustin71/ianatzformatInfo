@@ -108,6 +108,9 @@ func (tzStats *TimeZoneStatsDto) Initialize() {
 		tzStats.TzData[i] = TimeZoneDataCollection{}.New()
 	}
 
+	tzStats.MapTzAbbrvsToTimeZones = make(map[string][]string)
+
+	tzStats.MapTimeZonesToTzAbbrvs = make(map[string][]string)
 }
 
 // CountMajorTimeZoneGroup  - Counts, processes and stores

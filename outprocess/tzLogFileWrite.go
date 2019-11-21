@@ -147,8 +147,8 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 	var tz *tzdatastructs.TimeZoneDataDto
 	var testLocation *time.Location
 	var testTime time.Time
-	var testTimeStr, tzAbbrv, utcOffset, tzAbbrvId,
-	firstLetter, warningMsg string
+	var testTimeStr, tzAbbrv, utcOffset,
+				summerTzAbbrvId, winterTzAbbrvId, firstLetter, warningMsg string
 	var testTimeSplitAry, tzCanonicalValues, tzAbbrvValues []string
 	var ok bool
 	var tzAbbrvDto tzdatastructs.TzAbbreviationDto
@@ -208,16 +208,16 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		utcOffset = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[2], " "), " ")
 
-		tzAbbrvId = tzAbbrv+utcOffset
+		summerTzAbbrvId = tzAbbrv+ utcOffset
 
-		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[tzAbbrvId]
+		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[summerTzAbbrvId]
 
 		if !ok {
 			warningMsg = fmt.Sprintf(
-				"\nCould not locate time zone abbreviation for time zone: '%v'\n" +
-					"Expected Time Zone Abbreviation: '%v'\n" +
-					"UTC Offset: '%v'\n" +
-					"Summer Time: '%v'",
+				"\n  Could not locate time zone abbreviation for time zone: '%v'\n" +
+					"  Expected Time Zone Abbreviation: '%v'\n" +
+					"  UTC Offset: '%v'\n" +
+					"  Summer Time: '%v'",
 					tz.TzCanonicalValue, tzAbbrv, utcOffset, testTimeStr)
 
 			_ = tzLog.WriteWarning(warningMsg, ePrefix)
@@ -229,14 +229,15 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
 
-		tzCanonicalValues, ok = tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId]
+		tzCanonicalValues, ok = tzStats.MapTzAbbrvsToTimeZones[summerTzAbbrvId]
 
 		if !ok {
 			tzCanonicalValues = make([]string, 0)
 		}
 
 		tzCanonicalValues = append(tzCanonicalValues, tz.TzCanonicalValue)
-		tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId] = tzCanonicalValues
+
+		tzStats.MapTzAbbrvsToTimeZones[summerTzAbbrvId] = tzCanonicalValues
 
 		tzAbbrvValues, ok = tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue]
 
@@ -244,7 +245,7 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 			tzAbbrvValues = make([]string, 0)
 		}
 
-		tzAbbrvValues = append(tzAbbrvValues, tzAbbrvId)
+		tzAbbrvValues = append(tzAbbrvValues, summerTzAbbrvId)
 
 		tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue] = tzAbbrvValues
 
@@ -255,7 +256,7 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
-				"\nError returned by summer time.Parse(\"2006-01-02 15:04:00\", \"2019-12-23 16:50:00\", " +
+				"\nError returned by winter time.Parse(\"2006-01-02 15:04:00\", \"2019-12-23 16:50:00\", " +
 				"testLocation).\n" +
 				"testLocation='%v'\n"+
 				"Error:'%v'\n", tz.TzCanonicalValue, err.Error())
@@ -282,16 +283,20 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		utcOffset = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[2], " "), " ")
 
-		tzAbbrvId = tzAbbrv+utcOffset
+		winterTzAbbrvId = tzAbbrv+ utcOffset
 
-		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[tzAbbrvId]
+		if winterTzAbbrvId == summerTzAbbrvId {
+			continue
+		}
+
+		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[winterTzAbbrvId]
 
 		if !ok {
 			warningMsg = fmt.Sprintf(
 				"\nCould not locate time zone abbreviation for time zone: '%v'\n" +
-					"Expected Time Zone Abbreviation: '%v'\n" +
-					"UTC Offset: '%v'\n" +
-					"Summer Time: '%v'",
+					"  Expected Time Zone Abbreviation: '%v'\n" +
+					"  Winter UTC Offset: '%v'\n" +
+					"  Summer Time: '%v'",
 				tz.TzCanonicalValue, tzAbbrv, utcOffset, testTimeStr)
 
 			_ = tzLog.WriteWarning(warningMsg, ePrefix)
@@ -303,18 +308,14 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
 
-		tzAbbrvDto.IanaZone = tz.TzCanonicalValue
-
-		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
-
-		tzCanonicalValues, ok = tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId]
+		tzCanonicalValues, ok = tzStats.MapTzAbbrvsToTimeZones[winterTzAbbrvId]
 
 		if !ok {
 			tzCanonicalValues = make([]string, 0)
 		}
 
 		tzCanonicalValues = append(tzCanonicalValues, tz.TzCanonicalValue)
-		tzStats.MapTzAbbrvsToTimeZones[tzAbbrvId] = tzCanonicalValues
+		tzStats.MapTzAbbrvsToTimeZones[winterTzAbbrvId] = tzCanonicalValues
 
 		tzAbbrvValues, ok = tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue]
 
@@ -322,7 +323,7 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 			tzAbbrvValues = make([]string, 0)
 		}
 
-		tzAbbrvValues = append(tzAbbrvValues, tzAbbrvId)
+		tzAbbrvValues = append(tzAbbrvValues, winterTzAbbrvId)
 
 		tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue] = tzAbbrvValues
 
@@ -1403,6 +1404,7 @@ func (tzLog *TzLogOps) WriteWarning(
 		},
 		strSpec1,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
 		tzLog.errorLineBreakStr,
 		tzLog.leftMargin,
 		strSpec2,

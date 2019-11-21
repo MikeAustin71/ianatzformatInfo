@@ -105,7 +105,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeHeader(
 
 	b.WriteString("package main\n\n")
 	b.WriteString("import (\n")
-	b.WriteString("  errors\n")
+	b.WriteString("  \"errors\"\n")
 	b.WriteString(")\n\n\n")
 
 	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
@@ -181,7 +181,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeTimeZoneAbbreviationDto(
 	b.WriteString("// CopyIn() - Copies the field values from an incoming TimeZoneAbbreviationDto\n")
 	b.WriteString("// object to the current TimeZoneAbbreviationDto object.\n")
 	b.WriteString("// \n")
-	b.WriteString("func (TzAbbrv *TimeZoneAbbreviationDto) CopyIn(inComing *TzAbbreviationDto) error {\n")
+	b.WriteString("func (TzAbbrv *TimeZoneAbbreviationDto) CopyIn(inComing *TimeZoneAbbreviationDto) error {\n")
 	b.WriteString("  \n")
 	b.WriteString("  ePrefix := \"TzAbbreviationDto.CopyIn()\" \n")
 	b.WriteString("  \n")
@@ -431,6 +431,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 			outputStr += tzStr
 		}
 
+		b.WriteString(outputStr)
 	}
 
 	b.WriteString("}\n\n\n")
