@@ -26,7 +26,7 @@ type mTest struct {
 
 func (mT mTest) parseTime03() {
 
-	tz := libs.TZones.Africa.Timbuktu()
+	tz := "America/Buenos_Aires"
 	tzLocation := tz
 
 	location1, err := time.LoadLocation(tzLocation)

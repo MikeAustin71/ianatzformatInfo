@@ -2,22 +2,28 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-20 Wednesday 20:48:14.190618000 -0600 CST 
+     Execution Start Time: 2019-11-20 Wednesday 22:19:44.277167000 -0600 CST 
 
-    ==============================================================================
+  ==============================================================================
 
 
             Base Data Input
-    ------------------------------------------------------------------------------
-   IANA Time Zone Version: 2019c 
+  ------------------------------------------------------------------------------
+                  IANA Time Zone Version: 2019c 
 
-     Base Data Input File: D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt 
+                    Base Data Input File: 
+  D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt 
 
-       Output Source File: D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
+            Time Zone Output Source File: 
+  D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
 
-                 Log File: D:\GoProjects\ianatzformatInfo\app\output\20191120204814_ianaformatInfoLog.txt 
+     Tz Abbreviations Output Source File: 
+  D:\GoProjects\ianatzformatInfo\app\output\timezoneabbreviations.go 
 
-    ------------------------------------------------------------------------------
+                                Log File: 
+  D:\GoProjects\ianatzformatInfo\app\output\20191120221944_ianaformatInfoLog.txt 
+
+  ------------------------------------------------------------------------------
 
 
             IANA Time Zones Listed in Alphabetical Order
@@ -725,9 +731,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-20 Wednesday 20:48:14.190618000 -0600 CST
-    Ending Date Time: 2019-11-20 Wednesday 20:48:16.045961100 -0600 CST
-        Elapsed Time: 1-Seconds 855-Milliseconds 343-Microseconds 100-Nanoseconds
+  Starting Date Time: 2019-11-20 Wednesday 22:19:44.277167000 -0600 CST
+    Ending Date Time: 2019-11-20 Wednesday 22:19:46.276686000 -0600 CST
+        Elapsed Time: 1-Seconds 999-Milliseconds 519-Microseconds 0-Nanoseconds
   ------------------------------------------------------------------------------
 
 

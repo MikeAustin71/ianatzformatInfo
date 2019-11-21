@@ -197,7 +197,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeTimeZoneAbbreviationDto(
 	b.WriteString("  TzAbbrv.Location = inComing.Location\n")
 	b.WriteString("  TzAbbrv.UtcOffset = inComing.UtcOffset\n")
 	b.WriteString("  return nil\n")
-	b.WriteString("}  \n")
+	b.WriteString("}  \n\n\n")
 
 	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
 

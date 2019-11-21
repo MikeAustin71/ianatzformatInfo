@@ -55,6 +55,8 @@ func (TzAbbrv *TimeZoneAbbreviationDto) CopyIn(inComing *TimeZoneAbbreviationDto
   TzAbbrv.UtcOffset = inComing.UtcOffset
   return nil
 }  
+
+
 // MapTzAbbreviationReference - A reference map including all valid
 // alphabetic Time Zone abbreviations.
 //

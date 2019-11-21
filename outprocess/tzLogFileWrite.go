@@ -46,7 +46,7 @@ func (tzLog *TzLogOps) InitializeLogOps(
 	tzLog.dashLineBreakStr = textlinebuilder.LineSpec{
 		LineChar:         '-',
 		LineLength:       tzLog.maxLineLen,
-		LineFieldLength:  tzLog.maxLineLen + tzLog.leftMarginLength,
+		LineFieldLength:  tzLog.maxLineLen,
 		LineFieldPadChar: ' ',
 		LinePosition:     textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -54,7 +54,7 @@ func (tzLog *TzLogOps) InitializeLogOps(
 	tzLog.equalLineBreakStr = textlinebuilder.LineSpec{
 		LineChar:         '=',
 		LineLength:       tzLog.maxLineLen,
-		LineFieldLength:  tzLog.maxLineLen + tzLog.leftMarginLength,
+		LineFieldLength:  tzLog.maxLineLen,
 		LineFieldPadChar: ' ',
 		LinePosition:     textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -447,12 +447,14 @@ func (tzLog *TzLogOps) WriteFooter(
 		&b,
 		ePrefix,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
 		tzLog.equalLineBreakStr,
 		tzLog.newLine,
 		strSpec1,
 		tzLog.newLine,
 		strSpec2,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.equalLineBreakStr,
 		tzLog.newLine,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
@@ -482,6 +484,7 @@ func (tzLog *TzLogOps) WriteFooter(
 		strSpec1,
 		strSpec2,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
@@ -501,6 +504,7 @@ func (tzLog *TzLogOps) WriteFooter(
 		ePrefix,
 		strSpec1,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
 
@@ -557,6 +561,7 @@ func (tzLog *TzLogOps) WriteFooter(
 		strSpec1,
 		intSpec3,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
@@ -576,6 +581,7 @@ func (tzLog *TzLogOps) WriteFooter(
 		ePrefix,
 		strSpec1,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		tzLog.newLine)
 
@@ -667,11 +673,14 @@ func (tzLog *TzLogOps) WriteFooter(
 		strSpec1,
 		strSpec2,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		tzLog.newLine,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
 		tzLog.equalLineBreakStr,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.equalLineBreakStr,
 		tzLog.newLine)
 
@@ -730,6 +739,7 @@ func (tzLog *TzLogOps) WriteHeader(
 		tzLog.leftMargin,
 		strSpec1,
 		tzLog.newLine,
+		tzLog.leftMargin,
 		tzLog.equalLineBreakStr,
 		tzLog.newLine,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:1})
@@ -801,7 +811,7 @@ func (tzLog *TzLogOps) WriteHeader(
 
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "IANA Time Zone Version: ",
-		StrFieldLength: 25,
+		StrFieldLength: 40,
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -827,7 +837,7 @@ func (tzLog *TzLogOps) WriteHeader(
 
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Base Data Input File: ",
-		StrFieldLength: 25,
+		StrFieldLength: 40,
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -846,6 +856,8 @@ func (tzLog *TzLogOps) WriteHeader(
 		ePrefix,
 		tzLog.leftMargin,
 		strSpec1,
+		tzLog.newLine,
+		tzLog.leftMargin,
 		strSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
 
@@ -854,8 +866,8 @@ func (tzLog *TzLogOps) WriteHeader(
 	}
 
 	strSpec1 = textlinebuilder.StringSpec{
-		StrValue:       "Output Source File: ",
-		StrFieldLength: 25,
+		StrValue:       "Time Zone Output Source File: ",
+		StrFieldLength: 40,
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -875,6 +887,39 @@ func (tzLog *TzLogOps) WriteHeader(
 		ePrefix,
 		tzLog.leftMargin,
 		strSpec1,
+		tzLog.newLine,
+		tzLog.leftMargin,
+		strSpec2,
+		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
+
+	if err != nil {
+		return err
+	}
+
+	strSpec1 = textlinebuilder.StringSpec{
+		StrValue:       "Tz Abbreviations Output Source File: ",
+		StrFieldLength: 40,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
+	}
+
+	label = zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() +
+		tzdatastructs.TzAbbrvDataOutputFileName
+
+	strSpec2 = textlinebuilder.StringSpec{
+		StrValue:       label,
+		StrFieldLength: len(label) + 1,
+		StrPadChar:     ' ',
+		StrPosition:    textlinebuilder.FieldPos.LeftJustify(),
+	}
+
+	err = textlinebuilder.TextLineBuilder{}.Build(
+		&b,
+		ePrefix,
+		tzLog.leftMargin,
+		strSpec1,
+		tzLog.newLine,
+		tzLog.leftMargin,
 		strSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2})
 
@@ -884,7 +929,7 @@ func (tzLog *TzLogOps) WriteHeader(
 
 	strSpec1 = textlinebuilder.StringSpec{
 		StrValue:       "Log File: ",
-		StrFieldLength: 25,
+		StrFieldLength: 40,
 		StrPadChar:     ' ',
 		StrPosition:    textlinebuilder.FieldPos.RightJustify(),
 	}
@@ -903,6 +948,8 @@ func (tzLog *TzLogOps) WriteHeader(
 		ePrefix,
 		tzLog.leftMargin,
 		strSpec1,
+		tzLog.newLine,
+		tzLog.leftMargin,
 		strSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
 		tzLog.leftMargin,
@@ -1095,6 +1142,7 @@ func (tzLog *TzLogOps) WriteIanaRegionalTotals(
 		strSpec1,
 		intSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
@@ -1306,6 +1354,7 @@ lineSpec1 := textlinebuilder.LineSpec{
 		},
 		intSpec2,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:2},
+		tzLog.leftMargin,
 		tzLog.dashLineBreakStr,
 		textlinebuilder.BlankLinesSpec{NumBlankLines:3})
 
