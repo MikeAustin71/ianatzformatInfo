@@ -153,7 +153,7 @@ func (tzGrpDecs TzGroupDeclarations) CreateETCComments(
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
 	b.WriteString( tzdatastructs.CommentLead +
-		"The 'ETC' group is referenced at the IANA Time Zone Database at:\n")
+		"The 'Etc' group is referenced at the IANA Time Zone Database at:\n")
 
 	b.WriteString( tzdatastructs.CommentLead +
 		"   https://en.wikipedia.org/wiki/Tz_database#Area\n")
@@ -177,6 +177,9 @@ func (tzGrpDecs TzGroupDeclarations) CreateETCComments(
 
 	b.WriteString(tzdatastructs.CommentLead +
 		"a negative sign in their name (e.g \"Etc/GMT-14\" is 14 hours ahead of GMT).\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"In other words, \"Etc/GMT-14\" is equivalent to UTC+1400.\n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 

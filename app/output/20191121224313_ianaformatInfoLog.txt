@@ -1,0 +1,71 @@
+
+                               ianatzformatInfo.go                              
+  ==============================================================================
+
+     Execution Start Time: 2019-11-21 Thursday 22:43:13.542911900 -0600 CST 
+
+  ==============================================================================
+
+
+            Base Data Input
+  ------------------------------------------------------------------------------
+                  IANA Time Zone Version: 2019c 
+
+                    Base Data Input File: 
+  D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt 
+
+            Time Zone Output Source File: 
+  D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
+
+     Tz Abbreviations Output Source File: 
+  D:\GoProjects\ianatzformatInfo\app\output\timezoneabbreviations.go 
+
+                                Log File: 
+  D:\GoProjects\ianatzformatInfo\app\output\20191121224313_ianaformatInfoLog.txt 
+
+  ------------------------------------------------------------------------------
+
+
+  ******************************************************************************
+
+            Error
+
+******************************************************************************  ianaTzFormatInfo.main() ParseZoneInfoData.ParseZoneInfo()ParseZoneInfoData.parseIanaTimeZoneFiles() ParseZoneInfoData.zoneConfigTwoElements() TzZoneDeclarations.StandardGrpDeclaration() TzZoneDeclarations.createEtcComments() 
+Expected Etc Time Zone to contain a numeric value.
+Error: Etc Time Zone DOES NOT contain a numeric value.
+tzData.TzCanonicalValue='Etc/GMT'
+
+
+  ******************************************************************************
+
+
+
+
+  ==============================================================================
+                               End Of Execution                               
+                             ianatzformatInfo.go                              
+  ==============================================================================
+
+
+   Iana Time Zone Version: 2019c
+  ------------------------------------------------------------------------------
+
+
+               Errors and Warnings                
+  ------------------------------------------------------------------------------
+
+  Error Count.....................  1
+  Warning Count...................  0
+  ------------------------------------------------------------------------------
+
+
+                 Execution Times                  
+  ------------------------------------------------------------------------------
+  Starting Date Time: 2019-11-21 Thursday 22:43:13.542911900 -0600 CST
+    Ending Date Time: 2019-11-21 Thursday 22:43:14.164752300 -0600 CST
+        Elapsed Time: 0-Seconds 621-Milliseconds 840-Microseconds 400-Nanoseconds
+  ------------------------------------------------------------------------------
+
+
+  ==============================================================================
+  ==============================================================================

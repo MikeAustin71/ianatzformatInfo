@@ -1,0 +1,28 @@
+
+                               ianatzformatInfo.go                              
+  ==============================================================================
+
+     Execution Start Time: 2019-11-21 Thursday 22:58:50.549109600 -0600 CST 
+
+  ==============================================================================
+
+
+            Base Data Input
+  ------------------------------------------------------------------------------
+                  IANA Time Zone Version: 2019c 
+
+                    Base Data Input File: 
+  D:\GoProjects\ianatzformatInfo\app\input\targettzdata.txt 
+
+            Time Zone Output Source File: 
+  D:\GoProjects\ianatzformatInfo\app\output\timezonedata.go 
+
+     Tz Abbreviations Output Source File: 
+  D:\GoProjects\ianatzformatInfo\app\output\timezoneabbreviations.go 
+
+                                Log File: 
+  D:\GoProjects\ianatzformatInfo\app\output\20191121225850_ianaformatInfoLog.txt 
+
+  ------------------------------------------------------------------------------
+
+
