@@ -4,6 +4,7 @@ package main
 import (
 	"fmt"
 	"github.com/MikeAustin71/pathfileopsgo/pathfileops/v2"
+	"local.com/amarillomike/ianatzformatInfo/fileops"
 	"local.com/amarillomike/ianatzformatInfo/inprocess"
 	"local.com/amarillomike/ianatzformatInfo/outprocess"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
@@ -46,26 +47,25 @@ func main() {
 
 	tzdatastructs.ApplicationStartDateTime = time.Now()
 
-	// executableWorkingDirMgr, err := fileops.FileOps{}.GetApplicationDirectory(ePrefix)
+	baseWorkingDirMgr, err := fileops.FileOps{}.GetBaseDirectory(ePrefix)
 
-	executableWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
+	// baseWorkingDirMgr, err := pathfileops.DirMgr{}.New("D:\\GoProjects\\ianatzformatInfo\\app")
 
 	if err != nil {
 		fmt.Printf("%v\n", err.Error())
 		return
 	}
 
-
 	fmt.Println()
 	fmt.Println("ianatzformatInfo.exe" )
 	fmt.Println("--------------------")
-	fmt.Printf("Directory Directory:\n     %v\n\n", executableWorkingDirMgr.GetAbsolutePath())
+	fmt.Printf("Directory Directory:\n     %v\n\n", baseWorkingDirMgr.GetAbsolutePath())
 	fmt.Println()
 
 	var baseDataInputDirMgr pathfileops.DirMgr
 
 	baseDataInputDirMgr, err = pathfileops.DirMgr{}.New(
-		executableWorkingDirMgr.GetAbsolutePathWithSeparator() + "input")
+		baseWorkingDirMgr.GetAbsolutePathWithSeparator() + "input")
 
 
 	var zoneInfoDataDto tzdatastructs.ZoneInfoDataDto
@@ -96,7 +96,7 @@ func main() {
 
 
 	var timeZoneStats tzdatastructs.TimeZoneStatsDto
-parser := inprocess.ParseZoneInfoData{}
+	parser := inprocess.ParseZoneInfoData{}
 
 	timeZoneStats,
 		err =
@@ -123,8 +123,13 @@ parser := inprocess.ParseZoneInfoData{}
 		return
 	}
 
-	fmt.Printf("Output Source File:\n     %v\n\n",
-		zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() + tzdatastructs.TimeZoneDataOutputFileName)
+	fmt.Printf("Output Time Zone Source File:\n     %v\n\n",
+		zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() +
+			tzdatastructs.TimeZoneDataOutputFileName)
+
+	fmt.Printf("Output Time Zone Abbreviation Source File:\n    %v\n\n",
+		zoneInfoDataDto.AppOutputDirMgr.GetAbsolutePathWithSeparator() +
+			tzdatastructs.TzAbbrvDataOutputFileName)
 
 	fmt.Printf("Number Of Captured Iana Time Zones: %v\n\n",
 		timeZoneStats.IanaCapturedTimeZones.GetNumberOfTimeZones())

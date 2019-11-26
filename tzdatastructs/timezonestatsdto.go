@@ -69,7 +69,7 @@ func (tzStats *TimeZoneStatsDto) Initialize() {
 	tzStats.NumIanaLinkTZones = 0
 	tzStats.TotalIanaStdTzLinkZones = 0
 	tzStats.NumMilitaryTZones = 0
-	tzStats.NumOtherTZones = 0
+	tzStats.NumOtherTZones = 1
 	tzStats.TotalZones = 0
 	tzStats.NumMajorTZoneGroups = 0
 	tzStats.NumMajorLinkGroups = 0

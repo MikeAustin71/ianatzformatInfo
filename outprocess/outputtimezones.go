@@ -201,7 +201,8 @@ func (tzOut OutputTimeZones) createOpenOutputFile(
 // createTimeZoneTypeComments - Creates comments for the master Time Zone Type.
 //
 func (tzOut OutputTimeZones) createTimeZoneTypeComments(
-	tzStats *tzdatastructs.TimeZoneStatsDto, ePrefix string) ([]byte, error) {
+	b *strings.Builder,
+	tzStats *tzdatastructs.TimeZoneStatsDto, ePrefix string) error {
 
 	ePrefix += "OutputTimeZones.createTimeZoneTypeComments() "
 
@@ -211,11 +212,8 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	regionalStats, err := tzOut.createIanaRegionalTimeZoneStats(tzStats, ePrefix)
 
 	if err != nil {
-		return make([]byte, 0), err
+		return err
 	}
-
-	b := strings.Builder{}
-	b.Grow(5120)
 
 	b.WriteString(fmt.Sprintf("\n" +
 		"// TimeZones - This type and its associated methods encapsulate %v IANA Time\n",
@@ -230,6 +228,24 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 
 	b.WriteString("//\n")
 
+	b.WriteString("// The Time Zones Type encapsulates data elements used to access specific\n")
+	b.WriteString("// time zones. These data elements classify time zones by geographic region\n")
+	b.WriteString("// and type. For example, classifications like, 'America', 'Asia' and 'Europe'\n")
+	b.WriteString("// provide access to zones located in those geographic regions. The 'Military'\n")
+	b.WriteString("// classification provides access to time zones used exclusively by military\n")
+	b.WriteString("// or aviation organizations.\n")
+
+	b.WriteString("// \n")
+
+	b.WriteString(
+		"// The classification 'Other' includes many Time Zones which have been deprecated\n")
+	b.WriteString(
+		"// by the IANA Time Zone database. Deprecated IANA Time Zones are mapped internally\n")
+	b.WriteString(
+		"// to valid time zones. \n")
+
+	b.WriteString("// \n")
+
 	b.WriteString(
 		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n")
 
@@ -242,7 +258,7 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	b.WriteString(
 		"//    https://golang.org/pkg/time/#LoadLocation\n")
 
-	b.WriteString("//\n")
+	b.WriteString("// \n")
 
 	b.WriteString(
 		"// The IANA Time Zone database is widely recognized as the the world's leading\n")
@@ -250,16 +266,19 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	b.WriteString(
 		"// authority on global time zones.\n")
 
-	b.WriteString("//\n")
+	b.WriteString("// \n")
 
 	b.WriteString(
-		"// Reference:\n")
+		"// Reference: \n")
 
 	b.WriteString(
 		"//    https://en.wikipedia.org/wiki/List_of_tz_database_time_zones\n")
 
 	b.WriteString(
-			"//    https://en.wikipedia.org/wiki/Tz_database\n")
+		"//    https://en.wikipedia.org/wiki/Tz_database\n")
+
+	b.WriteString(
+		"//    https://en.wikipedia.org/wiki/List_of_military_time_zones\n")
 
 	b.WriteString("// \n")
 
@@ -352,6 +371,15 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	b.WriteString(
 		"// TZones.Asia.Shanghai()                    - Asia/Shanghai Time Zone\n")
 
+	b.WriteString(
+		"// TZones.Local()                            - Time Zone used on host computer\n")
+
+	b.WriteString(
+		"// TZones.UTC()                              - Coordinated Universal Time, UTC+0000\n")
+
+	b.WriteString(
+		"// TZones.Zulu()                             - Military Time Zone, UTC+0000.\n")
+
 	b.WriteString("//\n")
 
 	b.WriteString(
@@ -423,7 +451,7 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 			tzStats.NumMilitaryTZones))
 
 	b.WriteString(fmt.Sprintf(
-		"//          Other Non-Iana Time Zones : %3d\n",
+		"//          Other Non-Iana Time Zones : %3d  ('Local' Time Zone)\n",
 		tzStats.NumOtherTZones))
 
 	b.WriteString(
@@ -456,7 +484,7 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 
 	b.WriteString("// \n")
 
-	return []byte(b.String()), nil
+	return nil
 }
 
 
@@ -822,37 +850,35 @@ func (tzOut OutputTimeZones) writeTimeZoneMasterType(
 
 	lenMasterGroups := tzStats.TzGroups[tzdatastructs.Level_01_Idx].GetNumberOfGroups()
 
-	var err error
-	var outBytes []byte
+	b := strings.Builder{}
 
-	outBytes, err  = tzOut.createTimeZoneTypeComments(tzStats, ePrefix)
+	b.Grow(5120)
+
+	var err error
+
+	err  = tzOut.createTimeZoneTypeComments( &b, tzStats, ePrefix)
 
 	if err != nil {
 		return err
 	}
 
-	_, err = outputFileMgr.WriteBytesToFile(outBytes)
-
-	if err != nil {
-		return fmt.Errorf(ePrefix +
-			"\nError returned by outputFileMgr.WriteBytesToFile(typeDeclaration)\n" +
-			"Error='%v'\n", err.Error())
-	}
-
-
-	outBytes = []byte("type TimeZones struct {\n")
+	b.WriteString("type TimeZones struct {\n")
 
 	var leftMarginStr string
 	var centerMarginStr string
 	const centerMarginLen = 35
 
-	_, err = outputFileMgr.WriteBytesToFile(outBytes)
+	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
 			"\nError returned by outputFileMgr.WriteBytesToFile(typeDeclaration)\n" +
 			"Error='%v'\n", err.Error())
 	}
+
+	b.Reset()
+
+	b.Grow(5120)
 
 	leftMarginStr, err = strops.StrOps{}.MakeSingleCharString(' ', 4)
 
@@ -891,21 +917,13 @@ func (tzOut OutputTimeZones) writeTimeZoneMasterType(
 				"Error='%v'\n", err.Error())
 		}
 
-		outBytes = []byte(leftMarginStr + group.GroupName + centerMarginStr + group.TypeName + "\n")
-
-		_, err = outputFileMgr.WriteBytesToFile(outBytes)
-
-		if err != nil {
-			return fmt.Errorf(ePrefix +
-				"\n Error returned by outputFileMgr.WriteBytesToFile(TzGroupBytes)\n" +
-				"Error='%v'\n", err.Error())
-		}
+		b.WriteString(leftMarginStr + group.GroupName + centerMarginStr + group.TypeName + "\n")
 
 	}
 
-	outBytes = []byte("}\n\n\n")
+	b.WriteString ("}\n\n")
 
-	_, err = outputFileMgr.WriteBytesToFile(outBytes)
+	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +
@@ -913,6 +931,86 @@ func (tzOut OutputTimeZones) writeTimeZoneMasterType(
 			"Error='%v'\n", err.Error())
 	}
 
+	return tzOut.writeMasterTypeFunctions(outputFileMgr, ePrefix)
+}
+
+// writeMasterTypeFunctions - Writes type TimeZone functions to the
+// output file. These are top level functions directly accessible
+// by type 'TimeZones'. Currently, one function is provided, 'Local'.
+// 'Local' returns the time zone of the host computer running the code.
+//
+func (tzOut OutputTimeZones) writeMasterTypeFunctions(
+	outputFileMgr pathfileops.FileMgr,
+	ePrefix string) error {
+
+	ePrefix += "OutputTimeZones.writeTimeZoneFunctions() "
+	var err error
+
+	b := strings.Builder{}
+
+	b.Grow(5120)
+
+	b.WriteString("// Local - Returns the local time zone on the host computer where this\n")
+	b.WriteString("// code is executed.\n")
+	b.WriteString("// \n")
+	b.WriteString("// For documentation, reference:\n")
+	b.WriteString("//    https://golang.org/pkg/time/#LoadLocation\n")
+	b.WriteString("// \n")
+	b.WriteString("func(tZones TimeZones) Local() string {return \"Local\"}\n")
+	b.WriteString("\n\n")
+
+	b.WriteString("// UCT - A time zone equivalent to Coordinated Universal Time. \n")
+	b.WriteString("// Coordinated Universal Time is the primary time standard by which the world regulates\n")
+	b.WriteString("// regulates clocks and time. It is within about 1 second of mean solar time at 0°\n")
+	b.WriteString("// longitude, and is not adjusted for daylight saving time. In some countries, the\n")
+	b.WriteString("// term Greenwich Mean Time is used.\n ")
+	b.WriteString("// \n")
+	b.WriteString("// UCT is equivalent to a zero offset: UTC+0000. For additional information, reference:\n")
+	b.WriteString("//     https://en.wikipedia.org/wiki/Coordinated_Universal_Time\n" )
+	b.WriteString("// \n")
+	b.WriteString("func (iana TimeZones) UCT()  string { return \"UCT\" }\n")
+	b.WriteString("\n\n")
+
+
+	b.WriteString("// UTC - Coordinated Universal Time. \n")
+	b.WriteString("// Coordinated Universal Time (or UTC) is the primary time standard by which the\n")
+	b.WriteString("// world regulates clocks and time. It is within about 1 second of mean solar time\n")
+	b.WriteString("// at 0° longitude, and is not adjusted for daylight saving time. In some countries,\n")
+	b.WriteString("// the term Greenwich Mean Time is used.\n ")
+	b.WriteString("// \n")
+	b.WriteString("// UTC is equivalent to a zero offset: UTC+0000. For additional information, reference:\n")
+	b.WriteString("//     https://en.wikipedia.org/wiki/Coordinated_Universal_Time\n" )
+	b.WriteString("// \n")
+	b.WriteString("func (iana TimeZones) UTC()  string { return \"UTC\" }\n")
+	b.WriteString("\n\n")
+
+	b.WriteString("// Zulu - Zulu Time Zone (Z) has no offset from Coordinated Universal Time (UTC).\n")
+	b.WriteString("// This time zone is a military time zone. ")
+	b.WriteString("// \n")
+	b.WriteString("// Zulu Time Zone is often used in aviation and the military as another name for UTC +0.\n")
+	b.WriteString("// Zulu Time Zone is also commonly used at sea between longitudes 7.5° West and 7.5° East.\n")
+	b.WriteString("// The letter Z may be used as a suffix to denote a time being in the Zulu Time Zone,\n")
+	b.WriteString("// such as 08:00Z or 0800Z. This is spoken as \"zero eight hundred Zulu\".\n")
+	b.WriteString("// \n")
+	b.WriteString("// The US Military, Chinese Military, and several others have adopted a unique list of\n")
+	b.WriteString("// names for the time zones across the world. The names use the NATO phonetic alphabet which\n")
+	b.WriteString("// calls for the 26 letters of the alphabet to be designated by easily recognizable words.\n")
+	b.WriteString("// The Zulu time zone is one of these.\n")
+	b.WriteString("// \n")
+	b.WriteString("// For additional information, reference:\n")
+	b.WriteString("//     https://www.timeanddate.com/time/zones/z\n")
+	b.WriteString("//     https://www.timeanddate.com/time/zone/timezone/zulu\n")
+	b.WriteString("//      \n")
+	b.WriteString("func (iana TimeZones) Zulu()  string { return \"UTC\" }\n")
+	b.WriteString("\n\n\n")
+
+		_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile(EndOfMasterType)\n" +
+			"Error='%v'\n", err.Error())
+	}
 
 	return nil
 }

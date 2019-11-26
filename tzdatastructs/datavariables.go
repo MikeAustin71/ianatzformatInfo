@@ -63,7 +63,7 @@ var MilitaryTzMap = map[string]string{
 	"Whiskey":  "Etc/GMT+10",
 	"Xray":     "Etc/GMT+11",
 	"Yankee":   "Etc/GMT+12",
-	"Zulu":     "Etc/UTC"}
+	"Zulu":     "UTC"}
 
 var MilitaryUTCMap = map[string]string{
 	"Alpha":    "UTC+1",

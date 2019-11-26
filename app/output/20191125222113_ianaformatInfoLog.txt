@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-21 Thursday 23:08:34.033239900 -0600 CST 
+     Execution Start Time: 2019-11-25 Monday 22:21:13.524074100 -0600 CST 
 
   ==============================================================================
 
@@ -21,7 +21,7 @@
   D:\GoProjects\ianatzformatInfo\app\output\timezoneabbreviations.go 
 
                                 Log File: 
-  D:\GoProjects\ianatzformatInfo\app\output\20191121230834_ianaformatInfoLog.txt 
+  D:\GoProjects\ianatzformatInfo\app\output\20191125222113_ianaformatInfoLog.txt 
 
   ------------------------------------------------------------------------------
 
@@ -667,7 +667,7 @@
             22.      W        Whiskey       Etc/GMT+10      UTC-10  
             23.      X        Xray          Etc/GMT+11      UTC-11  
             24.      Y        Yankee        Etc/GMT+12      UTC-12  
-            25.      Z        Zulu          Etc/UTC         UTC+0   
+            25.      Z        Zulu          UTC             UTC+0   
   
   ------------------------------------------------------------------------------
   
@@ -701,10 +701,10 @@
 
   Military Time Zones................  25
 
-  Other Non-Iana Time Zones..........   0
+  Other Non-Iana Time Zones..........   1
 
                                           --------
-                          Total Time Zones   618
+                          Total Time Zones   619
 
   ------------------------------------------------------------------------------
 
@@ -731,9 +731,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-21 Thursday 23:08:34.033239900 -0600 CST
-    Ending Date Time: 2019-11-21 Thursday 23:08:35.792175200 -0600 CST
-        Elapsed Time: 1-Seconds 758-Milliseconds 935-Microseconds 300-Nanoseconds
+  Starting Date Time: 2019-11-25 Monday 22:21:13.524074100 -0600 CST
+    Ending Date Time: 2019-11-25 Monday 22:21:17.745683800 -0600 CST
+        Elapsed Time: 4-Seconds 221-Milliseconds 609-Microseconds 700-Nanoseconds
   ------------------------------------------------------------------------------
 
 

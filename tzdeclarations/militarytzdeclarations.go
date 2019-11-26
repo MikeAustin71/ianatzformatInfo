@@ -248,7 +248,7 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 
 	if tzData.TzName != "Zulu" {
 		b.WriteString(tzdatastructs.CommentLead +
-			fmt.Sprintf("If the reversal of signs necessary to generate UTC%v is\n",utcOffset))
+			fmt.Sprintf("If the reversal of signs necessary to generate %v is\n",utcOffset))
 
 		b.WriteString(tzdatastructs.CommentLead +
 			"confusing, see IANA the documentation for the 'ETC' Time Zone Area\n")
