@@ -220,7 +220,7 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 		tzStats.TotalIanaStdTzLinkZones))
 
 	b.WriteString(fmt.Sprintf(
-		"// Zones, %v-Military Time Zones and %v-Other Non-Iana Time Zones. This 'TimeZones'\n",
+		"// Zones, %v-Military Time Zones and %v-Other Non-Iana Time Zone. This 'TimeZones'\n",
 		tzStats.NumMilitaryTZones,tzStats.NumOtherTZones))
 
 	b.WriteString(
@@ -242,7 +242,7 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	b.WriteString(
 		"// by the IANA Time Zone database. Deprecated IANA Time Zones are mapped internally\n")
 	b.WriteString(
-		"// to valid time zones. \n")
+		"// to valid, current time zones. \n")
 
 	b.WriteString("// \n")
 
@@ -968,7 +968,7 @@ func (tzOut OutputTimeZones) writeMasterTypeFunctions(
 	b.WriteString("// UCT is equivalent to a zero offset: UTC+0000. For additional information, reference:\n")
 	b.WriteString("//     https://en.wikipedia.org/wiki/Coordinated_Universal_Time\n" )
 	b.WriteString("// \n")
-	b.WriteString("func (iana TimeZones) UCT()  string { return \"UCT\" }\n")
+	b.WriteString("func (tZones TimeZones) UCT()  string { return \"UCT\" }\n")
 	b.WriteString("\n\n")
 
 
@@ -981,7 +981,7 @@ func (tzOut OutputTimeZones) writeMasterTypeFunctions(
 	b.WriteString("// UTC is equivalent to a zero offset: UTC+0000. For additional information, reference:\n")
 	b.WriteString("//     https://en.wikipedia.org/wiki/Coordinated_Universal_Time\n" )
 	b.WriteString("// \n")
-	b.WriteString("func (iana TimeZones) UTC()  string { return \"UTC\" }\n")
+	b.WriteString("func (tZones TimeZones) UTC()  string { return \"UTC\" }\n")
 	b.WriteString("\n\n")
 
 	b.WriteString("// Zulu - Zulu Time Zone (Z) has no offset from Coordinated Universal Time (UTC).\n")
@@ -1001,7 +1001,7 @@ func (tzOut OutputTimeZones) writeMasterTypeFunctions(
 	b.WriteString("//     https://www.timeanddate.com/time/zones/z\n")
 	b.WriteString("//     https://www.timeanddate.com/time/zone/timezone/zulu\n")
 	b.WriteString("//      \n")
-	b.WriteString("func (iana TimeZones) Zulu()  string { return \"UTC\" }\n")
+	b.WriteString("func (tZones TimeZones) Zulu()  string { return \"UTC\" }\n")
 	b.WriteString("\n\n\n")
 
 		_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))

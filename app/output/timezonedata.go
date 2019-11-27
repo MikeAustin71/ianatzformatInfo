@@ -3,7 +3,7 @@ package main
 
 
 // TimeZones - This type and its associated methods encapsulate 593 IANA Time
-// Zones, 25-Military Time Zones and 1-Other Non-Iana Time Zones. This 'TimeZones'
+// Zones, 25-Military Time Zones and 1-Other Non-Iana Time Zone. This 'TimeZones'
 // type can therefore be used as a comprehensive enumeration of Global Time Zones.
 //
 // The Time Zones Type encapsulates data elements used to access specific
@@ -15,7 +15,7 @@ package main
 // 
 // The classification 'Other' includes many Time Zones which have been deprecated
 // by the IANA Time Zone database. Deprecated IANA Time Zones are mapped internally
-// to valid time zones. 
+// to valid, current time zones. 
 // 
 // The Go Programming Language uses IANA Time Zones in date-time calculations.
 //  Reference:
@@ -116,7 +116,7 @@ package main
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-11-25 Monday 22:21:13 -0600 CST
+// Type Creation Date: 2019-11-27 Wednesday 00:08:56 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -158,7 +158,7 @@ func(tZones TimeZones) Local() string {return "Local"}
 // UCT is equivalent to a zero offset: UTC+0000. For additional information, reference:
 //     https://en.wikipedia.org/wiki/Coordinated_Universal_Time
 // 
-func (iana TimeZones) UCT()  string { return "UCT" }
+func (tZones TimeZones) UCT()  string { return "UCT" }
 
 
 // UTC - Coordinated Universal Time. 
@@ -170,7 +170,7 @@ func (iana TimeZones) UCT()  string { return "UCT" }
 // UTC is equivalent to a zero offset: UTC+0000. For additional information, reference:
 //     https://en.wikipedia.org/wiki/Coordinated_Universal_Time
 // 
-func (iana TimeZones) UTC()  string { return "UTC" }
+func (tZones TimeZones) UTC()  string { return "UTC" }
 
 
 // Zulu - Zulu Time Zone (Z) has no offset from Coordinated Universal Time (UTC).
@@ -189,7 +189,7 @@ func (iana TimeZones) UTC()  string { return "UTC" }
 //     https://www.timeanddate.com/time/zones/z
 //     https://www.timeanddate.com/time/zone/timezone/zulu
 //      
-func (iana TimeZones) Zulu()  string { return "UTC" }
+func (tZones TimeZones) Zulu()  string { return "UTC" }
 
 
 
