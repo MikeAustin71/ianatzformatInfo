@@ -92,7 +92,33 @@ var MilitaryUTCMap = map[string]string{
 	"Yankee":   "UTC-12",
 	"Zulu":     "UTC+0"}
 
-
+var MilitaryTzLocationMap = map[string]string{
+	"Alpha"    :  "France",
+	"Bravo"    :  "Athens, Greece",
+	"Charlie"  :  "Arab Standard Time, Iraq, Bahrain, Kuwait, Saudi Arabia, Yemen, Qatar",
+	"Delta"    :  "Moscow, Russia and Afghanistan, however, Afghanistan is technically +4:30 from UTC",
+	"Echo"     :  "Pakistan, Kazakhstan, Tajikistan, Uzbekistan and Turkmenistan",
+	"Foxtrot"  :  "Bangladesh",
+	"Golf"     :  "Thailand",
+	"Hotel"    :  "Beijing, China",
+	"India"    :  "Tokyo, Australia",
+	"Kilo"     :  "Brisbane, Australia",
+	"Lima"     :  "Sydney, Australia",
+	"Mike"     :  "Wellington, New Zealand",
+	"November" :  "Azores",
+	"Oscar"    :  "Godthab, Greenland",
+	"Papa"     :  "Buenos Aires, Argentina",
+	"Quebec"   :  "Halifax, Nova Scotia",
+	"Romeo"    :  "EST, New York, NY",
+	"Sierra"   :  "CST, Dallas, TX",
+	"Tango"    :  "MST, Denver, CO",
+	"Uniform"  :  "PST, Los Angeles, CA",
+	"Victor"   :  "Juneau, AK",
+	"Whiskey"  :  "Honolulu, HI",
+	"Xray"     :  "American Samoa",
+	"Yankee"   :  "e.g. Fiji",
+	"Zulu"     :  "Zulu time",
+}
 // MilitaryTzArray - Array of strings
 // describing official Military Time Zones
 var MilitaryTzArray = []string{

@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2019-11-27 Wednesday 00:08:56.754604600 -0600 CST 
+     Execution Start Time: 2019-11-29 Friday 04:30:48.241252800 -0600 CST 
 
   ==============================================================================
 
@@ -21,7 +21,7 @@
   D:\GoProjects\ianatzformatInfo\app\output\timezoneabbreviations.go 
 
                                 Log File: 
-  D:\GoProjects\ianatzformatInfo\app\output\20191127000856_ianaformatInfoLog.txt 
+  D:\GoProjects\ianatzformatInfo\app\output\20191129043048_ianaformatInfoLog.txt 
 
   ------------------------------------------------------------------------------
 
@@ -731,9 +731,9 @@
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2019-11-27 Wednesday 00:08:56.754604600 -0600 CST
-    Ending Date Time: 2019-11-27 Wednesday 00:08:58.783550400 -0600 CST
-        Elapsed Time: 2-Seconds 28-Milliseconds 945-Microseconds 800-Nanoseconds
+  Starting Date Time: 2019-11-29 Friday 04:30:48.241252800 -0600 CST
+    Ending Date Time: 2019-11-29 Friday 04:30:52.360409100 -0600 CST
+        Elapsed Time: 4-Seconds 119-Milliseconds 156-Microseconds 300-Nanoseconds
   ------------------------------------------------------------------------------
 
 

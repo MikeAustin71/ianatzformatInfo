@@ -207,7 +207,7 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 		"UTC-3         P        (Buenos Aires, Argentina)\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"UTC-4         Q        (Halifax, Nova Scotia\n")
+		"UTC-4         Q        (Halifax, Nova Scotia)\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
 		"UTC-5         R        (EST, New York, NY)\n")
@@ -294,12 +294,21 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 // ---------------------------------------------------------------------------
 //
 // Example:
-//   Alpha - Military Time Zone 'A' or 'Alpha' is equivalent TO
-//   IANA Time Zone "Etc/GMT-1"
+// Alpha - Military Time Zone 'A' or 'Alpha' is equivalent to
+// to IANA Time Zone "Etc/GMT-1".
 //
-//   Offset from UTC is computed at +1 hours.
+// Offset from Universal Coordinated Time (UTC) is computed at UTC+1 hour.
 //
-//   func (milTz militaryTimeZones)Alpha() string { return "Etc/GMT-1" }
+// Time Zone Location: France
+//
+// If the reversal of signs necessary to generate UTC+1 hour is
+// confusing, see IANA the documentation for the 'ETC' Time Zone Area
+// referenced at:
+//
+//    https://en.wikipedia.org/wiki/Tz_database#Area
+//
+//
+//func (milTz militaryTimeZones) Alpha() string {return "Etc/GMT-1" }
 //
 // ----------------------------------------------------------------------------
 //
@@ -323,7 +332,7 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 
 	if !ok {
 		return fmt.Errorf(ePrefix +
-			"\nError: Invlalid Military Time Zone Name!\n" +
+			"\nError: Invalid Military Time Zone Name!\n" +
 			"TzName='%v'\n", tzData.TzName)
 	}
 
@@ -346,6 +355,19 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	b.WriteString(tzdatastructs.CommentLead +
 			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v.\n",
 			utcOffset))
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	tzLoc, ok := tzdatastructs.MilitaryTzLocationMap[tzData.TzName]
+
+	if !ok {
+		return fmt.Errorf(ePrefix +
+			"\nError: Invalid Military Time Zone Location!\n" +
+			"TzName='%v'\n", tzData.TzName)
+	}
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"Time Zone Location: " + tzLoc + "\n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
