@@ -67,84 +67,174 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"  Abbreviation Time zone name     Other names    Offset\n")
-
+		"   Time Zone       Time Zone        Equivalent IANA          UTC\n")
+	b.WriteString(tzdatastructs.CommentLead +
+		"  Abbreviation       Name              Time Zone            Offset\n")
+	b.WriteString(tzdatastructs.CommentLead +
+		"  ------------     --------          ---------------        ------\n")
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      A        Alpha Time Zone                   UTC +1\n")
+		"      A        Alpha Time Zone         Etc/GMT-1            UTC +1\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      B        Bravo Time Zone                   UTC +2\n")
+		"      B        Bravo Time Zone         Etc/GMT-2            UTC +2\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      C        Charlie Time Zone                 UTC +3\n")
+		"      C        Charlie Time Zone       Etc/GMT-3            UTC +3\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      D        Delta Time Zone                   UTC +4\n")
+		"      D        Delta Time Zone         Etc/GMT-4            UTC +4\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      E        Echo Time Zone                    UTC +5\n")
+		"      E        Echo Time Zone          Etc/GMT-5            UTC +5\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      F        Foxtrot Time Zone                 UTC +6\n")
+		"      F        Foxtrot Time Zone       Etc/GMT-6            UTC +6\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      G        Golf Time Zone                    UTC +7\n")
+		"      G        Golf Time Zone          Etc/GMT-7            UTC +7\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      H        Hotel Time Zone                   UTC +8\n")
+		"      H        Hotel Time Zone         Etc/GMT-8            UTC +8\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      I        India Time Zone                   UTC +9\n")
+		"      I        India Time Zone         Etc/GMT-9            UTC +9\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      K        Kilo Time Zone                    UTC +10\n")
+		"      K        Kilo Time Zone          Etc/GMT-10           UTC +10\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      L        Lima Time Zone                    UTC +11\n")
+		"      L        Lima Time Zone          Etc/GMT-11           UTC +11\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      M        Mike Time Zone                    UTC +12\n")
+		"      M        Mike Time Zone          Etc/GMT-12           UTC +12\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      N        November Time Zone                UTC -1\n")
+		"      N        November Time Zone      Etc/GMT+1            UTC -1\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      O        Oscar Time Zone                   UTC -2\n")
+		"      O        Oscar Time Zone         Etc/GMT+2            UTC -2\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      P        Papa Time Zone                    UTC -3\n")
+		"      P        Papa Time Zone          Etc/GMT+3            UTC -3\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      Q        Quebec Time Zone                  UTC -4\n")
+		"      Q        Quebec Time Zone        Etc/GMT+4            UTC -4\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      R        Romeo Time Zone                   UTC -5\n")
+		"      R        Romeo Time Zone         Etc/GMT+5            UTC -5\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      S        Sierra Time Zone                  UTC -6\n")
+		"      S        Sierra Time Zone        Etc/GMT+6            UTC -6\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      T        Tango Time Zone                   UTC -7\n")
+		"      T        Tango Time Zone         Etc/GMT+7            UTC -7\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      U        Uniform Time Zone                 UTC -8\n")
+		"      U        Uniform Time Zone       Etc/GMT+8            UTC -8\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      V        Victor Time Zone                  UTC -9\n")
+		"      V        Victor Time Zone        Etc/GMT+9            UTC -9\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      W        Whiskey Time Zone                 UTC -10\n")
+		"      W        Whiskey Time Zone       Etc/GMT+10           UTC -10\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      X        X-ray Time Zone                   UTC -11\n")
+		"      X        X-ray Time Zone         Etc/GMT+11           UTC -11\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      Y        Yankee Time Zone                  UTC -12\n")
+		"      Y        Yankee Time Zone        Etc/GMT+12           UTC -12\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"      Z        Zulu Time Zone                    UTC +0\n")
+		"      Z        Zulu Time Zone          UTC                  UTC +0\n")
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	b.WriteString(tzdatastructs.CommentLead +
+		" UTC     Time Zone     Time Zone\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"Offset  Abbreviation   Location\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"------  ------------   -----------------------------------------------------------------------\n")
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+1         A        (France)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+2         B        (Athens, Greece)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+3         C        (Arab Standard Time, Iraq, Bahrain, Kuwait, Saudi Arabia, Yemen, Qatar)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+4         D        (Used for Moscow, Russia and Afghanistan, however, Afghanistan is \n")
+	b.WriteString(tzdatastructs.CommentLead +
+		"                          technically +4:30 from UTC)\n")
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+5         E        (Pakistan, Kazakhstan, Tajikistan, Uzbekistan and Turkmenistan)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+6         F        (Bangladesh)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+7         G        (Thailand)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+8         H        (Beijing, China)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+9         I        (Tokyo, Australia)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+10        K        (Brisbane, Australia)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+11        L        (Sydney, Australia)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+12        M        (Wellington, New Zealand)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-1         N        (Azores)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-2         O        (Godthab, Greenland)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-3         P        (Buenos Aires, Argentina)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-4         Q        (Halifax, Nova Scotia\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-5         R        (EST, New York, NY)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-6         S        (CST, Dallas, TX)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-7         T        (MST, Denver, CO)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-8         U        (PST, Los Angeles, CA)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-9         V        (Juneau, AK)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-10        W        (Honolulu, HI)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC-11        X        (American Samoa)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC -12       Y        (e.g. Fiji)\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"UTC+-0        Z        (Zulu time)\n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
@@ -158,16 +248,16 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 		"IANA time zones. At first this may seem confusing. For example,\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"Military Time Zone 'L' or 'Lima' specifies UTC +11-hours.\n")
+		"Military Time Zone 'L', or 'Lima', specifies UTC +11 hours.\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"However, the equivalent IANA Time Zone is \"Etc/GMT+11\".\n")
+		"However, the equivalent IANA Time Zone is \"Etc/GMT-11\".\n")
 
 	b.WriteString(tzdatastructs.CommentLead +
 		"In date time calculations, IANA Time Zone \"Etc/GMT-11\" \n")
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"computes as UTC +11 hours.\n")
+		"resolves as UTC +11 hours.\n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
@@ -176,6 +266,19 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 
 	b.WriteString(tzdatastructs.CommentLead +
 		"    https://en.wikipedia.org/wiki/Tz_database#Area\n")
+
+	b.WriteString(tzdatastructs.CommentBlankLine)
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"A Military Date Time Group is traditionally formatted as 'DDHHMM(Z)MONYY'.\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"For example, 630pm on January 6th, 2012 in Fayetteville NC would read '061830RJAN12'\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"Reference:\n")
+		b.WriteString(tzdatastructs.CommentLead +
+		"    http://blog.refactortactical.com/blog/military-date-time-group/  \n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
