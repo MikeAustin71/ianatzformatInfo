@@ -92,6 +92,34 @@ var MilitaryUTCMap = map[string]string{
 	"Yankee":   "UTC-12",
 	"Zulu":     "UTC+0"}
 
+var MilitaryTzUrlReferenceMap = map[string]string {
+	"Alpha"    :  "https://www.timeanddate.com/worldclock/timezone/alpha",
+	"Bravo"    :  "https://www.timeanddate.com/worldclock/timezone/bravo",
+	"Charlie"  :  "https://www.timeanddate.com/worldclock/timezone/charlie",
+	"Delta"    :  "https://www.timeanddate.com/worldclock/timezone/delta",
+	"Echo"     :  "https://www.timeanddate.com/worldclock/timezone/echo",
+	"Foxtrot"  :  "https://www.timeanddate.com/worldclock/timezone/foxtrot",
+	"Golf"     :  "https://www.timeanddate.com/worldclock/timezone/golf",
+	"Hotel"    :  "https://www.timeanddate.com/worldclock/timezone/hotel",
+	"India"    :  "https://www.timeanddate.com/worldclock/timezone/india",
+	"Kilo"     :  "https://www.timeanddate.com/worldclock/timezone/kilo",
+	"Lima"     :  "https://www.timeanddate.com/worldclock/timezone/lima",
+	"Mike"     :  "https://www.timeanddate.com/worldclock/timezone/mike",
+	"November" :  "https://www.timeanddate.com/worldclock/timezone/november",
+	"Oscar"    :  "https://www.timeanddate.com/worldclock/timezone/oscar",
+	"Papa"     :  "https://www.timeanddate.com/worldclock/timezone/papa",
+	"Quebec"   :  "https://www.timeanddate.com/worldclock/timezone/quebec",
+	"Romeo"    :  "https://www.timeanddate.com/worldclock/timezone/romeo",
+	"Sierra"   :  "https://www.timeanddate.com/worldclock/timezone/sierra",
+	"Tango"    :  "https://www.timeanddate.com/worldclock/timezone/tango",
+	"Uniform"  :  "https://www.timeanddate.com/worldclock/timezone/uniform",
+	"Victor"   :  "https://www.timeanddate.com/worldclock/timezone/victor",
+	"Whiskey"  :  "https://www.timeanddate.com/worldclock/timezone/whiskey",
+	"Xray"     :  "https://www.timeanddate.com/worldclock/timezone/x-ray",
+	"Yankee"   :  "https://www.timeanddate.com/worldclock/timezone/yankee",
+	"Zulu"     :  "https://www.timeanddate.com/worldclock/timezone/zulu",
+}
+
 var MilitaryTzLocationMap = map[string]string{
 	"Alpha"    :  "France",
 	"Bravo"    :  "Athens, Greece",

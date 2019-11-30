@@ -353,12 +353,15 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
 	b.WriteString(tzdatastructs.CommentLead +
-			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at %v.\n",
+			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at\n// %v. \n",
 			utcOffset))
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
-	tzLoc, ok := tzdatastructs.MilitaryTzLocationMap[tzData.TzName]
+
+	var tzCommentTxt string
+
+	tzCommentTxt, ok = tzdatastructs.MilitaryTzLocationMap[tzData.TzName]
 
 	if !ok {
 		return fmt.Errorf(ePrefix +
@@ -366,8 +369,35 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 			"TzName='%v'\n", tzData.TzName)
 	}
 
+	tzCommentTxt = "// Time Zone Location: " + tzCommentTxt
+
+	tzCommentTxt, err = strops.StrOps{}.BreakTextAtLineLength(tzCommentTxt, 60, '\n')
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by StrOps{}.BreakTextAtLineLength(tzCommentTxt, 60, '\n')\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	tzCommentTxt = strings.Replace(tzCommentTxt, "\n", "\n// ", -1)
+
+	tzCommentTxt += "\n"
+
+	b.WriteString(tzCommentTxt)
+
+	tzCommentTxt, ok = tzdatastructs.MilitaryTzUrlReferenceMap[tzData.TzName]
+
+	if !ok {
+		return fmt.Errorf(ePrefix +
+			"\nError: Invalid Military Time Zone URL Reference!\n" +
+			"TzName='%v'\n", tzData.TzName)
+	}
+
 	b.WriteString(tzdatastructs.CommentLead +
-		"Time Zone Location: " + tzLoc + "\n")
+		"For additional information on this military time zone reference:\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"    " + tzCommentTxt + "\n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
