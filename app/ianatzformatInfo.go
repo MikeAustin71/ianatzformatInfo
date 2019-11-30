@@ -21,7 +21,7 @@ import (
 // 'targettzdata.txt' in a sub-directory labeled 'input' which is located directly
 // beneath the directory which houses this application executable.
 // Example:
-// Applzication executable is located in 'D:\myAppDir' .
+// Application executable is located in 'D:\myAppDir' .
 // File 'targettzdata.txt' MUST BE located in directory: 'D:\myAppDir\input\targettzdata.txt'.
 //
 // 'targettzdata.txt' is a text file containing two lines of information on the first two

@@ -232,8 +232,8 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	b.WriteString("// time zones. These data elements classify time zones by geographic region\n")
 	b.WriteString("// and type. For example, classifications like, 'America', 'Asia' and 'Europe'\n")
 	b.WriteString("// provide access to zones located in those geographic regions. The 'Military'\n")
-	b.WriteString("// classification provides access to time zones used exclusively by military\n")
-	b.WriteString("// or aviation organizations.\n")
+	b.WriteString("// classification provides access to time zones used exclusively by military,\n")
+	b.WriteString("// aviation or maritime organizations.\n")
 
 	b.WriteString("// \n")
 
@@ -250,7 +250,7 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 		"// The Go Programming Language uses IANA Time Zones in date-time calculations.\n")
 
 	b.WriteString(
-		"//  Reference:\n")
+		"// Reference:\n")
 
 	b.WriteString(
 		"//    https://golang.org/pkg/time/\n")
@@ -261,10 +261,10 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 	b.WriteString("// \n")
 
 	b.WriteString(
-		"// The IANA Time Zone database is widely recognized as the the world's leading\n")
+		"// The IANA Time Zone database is widely recognized as a leading authority on global\n")
 
 	b.WriteString(
-		"// authority on global time zones.\n")
+		"// time zones.\n")
 
 	b.WriteString("// \n")
 
@@ -288,10 +288,10 @@ func (tzOut OutputTimeZones) createTimeZoneTypeComments(
 		"// This application extracts information from a 'zoneinfo.zip' file. The \n")
 
 	b.WriteString(
-		"// 'zoneinfo.zip' file was in turn generated from time zone database\n")
+		"// 'zoneinfo.zip' file was in turn generated from time zone database file supplied\n")
 
 	b.WriteString(
-			"// files supplied by IANA time zone database.\n")
+			"// by the IANA time zone database.\n")
 
 	b.WriteString("// \n")
 

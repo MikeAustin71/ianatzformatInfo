@@ -251,7 +251,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 
 	for i:=0; i < numOfAbbrvs; i++ {
 
-		tzAbrv, err := tzStats.TzAbbreviations.PeekPtr(i)
+		tzAbbrv, err := tzStats.TzAbbreviations.PeekPtr(i)
 
 		if err != nil {
 			return fmt.Errorf(ePrefix +
@@ -261,12 +261,12 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 
 		outputStr = fmt.Sprintf(
 			"\"%v\"     :{\"%v\",\"%v\",\"%v\",\"%v\",\"%v\"},\n",
-			tzAbrv.Id,
-			tzAbrv.Id,
-			tzAbrv.Abbrv,
-			tzAbrv.TzName,
-			tzAbrv.Location,
-			tzAbrv.UtcOffset)
+			tzAbbrv.Id,
+			tzAbbrv.Id,
+			tzAbbrv.Abbrv,
+			tzAbbrv.TzName,
+			tzAbbrv.Location,
+			tzAbbrv.UtcOffset)
 
 		b.WriteString(outputStr)
 	}

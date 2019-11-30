@@ -54,7 +54,7 @@ func (tzAbbrv *TimeZoneAbbreviationCollection) AddIfNew(
 }
 
 // New - Returns a new properly initialized instance of a TimeZoneAbbreviationCollection
-func (tzAbbrv TimeZoneAbbreviationCollection) New() (TimeZoneAbbreviationCollection) {
+func (tzAbbrv TimeZoneAbbreviationCollection) New() TimeZoneAbbreviationCollection {
 
 	newAbbrvDto := TimeZoneAbbreviationCollection{}
 	newAbbrvDto.tzAbbreviations = make([]TzAbbreviationDto, 0)

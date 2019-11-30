@@ -34,14 +34,18 @@ func TestTimeZoneDataDto_01(t *testing.T) {
 		"America/Chicago",
 		"America/Chicago",
 		"America/Chicago",
-		"",
+		0,
 		"",
 		"Chicago",
 		"string",
 		"",
+		"America/Chicago",
 		"northamerica",
+		2,
 		tzdatastructs.TZClass.Canonical(),
 		tzdatastructs.TZType.Standard(),
+		tzdatastructs.TZCat.TimeZone(),
+		tzdatastructs.TZSrc.Iana(),
 		tzdatastructs.DepStatusCode.Valid())
 
 	if err != nil {
