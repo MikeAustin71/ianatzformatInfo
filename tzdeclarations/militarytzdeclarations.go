@@ -17,8 +17,6 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 	militaryTzType *tzdatastructs.TimeZoneGroupDto, ePrefix string) error {
 
 	ePrefix += "TzMilitaryDeclarations.MilitaryTypeDeclaration() "
-	//
-	//
 
 	b := strings.Builder{}
 
@@ -45,6 +43,9 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTypeDeclaration(
 
 	b.WriteString(tzdatastructs.CommentLead +
 		"    https://www.timeanddate.com/worldclock/timezone/alpha\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+		"    https://www.timeanddate.com/time/map/\n")
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
@@ -385,6 +386,12 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 
 	b.WriteString(tzCommentTxt)
 
+	b.WriteString(tzdatastructs.CommentLead +
+		"For a map of Military Time Zone Locations reference:\n" + tzdatastructs.CommentBlankLine)
+
+	b.WriteString(tzdatastructs.CommentLead +
+ "     https://www.timeanddate.com/time/map/\n" + tzdatastructs.CommentBlankLine)
+
 	tzCommentTxt, ok = tzdatastructs.MilitaryTzUrlReferenceMap[tzData.TzName]
 
 	if !ok {
@@ -394,7 +401,8 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	}
 
 	b.WriteString(tzdatastructs.CommentLead +
-		"For additional information on this military time zone reference:\n")
+		"For additional information on this military time zone reference:\n" +
+		tzdatastructs.CommentBlankLine)
 
 	b.WriteString(tzdatastructs.CommentLead +
 		"    " + tzCommentTxt + "\n")

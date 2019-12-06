@@ -147,6 +147,7 @@ var MilitaryTzLocationMap = map[string]string{
 	"Yankee"   :  "e.g. Fiji",
 	"Zulu"     :  "Zulu time",
 }
+
 // MilitaryTzArray - Array of strings
 // describing official Military Time Zones
 var MilitaryTzArray = []string{
