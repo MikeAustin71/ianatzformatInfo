@@ -47,6 +47,14 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) WriteOutput(
 		return err
 	}
 
+	err = outTzAbbrvs.writeStdTZoneAbbreviationsType(f,ePrefix)
+
+	if err != nil {
+		_ = f.CloseThisFile()
+		return err
+	}
+
+
 	err = outTzAbbrvs.writeMapTzAbbreviationReference(f, tzStats, ePrefix)
 
 	if err != nil {
@@ -106,6 +114,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeHeader(
 	b.WriteString("package main\n\n")
 	b.WriteString("import (\n")
 	b.WriteString("  \"errors\"\n")
+	b.WriteString("  \"sync\"\n")
 	b.WriteString(")\n\n\n")
 
 	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
@@ -154,11 +163,11 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeTimeZoneAbbreviationDto(
 	b.WriteString("// \n")
 
 	b.WriteString("type TimeZoneAbbreviationDto struct {\n")
-	b.WriteString("  Id         string\n")
-	b.WriteString("  Abbrv      string\n")
-	b.WriteString("  TzName     string\n")
-	b.WriteString("  Location   string\n")
-	b.WriteString("  UtcOffset  string\n")
+	b.WriteString("  Id                 string  // Example: \"CST-0600\"\n")
+	b.WriteString("  Abbrv              string  // Example: \"CST\"\n")
+	b.WriteString("  AbbrvDescription   string  // Example: \"Central Standard Time\"\n")
+	b.WriteString("  Location           string  // Example: \"North America\"\n")
+	b.WriteString("  UtcOffset          string  // Example: \"-0600\"\n")
 	b.WriteString("}\n\n\n")
 
 	b.WriteString("// CopyOut() - Makes and returns a deep copy of the current TimeZoneAbbreviationDto\n")
@@ -170,7 +179,7 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeTimeZoneAbbreviationDto(
 	b.WriteString("  newDto := TimeZoneAbbreviationDto{}\n")
 	b.WriteString("  newDto.Id = TzAbbrv.Id\n")
 	b.WriteString("  newDto.Abbrv = TzAbbrv.Abbrv\n")
-	b.WriteString("  newDto.TzName = TzAbbrv.TzName\n")
+	b.WriteString("  newDto.AbbrvDescription = TzAbbrv.AbbrvDescription\n")
 	b.WriteString("  newDto.Location = TzAbbrv.Location\n")
 	b.WriteString("  newDto.UtcOffset = TzAbbrv.UtcOffset\n")
 	b.WriteString("  \n")
@@ -193,11 +202,343 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeTimeZoneAbbreviationDto(
 
 	b.WriteString("  TzAbbrv.Id = inComing.Id\n")
 	b.WriteString("  TzAbbrv.Abbrv = inComing.Abbrv\n")
-	b.WriteString("  TzAbbrv.TzName = inComing.TzName\n")
+	b.WriteString("  TzAbbrv.AbbrvDescription = inComing.AbbrvDescription\n")
 	b.WriteString("  TzAbbrv.Location = inComing.Location\n")
 	b.WriteString("  TzAbbrv.UtcOffset = inComing.UtcOffset\n")
 	b.WriteString("  return nil\n")
 	b.WriteString("}  \n\n\n")
+
+	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by fMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = fMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\n Error returned by fMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+func (outTzAbbrvs OutputTimeZoneAbbreviations) writeStdTZoneAbbreviationsType(
+	fMgr pathfileops.FileMgr,
+	ePrefix string) error {
+
+	ePrefix += "OutputTimeZoneAbbreviations.writeStdTZoneAbbreviationsType() "
+
+	b := strings.Builder{}
+
+	b.Grow(5120)
+
+	b.WriteString(
+		"// StdTZoneAbbreviations - Provides thread safe access to\n")
+
+	b.WriteString(
+		"// standard IANA Time Zone abbreviations, abbreviation\n")
+
+	b.WriteString(
+		"// descriptions and UTC Offsets.\n//  \n")
+
+	b.WriteString(
+		"type StdTZoneAbbreviations struct {\n")
+
+	b.WriteString(
+		"  Input                  TimeZoneAbbreviationDto\n")
+
+	b.WriteString(
+		"  Output                 TimeZoneAbbreviationDto\n")
+
+	b.WriteString(
+		"  lock                   sync.Mutex\n")
+
+	b.WriteString("}\n\n\n")
+
+	b.WriteString(
+		"// AbbrvOffsetToTzReference - This method returns a type\n")
+
+	b.WriteString(
+		"// 'TimeZoneAbbreviation' describing a specific time zone\n")
+
+	b.WriteString(
+		"// abbreviation based on an input parameter consisting of\n")
+
+	b.WriteString(
+		"// an alphabetic time zone abbreviation and an UTC offset\n")
+
+	b.WriteString(
+		"// parameter.\n")
+
+	b.WriteString(
+		"//  \n")
+
+	b.WriteString(
+		"// The Time Zone Abbreviation Offset parameter, 'abbrvOffset',\n")
+
+	b.WriteString(
+		"// must be formatted with a time zone abbreviation in all\n")
+
+	b.WriteString(
+		"// upper case characters followed by the UTC Offset expressed\n")
+
+	b.WriteString(
+		"// in hours and minutes.\n")
+
+	b.WriteString(
+		"\n")
+
+	b.WriteString(
+		"// For example, to return a 'TimeZoneAbbreviationDto' describing\n")
+
+	b.WriteString(
+		"// North America Central Standard Time, the 'abbrvOffset' input\n")
+
+	b.WriteString(
+		"// parameter must be formatted as 'CST-0600'. Note: the UTC\n")
+
+	b.WriteString(
+		"// offset for North America Central Standard Time is 'UTC-0600'.\n")
+
+	b.WriteString(
+		"\n")
+
+	b.WriteString(
+		"// If the Abbreviation Offset parameter is invalid or if no\n")
+
+	b.WriteString(
+		"// 'TimeZoneAbbreviationDto' exists for the Abbreviation Offset\n")
+
+	b.WriteString(
+		"// parameter, this method will return a boolean value of 'false'.\n")
+
+	b.WriteString(
+		"//  \n")
+
+	b.WriteString(
+		"func (stdTzAbbrvs *StdTZoneAbbreviations) AbbrvOffsetToTzReference(\n")
+
+	b.WriteString(
+		"		abbrvOffset string) (TimeZoneAbbreviationDto, bool) {\n\n")
+
+	b.WriteString(
+		"	stdTzAbbrvs.lock.Lock()\n\n")
+
+	b.WriteString(
+		"	defer stdTzAbbrvs.lock.Unlock()\n\n")
+
+
+	b.WriteString(
+		"	result, ok := mapTzAbbreviationReference[abbrvOffset]\n\n")
+
+
+	b.WriteString(
+		"	return result, ok\n")
+
+
+	b.WriteString(
+		"}\n\n")
+
+
+	b.WriteString(
+		"// AbbrvOffsetToTimeZones - Returns a string array consisting of\n")
+
+
+	b.WriteString(
+		"// all standard time zones associated with a specific time zone\n")
+
+
+	b.WriteString(
+		"// abbreviation based on an input parameter consisting of an\n")
+
+
+	b.WriteString(
+		"// alphabetic time zone abbreviation and an UTC offset parameter.\n")
+
+
+	b.WriteString(
+		"// \n")
+
+
+	b.WriteString(
+		"// The Time Zone Abbreviation Offset parameter, 'abbrvOffset'\n")
+
+
+	b.WriteString(
+		"// must be formatted with a time zone abbreviation in all\n")
+
+
+	b.WriteString(
+		"// upper case characters followed by the UTC Offset expressed\n")
+
+
+	b.WriteString(
+		"// in hours and minutes.\n")
+
+
+	b.WriteString(
+		"// \n")
+
+
+	b.WriteString(
+		"// For example, to return a string array containing all standard\n")
+
+
+	b.WriteString(
+		"// time zones associated with North America Central Standard\n")
+
+
+	b.WriteString(
+		"// Time, the 'abbrvOffset' input parameter must be formatted as\n")
+
+
+	b.WriteString(
+		"// 'CST-0600'. Note: the UTC offset for North America Central\n")
+
+
+	b.WriteString(
+		"// Standard Time is 'UTC-0600'.\n")
+
+
+	b.WriteString(
+		"// \n")
+
+
+	b.WriteString(
+		"// If the Time Zone Abbreviation Offset parameter is invalid or\n")
+
+
+	b.WriteString(
+		"// if no string array exists for the Abbreviation Offset\n")
+
+
+	b.WriteString(
+		"// parameter, this method will return a boolean value of 'false'.\n")
+
+
+	b.WriteString(
+		"// \n")
+
+
+	b.WriteString(
+		"func (stdTzAbbrvs *StdTZoneAbbreviations) AbbrvOffsetToTimeZones(\n")
+
+
+	b.WriteString(
+		"		abbrvOffset string) ([]string, bool) {\n\n")
+
+
+	b.WriteString(
+		"	stdTzAbbrvs.lock.Lock()\n\n")
+
+
+	b.WriteString(
+		"	defer stdTzAbbrvs.lock.Unlock()\n\n")
+
+
+	b.WriteString(
+		"	result, ok :=  mapTzAbbrvsToTimeZones[abbrvOffset]\n\n")
+
+	b.WriteString(
+		"	return result, ok\n")
+
+	b.WriteString(
+		"}\n\n")
+
+	b.WriteString(
+		"// TimeZonesToAbbrvs - Returns a string array consisting of\n")
+
+	b.WriteString(
+		"// all time zone abbreviations associated with a standard,\n")
+
+	b.WriteString(
+		"// IANA time zone name passed as an input parameter.  This\n")
+
+	b.WriteString(
+		"// input parameter, 'timeZone', must be formatted as a\n")
+
+	b.WriteString(
+		"// standard IANA time zone name using upper and lower case\n")
+
+	b.WriteString(
+		"// characters as specified in the IANA Time Zone Database.\n")
+
+	b.WriteString(
+		"// \n")
+
+	b.WriteString(
+		"// The returned string array actually contains Time Zone\n")
+
+	b.WriteString(
+		"// Abbreviation and UTC Offset pairs.\n")
+
+	b.WriteString(
+		"// \n")
+
+	b.WriteString(
+		"// For example, the standard IANA Time Zone, 'America/Chicago'\n")
+
+	b.WriteString(
+		"// will return a string array consisting of two strings:\n")
+
+	b.WriteString(
+		"// \"CDT-0500\" and \"CST-0600\". These two strings describe the\n")
+
+	b.WriteString(
+		"// two time zone abbreviations associated with 'America/Chicago'\n")
+
+	b.WriteString(
+		"// (a.k.a. North America Central Time). \"CDT-0500\" stands for\n")
+
+	b.WriteString(
+		"// 'Central Daylight Time' and UTC-0500 (a UTC offset of\n")
+
+	b.WriteString(
+		"// -5 hours). Likewise, \"CST-0600\" identifies 'Central Standard\n")
+
+	b.WriteString(
+		"// Time' with an UTC offset of -6 hours (UTC-0600).\n")
+
+	b.WriteString(
+		"// \n")
+
+	b.WriteString(
+		"// If the Time Zone input parameter is invalid or if no string\n")
+
+	b.WriteString(
+		"// array exists for the Time Zone input parameter, this method\n")
+
+	b.WriteString(
+		"// will return a boolean value of 'false'.\n")
+
+	b.WriteString(
+		"// \n")
+
+	b.WriteString(
+		"func (stdTzAbbrvs *StdTZoneAbbreviations) TimeZonesToAbbrvs(\n")
+
+	b.WriteString(
+		"		timeZone string) ([]string, bool) {\n\n")
+
+	b.WriteString(
+		"	stdTzAbbrvs.lock.Lock()\n\n")
+
+	b.WriteString(
+		"	defer stdTzAbbrvs.lock.Unlock()\n\n")
+
+	b.WriteString(
+		"	result, ok := mapTimeZonesToTzAbbrvs[timeZone]\n\n")
+
+	b.WriteString(
+		"	return result, ok\n")
+
+	b.WriteString(
+		"}\n\n\n")
 
 	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
 
@@ -231,11 +572,11 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 
 		b.Grow(5120)
 
-		b.WriteString("// MapTzAbbreviationReference - A reference map including all valid\n")
+		b.WriteString("// mapTzAbbreviationReference - A reference map including all valid\n")
 		b.WriteString("// alphabetic Time Zone abbreviations.\n")
 		b.WriteString("//\n")
 
-		b.WriteString("var MapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{\n")
+		b.WriteString("var mapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{\n")
 
 	tzStats.TzAbbreviations.SortByAbbrv()
 
@@ -306,10 +647,10 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbrvsToTimeZones(
 
 	b.Grow(5120)
 
-	b.WriteString("// MapTzAbbrvsToTimeZones - A cross reference that maps\n")
+	b.WriteString("// mapTzAbbrvsToTimeZones - A cross reference that maps\n")
 	b.WriteString("// Time Zone Abbreviations to Time Zone Canonical Values.\n")
 	b.WriteString("// \n")
-	b.WriteString("var MapTzAbbrvsToTimeZones = map[string][]string {\n")
+	b.WriteString("var mapTzAbbrvsToTimeZones = map[string][]string {\n")
 
 	abbrvIds := make([]string, 0)
 
@@ -387,10 +728,10 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 
 	b.Grow(5120)
 
-	b.WriteString("// MapTimeZonesToTzAbbrvs - A cross reference that maps\n")
+	b.WriteString("// mapTimeZonesToTzAbbrvs - A cross reference that maps\n")
 	b.WriteString("// Time Zone Canonical Values to Time Zone Abbreviations.\n")
 	b.WriteString("// \n")
-	b.WriteString("var MapTimeZonesToTzAbbrvs = map[string][]string {\n")
+	b.WriteString("var mapTimeZonesToTzAbbrvs = map[string][]string {\n")
 
 	timeZoneCanonicalValues := make([]string ,0)
 
