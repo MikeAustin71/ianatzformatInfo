@@ -255,9 +255,6 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeStdTZoneAbbreviationsType(
 	b.WriteString(
 		"  Output                 TimeZoneAbbreviationDto\n")
 
-	b.WriteString(
-		"  lock                   sync.Mutex\n")
-
 	b.WriteString("}\n\n\n")
 
 	b.WriteString(
@@ -327,10 +324,10 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeStdTZoneAbbreviationsType(
 		"		abbrvOffset string) (TimeZoneAbbreviationDto, bool) {\n\n")
 
 	b.WriteString(
-		"	stdTzAbbrvs.lock.Lock()\n\n")
+		"	lockMapTzAbbreviationReference.Lock()\n\n")
 
 	b.WriteString(
-		"	defer stdTzAbbrvs.lock.Unlock()\n\n")
+		"	defer lockMapTzAbbreviationReference.Unlock()\n\n")
 
 
 	b.WriteString(
@@ -434,11 +431,11 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeStdTZoneAbbreviationsType(
 
 
 	b.WriteString(
-		"	stdTzAbbrvs.lock.Lock()\n\n")
+		"	lockMapTzAbbrvsToTimeZones.Lock()\n\n")
 
 
 	b.WriteString(
-		"	defer stdTzAbbrvs.lock.Unlock()\n\n")
+		"	defer lockMapTzAbbrvsToTimeZones.Unlock()\n\n")
 
 
 	b.WriteString(
@@ -526,10 +523,10 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeStdTZoneAbbreviationsType(
 		"		timeZone string) ([]string, bool) {\n\n")
 
 	b.WriteString(
-		"	stdTzAbbrvs.lock.Lock()\n\n")
+		"	lockMapTimeZonesToTzAbbrvs.Lock()\n\n")
 
 	b.WriteString(
-		"	defer stdTzAbbrvs.lock.Unlock()\n\n")
+		"	defer lockMapTimeZonesToTzAbbrvs.Unlock()\n\n")
 
 	b.WriteString(
 		"	result, ok := mapTimeZonesToTzAbbrvs[timeZone]\n\n")
@@ -574,7 +571,9 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 
 		b.WriteString("// mapTzAbbreviationReference - A reference map including all valid\n")
 		b.WriteString("// alphabetic Time Zone abbreviations.\n")
-		b.WriteString("//\n")
+		b.WriteString("//\n\n")
+
+		b.WriteString("var lockMapTzAbbreviationReference sync.Mutex\n\n")
 
 		b.WriteString("var mapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{\n")
 
@@ -649,7 +648,10 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbrvsToTimeZones(
 
 	b.WriteString("// mapTzAbbrvsToTimeZones - A cross reference that maps\n")
 	b.WriteString("// Time Zone Abbreviations to Time Zone Canonical Values.\n")
-	b.WriteString("// \n")
+	b.WriteString("// \n\n")
+
+	b.WriteString("var lockMapTzAbbrvsToTimeZones sync.Mutex\n\n")
+
 	b.WriteString("var mapTzAbbrvsToTimeZones = map[string][]string {\n")
 
 	abbrvIds := make([]string, 0)
@@ -730,7 +732,10 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 
 	b.WriteString("// mapTimeZonesToTzAbbrvs - A cross reference that maps\n")
 	b.WriteString("// Time Zone Canonical Values to Time Zone Abbreviations.\n")
-	b.WriteString("// \n")
+	b.WriteString("// \n\n")
+
+	b.WriteString("var lockMapTimeZonesToTzAbbrvs sync.Mutex\n\n")
+
 	b.WriteString("var mapTimeZonesToTzAbbrvs = map[string][]string {\n")
 
 	timeZoneCanonicalValues := make([]string ,0)

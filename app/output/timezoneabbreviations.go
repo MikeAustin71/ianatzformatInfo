@@ -1,8 +1,8 @@
 package main
 
 import (
-  "errors"
-  "sync"
+	"errors"
+	"sync"
 )
 
 
@@ -65,7 +65,6 @@ func (TzAbbrv *TimeZoneAbbreviationDto) CopyIn(inComing *TimeZoneAbbreviationDto
 type StdTZoneAbbreviations struct {
   Input                  TimeZoneAbbreviationDto
   Output                 TimeZoneAbbreviationDto
-  lock                   sync.Mutex
 }
 
 
@@ -92,9 +91,9 @@ type StdTZoneAbbreviations struct {
 func (stdTzAbbrvs *StdTZoneAbbreviations) AbbrvOffsetToTzReference(
 		abbrvOffset string) (TimeZoneAbbreviationDto, bool) {
 
-	stdTzAbbrvs.lock.Lock()
+	lockMapTzAbbreviationReference.Lock()
 
-	defer stdTzAbbrvs.lock.Unlock()
+	defer lockMapTzAbbreviationReference.Unlock()
 
 	result, ok := mapTzAbbreviationReference[abbrvOffset]
 
@@ -124,9 +123,9 @@ func (stdTzAbbrvs *StdTZoneAbbreviations) AbbrvOffsetToTzReference(
 func (stdTzAbbrvs *StdTZoneAbbreviations) AbbrvOffsetToTimeZones(
 		abbrvOffset string) ([]string, bool) {
 
-	stdTzAbbrvs.lock.Lock()
+	lockMapTzAbbrvsToTimeZones.Lock()
 
-	defer stdTzAbbrvs.lock.Unlock()
+	defer lockMapTzAbbrvsToTimeZones.Unlock()
 
 	result, ok :=  mapTzAbbrvsToTimeZones[abbrvOffset]
 
@@ -159,9 +158,9 @@ func (stdTzAbbrvs *StdTZoneAbbreviations) AbbrvOffsetToTimeZones(
 func (stdTzAbbrvs *StdTZoneAbbreviations) TimeZonesToAbbrvs(
 		timeZone string) ([]string, bool) {
 
-	stdTzAbbrvs.lock.Lock()
+	lockMapTimeZonesToTzAbbrvs.Lock()
 
-	defer stdTzAbbrvs.lock.Unlock()
+	defer lockMapTimeZonesToTzAbbrvs.Unlock()
 
 	result, ok := mapTimeZonesToTzAbbrvs[timeZone]
 
@@ -172,6 +171,9 @@ func (stdTzAbbrvs *StdTZoneAbbreviations) TimeZonesToAbbrvs(
 // mapTzAbbreviationReference - A reference map including all valid
 // alphabetic Time Zone abbreviations.
 //
+
+var lockMapTzAbbreviationReference sync.Mutex
+
 var mapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{
 "ACDT+1030"     :{"ACDT+1030","ACDT","Australian Central Daylight Time","Australia","+1030"},
 "ACST+0930"     :{"ACST+0930","ACST","Australian Central Standard Time","Australia","+0930"},
@@ -234,7 +236,10 @@ var mapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{
 
 // mapTzAbbrvsToTimeZones - A cross reference that maps
 // Time Zone Abbreviations to Time Zone Canonical Values.
-// 
+//
+
+var lockMapTzAbbrvsToTimeZones sync.Mutex
+
 var mapTzAbbrvsToTimeZones = map[string][]string {
 "ACDT+1030"     :{ "Australia/Adelaide","Australia/Broken_Hill","Australia/South","Australia/Yancowinna"},
 "ACST+0930"     :{ "Australia/Adelaide","Australia/Broken_Hill","Australia/Darwin","Australia/North","Australia/South","Australia/Yancowinna"},
@@ -297,7 +302,10 @@ var mapTzAbbrvsToTimeZones = map[string][]string {
 
 // mapTimeZonesToTzAbbrvs - A cross reference that maps
 // Time Zone Canonical Values to Time Zone Abbreviations.
-// 
+//
+
+var lockMapTimeZonesToTzAbbrvs sync.Mutex
+
 var mapTimeZonesToTzAbbrvs = map[string][]string {
 "Africa/Abidjan"     :{ "GMT+0000"},
 "Africa/Accra"     :{ "GMT+0000"},
