@@ -1001,7 +1001,7 @@ func (tzOut OutputTimeZones) writeTimeZoneMap(
 
 		xSpacer = strings.Repeat(" ", 46 - len(tz.TzName))
 
-		b.WriteString("	\"" + tz.TzName + "\" :" + xSpacer + "\"" + tz.UtcOffset + "\",\n" )
+		b.WriteString("  \"" + tz.TzName + "\" :" + xSpacer + "\"" + tz.UtcOffset + "\",\n" )
 	}
 	b.WriteString("}\n\n\n")
 

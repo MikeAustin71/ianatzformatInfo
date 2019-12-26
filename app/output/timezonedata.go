@@ -124,7 +124,7 @@ import (
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-12-26 Thursday 02:36:47 -0600 CST
+// Type Creation Date: 2019-12-26 Thursday 02:45:34 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
@@ -3907,7 +3907,7 @@ func(tzUtcOffset TimeZoneUtcOffsetReference) GetTimeZoneUtcOffset(
       "timeZoneName='%v'\n", timeZoneName)
   }
 
-	return utcOffset, nil
+  return utcOffset, nil
 }
 
 // mapAllTimeZonesToUtcOffsets - A reference map including all
@@ -4511,30 +4511,30 @@ var mapAllTimeZonesToUtcOffsets = map[string]string{
   "W-SU" :                                          "UTC+0300",
   "WET" :                                           "UTC+0000",
   "Zulu" :                                          "UTC+0000",
-	"Alpha" :                                         "UTC+0100",
-	"Bravo" :                                         "UTC+0200",
-	"Charlie" :                                       "UTC+0300",
-	"Delta" :                                         "UTC+0400",
-	"Echo" :                                          "UTC+0500",
-	"Foxtrot" :                                       "UTC+0600",
-	"Golf" :                                          "UTC+0700",
-	"Hotel" :                                         "UTC+0800",
-	"India" :                                         "UTC+0900",
-	"Kilo" :                                          "UTC+1000",
-	"Lima" :                                          "UTC+1100",
-	"Mike" :                                          "UTC+1200",
-	"November" :                                      "UTC-0100",
-	"Oscar" :                                         "UTC-0200",
-	"Papa" :                                          "UTC-0300",
-	"Quebec" :                                        "UTC-0400",
-	"Romeo" :                                         "UTC-0500",
-	"Sierra" :                                        "UTC-0600",
-	"Tango" :                                         "UTC-0700",
-	"Uniform" :                                       "UTC-0800",
-	"Victor" :                                        "UTC-0900",
-	"Whiskey" :                                       "UTC-1000",
-	"Xray" :                                          "UTC-1100",
-	"Yankee" :                                        "UTC-1200",
+  "Alpha" :                                         "UTC+0100",
+  "Bravo" :                                         "UTC+0200",
+  "Charlie" :                                       "UTC+0300",
+  "Delta" :                                         "UTC+0400",
+  "Echo" :                                          "UTC+0500",
+  "Foxtrot" :                                       "UTC+0600",
+  "Golf" :                                          "UTC+0700",
+  "Hotel" :                                         "UTC+0800",
+  "India" :                                         "UTC+0900",
+  "Kilo" :                                          "UTC+1000",
+  "Lima" :                                          "UTC+1100",
+  "Mike" :                                          "UTC+1200",
+  "November" :                                      "UTC-0100",
+  "Oscar" :                                         "UTC-0200",
+  "Papa" :                                          "UTC-0300",
+  "Quebec" :                                        "UTC-0400",
+  "Romeo" :                                         "UTC-0500",
+  "Sierra" :                                        "UTC-0600",
+  "Tango" :                                         "UTC-0700",
+  "Uniform" :                                       "UTC-0800",
+  "Victor" :                                        "UTC-0900",
+  "Whiskey" :                                       "UTC-1000",
+  "Xray" :                                          "UTC-1100",
+  "Yankee" :                                        "UTC-1200",
 }
 
 
