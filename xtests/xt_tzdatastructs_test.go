@@ -33,6 +33,7 @@ func TestTimeZoneDataDto_01(t *testing.T) {
 		"",
 		"America/Chicago",
 		"America/Chicago",
+		"UTC-0500",
 		"America/Chicago",
 		0,
 		"",

@@ -3,6 +3,8 @@ package tzdatastructs
 import (
 	errors2 "errors"
 	"fmt"
+	"strconv"
+	"time"
 )
 
 type TimeZoneStatsDto struct {
@@ -229,7 +231,25 @@ func (tzStats *TimeZoneStatsDto)CountIanaStdZone(
 
 	storeCapturedTimeZones:
 	
-		tzDataDto.ArrayStorageLevel = zoneLevel
+	tzDataDto.ArrayStorageLevel = zoneLevel
+
+	var testLocation *time.Location
+
+	testLocation, err = time.LoadLocation(tzDataDto.TzCanonicalValue)
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by time.LoadLocation(tzDataDto.TzCanonicalValue).\n"+
+			"tzLocation='%v'\n"+
+			"Error:'%v'\n", tzDataDto.TzCanonicalValue, err.Error())
+	}
+
+	testTime := time.Now().In(testLocation)
+
+	testTimeStr := testTime.Format("2006-01-02 15:04:05 -0700 MST")
+	lenLeadStr := len("2006-01-02 15:04:05 ")
+
+	tzDataDto.UtcOffset = "UTC" + testTimeStr[lenLeadStr: lenLeadStr + 5]
 
 	err = tzStats.IanaCapturedTimeZones.Add(tzDataDto)
 
@@ -398,7 +418,31 @@ func (tzStats *TimeZoneStatsDto) CountMilitaryZone(
 
 	tzDataDto.ArrayStorageLevel = zoneLevel
 
-	err := tzStats.CapturedMilitaryZones.Add(tzDataDto)
+	utcEquivalent, ok := MilitaryUTCMap[tzDataDto.TzName]
+
+	if !ok {
+		return fmt.Errorf(ePrefix +
+			"Error: MilitaryUTCMap[tzDataDto.TzName] FAILED!\n" +
+			"tzDataDto.TzName='%v'", tzDataDto.TzName)
+	}
+		// "Whiskey":  "UTC-10",
+	utcPrefix := utcEquivalent[0:4]
+
+	var utcHours int
+	var err error
+
+	utcHours, err = strconv.Atoi(utcEquivalent[4:])
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"Error returned by strconv.Atoi(utcEquivalent[4:])\n" +
+			"utcEquivalent[4:]='%v'\n" +
+			"Error='%v'\n", utcEquivalent[4:], err.Error())
+	}
+
+	tzDataDto.UtcOffset = fmt.Sprintf(utcPrefix + "%02d00", utcHours )
+
+	err = tzStats.CapturedMilitaryZones.Add(tzDataDto)
 
 	if err != nil {
 		return fmt.Errorf(ePrefix +

@@ -7,6 +7,7 @@ import (
 	"local.com/amarillomike/ianatzformatInfo/textlinebuilder"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
+	"time"
 )
 
 type OutputTimeZones struct {
@@ -62,15 +63,14 @@ func (tzOut OutputTimeZones) WriteOutput(
 		return err
 	}
 
-	err2 := f.FlushBytesToDisk()
+	err = tzOut.writeTimeZoneMap(
+		f,
+		tzStats,
+		ePrefix)
 
-	if err2 != nil {
+	if err != nil {
 		_ = f.CloseThisFile()
-		return fmt.Errorf(ePrefix +
-			"\nError returned by f.FlushBytesToDisk()\n" +
-			"f='%v'\nError='%v'\n",
-			f.GetAbsolutePathFileName(),
-			err2.Error())
+		return err
 	}
 
 	leftMargin := textlinebuilder.MarginSpec{
@@ -96,6 +96,8 @@ func (tzOut OutputTimeZones) WriteOutput(
 	err = nil
 
 	errArray := make([]error, 0)
+
+	var err2 error
 
 	err2 = f.FlushBytesToDisk()
 
@@ -688,8 +690,20 @@ func (tzOut OutputTimeZones) writeHeadersToOutputFile(
 	}
 
 	var errorArray []error
+	b := strings.Builder{}
 
-	_, err2 := outputFileMgr.WriteBytesToFile ([]byte("package main\n\n\n"))
+	b.Grow(1024)
+
+	b.WriteString("package main\n\n\n")
+
+	b.WriteString("import (\n")
+	b.WriteString("      \"fmt\"\n")
+	b.WriteString("      \"strings\"\n")
+	b.WriteString("      \"sync\"\n")
+	b.WriteString("      \"time\"\n")
+	b.WriteString(")\n\n\n")
+
+	_, err2 := outputFileMgr.WriteBytesToFile ([]byte(b.String()))
 
 	if err2 != nil {
 
@@ -816,6 +830,14 @@ func (tzOut OutputTimeZones) writeTimeZones(
 		}
 	}
 
+	err = outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
+			"Error='%v'\n", err.Error())
+	}
+
 		return nil
 }
 
@@ -834,6 +856,168 @@ func (tzOut OutputTimeZones) writeTimeZoneGlobalType(
 	if err != nil {
 		return fmt.Errorf(ePrefix +
 			"\nError returned by outputFileMgr.WriteBytesToFile(outBytes)\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	return nil
+}
+
+// Writes a map of all Time Zones to include: 'Local' time zone,
+// 'IANA' Time Zones and Military Time Zones.
+//
+func (tzOut OutputTimeZones) writeTimeZoneMap(
+	outputFileMgr pathfileops.FileMgr,
+	tzStats *tzdatastructs.TimeZoneStatsDto,
+	ePrefix string) error {
+
+	ePrefix += "OutputTimeZones.writeTimeZoneMap() "
+
+	numOfTimeZones := tzStats.IanaCapturedTimeZones.GetNumberOfTimeZones()
+
+	if numOfTimeZones < 1 {
+
+		return fmt.Errorf(ePrefix +
+			"\nError: Number of tzStats.IanaCapturedTimeZones='%v'\n", numOfTimeZones)
+	}
+
+	b := strings.Builder{}
+
+	b.Grow(5120)
+
+	b.WriteString("\n\n")
+
+	b.WriteString("// TimeZoneUtcOffsetReference - Provides thread safe access to\n")
+	b.WriteString("// all Time Zone zone names and their associated UTC offsets.\n")
+	b.WriteString("//  \n")
+	b.WriteString("type TimeZoneUtcOffsetReference struct {\n")
+	b.WriteString("	Input                  string\n")
+	b.WriteString("	Output                 string\n")
+	b.WriteString("}\n\n")
+
+	b.WriteString("// GetTimeZoneUtcOffset - Returns a UTC offset expressed in accordance \n")
+	b.WriteString("// with the following examples: 'UTC+0500', UTC-0500'\n")
+	b.WriteString("// \n")
+	b.WriteString("// The lookup operation is performed based on input string parameter\n")
+	b.WriteString("// 'timeZoneName'.\n")
+	b.WriteString("//  \n")
+	b.WriteString("func(tzUtcOffset TimeZoneUtcOffsetReference) GetTimeZoneUtcOffset(\n")
+	b.WriteString("  timeZoneName string) (string, error) {\n" )
+	b.WriteString("\n")
+
+	b.WriteString("  lockMapAllTimeZonesToUtcOffsets.Lock()\n\n")
+
+	b.WriteString("  defer lockMapAllTimeZonesToUtcOffsets.Unlock()\n\n")
+
+	b.WriteString("  ePrefix := \"TimeZoneUtcOffsetReference.GetTimeZoneUtcOffset() \" \n\n")
+
+	b.WriteString("  testStr := strings.ToLower(timeZoneName)\n\n")
+
+	b.WriteString("  if testStr == \"local\"{\n\n")
+
+	b.WriteString("    t := time.Now().In(time.Local)\n\n")
+
+	b.WriteString("    tStr := t.Format(\"2006-01-02 15:04:05 -0700 MST\")\n\n")
+
+	b.WriteString("    lenLeadStr := len(\"2006-01-02 15:04:05 \")\n\n")
+
+	b.WriteString("    return \"UTC\" + tStr[lenLeadStr: lenLeadStr + 5], nil \n")
+	b.WriteString("  }\n\n")
+
+	b.WriteString("  utcOffset, ok := mapAllTimeZonesToUtcOffsets[timeZoneName]\n\n")
+
+	b.WriteString("  if !ok {\n")
+	b.WriteString("    return \"\", fmt.Errorf(ePrefix + \n")
+	b.WriteString("      \"\\nInvalid 'timeZoneName'!\\n\" + \n")
+	b.WriteString("      \"timeZoneName='%v'\\n\", timeZoneName)\n")
+	b.WriteString("  }\n\n")
+
+	b.WriteString("  return utcOffset, nil\n")
+	b.WriteString("}\n\n")
+
+	b.WriteString("// mapAllTimeZonesToUtcOffsets - A reference map including all\n")
+
+	b.WriteString("// valid time zones and their associated UTC offsets.\n")
+
+	b.WriteString("//\n\n")
+
+	b.WriteString("var lockMapAllTimeZonesToUtcOffsets sync.Mutex\n\n")
+
+	xSpacer := strings.Repeat(" ", 41)
+
+	b.WriteString("var mapAllTimeZonesToUtcOffsets = map[string]string{\n")
+
+	t := time.Now().In(time.Local)
+
+	testTimeStr := t.Format("2006-01-02 15:04:05 -0700 MST")
+	lenLeadStr := len("2006-01-02 15:04:05 ")
+	localOffset := "UTC" + testTimeStr[lenLeadStr: lenLeadStr + 5]
+
+
+	b.WriteString("  \"Local\" :" + xSpacer + "\"" + localOffset + "\",\n")
+
+	tzStats.IanaCapturedTimeZones.SortByCanonicalValue()
+
+	var tz * tzdatastructs.TimeZoneDataDto
+	var err error
+
+	for i :=0; i < numOfTimeZones; i++ {
+
+		tz, err = tzStats.IanaCapturedTimeZones.PeekPtr(i)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix +
+				"\nError returned by tzStats.IanaCapturedTimeZones.PeekPtr(i)\n" +
+				"i='%v'\nError='%v'\n", i, err.Error())
+		}
+
+
+		xSpacer = strings.Repeat(" ", 46 - len(tz.TzCanonicalValue ))
+
+		b.WriteString("  \"" + tz.TzCanonicalValue + "\" :" + xSpacer + "\"" + tz.UtcOffset + "\",\n" )
+
+	}
+
+	numOfMilitaryTimeZones := tzStats.CapturedMilitaryZones.GetNumberOfTimeZones()
+
+	if numOfMilitaryTimeZones < 1 {
+		return fmt.Errorf(ePrefix +
+			"\nNumber of Military Time Zones is INVALID!\n" +
+			"numOfMilitaryTimeZones='%v'\n", numOfMilitaryTimeZones)
+	}
+
+	for j:=0; j < numOfMilitaryTimeZones; j++ {
+		tz, err = tzStats.CapturedMilitaryZones.PeekPtr(j)
+
+		if err != nil {
+			return fmt.Errorf(ePrefix+
+				"\nError returned by tzStats.CapturedMilitaryZones.PeekPtr(j)\n"+
+				"j='%v'\n"+
+				"Error='%v'\n", j, err.Error())
+		}
+
+		if tz.TzName == "Zulu" {
+			continue
+		}
+
+		xSpacer = strings.Repeat(" ", 46 - len(tz.TzName))
+
+		b.WriteString("	\"" + tz.TzName + "\" :" + xSpacer + "\"" + tz.UtcOffset + "\",\n" )
+	}
+	b.WriteString("}\n\n\n")
+
+	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.WriteBytesToFile([]byte(b.String()))\n" +
+			"Error='%v'\n", err.Error())
+	}
+
+	err = outputFileMgr.FlushBytesToDisk()
+
+	if err != nil {
+		return fmt.Errorf(ePrefix +
+			"\nError returned by outputFileMgr.FlushBytesToDisk()\n" +
 			"Error='%v'\n", err.Error())
 	}
 

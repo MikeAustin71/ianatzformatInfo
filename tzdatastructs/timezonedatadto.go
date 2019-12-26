@@ -15,6 +15,7 @@ type TimeZoneDataDto struct {
 	TzCanonicalValue          string
 	TzValue                   string
 	TzSortValue               string
+	UtcOffset                 string // Formatted like: UTC+0500, UTC-0500, UTC+1030
 	ArrayStorageLevel         int    // 0-2
 	FuncSelfReferenceVariable string
 	FuncType                  string
@@ -74,6 +75,7 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.TzCanonicalValue = tzDataDto.TzCanonicalValue
 	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
 	newTzDto.TzValue = tzDataDto.TzValue
+	newTzDto.UtcOffset = tzDataDto.UtcOffset
 	newTzDto.TzSortValue = tzDataDto.TzSortValue
 	newTzDto.ArrayStorageLevel = tzDataDto.ArrayStorageLevel
 	newTzDto.FuncSelfReferenceVariable = tzDataDto.FuncSelfReferenceVariable
@@ -108,6 +110,7 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.TzCanonicalValue = inTzDataDto.TzCanonicalValue
 	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
 	tzDataDto.TzValue = inTzDataDto.TzValue
+	tzDataDto.UtcOffset = inTzDataDto.UtcOffset
 	tzDataDto.TzSortValue = inTzDataDto.TzSortValue
 	tzDataDto.ArrayStorageLevel = inTzDataDto.ArrayStorageLevel
 	tzDataDto.FuncSelfReferenceVariable = inTzDataDto.FuncSelfReferenceVariable
@@ -145,6 +148,7 @@ func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 		tzDataDto.GroupName == tzDDto.GroupName &&
 		tzDataDto.TzName == tzDDto.TzName &&
 		tzDataDto.TzAliasValue == tzDDto.TzAliasValue &&
+		tzDataDto.UtcOffset == tzDDto.UtcOffset &&
 		tzDataDto.TzCanonicalValue == tzDDto.TzCanonicalValue &&
 		tzDataDto.TzValue == tzDDto.TzValue {
 		return true
@@ -168,6 +172,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	tzAliasValue,
 	tzCanonicalValue,
 	tzValue,
+	tzUtcOffset,
 	tzSortValue string,
 	arrayStorageLevel int,
 	funcSelfReferenceVariable,
@@ -225,6 +230,7 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.TzAliasValue = tzAliasValue
 	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzValue = tzValue
+	newTzDto.UtcOffset = tzUtcOffset
 	newTzDto.TzSortValue = tzSortValue
 	newTzDto.ArrayStorageLevel = arrayStorageLevel
 	newTzDto.FuncSelfReferenceVariable = funcSelfReferenceVariable

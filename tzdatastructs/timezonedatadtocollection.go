@@ -551,3 +551,28 @@ func (tzDataCol *TimeZoneDataCollection) SortByWorldRegion() {
 
 	return
 }
+// SortByCanonicalValue - Sort the collection by Time Zone Canonical Value
+// alphabetically.
+//
+func (tzDataCol *TimeZoneDataCollection) SortByCanonicalValue() {
+
+	if tzDataCol.tzDataDtos == nil {
+		tzDataCol.tzDataDtos = make([]TimeZoneDataDto, 0, 500)
+	}
+
+	if len(tzDataCol.tzDataDtos) < 2 {
+		return
+	}
+
+	var less func(i, j int) bool
+
+	less = func(i, j int) bool {
+
+		return tzDataCol.tzDataDtos[i].TzCanonicalValue <
+			tzDataCol.tzDataDtos[j].TzCanonicalValue
+	}
+
+	sort.Slice(tzDataCol.tzDataDtos, less)
+
+	return
+}

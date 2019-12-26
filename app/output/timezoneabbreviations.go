@@ -1,8 +1,8 @@
 package main
 
 import (
-	"errors"
-	"sync"
+  "errors"
+  "sync"
 )
 
 
@@ -236,7 +236,7 @@ var mapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{
 
 // mapTzAbbrvsToTimeZones - A cross reference that maps
 // Time Zone Abbreviations to Time Zone Canonical Values.
-//
+// 
 
 var lockMapTzAbbrvsToTimeZones sync.Mutex
 
@@ -302,7 +302,7 @@ var mapTzAbbrvsToTimeZones = map[string][]string {
 
 // mapTimeZonesToTzAbbrvs - A cross reference that maps
 // Time Zone Canonical Values to Time Zone Abbreviations.
-//
+// 
 
 var lockMapTimeZonesToTzAbbrvs sync.Mutex
 
