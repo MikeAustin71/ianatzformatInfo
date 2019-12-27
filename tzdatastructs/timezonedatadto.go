@@ -15,7 +15,12 @@ type TimeZoneDataDto struct {
 	TzCanonicalValue          string
 	TzValue                   string
 	TzSortValue               string
-	UtcOffset                 string // Formatted like: UTC+0500, UTC-0500, UTC+1030
+	UtcOffset                 []string // Two element array populated with UTC offsets
+	                                   // First offset is June 15th offset. Second
+	                                   // offset is December 15th offset. The UTC
+	                                   // offsets are formatted in accordance with the
+	                                   // following examples:
+	                                   //      UTC+0500, UTC-0500, UTC+1000, UTC+1000
 	ArrayStorageLevel         int    // 0-2
 	FuncSelfReferenceVariable string
 	FuncType                  string
@@ -75,7 +80,6 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	newTzDto.TzCanonicalValue = tzDataDto.TzCanonicalValue
 	newTzDto.TzAliasValue = tzDataDto.TzAliasValue
 	newTzDto.TzValue = tzDataDto.TzValue
-	newTzDto.UtcOffset = tzDataDto.UtcOffset
 	newTzDto.TzSortValue = tzDataDto.TzSortValue
 	newTzDto.ArrayStorageLevel = tzDataDto.ArrayStorageLevel
 	newTzDto.FuncSelfReferenceVariable = tzDataDto.FuncSelfReferenceVariable
@@ -94,6 +98,25 @@ func (tzDataDto *TimeZoneDataDto) CopyOut() TimeZoneDataDto {
 	copy(newTzDto.FuncDeclaration, tzDataDto.FuncDeclaration)
 	newTzDto.isInitialized = tzDataDto.isInitialized
 
+	newTzDto.UtcOffset = make([]string, 2)
+
+	lenTzDataDtoUtcOffset := len(tzDataDto.UtcOffset)
+
+	switch lenTzDataDtoUtcOffset {
+	case 0:
+		newTzDto.UtcOffset[0] = ""
+		newTzDto.UtcOffset[1] = ""
+	case 1:
+		newTzDto.UtcOffset[0] = tzDataDto.UtcOffset[0]
+		newTzDto.UtcOffset[1] = tzDataDto.UtcOffset[0]
+	case 2:
+		newTzDto.UtcOffset[0] = tzDataDto.UtcOffset[0]
+		newTzDto.UtcOffset[1] = tzDataDto.UtcOffset[1]
+	default:
+		newTzDto.UtcOffset[0] = ""
+		newTzDto.UtcOffset[1] = ""
+	}
+
 	return newTzDto
 }
 
@@ -110,7 +133,6 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	tzDataDto.TzCanonicalValue = inTzDataDto.TzCanonicalValue
 	tzDataDto.TzAliasValue = inTzDataDto.TzAliasValue
 	tzDataDto.TzValue = inTzDataDto.TzValue
-	tzDataDto.UtcOffset = inTzDataDto.UtcOffset
 	tzDataDto.TzSortValue = inTzDataDto.TzSortValue
 	tzDataDto.ArrayStorageLevel = inTzDataDto.ArrayStorageLevel
 	tzDataDto.FuncSelfReferenceVariable = inTzDataDto.FuncSelfReferenceVariable
@@ -129,6 +151,25 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 	copy(tzDataDto.FuncDeclaration, inTzDataDto.FuncDeclaration)
 	tzDataDto.isInitialized = inTzDataDto.isInitialized
 
+	tzDataDto.UtcOffset = make([]string, 2)
+
+	lenInTzDataDtoUtcOffset := len(inTzDataDto.UtcOffset)
+
+	switch lenInTzDataDtoUtcOffset {
+	case 0:
+		tzDataDto.UtcOffset[0] = ""
+		tzDataDto.UtcOffset[1] = ""
+	case 1:
+		tzDataDto.UtcOffset[0] = inTzDataDto.UtcOffset[0]
+		tzDataDto.UtcOffset[1] = inTzDataDto.UtcOffset[0]
+	case 2:
+		tzDataDto.UtcOffset[0] = inTzDataDto.UtcOffset[0]
+		tzDataDto.UtcOffset[1] = inTzDataDto.UtcOffset[1]
+	default:
+		tzDataDto.UtcOffset[0] = ""
+		tzDataDto.UtcOffset[1] = ""
+	}
+
 }
 
 // TimeZoneDataDto - Compares isInitialized, GroupName, SubTzName,
@@ -142,19 +183,28 @@ func (tzDataDto *TimeZoneDataDto) CopyIn(
 //
 func (tzDataDto *TimeZoneDataDto) EqualValues( tzDDto TimeZoneDataDto) bool {
 
-	if tzDataDto.isInitialized == tzDDto.isInitialized &&
-		tzDataDto.WorldRegionSortCode == tzDataDto.WorldRegionSortCode &&
-		tzDataDto.ParentGroupName == tzDDto.ParentGroupName &&
-		tzDataDto.GroupName == tzDDto.GroupName &&
-		tzDataDto.TzName == tzDDto.TzName &&
-		tzDataDto.TzAliasValue == tzDDto.TzAliasValue &&
-		tzDataDto.UtcOffset == tzDDto.UtcOffset &&
-		tzDataDto.TzCanonicalValue == tzDDto.TzCanonicalValue &&
-		tzDataDto.TzValue == tzDDto.TzValue {
-		return true
+	if tzDataDto.isInitialized != tzDDto.isInitialized ||
+		tzDataDto.WorldRegionSortCode != tzDataDto.WorldRegionSortCode ||
+		tzDataDto.ParentGroupName != tzDDto.ParentGroupName ||
+		tzDataDto.GroupName != tzDDto.GroupName ||
+		tzDataDto.TzName != tzDDto.TzName ||
+		tzDataDto.TzAliasValue != tzDDto.TzAliasValue ||
+		tzDataDto.TzCanonicalValue != tzDDto.TzCanonicalValue ||
+		tzDataDto.TzValue != tzDDto.TzValue {
+		return false
 	}
 
-	return false
+	if len(tzDataDto.UtcOffset) != len(tzDDto.UtcOffset) {
+		return false
+	}
+
+	for i:=0; i < len(tzDataDto.UtcOffset); i++ {
+		if tzDataDto.UtcOffset[i] != tzDDto.UtcOffset[i] {
+			return false
+		}
+	}
+
+	return true
 }
 
 // IsInitialized - Returns the value of internal data field
@@ -171,8 +221,8 @@ func (tzDataDto TimeZoneDataDto) New(
 	tzName,
 	tzAliasValue,
 	tzCanonicalValue,
-	tzValue,
-	tzUtcOffset,
+	tzValue string,
+	tzUtcOffset []string,
 	tzSortValue string,
 	arrayStorageLevel int,
 	funcSelfReferenceVariable,
@@ -230,7 +280,6 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.TzAliasValue = tzAliasValue
 	newTzDto.TzCanonicalValue = tzCanonicalValue
 	newTzDto.TzValue = tzValue
-	newTzDto.UtcOffset = tzUtcOffset
 	newTzDto.TzSortValue = tzSortValue
 	newTzDto.ArrayStorageLevel = arrayStorageLevel
 	newTzDto.FuncSelfReferenceVariable = funcSelfReferenceVariable
@@ -246,6 +295,28 @@ func (tzDataDto TimeZoneDataDto) New(
 	newTzDto.TzSource = tzSource
 	newTzDto.DeprecationStatus = deprecationStatus
 	newTzDto.isInitialized = true
+
+	newTzDto.UtcOffset = make([]string, 2)
+
+	lenTzUtcOffsetUtcOffset := len(tzUtcOffset)
+
+	switch lenTzUtcOffsetUtcOffset {
+	case 0:
+		newTzDto.UtcOffset[0] = ""
+		newTzDto.UtcOffset[1] = ""
+	case 1:
+		newTzDto.UtcOffset[0] = tzUtcOffset[0]
+		newTzDto.UtcOffset[1] = tzUtcOffset[0]
+	case 2:
+		newTzDto.UtcOffset[0] = tzUtcOffset[0]
+		newTzDto.UtcOffset[1] = tzUtcOffset[1]
+	default:
+		newTzDto.UtcOffset[0] = ""
+		newTzDto.UtcOffset[1] = ""
+	}
+
+
+	newTzDto.UtcOffset = tzUtcOffset
 
 	return newTzDto, nil
 }

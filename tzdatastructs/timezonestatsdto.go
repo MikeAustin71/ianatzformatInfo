@@ -188,6 +188,7 @@ func (tzStats *TimeZoneStatsDto) CountLevel3StdSubGroup(
 
 // CountIanaStdZone  - Counts processes and stores
 // information for a standard Iana Time Zone.
+//
 func (tzStats *TimeZoneStatsDto)CountIanaStdZone(
 	tzDataDto TimeZoneDataDto, zoneLevel int, ePrefix string) error {
 
@@ -244,12 +245,39 @@ func (tzStats *TimeZoneStatsDto)CountIanaStdZone(
 			"Error:'%v'\n", tzDataDto.TzCanonicalValue, err.Error())
 	}
 
-	testTime := time.Now().In(testLocation)
+	tzDataDto.UtcOffset = make([]string, 2)
 
-	testTimeStr := testTime.Format("2006-01-02 15:04:05 -0700 MST")
+	tNow := time.Now().In(testLocation)
+
+	tJune := time.Date(
+		tNow.Year(),
+		time.Month(6),
+		15,
+		14,
+		0,
+		0,
+		0,
+		testLocation)
+
+tDecember := time.Date(
+	tNow.Year(),
+	time.Month(12),
+	15,
+	14,
+	0,
+	0,
+	0,
+	testLocation)
+
+	juneTimeStr := tJune.Format("2006-01-02 15:04:05 -0700 MST")
+
 	lenLeadStr := len("2006-01-02 15:04:05 ")
 
-	tzDataDto.UtcOffset = "UTC" + testTimeStr[lenLeadStr: lenLeadStr + 5]
+	tzDataDto.UtcOffset[0] = "UTC" + juneTimeStr[lenLeadStr: lenLeadStr + 5]
+
+	decTimeStr := tDecember.Format("2006-01-02 15:04:05 -0700 MST")
+
+	tzDataDto.UtcOffset[1] = "UTC" + decTimeStr[lenLeadStr: lenLeadStr + 5]
 
 	err = tzStats.IanaCapturedTimeZones.Add(tzDataDto)
 
@@ -418,6 +446,8 @@ func (tzStats *TimeZoneStatsDto) CountMilitaryZone(
 
 	tzDataDto.ArrayStorageLevel = zoneLevel
 
+	tzDataDto.UtcOffset = make([]string, 2)
+
 	utcEquivalent, ok := MilitaryUTCMap[tzDataDto.TzName]
 
 	if !ok {
@@ -440,7 +470,11 @@ func (tzStats *TimeZoneStatsDto) CountMilitaryZone(
 			"Error='%v'\n", utcEquivalent[4:], err.Error())
 	}
 
-	tzDataDto.UtcOffset = fmt.Sprintf(utcPrefix + "%02d00", utcHours )
+	utcOffset := fmt.Sprintf(utcPrefix + "%02d00", utcHours )
+
+	tzDataDto.UtcOffset[0] = utcOffset
+
+	tzDataDto.UtcOffset[1] = utcOffset
 
 	err = tzStats.CapturedMilitaryZones.Add(tzDataDto)
 

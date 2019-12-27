@@ -7,7 +7,6 @@ import (
 	"local.com/amarillomike/ianatzformatInfo/textlinebuilder"
 	"local.com/amarillomike/ianatzformatInfo/tzdatastructs"
 	"strings"
-	"time"
 )
 
 type OutputTimeZones struct {
@@ -894,14 +893,27 @@ func (tzOut OutputTimeZones) writeTimeZoneMap(
 	b.WriteString("	Output                 string\n")
 	b.WriteString("}\n\n")
 
-	b.WriteString("// GetTimeZoneUtcOffset - Returns a UTC offset expressed in accordance \n")
-	b.WriteString("// with the following examples: 'UTC+0500', UTC-0500'\n")
+	b.WriteString("// GetTimeZoneUtcOffsets - Returns a pair of UTC offsets as a string\n")
+	b.WriteString("// array consisting of two elements. These two UTC offsets are associated\n")
+	b.WriteString("// with the time zone specified in input parameter string, 'timeZoneName'.\n")
+	b.WriteString("// The first UTC offset shows the hours and minutes of offset from UTC\n")
+	b.WriteString("// time on June 15th of the current year. The second UTC offset shows\n")
+	b.WriteString("// the hours and minutes of offset from UTC time on December 31st of\n")
+	b.WriteString("// the current year. If the two UTC offsets are equivalent, it signals\n")
+	b.WriteString("// that day light savings time is not applied to the specified time zone.\n")
 	b.WriteString("// \n")
-	b.WriteString("// The lookup operation is performed based on input string parameter\n")
-	b.WriteString("// 'timeZoneName'.\n")
+	b.WriteString("// The two returned UTC offset strings are formatted as shown in the\n")
+	b.WriteString("// following examples: \n")
+	b.WriteString("//      UTC+1030\n")
+	b.WriteString("//      UTC-0500\n")
+	b.WriteString("//      UTC+0400\n")
+	b.WriteString("//      UTC-0400\n")
 	b.WriteString("//  \n")
-	b.WriteString("func(tzUtcOffset TimeZoneUtcOffsetReference) GetTimeZoneUtcOffset(\n")
-	b.WriteString("  timeZoneName string) (string, error) {\n" )
+	b.WriteString("// The lookup operation is performed using thread safe access to the\n")
+	b.WriteString("// map, 'mapAllTimeZonesToUtcOffsets'.\n")
+	b.WriteString("//  \n")
+	b.WriteString("func(tzUtcOffset TimeZoneUtcOffsetReference) GetTimeZoneUtcOffsets(\n")
+	b.WriteString("  timeZoneName string) ([]string, error) {\n" )
 	b.WriteString("\n")
 
 	b.WriteString("  lockMapAllTimeZonesToUtcOffsets.Lock()\n\n")
@@ -910,53 +922,89 @@ func (tzOut OutputTimeZones) writeTimeZoneMap(
 
 	b.WriteString("  ePrefix := \"TimeZoneUtcOffsetReference.GetTimeZoneUtcOffset() \" \n\n")
 
+	b.WriteString("  utcArray := make([]string, 2) \n\n")
+
 	b.WriteString("  testStr := strings.ToLower(timeZoneName)\n\n")
 
 	b.WriteString("  if testStr == \"local\"{\n\n")
 
-	b.WriteString("    t := time.Now().In(time.Local)\n\n")
+	b.WriteString("    tNow := time.Now().In(time.Local)\n\n")
 
-	b.WriteString("    tStr := t.Format(\"2006-01-02 15:04:05 -0700 MST\")\n\n")
+	b.WriteString("    tJune := time.Date(\n")
+	b.WriteString("        tNow.Year(),\n")
+	b.WriteString("        time.Month(6),\n")
+	b.WriteString("        15,\n")
+	b.WriteString("        14,\n")
+	b.WriteString("         0,\n")
+	b.WriteString("         0,\n")
+	b.WriteString("         0,\n")
+	b.WriteString("        time.Local)\n\n")
+
+	b.WriteString("    tDecember := time.Date(\n")
+	b.WriteString("        tNow.Year(),\n")
+	b.WriteString("        time.Month(12),\n")
+	b.WriteString("        15,\n")
+	b.WriteString("        14,\n")
+	b.WriteString("         0,\n")
+	b.WriteString("         0,\n")
+	b.WriteString("         0,\n")
+	b.WriteString("        time.Local)\n\n")
+
+
+	b.WriteString("    tJuneStr := tJune.Format(\"2006-01-02 15:04:05 -0700 MST\")\n\n")
+
+	b.WriteString("    tDecemberStr := tDecember.Format(\"2006-01-02 15:04:05 -0700 MST\")\n\n")
 
 	b.WriteString("    lenLeadStr := len(\"2006-01-02 15:04:05 \")\n\n")
 
-	b.WriteString("    return \"UTC\" + tStr[lenLeadStr: lenLeadStr + 5], nil \n")
+	b.WriteString("    utcArray[0] = \"UTC\" + tJuneStr[lenLeadStr: lenLeadStr + 5] \n\n")
+
+	b.WriteString("    utcArray[1] = \"UTC\" + tDecemberStr[lenLeadStr: lenLeadStr + 5] \n\n")
+
+	b.WriteString("    return utcArray, nil\n")
+
 	b.WriteString("  }\n\n")
 
-	b.WriteString("  utcOffset, ok := mapAllTimeZonesToUtcOffsets[timeZoneName]\n\n")
+	b.WriteString("  utcArray, ok := mapAllTimeZonesToUtcOffsets[timeZoneName]\n\n")
 
 	b.WriteString("  if !ok {\n")
-	b.WriteString("    return \"\", fmt.Errorf(ePrefix + \n")
+	b.WriteString("    return make([]string, 2), fmt.Errorf(ePrefix + \n")
 	b.WriteString("      \"\\nInvalid 'timeZoneName'!\\n\" + \n")
 	b.WriteString("      \"timeZoneName='%v'\\n\", timeZoneName)\n")
 	b.WriteString("  }\n\n")
 
-	b.WriteString("  return utcOffset, nil\n")
+	b.WriteString("  return utcArray, nil\n")
 	b.WriteString("}\n\n")
 
 	b.WriteString("// mapAllTimeZonesToUtcOffsets - A reference map including all\n")
 
-	b.WriteString("// valid time zones and their associated UTC offsets.\n")
+	b.WriteString("// valid time zones and their associated UTC offsets. These UTC\n")
 
-	b.WriteString("//\n\n")
+	b.WriteString("// offsets are contained in a returned string array containing\n")
+	b.WriteString("// a pair of UTC offsets. The returned string array consists of\n")
+	b.WriteString("// two array elements. The first array element contains the UTC\n")
+	b.WriteString("// offset calculated for June 15th of the current year. The\n")
+	b.WriteString("// second UTC offset is calculated for December 15th of the\n")
+	b.WriteString("// current year.  If the two UTC offsets are equivalent, it\n")
+	b.WriteString("// signals that daylight savings time is not applied in the\n")
+	b.WriteString("// time zone.\n")
+	b.WriteString("//  \n")
+	b.WriteString("// Returned UTC offset strings are formatted in accordance with\n")
+	b.WriteString("// following examples: \n")
+	b.WriteString("//      UTC+1030\n")
+	b.WriteString("//      UTC-0500\n")
+	b.WriteString("//      UTC+0400\n")
+	b.WriteString("//      UTC-0400\n")
+	b.WriteString("//  \n\n")
 
 	b.WriteString("var lockMapAllTimeZonesToUtcOffsets sync.Mutex\n\n")
 
-	xSpacer := strings.Repeat(" ", 41)
-
-	b.WriteString("var mapAllTimeZonesToUtcOffsets = map[string]string{\n")
-
-	t := time.Now().In(time.Local)
-
-	testTimeStr := t.Format("2006-01-02 15:04:05 -0700 MST")
-	lenLeadStr := len("2006-01-02 15:04:05 ")
-	localOffset := "UTC" + testTimeStr[lenLeadStr: lenLeadStr + 5]
-
-
-	b.WriteString("  \"Local\" :" + xSpacer + "\"" + localOffset + "\",\n")
+	b.WriteString("var mapAllTimeZonesToUtcOffsets = map[string][]string{\n")
 
 	tzStats.IanaCapturedTimeZones.SortByCanonicalValue()
 
+	var xSpacer string
+	var lenTzName int
 	var tz * tzdatastructs.TimeZoneDataDto
 	var err error
 
@@ -970,10 +1018,17 @@ func (tzOut OutputTimeZones) writeTimeZoneMap(
 				"i='%v'\nError='%v'\n", i, err.Error())
 		}
 
+		lenTzName = len(tz.TzCanonicalValue)
 
-		xSpacer = strings.Repeat(" ", 46 - len(tz.TzCanonicalValue ))
+		if lenTzName > 35 {
+			xSpacer = strings.Repeat(" ",  2)
+		} else {
+			xSpacer = strings.Repeat(" ", 35 - lenTzName)
+		}
 
-		b.WriteString("  \"" + tz.TzCanonicalValue + "\" :" + xSpacer + "\"" + tz.UtcOffset + "\",\n" )
+
+
+		b.WriteString("  \"" + tz.TzCanonicalValue + "\""  + xSpacer + ": { " + "\"" + tz.UtcOffset[0] + "\", \""  + tz.UtcOffset[1] +"\"},\n" )
 
 	}
 
@@ -999,10 +1054,17 @@ func (tzOut OutputTimeZones) writeTimeZoneMap(
 			continue
 		}
 
-		xSpacer = strings.Repeat(" ", 46 - len(tz.TzName))
+		lenTzName = len(tz.TzName)
 
-		b.WriteString("  \"" + tz.TzName + "\" :" + xSpacer + "\"" + tz.UtcOffset + "\",\n" )
+		if lenTzName > 35 {
+			xSpacer = strings.Repeat(" ",  2)
+		} else {
+			xSpacer = strings.Repeat(" ", 35 - lenTzName)
+		}
+
+		b.WriteString("  \"" + tz.TzName + "\"" + xSpacer + ": { " + "\"" + tz.UtcOffset[0] + "\", \""  + tz.UtcOffset[1] +"\"},\n" )
 	}
+
 	b.WriteString("}\n\n\n")
 
 	_, err = outputFileMgr.WriteBytesToFile([]byte(b.String()))

@@ -587,7 +587,8 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 			"Number of Abbreviations: '%v'\n", numOfAbbrvs)
 	}
 
-	var outputStr string
+	var outputStr, xSpacer string
+	var lenKeyName int
 
 	for i:=0; i < numOfAbbrvs; i++ {
 
@@ -599,8 +600,16 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 				"Error='%v'\n", err.Error())
 		}
 
+		lenKeyName = len(tzAbbrv.Id)
+
+		if lenKeyName >= 12 {
+			xSpacer = strings.Repeat(" ", 2)
+		} else {
+			xSpacer = strings.Repeat(" ", 12 -lenKeyName)
+		}
+
 		outputStr = fmt.Sprintf(
-			"\"%v\"     :{\"%v\",\"%v\",\"%v\",\"%v\",\"%v\"},\n",
+			"\"%v\"" + xSpacer +":{\"%v\",\"%v\",\"%v\",\"%v\",\"%v\"},\n",
 			tzAbbrv.Id,
 			tzAbbrv.Id,
 			tzAbbrv.Abbrv,
@@ -656,6 +665,9 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbrvsToTimeZones(
 
 	abbrvIds := make([]string, 0)
 
+	var xSpacer string
+	var lenKeyName int
+
 	for idx := range tzStats.MapTzAbbrvsToTimeZones {
 
 		abbrvIds = append(abbrvIds, idx)
@@ -674,7 +686,15 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbrvsToTimeZones(
 				"However, this entry is INVALID!\n")
 		}
 
-		outputStr := fmt.Sprintf("\"%v\"     :{ ",
+		lenKeyName = len(abbrvIds[i])
+
+		if lenKeyName >= 12 {
+			xSpacer = strings.Repeat(" ",  2)
+		} else {
+			xSpacer = strings.Repeat(" ", 12 -lenKeyName)
+		}
+
+		outputStr := fmt.Sprintf("\"%v\"" + xSpacer + ":{ ",
 			abbrvIds[i])
 
 		lenTzCanonicalValues := len(tzCanonicalValues)
@@ -748,6 +768,9 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 
 	sort.Strings(timeZoneCanonicalValues)
 
+	var lenKeyName int
+	var xSpacer string
+
 	for i:=0; i < len(timeZoneCanonicalValues); i++ {
 
 		tzAbbrvValues, ok :=
@@ -759,7 +782,15 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 				"However, this entry is INVALID!\n")
 		}
 
-		outputStr := fmt.Sprintf("\"%v\"     :{ ",
+		lenKeyName = len(timeZoneCanonicalValues[i])
+
+		if lenKeyName >= 35 {
+			xSpacer = strings.Repeat(" ", 2)
+		} else {
+			xSpacer = strings.Repeat(" ", 35 -lenKeyName)
+		}
+
+		outputStr := fmt.Sprintf("\"%v\"" + xSpacer + ":{ ",
 			timeZoneCanonicalValues[i])
 
 		lenTzAbbrvValues := len(tzAbbrvValues)
