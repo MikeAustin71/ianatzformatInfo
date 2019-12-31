@@ -199,12 +199,14 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		tzAbbrv = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[3], " "), " ")
 
-		firstLetter = tzAbbrv[0:1]
 
+		/*
+			firstLetter = tzAbbrv[0:1]
 		if firstLetter == "+" ||
 			firstLetter == "-"{
 			goto winterTimeTest
 		}
+*/
 
 		utcOffset = strings.TrimRight(strings.TrimLeft(testTimeSplitAry[2], " "), " ")
 
@@ -249,7 +251,7 @@ func (tzLog *TzLogOps) TestIanaTimeZoneAbbreviations(
 
 		tzStats.MapTimeZonesToTzAbbrvs[tz.TzCanonicalValue] = tzAbbrvValues
 
-	winterTimeTest:
+	// winterTimeTest:
 		// Test Winter Time
 		testTime, err =
 			time.ParseInLocation("2006-01-02 15:04:00", "2019-12-23 16:50:00", testLocation)
