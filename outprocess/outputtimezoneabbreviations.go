@@ -815,9 +815,24 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 
 	b.WriteString("var mapTimeZonesToTzAbbrvs = map[string][]string {\n")
 
-	// TODO - Add Military Time Zone Letter Abbreviations!
 
 	timeZoneCanonicalValues := make([]string ,0)
+
+	// Add Military Time Zone Letter Abbreviations!
+	for key, value := range tzdatastructs.MilitaryTzMap {
+
+		milTzLetter := key[0:1]
+
+		timeZoneCanonicalValues, _ =
+				tzStats.MapTimeZonesToTzAbbrvs[value]
+
+		timeZoneCanonicalValues =
+			append(timeZoneCanonicalValues, milTzLetter)
+
+		tzStats.MapTimeZonesToTzAbbrvs[value] = timeZoneCanonicalValues
+	}
+
+	timeZoneCanonicalValues = make([]string ,0)
 
 	for idx := range tzStats.MapTimeZonesToTzAbbrvs {
 

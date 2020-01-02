@@ -2,7 +2,7 @@
                                ianatzformatInfo.go                              
   ==============================================================================
 
-     Execution Start Time: 2020-01-02 Thursday 00:57:20.667466000 -0600 CST 
+     Execution Start Time: 2020-01-02 Thursday 14:53:08.510848400 -0600 CST 
 
   ==============================================================================
 
@@ -21,7 +21,7 @@
   D:\GoProjects\ianatzformatInfo\app\output\timezoneabbreviations.go 
 
                                 Log File: 
-  D:\GoProjects\ianatzformatInfo\app\output\20200102005720_ianaformatInfoLog.txt 
+  D:\GoProjects\ianatzformatInfo\app\output\20200102145308_ianaformatInfoLog.txt 
 
   ------------------------------------------------------------------------------
 
@@ -783,9 +783,9 @@ Could not locate time zone abbreviation for time zone: 'Pacific/Chatham'
 
                  Execution Times                  
   ------------------------------------------------------------------------------
-  Starting Date Time: 2020-01-02 Thursday 00:57:20.667466000 -0600 CST
-    Ending Date Time: 2020-01-02 Thursday 00:57:23.071984600 -0600 CST
-        Elapsed Time: 2-Seconds 404-Milliseconds 518-Microseconds 600-Nanoseconds
+  Starting Date Time: 2020-01-02 Thursday 14:53:08.510848400 -0600 CST
+    Ending Date Time: 2020-01-02 Thursday 14:53:11.115886700 -0600 CST
+        Elapsed Time: 2-Seconds 605-Milliseconds 38-Microseconds 300-Nanoseconds
   ------------------------------------------------------------------------------
 
 
