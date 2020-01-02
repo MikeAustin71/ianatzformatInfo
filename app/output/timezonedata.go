@@ -124,7 +124,7 @@ import (
 // 
 //            Primary Time Zone Groups:  17
 // 
-// Type Creation Date: 2019-12-30 Monday 23:50:33 -0600 CST
+// Type Creation Date: 2020-01-01 Wednesday 19:12:54 -0600 CST
 // ----------------------------------------------------------------------------
 // 
 type TimeZones struct {
