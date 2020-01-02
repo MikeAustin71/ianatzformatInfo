@@ -130,7 +130,11 @@ func (parseZInfo ParseZoneInfoData) configMilitaryTimeZones(
 		tzDataDto.FuncSelfReferenceVariable = "milTz"
 
 		// FuncName: Alpha()
-		tzDataDto.FuncName = parseZInfo.zoneCfgValidFuncName(tzdatastructs.MilitaryTzArray[i])
+		funcName := tzdatastructs.MilitaryTzArray[i]
+		if funcName == "X-ray" {
+			funcName = "Xray"
+		}
+		tzDataDto.FuncName = parseZInfo.zoneCfgValidFuncName(funcName)
 
 		tzDataDto.FuncReturnType = "string"
 

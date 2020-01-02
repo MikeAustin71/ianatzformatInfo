@@ -577,6 +577,28 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbreviationReference(
 
 		b.WriteString("var mapTzAbbreviationReference = map[string]TimeZoneAbbreviationDto{\n")
 
+	var ok bool
+	var milTzLetter, milAbbrvId string
+	var tzAbbrvDto tzdatastructs.TzAbbreviationDto
+
+	// Add the Military Time Zone Letter References
+	for i:=0; i < len(tzdatastructs.MilitaryTzArray); i++ {
+
+		milTzLetter = tzdatastructs.MilitaryTzArray[i][0:1]
+
+		milAbbrvId, ok = tzdatastructs.MilitaryAbbrvMap[milTzLetter]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"\nError: tzdatastructs.MilitaryAbbrvMap[milTzLetter] Lookup Failed!\n" +
+				"'milTzLetter is INVALID!\n" +
+				"milTzLetter='%v'\n", milTzLetter )
+		}
+
+		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[milAbbrvId]
+		tzStats.TzAbbreviations.AddIfNew(tzAbbrvDto)
+	}
+
 	tzStats.TzAbbreviations.SortByAbbrv()
 
 	numOfAbbrvs := tzStats.TzAbbreviations.GetNumOfAbbreviations()
@@ -715,6 +737,41 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTzAbbrvsToTimeZones(
 		b.WriteString(outputStr)
 	}
 
+	var ok bool
+	var milTzLetter, milAbbrvId string
+	var tzAbbrvDto tzdatastructs.TzAbbreviationDto
+
+	// Add the Military Time Zones At End Of Map
+	for i:=0; i < len(tzdatastructs.MilitaryTzArray); i++ {
+
+		milTzLetter = tzdatastructs.MilitaryTzArray[i][0:1]
+
+		milAbbrvId, ok = tzdatastructs.MilitaryAbbrvMap[milTzLetter]
+
+		if !ok {
+			return fmt.Errorf(ePrefix +
+				"\nError: tzdatastructs.MilitaryAbbrvMap[milTzLetter] Lookup Failed!\n" +
+				"'milTzLetter is INVALID!\n" +
+				"milTzLetter='%v'\n", milTzLetter )
+		}
+
+		tzAbbrvDto, ok = tzdatastructs.TzAbbreviationReference[milAbbrvId]
+
+		lenKeyName = len(milAbbrvId)
+
+		if lenKeyName >= 12 {
+			xSpacer = strings.Repeat(" ",  2)
+		} else {
+			xSpacer = strings.Repeat(" ", 12 -lenKeyName)
+		}
+
+		outputStr := fmt.Sprintf("\"%v\"" + xSpacer + ":{ \"%v\"},\n",
+			milAbbrvId, tzAbbrvDto.IanaZone)
+
+		b.WriteString(outputStr)
+
+	}
+
 	b.WriteString("}\n\n\n")
 
 	_, err := fMgr.WriteBytesToFile([]byte(b.String()))
@@ -757,6 +814,8 @@ func (outTzAbbrvs OutputTimeZoneAbbreviations) writeMapTimeZonesToTzAbbrvs(
 	b.WriteString("var lockMapTimeZonesToTzAbbrvs sync.Mutex\n\n")
 
 	b.WriteString("var mapTimeZonesToTzAbbrvs = map[string][]string {\n")
+
+	// TODO - Add Military Time Zone Letter Abbreviations!
 
 	timeZoneCanonicalValues := make([]string ,0)
 

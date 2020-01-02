@@ -61,9 +61,37 @@ var MilitaryTzMap = map[string]string{
 	"Uniform":  "Etc/GMT+8",
 	"Victor":   "Etc/GMT+9",
 	"Whiskey":  "Etc/GMT+10",
-	"Xray":     "Etc/GMT+11",
+	"X-ray":    "Etc/GMT+11",
 	"Yankee":   "Etc/GMT+12",
 	"Zulu":     "UTC"}
+
+var MilitaryAbbrvMap = map[string]string {
+	"A":        "A+0100",
+	"B":        "B+0200",
+	"C":        "C+0300",
+	"D":        "D+0400",
+	"E":        "E+0500",
+	"F":        "F+0600",
+	"G":        "G+0700",
+	"H":        "H+0800",
+	"I":        "I+0900",
+	"K":        "K+1000",
+	"L":        "L+1100",
+	"M":        "M+1200",
+	"N":        "N-0100",
+	"O":        "O-0200",
+	"P":        "P-0300",
+	"Q":        "Q-0400",
+	"R":        "R-0500",
+	"S":        "S-0600",
+	"T":        "T-0700",
+	"U":        "U-0800",
+	"V":        "V-0900",
+	"W":        "W-1000",
+	"X":        "X-1100",
+	"Y":        "Y-1200",
+	"Z":        "Z+0000",
+}
 
 var MilitaryUTCMap = map[string]string{
 	"Alpha":    "UTC+1",
@@ -88,7 +116,7 @@ var MilitaryUTCMap = map[string]string{
 	"Uniform":  "UTC-8",
 	"Victor":   "UTC-9",
 	"Whiskey":  "UTC-10",
-	"Xray":     "UTC-11",
+	"X-ray":     "UTC-11",
 	"Yankee":   "UTC-12",
 	"Zulu":     "UTC+0"}
 
@@ -115,7 +143,7 @@ var MilitaryTzUrlReferenceMap = map[string]string {
 	"Uniform"  :  "https://www.timeanddate.com/worldclock/timezone/uniform",
 	"Victor"   :  "https://www.timeanddate.com/worldclock/timezone/victor",
 	"Whiskey"  :  "https://www.timeanddate.com/worldclock/timezone/whiskey",
-	"Xray"     :  "https://www.timeanddate.com/worldclock/timezone/x-ray",
+	"X-ray"     :  "https://www.timeanddate.com/worldclock/timezone/x-ray",
 	"Yankee"   :  "https://www.timeanddate.com/worldclock/timezone/yankee",
 	"Zulu"     :  "https://www.timeanddate.com/worldclock/timezone/zulu",
 }
@@ -143,7 +171,7 @@ var MilitaryTzLocationMap = map[string]string{
 	"Uniform"  :  "PST, Los Angeles, CA",
 	"Victor"   :  "Juneau, AK",
 	"Whiskey"  :  "Honolulu, HI",
-	"Xray"     :  "American Samoa",
+	"X-ray"     :  "American Samoa",
 	"Yankee"   :  "e.g. Fiji",
 	"Zulu"     :  "Zulu time",
 }
@@ -173,7 +201,7 @@ var MilitaryTzArray = []string{
 	"Uniform",
 	"Victor",
 	"Whiskey",
-	"Xray",
+	"X-ray",
 	"Yankee",
 	"Zulu",
 }

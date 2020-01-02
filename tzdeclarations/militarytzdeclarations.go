@@ -354,7 +354,10 @@ func (tzMilDecs TzMilitaryDeclarations) MilitaryTzFuncDeclaration(
 	b.WriteString(tzdatastructs.CommentBlankLine)
 
 	b.WriteString(tzdatastructs.CommentLead +
-			fmt.Sprintf("Offset from Universal Coordinated Time (UTC) is computed at\n// %v. \n",
+		"Offset from Universal Coordinated Time (UTC) is computed at\n")
+
+	b.WriteString(tzdatastructs.CommentLead +
+			fmt.Sprintf("%v. \n",
 			utcOffset))
 
 	b.WriteString(tzdatastructs.CommentBlankLine)
